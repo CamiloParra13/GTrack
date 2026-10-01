@@ -1,29 +1,42 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<RepositorioEnMemoria>();
+builder.Services.AddSingleton<IUsuarioRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
+builder.Services.AddSingleton<ITokenRecuperacionRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
+
+builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IRecuperacionService, RecuperacionService>();
+builder.Services.AddScoped<IEmailService, EmailDesarrolloService>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(o =>
+    {
+        o.LoginPath = "/Usuario/Login";
+        o.AccessDeniedPath = "/Usuario/Login";
+    });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
+    pattern: "{controller=Usuario}/{action=Login}/{id?}");
 
 app.Run();
