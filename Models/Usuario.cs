@@ -1,6 +1,7 @@
 ﻿public enum RolUsuario { Negocio, Repartidor, Administrador }
 
-public enum EstadoCuenta { PendienteValidacion, Activo, Suspendido, Rechazado }
+// Eliminado va al final para no cambiar los valores numéricos de los estados existentes
+public enum EstadoCuenta { PendienteValidacion, Activo, Suspendido, Rechazado, Eliminado }
 
 public class Usuario
 {

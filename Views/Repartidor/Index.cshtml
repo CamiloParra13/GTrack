@@ -1,0 +1,73 @@
+﻿@model List<Repartidor>
+@{
+    ViewData["Title"] = "Repartidores";
+    string Veh(TipoVehiculo v) => v == TipoVehiculo.APie ? "A pie" : v.ToString();
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2 class="mb-0">Repartidores</h2>
+        <p class="text-muted mb-0">Repartidores vinculados a tu negocio</p>
+    </div>
+    <a asp-action="Registrar" class="btn btn-primary">+ Registrar Nuevo Repartidor</a>
+</div>
+
+@if (TempData["Mensaje"] is string ok)
+{
+    <div class="alert alert-success">@ok</div>
+}
+@if (TempData["Aviso"] is string aviso)
+{
+    <div class="alert alert-warning">@aviso</div>
+}
+@if (TempData["Credenciales"] is string cred)
+{
+    <div class="alert alert-info">
+        <strong>Credenciales temporales del repartidor</strong><br />@cred
+    </div>
+}
+
+<div class="card shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Documento</th>
+                    <th>Correo</th>
+                    <th>Teléfono</th>
+                    <th>Vehículo</th>
+                    <th>Placa</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        <td class="fw-semibold">@r.NombreCompleto</td>
+                        <td>@r.Usuario?.Documento</td>
+                        <td>@r.Usuario?.Correo</td>
+                        <td>@r.Telefono</td>
+                        <td>@Veh(r.Vehiculo)</td>
+                        <td>@(r.Placa ?? "—")</td>
+                        <td>
+                            @if (r.Usuario?.Estado == EstadoCuenta.Activo)
+                            {
+                                <span class="badge bg-success">Activo</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@r.Usuario?.Estado</span>
+                            }
+                        </td>
+                    </tr>
+                }
+                @if (Model.Count == 0)
+                {
+                    <tr><td colspan="7" class="text-center text-muted py-4">Aún no has registrado repartidores.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

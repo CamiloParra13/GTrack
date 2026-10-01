@@ -1,8 +1,81 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (User.Identity?.IsAuthenticated != true)
+{
+    @* CU-01 paso 1: fondo blanco, logo centrado y dos botones *@
+    <div class="landing">
+        @if (TempData["Mensaje"] is string msgPublico)
+        {
+            <div class="alert alert-success mb-0">@msgPublico</div>
+        }
+
+        <a class="logo logo-lg" asp-controller="Home" asp-action="Index">
+            <span class="logo-mark">G</span><span class="logo-text">GTrack</span>
+        </a>
+        <p class="text-muted mb-0">Gestiona y consulta el estado de tus pedidos</p>
+
+        <div class="d-flex gap-3 flex-wrap justify-content-center">
+            <a asp-controller="Usuario" asp-action="Login" class="btn btn-outline-primary btn-lg px-4">Iniciar Sesión</a>
+            <a asp-controller="Negocio" asp-action="Registrar" class="btn btn-primary btn-lg px-4">Registrarse</a>
+        </div>
+    </div>
+}
+else
+{
+    var esNegocio = User.IsInRole("Negocio");
+    var esAdmin = User.IsInRole("Administrador");
+
+    <div class="mx-auto" style="max-width: 900px;">
+        @if (TempData["Mensaje"] is string msgPanel)
+        {
+            <div class="alert alert-success">@msgPanel</div>
+        }
+
+        <h2 class="mb-1">Bienvenido a GTrack</h2>
+        <p class="text-muted mb-4">Selecciona una opción del menú o entra a una de estas secciones.</p>
+
+        <div class="row g-3">
+            @if (esNegocio)
+            {
+                <div class="col-md-6">
+                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card" asp-controller="Repartidor" asp-action="Index">
+                        <h5>🛵 Repartidores</h5>
+                        <p class="text-muted mb-0">Registra y consulta los repartidores de tu negocio.</p>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card" asp-controller="Negocio" asp-action="Perfil">
+                        <h5>🏪 Mi Perfil</h5>
+                        <p class="text-muted mb-0">Consulta, edita o elimina la información de tu negocio.</p>
+                    </a>
+                </div>
+            }
+            else if (esAdmin)
+            {
+                <div class="col-md-6">
+                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card" asp-controller="Admin" asp-action="Negocios">
+                        <h5>🏪 Negocios</h5>
+                        <p class="text-muted mb-0">Revisa y valida los negocios registrados.</p>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card" asp-controller="Admin" asp-action="Administradores">
+                        <h5>🛡️ Administradores</h5>
+                        <p class="text-muted mb-0">Consulta y registra nuevos administradores.</p>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="col-12">
+                    <div class="card shadow-sm p-4">
+                        <h5>🛵 Tu cuenta está activa</h5>
+                        <p class="text-muted mb-0">El panel de pedidos asignados estará disponible próximamente.</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
