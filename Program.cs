@@ -12,6 +12,7 @@ builder.Services.AddSingleton<INegocioRepository>(sp => sp.GetRequiredService<Re
 builder.Services.AddSingleton<ICodigoVerificacionRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
 builder.Services.AddSingleton<IRepartidorRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
 builder.Services.AddSingleton<IAdministracionRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
+builder.Services.AddSingleton<IPedidoRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
 
 builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -20,6 +21,7 @@ builder.Services.AddScoped<INegocioService, NegocioService>();
 builder.Services.AddScoped<IRepartidorService, RepartidorService>();
 builder.Services.AddScoped<IAdministracionService, AdministracionService>();
 builder.Services.AddScoped<IEmailService, EmailDesarrolloService>();
+builder.Services.AddScoped<IPedidoService, PedidoService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(o =>

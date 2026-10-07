@@ -1,4 +1,4 @@
-﻿@{
+@{
     var autenticado = User.Identity?.IsAuthenticated == true;
     var email = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value ?? "";
     var inicial = email.Length > 0 ? char.ToUpper(email[0]).ToString() : "G";
@@ -10,6 +10,7 @@
     var landing = !autenticado && controlador == "Home" && accion == "Index";
 
     var enHome = controlador == "Home";
+    var enPedido = controlador == "Pedido";
     var enRepartidores = controlador == "Repartidor";
     var enPerfil = controlador == "Negocio";
     var enNegocios = controlador == "Admin" && accion == "Negocios";
@@ -30,7 +31,8 @@
         <div class="app-shell">
             <aside class="sidebar">
                 <a class="logo mb-4" asp-controller="Home" asp-action="Index">
-                    <span class="logo-mark">G</span><span class="logo-text">GTrack</span>
+                    <img src="~/images/Logo_Gtrack.png" alt="GTrack" class="logo-img" />
+                    <span class="logo-text">GTrack</span>
                 </a>
 
                 <nav class="d-flex flex-column gap-1">
@@ -38,6 +40,7 @@
 
                     @if (esNegocio)
                     {
+                        <a class="side-link @(enPedido ? "active" : "")" asp-controller="Pedido" asp-action="Registrar">📦 Registrar Pedido</a>
                         <a class="side-link @(enRepartidores ? "active" : "")" asp-controller="Repartidor" asp-action="Index">🛵 Repartidores</a>
                         <a class="side-link @(enPerfil ? "active" : "")" asp-controller="Negocio" asp-action="Perfil">🏪 Mi Perfil</a>
                     }
@@ -89,7 +92,8 @@
     {
         <header class="public-bar">
             <a class="logo" asp-controller="Home" asp-action="Index">
-                <span class="logo-mark">G</span><span class="logo-text">GTrack</span>
+                <img src="~/images/Logo_Gtrack.png" alt="GTrack" class="logo-img" />
+                <span class="logo-text">GTrack</span>
             </a>
         </header>
         <div class="container py-4">

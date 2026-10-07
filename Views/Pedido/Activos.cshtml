@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "Pedidos Activos";
+}
+
+@if (TempData["Mensaje"] is string msg)
+{
+    <div class="alert alert-success">@msg</div>
+}
+
+<div class="card shadow-sm p-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2 class="mb-0">Pedidos Activos</h2>
+        <a asp-action="Registrar" class="btn btn-primary btn-sm">+ Registrar Nuevo Pedido</a>
+    </div>
+    <p class="text-muted mb-0">El listado completo de pedidos activos estará disponible próximamente.</p>
+</div>
+

@@ -72,16 +72,12 @@ a {
     text-decoration: none;
 }
 
+.logo-img,
 .logo-mark {
     width: 2.25rem;
     height: 2.25rem;
-    border-radius: .6rem;
-    background: var(--gt-blue);
-    color: #fff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
+    object-fit: contain;
+    display: inline-block;
 }
 
 .logo-text {
@@ -90,11 +86,11 @@ a {
     color: #0f1b3d;
 }
 
+.logo-lg .logo-img,
 .logo-lg .logo-mark {
     width: 4.5rem;
     height: 4.5rem;
-    font-size: 2.2rem;
-    border-radius: 1.1rem;
+    object-fit: contain;
 }
 
 .logo-lg .logo-text {
