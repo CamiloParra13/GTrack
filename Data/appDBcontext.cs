@@ -1,44 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
+// Mapea los modelos de C# a las tablas de la base gTrack (SQL Server).
+// La base ya existe (script gTrack.sql): NO se usan migraciones.
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<TokenRecuperacion> TokensRecuperacion => Set<TokenRecuperacion>();
     public DbSet<Negocio> Negocios => Set<Negocio>();
     public DbSet<CodigoVerificacion> CodigosVerificacion => Set<CodigoVerificacion>();
+    public DbSet<Repartidor> Repartidores => Set<Repartidor>();
+    public DbSet<Administrador> Administradores => Set<Administrador>();
+    public DbSet<Pedido> Pedidos => Set<Pedido>();
+    public DbSet<ItemPedido> ItemsPedido => Set<ItemPedido>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Usuario>(e =>
-        {
-            e.Property(u => u.Correo).HasMaxLength(150);
-            e.Property(u => u.Documento).HasMaxLength(20);
-            e.HasIndex(u => u.Correo).IsUnique();
-            e.HasIndex(u => u.Documento).IsUnique();
-        });
-
-        modelBuilder.Entity<TokenRecuperacion>(e =>
-        {
-            e.Property(t => t.TokenHash).HasMaxLength(64);
-            e.HasIndex(t => t.TokenHash).IsUnique();
-        });
-
-        modelBuilder.Entity<Negocio>(e =>
-        {
-            e.Property(n => n.Nombre).HasMaxLength(100);
-            e.Property(n => n.TipoActividad).HasMaxLength(60);
-            e.Property(n => n.Telefono).HasMaxLength(15);
-            e.Property(n => n.Direccion).HasMaxLength(200);
-            e.HasIndex(n => n.Telefono).IsUnique();
-            e.HasOne(n => n.Usuario).WithOne()
-                .HasForeignKey<Negocio>(n => n.UsuarioId)
-                .OnDelete(DeleteBehavior.Restrict);
-        });
-
-        modelBuilder.Entity<CodigoVerificacion>(e =>
-        {
-            e.Property(c => c.CodigoHash).HasMaxLength(64);
-            e.HasIndex(c => c.UsuarioId);
-        });
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 }

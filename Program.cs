@@ -1,18 +1,24 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<RepositorioEnMemoria>();
-builder.Services.AddSingleton<IUsuarioRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<ITokenRecuperacionRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<INegocioRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<ICodigoVerificacionRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<IRepartidorRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<IAdministracionRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<IPedidoRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
+// Base de datos SQL Server (cadena "gTrack" en appsettings.json)
+builder.Services.AddDbContext<AppDbContext>(o =>
+    o.UseSqlServer(builder.Configuration.GetConnectionString("gTrack")));
+
+// Repositorios con EF Core (Scoped: uno por solicitud, igual que el DbContext)
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<ITokenRecuperacionRepository, TokenRecuperacionRepository>();
+builder.Services.AddScoped<INegocioRepository, NegocioRepository>();
+builder.Services.AddScoped<ICodigoVerificacionRepository, CodigoVerificacionRepository>();
+builder.Services.AddScoped<PersonalRepository>();
+builder.Services.AddScoped<IRepartidorRepository>(sp => sp.GetRequiredService<PersonalRepository>());
+builder.Services.AddScoped<IAdministracionRepository>(sp => sp.GetRequiredService<PersonalRepository>());
+builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
 
 builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -20,8 +26,8 @@ builder.Services.AddScoped<IRecuperacionService, RecuperacionService>();
 builder.Services.AddScoped<INegocioService, NegocioService>();
 builder.Services.AddScoped<IRepartidorService, RepartidorService>();
 builder.Services.AddScoped<IAdministracionService, AdministracionService>();
-builder.Services.AddScoped<IEmailService, EmailDesarrolloService>();
 builder.Services.AddScoped<IPedidoService, PedidoService>();
+builder.Services.AddScoped<IEmailService, EmailDesarrolloService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(o =>
@@ -31,6 +37,13 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 var app = builder.Build();
+
+// Perfiles de prueba (solo Development y solo si no hay usuarios)
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    await DbSeeder.SembrarAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>());
+}
 
 if (!app.Environment.IsDevelopment())
 {

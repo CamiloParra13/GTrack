@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 public class NegocioRepository(AppDbContext db) : INegocioRepository
 {
@@ -29,9 +29,13 @@ public class NegocioRepository(AppDbContext db) : INegocioRepository
         await db.SaveChangesAsync();
     }
 
-    // TODO: consultar la tabla de pedidos cuando exista (estados distintos de Entregado/Cancelado)
-    public Task<bool> TienePedidosActivosAsync(int negocioId) => Task.FromResult(false);
+    // CU-11: pedidos que aún no terminaron (distintos de Entregado y Cancelado)
+    public Task<bool> TienePedidosActivosAsync(int negocioId) =>
+        db.Pedidos.AnyAsync(p => p.NegocioId == negocioId &&
+            p.Estado != EstadoPedido.Entregado && p.Estado != EstadoPedido.Cancelado);
 
-    // TODO: consultar la tabla de repartidores cuando exista
-    public Task<bool> TieneRepartidoresVinculadosAsync(int negocioId) => Task.FromResult(false);
+    // CU-11: repartidores del negocio cuya cuenta no está eliminada
+    public Task<bool> TieneRepartidoresVinculadosAsync(int negocioId) =>
+        db.Repartidores.AnyAsync(r => r.NegocioId == negocioId &&
+            r.Usuario!.Estado != EstadoCuenta.Eliminado);
 }
