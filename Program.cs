@@ -1,18 +1,22 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<RepositorioEnMemoria>();
-builder.Services.AddSingleton<IUsuarioRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<ITokenRecuperacionRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<INegocioRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<ICodigoVerificacionRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<IRepartidorRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<IAdministracionRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
-builder.Services.AddSingleton<IPedidoRepository>(sp => sp.GetRequiredService<RepositorioEnMemoria>());
+// Conexión a SQL Server (cadena "GtrackDb" en appsettings.json)
+builder.Services.AddDbContext<AppDbContext>(o =>
+    o.UseSqlServer(builder.Configuration.GetConnectionString("GtrackDb")));
+
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<ITokenRecuperacionRepository, TokenRecuperacionRepository>();
+builder.Services.AddScoped<INegocioRepository, NegocioRepository>();
+builder.Services.AddScoped<ICodigoVerificacionRepository, CodigoVerificacionRepository>();
+builder.Services.AddScoped<IRepartidorRepository, RepartidorRepository>();
+builder.Services.AddScoped<IAdministracionRepository, AdministracionRepository>();
+builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
 
 builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
