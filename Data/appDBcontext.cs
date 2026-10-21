@@ -10,6 +10,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Administrador> Administradores => Set<Administrador>();
     public DbSet<Pedido> Pedidos => Set<Pedido>();
     public DbSet<ItemPedido> ItemsPedido => Set<ItemPedido>();
+    public DbSet<Notificacion> Notificaciones => Set<Notificacion>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -40,7 +41,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(n => n.TipoActividad).HasMaxLength(100);
             e.Property(n => n.Telefono).HasMaxLength(15).IsUnicode(false);
             e.Property(n => n.Direccion).HasMaxLength(200);
-            // Columna de la BD que no está en el modelo: se llena al aprobar el negocio
             e.Property<DateTime?>("FechaValidacion");
             e.HasIndex(n => n.Telefono).IsUnique();
             e.HasOne(n => n.Usuario).WithOne()
@@ -98,9 +98,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<ItemPedido>(e =>
         {
-            e.ToTable("ItemPedido");   // la columna Subtotal es calculada por SQL Server
+            e.ToTable("ItemPedido");
             e.Property(i => i.Descripcion).HasMaxLength(100);
             e.Property(i => i.PrecioUnitario).HasPrecision(18, 2);
+        });
+
+        modelBuilder.Entity<Notificacion>(e =>
+        {
+            e.ToTable("Notificacion");
+            e.Property(n => n.Titulo).HasMaxLength(100);
+            e.Property(n => n.Mensaje).HasMaxLength(300);
+            e.Property(n => n.Enlace).HasMaxLength(200);
+            e.HasIndex(n => new { n.UsuarioId, n.Leida, n.FechaCreacion });
         });
     }
 }

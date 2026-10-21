@@ -15,6 +15,7 @@
     var enPerfil = controlador == "Negocio";
     var enNegocios = controlador == "Admin" && accion == "Negocios";
     var enAdmins = controlador == "Admin" && accion != "Negocios";
+    var enNotificaciones = controlador == "Notificaciones";
 }
 <!DOCTYPE html>
 <html lang="es">
@@ -49,9 +50,9 @@
                         <a class="side-link @(enNegocios ? "active" : "")" asp-controller="Admin" asp-action="Negocios">🏪 Negocios</a>
                         <a class="side-link @(enAdmins ? "active" : "")" asp-controller="Admin" asp-action="Administradores">🛡️ Administradores</a>
                     }
+                    <a class="side-link @(enNotificaciones ? "active" : "")" asp-controller="Notificaciones" asp-action="Index">🔔 Notificaciones @await Component.InvokeAsync("Notificaciones")</a>
                 </nav>
 
-                @* CU-13 paso 1: botón de perfil abajo a la izquierda con lista de menús *@
                 <div class="dropup mt-auto">
                     <button class="user-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="avatar">@inicial</span>

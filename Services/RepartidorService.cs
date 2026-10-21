@@ -12,6 +12,7 @@ public class RepartidorService(
     IUsuarioRepository usuarios,
     IPasswordHasher<Usuario> hasher,
     IEmailService email,
+    INotificacionService avisos,
     ILogger<RepartidorService> logger) : IRepartidorService
 {
     public async Task<List<Repartidor>> ListarAsync(int usuarioNegocioId)
@@ -29,9 +30,8 @@ public class RepartidorService(
         var correo = dto.Correo.Trim();
         var telefono = dto.Telefono.Trim();
 
-        // RN-1-CU09: documento, correo y teléfono únicos
         if (await negocios.ExisteDocumentoAsync(documento))
-            return new(false, "Este repartidor ya se encuentra registrado", false, null);   // FA-09-CU09
+            return new(false, "Este repartidor ya se encuentra registrado", false, null);
         if (await usuarios.ObtenerPorCorreoAsync(correo) is not null)
             return new(false, "El correo ya está registrado en el sistema", false, null);
         if (await repartidores.TelefonoEnUsoAsync(telefono))
@@ -51,7 +51,7 @@ public class RepartidorService(
 
         var repartidor = new Repartidor
         {
-            NegocioId = negocio.Id,          // RN-2-CU09
+            NegocioId = negocio.Id,
             NombreCompleto = dto.NombreCompleto.Trim(),
             Telefono = telefono,
             Vehiculo = dto.Vehiculo!.Value,
@@ -60,12 +60,16 @@ public class RepartidorService(
 
         await repartidores.RegistrarRepartidorAsync(usuario, repartidor);
 
-        // FE-21-CU09: si falla el correo, el repartidor queda registrado igual
+        await avisos.RepartidorRegistradoAsync(usuarioNegocioId, repartidor.NombreCompleto);
+
         try
         {
-            await email.EnviarAsync(correo, "Tus credenciales de acceso a GTrack",
-                $"Hola {repartidor.NombreCompleto}, el negocio {negocio.Nombre} te registró como repartidor en GTrack.\n" +
-                $"Usuario: {correo} (o tu número de documento)\nContraseña temporal: {password}");
+            await email.EnviarAsync(correo, "Tus credenciales de acceso a GTrack", PlantillaCorreo.Crear(
+                titulo: "Tu cuenta de repartidor está lista",
+                saludo: $"Hola, {repartidor.NombreCompleto}",
+                parrafos: [$"El negocio {negocio.Nombre} te registró como repartidor en GTrack. Estas son tus credenciales de acceso:"],
+                datos: [("Usuario", correo), ("O tu documento", documento), ("Contraseña temporal", password)],
+                nota: "Guarda esta información en un lugar seguro y no la compartas con nadie."));
             return new(true, null, true, password);
         }
         catch (Exception ex)
