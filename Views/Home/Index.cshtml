@@ -33,6 +33,11 @@ else
         {
             <div class="alert alert-success">@msgPanel</div>
         }
+        @* CU-28 FE-68: error al cerrar sesión (la sesión sigue activa) *@
+        @if (TempData["Error"] is string errPanel)
+        {
+            <div class="alert alert-danger">@errPanel</div>
+        }
 
         <h2 class="mb-1">Bienvenido a GTrack</h2>
         <p class="text-muted mb-4">Selecciona una opción del menú o entra a una de estas secciones.</p>

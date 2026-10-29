@@ -40,11 +40,24 @@ public class UsuarioController(IAuthService auth, IRecuperacionService recuperac
         return RedirectToAction("Index", "Home");
     }
 
+    // ---------- CU-28 Cerrar sesión ----------
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToAction(nameof(Login));
+        try
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+        catch (Exception)
+        {
+            // FE-68-CU28: la sesión permanece activa
+            TempData["Error"] = "No fue posible cerrar la sesión. Intenta nuevamente";
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Paso 4: redirige a la página principal con el mensaje de éxito
+        TempData["Mensaje"] = "Tu sesión ha sido cerrada exitosamente";
+        return RedirectToAction("Index", "Home");
     }
 
     // ---------- CU-20 Recuperar contraseña ----------

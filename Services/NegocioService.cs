@@ -16,7 +16,7 @@ public class NegocioService(
     private const int MinutosVigenciaCodigo = 10;
     private const int MinutosVentanaEdicion = 10;   // tiempo para guardar después de validar el código
 
-    private const string MensajeErrorEnvio = "No fue posible enviar el código. Intenta nuevamente";       // FE-32
+    private const string MensajeErrorEnvio = "No fue posible enviar el código. Intenta nuevamente";        // FE-32
     private const string MensajeErrorGuardado = "No fue posible actualizar la información. Intenta Nuevamente"; // FE-33
     private const string MensajeCodigoExpirado = "El código expiró o ya no es válido. Solicita uno nuevo";
 

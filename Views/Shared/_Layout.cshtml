@@ -15,6 +15,7 @@
     var enPerfil = controlador == "Negocio";
     var enNegocios = controlador == "Admin" && accion == "Negocios";
     var enAdmins = controlador == "Admin" && accion != "Negocios";
+    var enNotificaciones = controlador == "Notificaciones";
 }
 <!DOCTYPE html>
 <html lang="es">
@@ -49,9 +50,9 @@
                         <a class="side-link @(enNegocios ? "active" : "")" asp-controller="Admin" asp-action="Negocios">🏪 Negocios</a>
                         <a class="side-link @(enAdmins ? "active" : "")" asp-controller="Admin" asp-action="Administradores">🛡️ Administradores</a>
                     }
+                   
                 </nav>
 
-                @* CU-13 paso 1: botón de perfil abajo a la izquierda con lista de menús *@
                 <div class="dropup mt-auto">
                     <button class="user-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="avatar">@inicial</span>
@@ -69,9 +70,11 @@
                             <li><hr class="dropdown-divider" /></li>
                         }
                         <li>
-                            <form asp-controller="Usuario" asp-action="Logout" method="post">
-                                <button type="submit" class="dropdown-item text-danger">Cerrar sesión</button>
-                            </form>
+                            @* CU-28 paso 1: abre el cuadro de confirmación *@
+                            <button type="button" class="dropdown-item text-danger"
+                                    data-bs-toggle="modal" data-bs-target="#modal-cerrar-sesion">
+                                Cerrar sesión
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -80,6 +83,26 @@
             <main class="app-main" role="main">
                 @RenderBody()
             </main>
+        </div>
+
+        @* CU-28 paso 2: cuadro de confirmación de cierre de sesión *@
+        <div class="modal fade" id="modal-cerrar-sesion" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center p-4">
+                        <h5 class="mb-2">¿Estás seguro de que deseas cerrar sesión?</h5>
+                        <p id="aviso-cambios" class="text-warning small d-none mb-0">
+                            Tienes cambios sin guardar que se perderán.
+                        </p>
+                    </div>
+                    <div class="modal-footer justify-content-center border-0 pb-4">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <form asp-controller="Usuario" asp-action="Logout" method="post" class="m-0">
+                            <button type="submit" class="btn btn-danger">Sí, cerrar sesión</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     }
     else if (landing)
