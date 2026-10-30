@@ -39,4 +39,22 @@ public class RepartidorController(IRepartidorService repartidores, IWebHostEnvir
 
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> CambiarEstado(int id)
+    {
+        // Alterna el estado del repartidor validando que pertenezca al negocio actual
+        var r = await repartidores.CambiarEstadoAsync(UsuarioId, id);
+
+        if (!r.Ok)
+        {
+            TempData["Error"] = r.Error ?? "No se pudo actualizar el estado del repartidor.";
+        }
+        else
+        {
+            TempData["Mensaje"] = "El estado del repartidor ha sido actualizado con éxito.";
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
 }

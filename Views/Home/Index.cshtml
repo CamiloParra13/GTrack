@@ -4,22 +4,37 @@
 
 @if (User.Identity?.IsAuthenticated != true)
 {
-    @* CU-01 paso 1: fondo blanco, logo centrado y dos botones *@
-    <div class="landing">
+    @* Fondo amigable utilizando una tonalidad suave de Bootstrap (bg-light) con bordes y espacios modernos *@
+    <div class="landing d-flex flex-column justify-content-between align-items-center min-vh-75 py-4 px-4 bg-light rounded-4 shadow-sm my-3 mx-auto" style="min-height: 85vh; max-width: 1200px;">
+
         @if (TempData["Mensaje"] is string msgPublico)
         {
-            <div class="alert alert-success mb-0">@msgPublico</div>
+            <div class="alert alert-success w-100 text-center shadow-sm">@msgPublico</div>
         }
 
-        <a class="logo logo-lg" asp-controller="Home" asp-action="Index">
-            <img src="~/images/Logo_Gtrack.png" alt="GTrack" class="logo-img" />
-            <span class="logo-text">GTrack</span>
-        </a>
-        <p class="text-muted mb-0">Gestiona y consulta el estado de tus pedidos</p>
+        <!-- 1. ARRIBA A LA DERECHA: Botones de Iniciar Sesión y Registrarse -->
+        <div class="w-100 d-flex justify-content-end">
+            <div class="d-flex gap-2">
+                <a asp-controller="Usuario" asp-action="Login" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold bg-white">Iniciar Sesión</a>
+                <a asp-controller="Negocio" asp-action="Registrar" class="btn btn-primary rounded-pill px-4 fw-semibold shadow-sm">Registrarse</a>
+            </div>
+        </div>
 
-        <div class="d-flex gap-3 flex-wrap justify-content-center">
-            <a asp-controller="Usuario" asp-action="Login" class="btn btn-outline-primary btn-lg px-4">Iniciar Sesión</a>
-            <a asp-controller="Negocio" asp-action="Registrar" class="btn btn-primary btn-lg px-4">Registrarse</a>
+        <!-- 2. EN EL CENTRO: Logo y GTrack -->
+        <div class="text-center my-auto">
+            <a class="logo logo-lg text-decoration-none" asp-controller="Home" asp-action="Index">
+                <img src="~/images/Logo_Gtrack.png" alt="GTrack" class="logo-img mb-3" style="max-height: 90px;" />
+                <h1 class="display-1 fw-bold text-dark m-0 tracking-tight">GTrack</h1>
+            </a>
+            <p class="text-muted fs-5 mt-2">Gestiona y consulta el estado de tus pedidos de forma rápida y segura</p>
+        </div>
+
+        <!-- 3. ABAJO A LA DERECHA: Botón elegante de consultar pedido (CU-05) -->
+        <div class="w-100 d-flex justify-content-end">
+            <a asp-controller="Pedido" asp-action="Consultar" class="btn btn-outline-dark rounded-pill px-4 py-2 shadow-sm d-inline-flex align-items-center gap-2 bg-white transition-all">
+                <span class="fs-5">🔍</span>
+                <span class="fw-medium">Consultar Estado de Pedido</span>
+            </a>
         </div>
     </div>
 }
@@ -33,7 +48,6 @@ else
         {
             <div class="alert alert-success">@msgPanel</div>
         }
-        @* CU-28 FE-68: error al cerrar sesión (la sesión sigue activa) *@
         @if (TempData["Error"] is string errPanel)
         {
             <div class="alert alert-danger">@errPanel</div>
@@ -46,13 +60,13 @@ else
             @if (esNegocio)
             {
                 <div class="col-md-6">
-                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card" asp-controller="Repartidor" asp-action="Index">
+                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Repartidor" asp-action="Index">
                         <h5>🛵 Repartidores</h5>
                         <p class="text-muted mb-0">Registra y consulta los repartidores de tu negocio.</p>
                     </a>
                 </div>
                 <div class="col-md-6">
-                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card" asp-controller="Negocio" asp-action="Perfil">
+                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Negocio" asp-action="Perfil">
                         <h5>🏪 Mi Perfil</h5>
                         <p class="text-muted mb-0">Consulta, edita o elimina la información de tu negocio.</p>
                     </a>
@@ -61,13 +75,13 @@ else
             else if (esAdmin)
             {
                 <div class="col-md-6">
-                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card" asp-controller="Admin" asp-action="Negocios">
+                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Admin" asp-action="Negocios">
                         <h5>🏪 Negocios</h5>
                         <p class="text-muted mb-0">Revisa y valida los negocios registrados.</p>
                     </a>
                 </div>
                 <div class="col-md-6">
-                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card" asp-controller="Admin" asp-action="Administradores">
+                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Admin" asp-action="Administradores">
                         <h5>🛡️ Administradores</h5>
                         <p class="text-muted mb-0">Consulta y registra nuevos administradores.</p>
                     </a>
@@ -76,7 +90,7 @@ else
             else
             {
                 <div class="col-12">
-                    <div class="card shadow-sm p-4">
+                    <div class="card shadow-sm p-4 border-0">
                         <h5>🛵 Tu cuenta está activa</h5>
                         <p class="text-muted mb-0">El panel de pedidos asignados estará disponible próximamente.</p>
                     </div>

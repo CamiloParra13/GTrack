@@ -1,7 +1,7 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 [Authorize(Roles = "Negocio")]
 public class PedidoController(
@@ -77,5 +77,42 @@ public class PedidoController(
         }
 
         return RedirectToAction(nameof(Activos));
+    }
+
+    // ==========================================
+    // NUEVAS ACCIONES PARA EL CU-05: CONSULTAR PEDIDO
+    // ==========================================
+
+    [AllowAnonymous]
+    [HttpGet]
+    public IActionResult Consultar()
+    {
+        return View();
+    }
+
+    [AllowAnonymous]
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> Consultar(string codigo)
+    {
+        if (string.IsNullOrWhiteSpace(codigo))
+        {
+            ModelState.AddModelError("", "Por favor, ingresa el código del pedido.");
+            return View();
+        }
+
+        // Consultamos directamente incluyendo las relaciones necesarias para mostrarlas en la vista
+        var pedido = await context.Pedidos
+            .Include(p => p.Items)
+            .Include(p => p.Negocio)
+            .Include(p => p.Repartidor)
+            .FirstOrDefaultAsync(p => p.Codigo == codigo.Trim());
+
+        if (pedido == null)
+        {
+            ModelState.AddModelError("", "No se encontró ningún pedido con el código ingresado.");
+            return View();
+        }
+
+        return View(pedido);
     }
 }

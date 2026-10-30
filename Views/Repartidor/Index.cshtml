@@ -1,73 +1,82 @@
-﻿@model List<Repartidor>
+﻿@model IEnumerable<Repartidor>
+
 @{
-    ViewData["Title"] = "Repartidores";
-    string Veh(TipoVehiculo v) => v == TipoVehiculo.APie ? "A pie" : v.ToString();
+    ViewData["Title"] = "Gestión de Repartidores";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <div>
-        <h2 class="mb-0">Repartidores</h2>
-        <p class="text-muted mb-0">Repartidores vinculados a tu negocio</p>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Mis Repartidores</h2>
+            <p class="text-muted small mb-0">Administra el personal de entrega de tu negocio.</p>
+        </div>
+        <a asp-action="Registrar" class="btn btn-primary rounded-pill px-4 shadow-sm fw-semibold">＋ Registrar Repartidor</a>
     </div>
-    <a asp-action="Registrar" class="btn btn-primary">+ Registrar Nuevo Repartidor</a>
-</div>
 
-@if (TempData["Mensaje"] is string ok)
-{
-    <div class="alert alert-success">@ok</div>
-}
-@if (TempData["Aviso"] is string aviso)
-{
-    <div class="alert alert-warning">@aviso</div>
-}
-@if (TempData["Credenciales"] is string cred)
-{
-    <div class="alert alert-info">
-        <strong>Credenciales temporales del repartidor</strong><br />@cred
-    </div>
-}
+    @if (TempData["Mensaje"] is string msg)
+    {
+        <div class="alert alert-success border-0 shadow-sm rounded-3">@msg</div>
+    }
+    @if (TempData["Error"] is string err)
+    {
+        <div class="alert alert-danger border-0 shadow-sm rounded-3">@err</div>
+    }
 
-<div class="card shadow-sm">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Documento</th>
-                    <th>Correo</th>
-                    <th>Teléfono</th>
-                    <th>Vehículo</th>
-                    <th>Placa</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var r in Model)
-                {
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 bg-white">
+                <thead class="table-dark">
                     <tr>
-                        <td class="fw-semibold">@r.NombreCompleto</td>
-                        <td>@r.Usuario?.Documento</td>
-                        <td>@r.Usuario?.Correo</td>
-                        <td>@r.Telefono</td>
-                        <td>@Veh(r.Vehiculo)</td>
-                        <td>@(r.Placa ?? "—")</td>
-                        <td>
-                            @if (r.Usuario?.Estado == EstadoCuenta.Activo)
-                            {
-                                <span class="badge bg-success">Activo</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-secondary">@r.Usuario?.Estado</span>
-                            }
-                        </td>
+                        <th class="ps-4 py-3">Nombre</th>
+                        <th class="py-3">Teléfono</th>
+                        <th class="py-3">Correo</th>
+                        <th class="py-3">Estado</th>
+                        <th class="text-end pe-4 py-3">Acciones</th>
                     </tr>
-                }
-                @if (Model.Count == 0)
-                {
-                    <tr><td colspan="7" class="text-center text-muted py-4">Aún no has registrado repartidores.</td></tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var rep in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-semibold text-dark">@rep.Nombre</td>
+                                <td>@rep.Telefono</td>
+                                <td><span class="text-muted">@rep.Correo</span></td>
+                                <td>
+                                    @if (rep.Activo)
+                                    {
+                                        <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold">Activo</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-semibold">Suspendido</span>
+                                    }
+                                </td>
+                                <td class="text-end pe-4">
+                                    <form asp-action="CambiarEstado" asp-route-id="@rep.Id" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        @if (rep.Activo)
+                                        {
+                                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-medium">Suspender</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-medium">Activar</button>
+                                        }
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">No hay repartidores registrados todavía.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
