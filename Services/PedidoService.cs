@@ -1,9 +1,11 @@
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-// CU-03: Implementación del servicio de pedidos
 public class PedidoService(
     IPedidoRepository pedidos,
     INegocioRepository negocios,
+    AppDbContext context,
     ILogger<PedidoService> logger) : IPedidoService
 {
     private const string AlfabetoCodigo = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
@@ -14,11 +16,11 @@ public class PedidoService(
         if (negocio is null) return null;
 
         var ultimoPedido = await pedidos.ObtenerUltimoPorTelefonoAsync(negocio.Id, telefono.Trim());
-        if (ultimoPedido is null) return null;
+        if (ultimoPedido is null || ultimoPedido.Cliente is null) return null;
 
         return new ClienteAutocompletarDto
         {
-            Nombre = ultimoPedido.ClienteNombre,
+            Nombre = ultimoPedido.Cliente.NombreCompleto,
             Direccion = ultimoPedido.DireccionEntrega
         };
     }
@@ -42,7 +44,60 @@ public class PedidoService(
         if (items.Count == 0)
             return (false, "Debes completar todos los campos obligatorios del pedido", null);
 
-        var valorTotal = items.Sum(i => i.Cantidad * i.PrecioUnitario);
+        int clienteId = 1;
+        try
+        {
+            var telefono = dto.ClienteTelefono?.Trim();
+            var nombre = dto.ClienteNombre?.Trim();
+            var direccion = dto.DireccionEntrega?.Trim();
+
+            if (!string.IsNullOrEmpty(telefono))
+            {
+                var clienteDb = await context.Set<Cliente>()
+                    .IgnoreQueryFilters()
+                    .FirstOrDefaultAsync(c => c.Telefono == telefono);
+
+                if (clienteDb != null)
+                {
+                    clienteId = clienteDb.Id;
+
+                    // Actualizamos nombre si cambió
+                    if (!string.IsNullOrEmpty(nombre) && clienteDb.NombreCompleto != nombre)
+                    {
+                        clienteDb.NombreCompleto = nombre;
+                    }
+
+                    // MEJORA 2: Actualizar la dirección predeterminada si el usuario introdujo una nueva
+                    if (!string.IsNullOrEmpty(direccion) && clienteDb.DireccionPredeterminada != direccion)
+                    {
+                        clienteDb.DireccionPredeterminada = direccion;
+                    }
+
+                    await context.SaveChangesAsync();
+                }
+                else
+                {
+                    var nuevoCliente = new Cliente
+                    {
+                        NombreCompleto = !string.IsNullOrEmpty(nombre) ? nombre : "Cliente Frecuente",
+                        Telefono = telefono,
+                        DireccionPredeterminada = !string.IsNullOrEmpty(direccion) ? direccion : "Sin dirección",
+                        FechaRegistro = DateTime.UtcNow,
+                        NegocioId = negocio.Id
+                    };
+
+                    context.Set<Cliente>().Add(nuevoCliente);
+                    await context.SaveChangesAsync();
+                    clienteId = nuevoCliente.Id;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            context.ChangeTracker.Clear();
+            logger.LogWarning(ex, "No se pudo registrar/buscar el cliente automáticamente, usando valor por defecto.");
+            clienteId = 1;
+        }
 
         string? codigo = null;
         for (var intento = 0; intento < 5; intento++)
@@ -65,12 +120,10 @@ public class PedidoService(
         {
             Codigo = codigo,
             NegocioId = negocio.Id,
-            ClienteNombre = dto.ClienteNombre.Trim(),
-            ClienteTelefono = dto.ClienteTelefono.Trim(),
+            ClienteId = clienteId,
             DireccionEntrega = dto.DireccionEntrega.Trim(),
-            MetodoPago = dto.MetodoPago!.Value,
-            Estado = EstadoPedido.Recibido,
-            ValorTotal = valorTotal,
+            MetodoPagoId = (int)dto.MetodoPago!.Value,
+            EstadoPedidoId = 0,
             FechaCreacion = DateTime.UtcNow,
             Items = items
         };
@@ -87,5 +140,92 @@ public class PedidoService(
 
         return (true, null, codigo);
     }
-}
 
+    public async Task<(bool Ok, string? Error)> ActualizarEstadoAsync(int usuarioNegocioId, int pedidoId, int nuevoEstadoId, int? repartidorId = null)
+    {
+        var negocio = await negocios.ObtenerPorUsuarioIdAsync(usuarioNegocioId);
+        if (negocio is null)
+            return (false, "No fue posible identificar tu negocio");
+
+        var pedido = await pedidos.ObtenerPorIdAsync(pedidoId);
+        if (pedido is null || pedido.NegocioId != negocio.Id)
+            return (false, "El pedido no fue encontrado o no pertenece a tu negocio");
+
+        // MEJORA 1: Blindar pedidos finalizados (si ya está Entregado o Cancelado, no se puede modificar)
+        if (pedido.EstadoPedidoId == (int)EstadoPedido.Entregado || pedido.EstadoPedidoId == (int)EstadoPedido.Cancelado)
+        {
+            return (false, "Este pedido ya se encuentra finalizado y no puede ser modificado.");
+        }
+
+        // MEJORA 3: Validación básica de secuencia de estados (Evitar saltos extraños si es necesario)
+        // (Opcional según tu flujo: Asegurar que un pedido no pase directamente a Entregado sin estar Asignado o En Camino)
+        if (nuevoEstadoId == (int)EstadoPedido.Entregado && pedido.EstadoPedidoId < (int)EstadoPedido.Asignado)
+        {
+            return (false, "El pedido debe ser asignado y despachado antes de poder marcarse como entregado.");
+        }
+
+        if (nuevoEstadoId >= (int)EstadoPedido.Asignado && nuevoEstadoId <= (int)EstadoPedido.Entregado)
+        {
+            int? repartidorAValidar = repartidorId.HasValue && repartidorId.Value > 0
+                ? repartidorId
+                : pedido.RepartidorId;
+
+            if (repartidorAValidar.HasValue && repartidorAValidar.Value > 0)
+            {
+                var estaSuspendido = await context.Set<SuspensionRepartidor>()
+                    .AnyAsync(s => s.RepartidorId == repartidorAValidar.Value);
+
+                if (estaSuspendido)
+                {
+                    return (false, "No es posible procesar el pedido: el repartidor asignado se encuentra actualmente suspendido.");
+                }
+
+                if (repartidorId.HasValue && repartidorId.Value > 0)
+                {
+                    pedido.RepartidorId = repartidorId.Value;
+                }
+            }
+            else if (pedido.RepartidorId is null)
+            {
+                return (false, "Debes seleccionar un repartidor antes de pasar el pedido a este estado.");
+            }
+        }
+
+        try
+        {
+            pedido.EstadoPedidoId = nuevoEstadoId;
+            await pedidos.ActualizarAsync(pedido);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error al actualizar el estado del pedido {PedidoId} para el negocio {NegocioId}", pedidoId, negocio.Id);
+            return (false, "No fue posible actualizar el estado del pedido. Intenta nuevamente");
+        }
+
+        return (true, null);
+    }
+
+    public async Task<List<Pedido>> ObtenerPedidosActivosAsync(int usuarioNegocioId)
+    {
+        var negocio = await negocios.ObtenerPorUsuarioIdAsync(usuarioNegocioId);
+        if (negocio is null) return [];
+
+        var listaPedidos = await pedidos.ObtenerPorNegocioAsync(negocio.Id);
+
+        return listaPedidos
+            .Where(p => p.EstadoPedidoId != (int)EstadoPedido.Entregado && p.EstadoPedidoId != (int)EstadoPedido.Cancelado)
+            .ToList();
+    }
+
+    public async Task<List<Pedido>> ObtenerHistorialPedidosAsync(int usuarioNegocioId)
+    {
+        var negocio = await negocios.ObtenerPorUsuarioIdAsync(usuarioNegocioId);
+        if (negocio is null) return [];
+
+        var listaPedidos = await pedidos.ObtenerPorNegocioAsync(negocio.Id);
+
+        return listaPedidos
+            .Where(p => p.EstadoPedidoId == (int)EstadoPedido.Entregado || p.EstadoPedidoId == (int)EstadoPedido.Cancelado)
+            .ToList();
+    }
+}

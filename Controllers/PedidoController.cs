@@ -1,10 +1,13 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-// CU-03: Controlador para la gestión de pedidos
 [Authorize(Roles = "Negocio")]
-public class PedidoController(IPedidoService pedidos) : Controller
+public class PedidoController(
+    IPedidoService pedidos,
+    INegocioRepository negocios,
+    AppDbContext context) : Controller
 {
     private int UsuarioId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
@@ -35,6 +38,44 @@ public class PedidoController(IPedidoService pedidos) : Controller
     }
 
     [HttpGet]
-    public IActionResult Activos() => View();
-}
+    public async Task<IActionResult> Activos()
+    {
+        var negocio = await negocios.ObtenerPorUsuarioIdAsync(UsuarioId);
+        var pedidosActivos = await pedidos.ObtenerPedidosActivosAsync(UsuarioId);
 
+        List<Repartidor> listaRepartidores = [];
+        if (negocio != null)
+        {
+            listaRepartidores = await context.Set<Repartidor>()
+                .Where(r => r.NegocioId == negocio.Id)
+                .ToListAsync();
+        }
+
+        ViewBag.Repartidores = listaRepartidores;
+        return View(pedidosActivos);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Historial()
+    {
+        var historialPedidos = await pedidos.ObtenerHistorialPedidosAsync(UsuarioId);
+        return View(historialPedidos);
+    }
+
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> ActualizarEstado(int id, int nuevoEstadoId, int? repartidorId)
+    {
+        var (okActualizacion, errorMsg) = await pedidos.ActualizarEstadoAsync(UsuarioId, id, nuevoEstadoId, repartidorId);
+
+        if (!okActualizacion)
+        {
+            TempData["Error"] = errorMsg ?? "No fue posible actualizar el estado.";
+        }
+        else
+        {
+            TempData["Mensaje"] = "¡El estado del pedido se ha actualizado correctamente!";
+        }
+
+        return RedirectToAction(nameof(Activos));
+    }
+}

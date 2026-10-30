@@ -17,7 +17,6 @@ public class NegocioRepository(AppDbContext db) : INegocioRepository
 
     public async Task RegistrarAsync(Usuario usuario, Negocio negocio)
     {
-        // Un solo SaveChanges: o se guardan los dos o ninguno
         negocio.Usuario = usuario;
         db.Negocios.Add(negocio);
         await db.SaveChangesAsync();
@@ -32,7 +31,7 @@ public class NegocioRepository(AppDbContext db) : INegocioRepository
     // RN-1-CU11: pedidos en curso = cualquier estado distinto de Entregado o Cancelado
     public Task<bool> TienePedidosActivosAsync(int negocioId) =>
         db.Pedidos.AnyAsync(p => p.NegocioId == negocioId &&
-            p.Estado != EstadoPedido.Entregado && p.Estado != EstadoPedido.Cancelado);
+            p.EstadoPedidoId != (int)EstadoPedido.Entregado && p.EstadoPedidoId != (int)EstadoPedido.Cancelado);
 
     // FE-26-CU11: repartidores vinculados que no estén dados de baja
     public Task<bool> TieneRepartidoresVinculadosAsync(int negocioId) =>

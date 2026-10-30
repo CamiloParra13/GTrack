@@ -10,23 +10,20 @@
     var landing = !autenticado && controlador == "Home" && accion == "Index";
 
     var enHome = controlador == "Home";
-    var enPedido = controlador == "Pedido";
+    var enPedido = controlador == "Pedido" && accion == "Registrar";
+    var enPedidoActivo = controlador == "Pedido" && accion == "Activos";
+    var enHistorial = controlador == "Pedido" && accion == "Historial";
     var enRepartidores = controlador == "Repartidor";
     var enPerfil = controlador == "Negocio";
     var enNegocios = controlador == "Admin" && accion == "Negocios";
     var enAdmins = controlador == "Admin" && accion != "Negocios";
     var enNotificaciones = controlador == "Notificaciones";
-}
-<!DOCTYPE html>
-<html lang="es">
-<head>
+}<!DOCTYPE html><html lang="es"><head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GTrack</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-</head>
-<body>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /></head><body>
     @if (autenticado)
     {
         <div class="app-shell">
@@ -42,15 +39,17 @@
                     @if (esNegocio)
                     {
                         <a class="side-link @(enPedido ? "active" : "")" asp-controller="Pedido" asp-action="Registrar">📦 Registrar Pedido</a>
+                        <a class="side-link @(enPedidoActivo ? "active" : "")" asp-controller="Pedido" asp-action="Activos">📋 Pedidos Activos</a>
+                        <a class="side-link @(enHistorial ? "active" : "")" asp-controller="Pedido" asp-action="Historial">📂 Historial de Pedidos</a>
                         <a class="side-link @(enRepartidores ? "active" : "")" asp-controller="Repartidor" asp-action="Index">🛵 Repartidores</a>
-                        <a class="side-link @(enPerfil ? "active" : "")" asp-controller="Negocio" asp-action="Perfil">🏪 Mi Perfil</a>
+                        @* Nota: "Mi Perfil" se quitó de aquí para que solo aparezca en el menú desplegable inferior *@
                     }
                     @if (esAdmin)
                     {
                         <a class="side-link @(enNegocios ? "active" : "")" asp-controller="Admin" asp-action="Negocios">🏪 Negocios</a>
                         <a class="side-link @(enAdmins ? "active" : "")" asp-controller="Admin" asp-action="Administradores">🛡️ Administradores</a>
                     }
-                   
+
                 </nav>
 
                 <div class="dropup mt-auto">
@@ -129,6 +128,4 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+    @await RenderSectionAsync("Scripts", required: false)</body></html>

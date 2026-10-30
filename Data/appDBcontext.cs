@@ -10,6 +10,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Administrador> Administradores => Set<Administrador>();
     public DbSet<Pedido> Pedidos => Set<Pedido>();
     public DbSet<ItemPedido> ItemsPedido => Set<ItemPedido>();
+    public DbSet<SuspensionRepartidor> SuspensionRepartidor { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -82,15 +83,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         {
             e.ToTable("Pedido");
             e.Property(p => p.Codigo).HasMaxLength(8).IsFixedLength().IsUnicode(false);
-            e.Property(p => p.MetodoPago).HasColumnName("MetodoPagoId");
-            e.Property(p => p.Estado).HasColumnName("EstadoPedidoId");
-            e.Property(p => p.ClienteNombre).HasMaxLength(100);
-            e.Property(p => p.ClienteTelefono).HasMaxLength(15).IsUnicode(false);
             e.Property(p => p.DireccionEntrega).HasMaxLength(200);
-            e.Property(p => p.ValorTotal).HasPrecision(18, 2);
+
             e.HasOne(p => p.Negocio).WithMany()
                 .HasForeignKey(p => p.NegocioId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            e.HasOne(p => p.Cliente).WithMany()
+                .HasForeignKey(p => p.ClienteId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             e.HasMany(p => p.Items).WithOne(i => i.Pedido)
                 .HasForeignKey(i => i.PedidoId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -98,7 +100,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<ItemPedido>(e =>
         {
-            e.ToTable("ItemPedido");   // la columna Subtotal es calculada por SQL Server
+            e.ToTable("ItemPedido");
             e.Property(i => i.Descripcion).HasMaxLength(100);
             e.Property(i => i.PrecioUnitario).HasPrecision(18, 2);
         });

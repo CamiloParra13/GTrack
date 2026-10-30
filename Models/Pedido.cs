@@ -1,19 +1,22 @@
-public enum EstadoPedido { Recibido, EnPreparacion, ListoParaEntrega, Asignado, EnCamino, Entregado, Cancelado }
-public enum MetodoPago { Efectivo, Transferencia, Tarjeta }
-
-// CU-03: pedido registrado por el negocio.
 public class Pedido
 {
     public int Id { get; set; }
-    public string Codigo { get; set; } = "";     // RN-1-CU03: alfanumérico 8 caracteres en mayúsculas, único
+    public string Codigo { get; set; } = "";
     public int NegocioId { get; set; }
     public Negocio? Negocio { get; set; }
-    public string ClienteNombre { get; set; } = "";
-    public string ClienteTelefono { get; set; } = "";
+
+    public int ClienteId { get; set; }
+    public Cliente? Cliente { get; set; }
+
+    public int? RepartidorId { get; set; }
+    public Repartidor? Repartidor { get; set; }
+
     public string DireccionEntrega { get; set; } = "";
-    public MetodoPago MetodoPago { get; set; }
-    public EstadoPedido Estado { get; set; } = EstadoPedido.Recibido; // PE-6-CU03
-    public decimal ValorTotal { get; set; }
+
+    // Columnas reales en la base de datos SQL Server
+    public int MetodoPagoId { get; set; }
+    public int EstadoPedidoId { get; set; } = 0;
+
     public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
     public List<ItemPedido> Items { get; set; } = [];
 }
@@ -26,4 +29,15 @@ public class ItemPedido
     public string Descripcion { get; set; } = "";
     public int Cantidad { get; set; }
     public decimal PrecioUnitario { get; set; }
+}
+
+public enum EstadoPedido
+{
+    Recibido,
+    EnPreparacion,
+    ListoParaEntrega,
+    Asignado,
+    EnCamino,
+    Entregado,
+    Cancelado
 }
