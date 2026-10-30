@@ -1,60 +1,115 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 [Authorize(Roles = "Negocio")]
-public class RepartidorController(IRepartidorService repartidores, IWebHostEnvironment env) : Controller
+public class RepartidorController(
+    IRepartidorRepository repartidorRepo,
+    INegocioRepository negocioRepo,
+    IWebHostEnvironment env,
+    AppDbContext context) : Controller
 {
     private int UsuarioId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
     [HttpGet]
-    public async Task<IActionResult> Index() => View(await repartidores.ListarAsync(UsuarioId));
+    public async Task<IActionResult> Index()
+    {
+        var negocio = await negocioRepo.ObtenerPorUsuarioIdAsync(UsuarioId);
+        if (negocio == null) return View(new List<Repartidor>());
+
+        var repartidores = await repartidorRepo.ListarPorNegocioAsync(negocio.Id);
+        return View(repartidores);
+    }
 
     [HttpGet]
-    public IActionResult Registrar() => View(new RegistroRepartidorDto());
+    public IActionResult Registrar()
+    {
+        return View(new RegistroRepartidorDto());
+    }
 
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Registrar(RegistroRepartidorDto dto)
     {
         if (!ModelState.IsValid)
         {
-            // FE-20-CU09
-            if (ModelState.Values.SelectMany(v => v.Errors).Any(e => e.ErrorMessage == RegistroNegocioDto.Obligatorio))
-                ModelState.AddModelError("", "Debes completar todos los campos obligatorios");
             return View(dto);
         }
 
-        var r = await repartidores.RegistrarAsync(UsuarioId, dto);
-        if (!r.Ok)
+        // 1. Validar si el correo ya existe en la base de datos
+        var correoExiste = await context.Usuarios.AnyAsync(u => u.Correo == dto.Correo);
+        if (correoExiste)
         {
-            ModelState.AddModelError("", r.Error!);
+            ModelState.AddModelError("Correo", "Este correo electrónico ya se encuentra registrado.");
             return View(dto);
         }
 
-        TempData["Mensaje"] = "Repartidor registrado exitosamente";
-        if (!r.CorreoEnviado) // FE-21-CU09
-            TempData["Aviso"] = "No fue posible enviar las credenciales por correo. Puedes enviarlas manualmente";
-        if (!r.CorreoEnviado || env.IsDevelopment())
-            TempData["Credenciales"] = $"Usuario: {dto.Correo.Trim()} — Contraseña temporal: {r.PasswordTemporal}";
+        // 2. Validar si el documento ya existe en la base de datos (en la tabla Usuario)
+        var documentoExiste = await context.Usuarios.AnyAsync(u => u.Documento == dto.Documento);
+        if (documentoExiste)
+        {
+            ModelState.AddModelError("Documento", "Este número de documento ya se encuentra registrado.");
+            return View(dto);
+        }
 
+        var negocio = await negocioRepo.ObtenerPorUsuarioIdAsync(UsuarioId);
+        if (negocio == null) return NotFound();
+
+        // 3. Creamos la cuenta de usuario base para el repartidor
+        var nuevoUsuario = new Usuario
+        {
+            Correo = dto.Correo,
+            Documento = dto.Documento,
+            Rol = RolUsuario.Repartidor,
+            Estado = EstadoCuenta.Activo
+        };
+
+        context.Usuarios.Add(nuevoUsuario);
+        await context.SaveChangesAsync(); // Genera el Id del usuario
+
+        // 4. Creamos el repartidor vinculado al negocio y al usuario (sin la propiedad Documento si no la tiene el modelo)
+        var repartidor = new Repartidor
+        {
+            NombreCompleto = dto.NombreCompleto,
+            Telefono = dto.Telefono,
+            Vehiculo = dto.Vehiculo ?? TipoVehiculo.Moto, // Conversión segura si es nullable
+            Placa = dto.Placa,
+            NegocioId = negocio.Id,
+            UsuarioId = nuevoUsuario.Id
+        };
+
+        context.Repartidores.Add(repartidor);
+        await context.SaveChangesAsync();
+
+        TempData["Mensaje"] = "¡El repartidor ha sido registrado exitosamente!";
         return RedirectToAction(nameof(Index));
     }
 
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> CambiarEstado(int id)
     {
-        // Alterna el estado del repartidor validando que pertenezca al negocio actual
-        var r = await repartidores.CambiarEstadoAsync(UsuarioId, id);
+        var negocio = await negocioRepo.ObtenerPorUsuarioIdAsync(UsuarioId);
+        if (negocio == null) return NotFound();
 
-        if (!r.Ok)
+        var repartidor = await context.Set<Repartidor>()
+            .Include(r => r.Usuario)
+            .FirstOrDefaultAsync(r => r.Id == id && r.NegocioId == negocio.Id);
+
+        if (repartidor == null || repartidor.Usuario == null)
         {
-            TempData["Error"] = r.Error ?? "No se pudo actualizar el estado del repartidor.";
-        }
-        else
-        {
-            TempData["Mensaje"] = "El estado del repartidor ha sido actualizado con éxito.";
+            TempData["Error"] = "El repartidor no existe o no pertenece a tu negocio.";
+            return RedirectToAction(nameof(Index));
         }
 
+        repartidor.Usuario.Estado = repartidor.Usuario.Estado == EstadoCuenta.Activo
+            ? EstadoCuenta.Suspendido
+            : EstadoCuenta.Activo;
+
+        context.Entry(repartidor.Usuario).State = EntityState.Modified;
+
+        await context.SaveChangesAsync();
+
+        TempData["Mensaje"] = "El estado del repartidor ha sido actualizado correctamente.";
         return RedirectToAction(nameof(Index));
     }
 }

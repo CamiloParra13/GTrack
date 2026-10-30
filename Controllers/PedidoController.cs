@@ -47,7 +47,8 @@ public class PedidoController(
         if (negocio != null)
         {
             listaRepartidores = await context.Set<Repartidor>()
-                .Where(r => r.NegocioId == negocio.Id)
+                .Include(r => r.Usuario) 
+                .Where(r => r.NegocioId == negocio.Id && r.Usuario.Estado == EstadoCuenta.Activo) 
                 .ToListAsync();
         }
 

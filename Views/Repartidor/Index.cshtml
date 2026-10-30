@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Repartidor>
+﻿@model List<Repartidor>
 
 @{
     ViewData["Title"] = "Gestión de Repartidores";
@@ -39,12 +39,13 @@
                     {
                         @foreach (var rep in Model)
                         {
+                            var esActivo = rep.Usuario?.Estado == EstadoCuenta.Activo;
                             <tr>
-                                <td class="ps-4 fw-semibold text-dark">@rep.Nombre</td>
+                                <td class="ps-4 fw-semibold text-dark">@rep.NombreCompleto</td>
                                 <td>@rep.Telefono</td>
-                                <td><span class="text-muted">@rep.Correo</span></td>
+                                <td><span class="text-muted">@(rep.Usuario?.Correo ?? "—")</span></td>
                                 <td>
-                                    @if (rep.Activo)
+                                    @if (esActivo)
                                     {
                                         <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold">Activo</span>
                                     }
@@ -56,7 +57,7 @@
                                 <td class="text-end pe-4">
                                     <form asp-action="CambiarEstado" asp-route-id="@rep.Id" method="post" class="d-inline">
                                         @Html.AntiForgeryToken()
-                                        @if (rep.Activo)
+                                        @if (esActivo)
                                         {
                                             <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-medium">Suspender</button>
                                         }
@@ -72,7 +73,7 @@
                     else
                     {
                         <tr>
-                            <td colspan="5" class="text-center py-4 text-muted">No hay repartidores registrados todavía.</td>
+                            <td colspan="5" class="text-center py-4 text-muted">Aún no has registrado repartidores.</td>
                         </tr>
                     }
                 </tbody>
