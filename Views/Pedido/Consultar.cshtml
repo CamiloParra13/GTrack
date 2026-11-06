@@ -1,0 +1,120 @@
+﻿@model Pedido
+
+@{
+    ViewData["Title"] = "Consultar Estado de Pedido";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <!-- Tarjeta principal de consulta limpia y moderna -->
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+
+                <!-- Encabezado minimalista -->
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-0 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="fw-bold text-dark mb-1">Rastreo de Pedido</h4>
+                        <p class="text-muted small mb-0">Ingresa tu código único para verificar el estado de tu orden en tiempo real.</p>
+                    </div>
+                    <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fw-semibold">GTrack</span>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <!-- Resumen de errores de validación si los hay -->
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger rounded-3 border-0 shadow-sm fs-6 mb-4" role="alert">
+                            <div asp-validation-summary="All" class="mb-0"></div>
+                        </div>
+                    }
+
+                    <!-- Formulario de búsqueda estilizado con input tipo píldora -->
+                    <form asp-action="Consultar" method="post" class="mb-2">
+                        <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden border">
+                            <span class="input-group-text bg-white border-0 ps-4 text-muted">🔍</span>
+                            <input type="text" name="codigo" class="form-control border-0 py-3 shadow-none" placeholder="Ingresa tu código de pedido..." required autocomplete="off" />
+                            <button class="btn btn-dark px-5 fw-semibold" type="submit">Buscar</button>
+                        </div>
+                    </form>
+
+                    <!-- Resultados de la consulta (si existe el pedido) -->
+                    @if (Model != null)
+                    {
+                        <hr class="my-4 text-muted opacity-25" />
+
+                        <div class="d-flex flex-wrap justify-content-between align-items-center bg-light p-3 rounded-3 mb-4">
+                            <div>
+                                <span class="text-muted small d-block">Pedido Encontrado</span>
+                                <h5 class="text-primary fw-bold mb-0">@Model.Codigo</h5>
+                            </div>
+                            <div class="mt-2 mt-sm-0">
+                                <span class="badge bg-success fs-6 px-3 py-2 rounded-pill shadow-sm">
+                                    @((EstadoPedido)Model.EstadoPedidoId)
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <div class="p-3 border-0 bg-light rounded-3 h-100">
+                                    <small class="text-muted d-block mb-1">Negocio Establecimiento</small>
+                                    <strong class="text-dark">@(Model.Negocio?.Nombre ?? "No especificado")</strong>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 border-0 bg-light rounded-3 h-100">
+                                    <small class="text-muted d-block mb-1">Fecha de Creación</small>
+                                    <strong class="text-dark">@Model.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</strong>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="p-3 border-0 bg-light rounded-3">
+                                    <small class="text-muted d-block mb-1">Dirección de Entrega</small>
+                                    <strong class="text-dark">@Model.DireccionEntrega</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (Model.Items != null && Model.Items.Any())
+                        {
+                            <h6 class="fw-bold mb-3 text-dark">Productos Solicitados</h6>
+                            <div class="table-responsive border rounded-3 overflow-hidden shadow-sm">
+                                <table class="table table-hover align-middle mb-0 bg-white">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th class="py-3 ps-3">Descripción</th>
+                                            <th class="py-3 text-center">Cant.</th>
+                                            <th class="py-3 text-end">Precio U.</th>
+                                            <th class="py-3 text-end pe-3">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Items)
+                                        {
+                                            <tr>
+                                                <td class="ps-3 py-3">@item.Descripcion</td>
+                                                <td class="text-center">@item.Cantidad</td>
+                                                <td class="text-end">$@item.PrecioUnitario.ToString("N0", new System.Globalization.CultureInfo("es-CO"))</td>
+                                                <td class="text-end fw-bold pe-3">$@((item.Cantidad * item.PrecioUnitario).ToString("N0", new System.Globalization.CultureInfo("es-CO")))</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            <!-- Enlace para volver a la página principal -->
+            <div class="text-center mt-4">
+                <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted fw-medium">
+                    ← Volver a la página principal
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

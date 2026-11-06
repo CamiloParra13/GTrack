@@ -1,50 +1,131 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
+@{
+    var autenticado = User.Identity?.IsAuthenticated == true;
+    var email = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value ?? "";
+    var inicial = email.Length > 0 ? char.ToUpper(email[0]).ToString() : "G";
+    var controlador = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var accion = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    var esNegocio = User.IsInRole("Negocio");
+    var esAdmin = User.IsInRole("Administrador");
+    var rol = esNegocio ? "Negocio" : esAdmin ? "Administrador" : "Repartidor";
+    var landing = !autenticado && controlador == "Home" && accion == "Index";
+
+    var enHome = controlador == "Home";
+    var enPedido = controlador == "Pedido" && accion == "Registrar";
+    var enPedidoActivo = controlador == "Pedido" && accion == "Activos";
+    var enHistorial = controlador == "Pedido" && accion == "Historial";
+    var enRepartidores = controlador == "Repartidor";
+    var enPerfil = controlador == "Negocio";
+    var enNegocios = controlador == "Admin" && accion == "Negocios";
+    var enAdmins = controlador == "Admin" && accion != "Negocios";
+    var enNotificaciones = controlador == "Notificaciones";
+}<!DOCTYPE html><html lang="es"><head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Gtrack</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - GTrack</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Gtrack.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Gtrack</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /></head><body>
+    @if (autenticado)
+    {
+        <div class="app-shell">
+            <aside class="sidebar">
+                <a class="logo mb-4" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/Logo_Gtrack.png" alt="GTrack" class="logo-img" />
+                    <span class="logo-text">GTrack</span>
+                </a>
+
+                <nav class="d-flex flex-column gap-1">
+                    <a class="side-link @(enHome ? "active" : "")" asp-controller="Home" asp-action="Index">🏠 Inicio</a>
+
+                    @if (esNegocio)
+                    {
+                        <a class="side-link @(enPedido ? "active" : "")" asp-controller="Pedido" asp-action="Registrar">📦 Registrar Pedido</a>
+                        <a class="side-link @(enPedidoActivo ? "active" : "")" asp-controller="Pedido" asp-action="Activos">📋 Pedidos Activos</a>
+                        <a class="side-link @(enHistorial ? "active" : "")" asp-controller="Pedido" asp-action="Historial">📂 Historial de Pedidos</a>
+                        <a class="side-link @(enRepartidores ? "active" : "")" asp-controller="Repartidor" asp-action="Index">🛵 Repartidores</a>
+                        @* Nota: "Mi Perfil" se quitó de aquí para que solo aparezca en el menú desplegable inferior *@
+                    }
+                    @if (esAdmin)
+                    {
+                        <a class="side-link @(enNegocios ? "active" : "")" asp-controller="Admin" asp-action="Negocios">🏪 Negocios</a>
+                        <a class="side-link @(enAdmins ? "active" : "")" asp-controller="Admin" asp-action="Administradores">🛡️ Administradores</a>
+                    }
+
+                </nav>
+
+                <div class="dropup mt-auto">
+                    <button class="user-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="avatar">@inicial</span>
+                        <span class="user-info"><strong>@rol</strong><small>@email</small></span>
+                    </button>
+                    <ul class="dropdown-menu w-100 shadow">
+                        @if (esNegocio)
+                        {
+                            <li><a class="dropdown-item" asp-controller="Negocio" asp-action="Perfil">Mi perfil</a></li>
+                            <li>
+                                <form asp-controller="Negocio" asp-action="EnviarCodigo" method="post">
+                                    <button type="submit" class="dropdown-item">Editar perfil</button>
+                                </form>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                        }
+                        <li>
+                            @* CU-28 paso 1: abre el cuadro de confirmación *@
+                            <button type="button" class="dropdown-item text-danger"
+                                    data-bs-toggle="modal" data-bs-target="#modal-cerrar-sesion">
+                                Cerrar sesión
+                            </button>
                         </li>
                     </ul>
                 </div>
+            </aside>
+
+            <main class="app-main" role="main">
+                @RenderBody()
+            </main>
+        </div>
+
+        @* CU-28 paso 2: cuadro de confirmación de cierre de sesión *@
+        <div class="modal fade" id="modal-cerrar-sesion" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center p-4">
+                        <h5 class="mb-2">¿Estás seguro de que deseas cerrar sesión?</h5>
+                        <p id="aviso-cambios" class="text-warning small d-none mb-0">
+                            Tienes cambios sin guardar que se perderán.
+                        </p>
+                    </div>
+                    <div class="modal-footer justify-content-center border-0 pb-4">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <form asp-controller="Usuario" asp-action="Logout" method="post" class="m-0">
+                            <button type="submit" class="btn btn-danger">Sí, cerrar sesión</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+        </div>
+    }
+    else if (landing)
+    {
+        <main role="main">
             @RenderBody()
         </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Gtrack - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    }
+    else
+    {
+        <header class="public-bar">
+            <a class="logo" asp-controller="Home" asp-action="Index">
+                <img src="~/images/Logo_Gtrack.png" alt="GTrack" class="logo-img" />
+                <span class="logo-text">GTrack</span>
+            </a>
+        </header>
+        <div class="container py-4">
+            <main role="main">
+                @RenderBody()
+            </main>
         </div>
-    </footer>
+    }
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+    @await RenderSectionAsync("Scripts", required: false)</body></html>

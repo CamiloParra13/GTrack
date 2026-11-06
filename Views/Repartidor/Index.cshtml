@@ -1,0 +1,83 @@
+﻿@model List<Repartidor>
+
+@{
+    ViewData["Title"] = "Gestión de Repartidores";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Mis Repartidores</h2>
+            <p class="text-muted small mb-0">Administra el personal de entrega de tu negocio.</p>
+        </div>
+        <a asp-action="Registrar" class="btn btn-primary rounded-pill px-4 shadow-sm fw-semibold">＋ Registrar Repartidor</a>
+    </div>
+
+    @if (TempData["Mensaje"] is string msg)
+    {
+        <div class="alert alert-success border-0 shadow-sm rounded-3">@msg</div>
+    }
+    @if (TempData["Error"] is string err)
+    {
+        <div class="alert alert-danger border-0 shadow-sm rounded-3">@err</div>
+    }
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 bg-white">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="ps-4 py-3">Nombre</th>
+                        <th class="py-3">Teléfono</th>
+                        <th class="py-3">Correo</th>
+                        <th class="py-3">Estado</th>
+                        <th class="text-end pe-4 py-3">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var rep in Model)
+                        {
+                            var esActivo = rep.Usuario?.Estado == EstadoCuenta.Activo;
+                            <tr>
+                                <td class="ps-4 fw-semibold text-dark">@rep.NombreCompleto</td>
+                                <td>@rep.Telefono</td>
+                                <td><span class="text-muted">@(rep.Usuario?.Correo ?? "—")</span></td>
+                                <td>
+                                    @if (esActivo)
+                                    {
+                                        <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold">Activo</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-semibold">Suspendido</span>
+                                    }
+                                </td>
+                                <td class="text-end pe-4">
+                                    <form asp-action="CambiarEstado" asp-route-id="@rep.Id" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        @if (esActivo)
+                                        {
+                                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-medium">Suspender</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-medium">Activar</button>
+                                        }
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">Aún no has registrado repartidores.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

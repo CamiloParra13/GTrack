@@ -1,0 +1,51 @@
+﻿@using System.Globalization
+@model List<AdministradorDto>
+@{
+    ViewData["Title"] = "Administradores";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2 class="mb-0">Administradores</h2>
+        <p class="text-muted mb-0">Usuarios con acceso de moderación</p>
+    </div>
+    <a asp-action="RegistrarAdministrador" class="btn btn-primary">+ Registrar Nuevo Administrador</a>
+</div>
+
+@if (TempData["Mensaje"] is string ok)
+{
+    <div class="alert alert-success">@ok</div>
+}
+@if (TempData["Aviso"] is string aviso)
+{
+    <div class="alert alert-warning">@aviso</div>
+}
+@if (TempData["Credenciales"] is string cred)
+{
+    <div class="alert alert-info">
+        <strong>Credenciales temporales del administrador</strong><br />@cred
+    </div>
+}
+
+<div class="card shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr><th>Nombre</th><th>Documento</th><th>Correo</th><th>Teléfono</th><th>Registrado</th><th>Estado</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var a in Model)
+                {
+                    <tr>
+                        <td class="fw-semibold">@a.NombreCompleto</td>
+                        <td>@a.Documento</td>
+                        <td>@a.Correo</td>
+                        <td>@a.Telefono</td>
+                        <td>@(a.FechaRegistro?.ToLocalTime().ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("es-CO")) ?? "—")</td>
+                        <td><span class="badge bg-success">@a.Estado</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
