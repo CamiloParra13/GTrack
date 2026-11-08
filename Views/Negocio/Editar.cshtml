@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model EditarNegocioDto
+@{
+    ViewData["Title"] = "Editar perfil";
+}
+
+<style>
+    .input-validation-error { border-color: #dc3545; }
+</style>
+
+<div class="mx-auto" style="max-width: 640px;">
+    <div class="card shadow-sm p-4">
+        <h2>Editar Perfil del Negocio</h2>
+        <p class="text-muted">Actualiza la información de tu negocio. El documento (NIT/CC) no se puede modificar.</p>
+
+        <form asp-action="Editar" method="post" id="form-editar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Nombre" class="form-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger small"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TipoActividad" class="form-label"></label>
+                <select asp-for="TipoActividad" class="form-select"
+                        asp-items="@(new SelectList(ActividadesEconomicas.Lista, Model.TipoActividad))">
+                    <option value="">Selecciona el sector económico</option>
+                </select>
+                <span asp-validation-for="TipoActividad" class="text-danger small"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Correo" class="form-label"></label>
+                    <input asp-for="Correo" class="form-control" />
+                    <span asp-validation-for="Correo" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Telefono" class="form-label"></label>
+                    <input asp-for="Telefono" type="tel" class="form-control" inputmode="numeric" />
+                    <span asp-validation-for="Telefono" class="text-danger small"></span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Direccion" class="form-label"></label>
+                <input asp-for="Direccion" class="form-control" />
+                <span asp-validation-for="Direccion" class="text-danger small"></span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <a asp-action="Perfil" class="btn btn-outline-secondary">Cancelar</a>
+                <button type="submit" id="btn-guardar" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            const form = document.getElementById('form-editar');
+            const boton = document.getElementById('btn-guardar');
+            const campos = Array.from(form.querySelectorAll('input:not([type=hidden]), select'));
+
+            // RN-2-CU13: el botón solo se activa con datos en formato válido
+            function actualizar() {
+                const llenos = campos.every(c => c.value.trim() !== '');
+                const telefonoOk = /^\d{7,10}$/.test(form.Telefono.value.trim());
+                boton.disabled = !(llenos && telefonoOk && form.checkValidity());
+            }
+
+            form.addEventListener('input', actualizar);
+            form.addEventListener('change', actualizar);
+            actualizar();
+        })();
+    </script>
+}
