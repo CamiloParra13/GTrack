@@ -6,7 +6,7 @@
 {
     @* Fondo amigable utilizando una tonalidad suave de Bootstrap (bg-light) con bordes y espacios modernos *@
     <div class="landing d-flex flex-column justify-content-between align-items-center min-vh-75 py-4 px-4 bg-light rounded-4 shadow-sm my-3 mx-auto" style="min-height: 85vh; max-width: 1200px;">
-        
+
         @if (TempData["Mensaje"] is string msgPublico)
         {
             <div class="alert alert-success w-100 text-center shadow-sm">@msgPublico</div>
@@ -32,7 +32,7 @@
         <!-- 3. ABAJO A LA DERECHA: Botón elegante de consultar pedido (CU-05) -->
         <div class="w-100 d-flex justify-content-end">
             <a asp-controller="Pedido" asp-action="Consultar" class="btn btn-outline-dark rounded-pill px-4 py-2 shadow-sm d-inline-flex align-items-center gap-2 bg-white transition-all">
-                <span class="fs-5">🔍</span>
+                <i class="bi bi-search fs-5"></i>
                 <span class="fw-medium">Consultar Estado de Pedido</span>
             </a>
         </div>
@@ -61,13 +61,13 @@ else
             {
                 <div class="col-md-6">
                     <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Repartidor" asp-action="Index">
-                        <h5>🛵 Repartidores</h5>
+                        <h5><i class="bi bi-people me-2"></i>Repartidores</h5>
                         <p class="text-muted mb-0">Registra y consulta los repartidores de tu negocio.</p>
                     </a>
                 </div>
                 <div class="col-md-6">
                     <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Negocio" asp-action="Perfil">
-                        <h5>🏪 Mi Perfil</h5>
+                        <h5><i class="bi bi-shop me-2"></i>Mi Perfil</h5>
                         <p class="text-muted mb-0">Consulta, edita o elimina la información de tu negocio.</p>
                     </a>
                 </div>
@@ -76,13 +76,13 @@ else
             {
                 <div class="col-md-6">
                     <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Admin" asp-action="Negocios">
-                        <h5>🏪 Negocios</h5>
+                        <h5><i class="bi bi-shop me-2"></i>Negocios</h5>
                         <p class="text-muted mb-0">Revisa y valida los negocios registrados.</p>
                     </a>
                 </div>
                 <div class="col-md-6">
                     <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Admin" asp-action="Administradores">
-                        <h5>🛡️ Administradores</h5>
+                        <h5><i class="bi bi-shield-check me-2"></i>Administradores</h5>
                         <p class="text-muted mb-0">Consulta y registra nuevos administradores.</p>
                     </a>
                 </div>
@@ -90,10 +90,10 @@ else
             else
             {
                 <div class="col-12">
-                    <div class="card shadow-sm p-4 border-0">
-                        <h5>🛵 Tu cuenta está activa</h5>
-                        <p class="text-muted mb-0">El panel de pedidos asignados estará disponible próximamente.</p>
-                    </div>
+                    <a class="card shadow-sm p-4 text-decoration-none dash-card border-0" asp-controller="Repartidor" asp-action="MisPedidos">
+                        <h5><i class="bi bi-box-seam me-2"></i>Mis Pedidos Asignados</h5>
+                        <p class="text-muted mb-0">Consulta tus pedidos y actualiza su estado.</p>
+                    </a>
                 </div>
             }
         </div>

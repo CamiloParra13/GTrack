@@ -4,11 +4,11 @@
 
     var estado = Model.Estado switch
     {
-        EstadoCuenta.Activo => ("Activo", "success"),
-        EstadoCuenta.PendienteValidacion => ("Pendiente de validación", "warning"),
-        EstadoCuenta.Suspendido => ("Suspendido", "secondary"),
-        EstadoCuenta.Rechazado => ("Rechazado", "danger"),
-        _ => ("Eliminado", "dark")
+        EstadoCuenta.Activo => ("Activo", "estado-entregado", "bi-check-circle"),
+        EstadoCuenta.PendienteValidacion => ("Pendiente de validación", "estado-preparacion", "bi-hourglass-split"),
+        EstadoCuenta.Suspendido => ("Suspendido", "estado-recibido", "bi-pause-circle"),
+        EstadoCuenta.Rechazado => ("Rechazado", "estado-cancelado", "bi-x-circle"),
+        _ => ("Eliminado", "estado-recibido", "bi-trash")
     };
 }
 
@@ -26,10 +26,10 @@
     <div class="card shadow-sm p-4">
         <div class="d-flex justify-content-between align-items-start">
             <div>
-                <h2 class="mb-0">Perfil de Negocio</h2>
+                <h2 class="mb-0"><i class="bi bi-shop me-2"></i>Perfil de Negocio</h2>
                 <p class="text-muted">Información esencial del negocio</p>
             </div>
-            <span class="badge bg-@estado.Item2">@estado.Item1</span>
+            <span class="estado-badge @estado.Item2"><i class="bi @estado.Item3"></i>@estado.Item1</span>
         </div>
 
         <dl class="row mb-4">
@@ -48,12 +48,12 @@
         </dl>
 
         <form asp-action="EnviarCodigo" method="post">
-            <button type="submit" class="btn btn-primary">Editar perfil</button>
+            <button type="submit" class="btn btn-primary rounded-pill px-4"><i class="bi bi-pencil-square me-1"></i>Editar perfil</button>
         </form>
 
         <hr class="mt-4" />
         <p class="mb-0">
-            <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#modal-password">Eliminar mi cuenta</a>
+            <a href="#" class="text-danger text-decoration-none fw-medium" data-bs-toggle="modal" data-bs-target="#modal-password"><i class="bi bi-trash me-1"></i>Eliminar mi cuenta</a>
         </p>
     </div>
 </div>
@@ -64,7 +64,7 @@
         <div class="modal-content">
             <form asp-action="VerificarEliminacion" method="post" id="form-confirmar">
                 <div class="modal-header">
-                    <h5 class="modal-title">Confirma tu identidad</h5>
+                    <h5 class="modal-title"><i class="bi bi-shield-lock me-2"></i>Confirma tu identidad</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
@@ -74,7 +74,7 @@
                     <input type="password" name="Password" id="pwd-confirmar" class="form-control" autocomplete="current-password" />
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger w-100">Confirmar identidad</button>
+                    <button type="submit" class="btn btn-danger w-100 rounded-pill">Confirmar identidad</button>
                 </div>
             </form>
         </div>
@@ -88,14 +88,14 @@
             <form asp-action="EliminarCuenta" method="post">
                 <input type="hidden" name="Password" id="pwd-final" />
                 <div class="modal-header">
-                    <h5 class="modal-title">¿Estás seguro de eliminar tu cuenta?</h5>
+                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle text-danger me-2"></i>¿Estás seguro de eliminar tu cuenta?</h5>
                 </div>
                 <div class="modal-body">
                     <p class="mb-0">Esta acción no se puede deshacer.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, cancelar</button>
-                    <button type="submit" class="btn btn-danger">Sí, eliminar cuenta</button>
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">No, cancelar</button>
+                    <button type="submit" class="btn btn-danger rounded-pill">Sí, eliminar cuenta</button>
                 </div>
             </form>
         </div>

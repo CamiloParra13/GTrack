@@ -1,0 +1,444 @@
+@model List<Pedido>
+
+@{
+    ViewData["Title"] = "Mis Pedidos";
+    var pedidos = Model ?? new List<Pedido>();
+    var co = new System.Globalization.CultureInfo("es-CO");
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+@Html.AntiForgeryToken()
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Mis Pedidos Asignados</h2>
+            <p class="text-muted small mb-0">Consulta tus pedidos y actualiza su estado</p>
+        </div>
+    </div>
+
+    @if (TempData["Mensaje"] is string msg)
+    {
+        <div class="alert alert-success border-0 shadow-sm rounded-3"><i class="bi bi-check-circle me-2"></i>@msg</div>
+    }
+    @if (TempData["Error"] is string err)
+    {
+        <div class="alert alert-danger border-0 shadow-sm rounded-3"><i class="bi bi-exclamation-circle me-2"></i>@err</div>
+    }
+
+    @if (Model == null)
+    {
+        <div class="alert alert-danger border-0 shadow-sm rounded-3" data-no-toast><i class="bi bi-exclamation-circle me-2"></i>No fue posible cargar tus pedidos. Intenta Nuevamente</div>
+    }
+    else if (!pedidos.Any())
+    {
+        <div class="empty-state">
+            <i class="bi bi-inbox"></i>
+            <p>No tienes pedidos asignados actualmente</p>
+        </div>
+    }
+    else
+    {
+        <!-- Filtro por estado (CU-10): activo en azul, los demás en gris claro -->
+        <div class="d-flex gap-2 mb-4 flex-wrap" id="filtros-estado">
+            <button type="button" class="btn btn-sm rounded-pill px-3 btn-primary" data-filtro="todos">Todos</button>
+            <button type="button" class="btn btn-sm rounded-pill px-3 btn-light border" data-filtro="asignado">Asignado</button>
+            <button type="button" class="btn btn-sm rounded-pill px-3 btn-light border" data-filtro="encamino">En camino</button>
+        </div>
+
+        <div id="sin-resultados" class="empty-state d-none">
+            <i class="bi bi-funnel"></i>
+            <p>No tienes pedidos con este estado</p>
+        </div>
+
+        <div class="row g-3" id="lista-pedidos">
+            @foreach (var pedido in pedidos)
+            {
+                var total = pedido.Items?.Sum(i => i.Cantidad * i.PrecioUnitario) ?? 0m;
+                var esAsignado = pedido.EstadoPedidoId == (int)EstadoPedido.Asignado;
+                var esEnCamino = pedido.EstadoPedidoId == (int)EstadoPedido.EnCamino;
+                var clave = esAsignado ? "asignado" : esEnCamino ? "encamino" : "otro";
+
+                <div class="col-12 col-md-6 col-lg-4 tarjeta-pedido" data-estado="@clave">
+                    <div class="card border-0 shadow-sm rounded-4 h-100">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-light text-dark border px-2 py-1 font-monospace">@pedido.Codigo</span>
+                                @if (esAsignado)
+                                {
+                                    <span class="estado-badge estado-asignado"><i class="bi bi-person-check"></i>Asignado</span>
+                                }
+                                else if (esEnCamino)
+                                {
+                                    <span class="estado-badge estado-encamino"><i class="bi bi-truck"></i>En camino</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary px-3 py-2 rounded-pill fw-semibold">@((EstadoPedido)pedido.EstadoPedidoId)</span>
+                                }
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="text-muted small"><i class="bi bi-geo-alt me-1"></i>Dirección de entrega</div>
+                                <div class="fw-semibold text-dark">@pedido.DireccionEntrega</div>
+                            </div>
+
+                            <div class="mt-auto">
+                                @if (esEnCamino)
+                                {
+                                    <div class="d-flex gap-2 flex-wrap mb-2">
+                                        <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3 btn-compartir" data-pedido-id="@pedido.Id">
+                                            <i class="bi bi-geo-alt-fill me-1"></i>Compartir mi ubicación
+                                        </button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3 btn-simular" data-pedido-id="@pedido.Id">
+                                            <i class="bi bi-play-circle me-1"></i>Simular recorrido
+                                        </button>
+                                    </div>
+                                    <div class="small tracking-status mb-2" id="status-@pedido.Id" style="min-height: 1.25rem;"></div>
+                                }
+                                <button type="button" class="btn btn-primary w-100 rounded-pill fw-medium"
+                                        data-bs-toggle="modal" data-bs-target="#detalle-@pedido.Id">
+                                    <i class="bi bi-eye me-1"></i>Ver detalle
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detalle del pedido (ventana superpuesta, CU-08) -->
+                <div class="modal fade" id="detalle-@pedido.Id" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content rounded-4 border-0 shadow">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title fw-bold">Pedido <span class="font-monospace">@pedido.Codigo</span></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            </div>
+                            <div class="modal-body">
+                                <dl class="row mb-0">
+                                    <dt class="col-5 text-muted fw-normal">Estado</dt>
+                                    <dd class="col-7 fw-semibold">@((EstadoPedido)pedido.EstadoPedidoId)</dd>
+                                    <dt class="col-5 text-muted fw-normal">Dirección</dt>
+                                    <dd class="col-7">@pedido.DireccionEntrega</dd>
+                                    @if (pedido.Cliente != null)
+                                    {
+                                        <dt class="col-5 text-muted fw-normal">Cliente</dt>
+                                        <dd class="col-7">@pedido.Cliente.NombreCompleto</dd>
+                                    }
+                                    <dt class="col-5 text-muted fw-normal">Método de pago</dt>
+                                    <dd class="col-7">@((MetodoPago)pedido.MetodoPagoId)</dd>
+                                    <dt class="col-5 text-muted fw-normal">Valor total</dt>
+                                    <dd class="col-7 fw-bold">$@total.ToString("N0", co)</dd>
+                                </dl>
+                            </div>
+                            <div class="modal-footer border-0 d-flex flex-column gap-2 align-items-stretch">
+                                @if (esAsignado)
+                                {
+                                    <form asp-action="IniciarEntrega" asp-route-id="@pedido.Id" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-primary w-100 rounded-pill fw-medium">
+                                            <i class="bi bi-play-circle me-1"></i>Marcar En Camino
+                                        </button>
+                                    </form>
+                                }
+                                else if (esEnCamino)
+                                {
+                                    <button type="button" class="btn btn-primary w-100 rounded-pill fw-medium btn-pedir-confirmacion"
+                                            data-pedido-id="@pedido.Id"
+                                            data-action="@Url.Action("MarcarEntregado", new { id = pedido.Id })"
+                                            data-detalle="#detalle-@pedido.Id">
+                                        <i class="bi bi-check2-circle me-1"></i>Marcar Entregado
+                                    </button>
+                                }
+                                <button type="button" class="btn btn-outline-secondary w-100 rounded-pill" disabled
+                                        title="Disponible con el registro de novedades (CU-16)">
+                                    <i class="bi bi-exclamation-triangle me-1"></i>Reportar Novedad
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<!-- Confirmación de entrega -->
+<div class="modal fade" id="modal-confirmar-entrega" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-body text-center p-4">
+                <i class="bi bi-question-circle text-primary fs-1 d-block mb-2"></i>
+                <p class="fw-semibold mb-4">¿Confirmas la entrega del pedido?</p>
+                <form id="form-confirmar-entrega" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-light border rounded-pill flex-fill" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-pill flex-fill">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    (function () {
+        // ---------- Filtro por estado (CU-10) ----------
+        const botones = document.querySelectorAll('#filtros-estado [data-filtro]');
+        const tarjetas = document.querySelectorAll('.tarjeta-pedido');
+        const vacio = document.getElementById('sin-resultados');
+
+        botones.forEach(function (b) {
+            b.addEventListener('click', function () {
+                const f = b.getAttribute('data-filtro');
+                botones.forEach(function (x) {
+                    const activo = x === b;
+                    x.classList.toggle('btn-primary', activo);
+                    x.classList.toggle('btn-light', !activo);
+                    x.classList.toggle('border', !activo);
+                });
+                let visibles = 0;
+                tarjetas.forEach(function (t) {
+                    const ok = f === 'todos' || t.getAttribute('data-estado') === f;
+                    t.classList.toggle('d-none', !ok);
+                    if (ok) visibles++;
+                });
+                if (vacio) vacio.classList.toggle('d-none', visibles !== 0);
+            });
+        });
+
+        // ---------- Confirmación de entrega (CU-08) ----------
+        const modalConfirmar = document.getElementById('modal-confirmar-entrega');
+        const formConfirmar = document.getElementById('form-confirmar-entrega');
+        document.querySelectorAll('.btn-pedir-confirmacion').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                formConfirmar.setAttribute('action', btn.getAttribute('data-action'));
+                formConfirmar.setAttribute('data-pedido-id', btn.getAttribute('data-pedido-id'));
+                const det = bootstrap.Modal.getInstance(document.querySelector(btn.getAttribute('data-detalle')));
+                if (det) det.hide();
+                bootstrap.Modal.getOrCreateInstance(modalConfirmar).show();
+            });
+        });
+        formConfirmar.addEventListener('submit', function () {
+            const id = this.getAttribute('data-pedido-id');
+            if (id) { detenerCompartir(id); detenerSimulacion(id); }
+        });
+
+        // ---------- Rastreo ----------
+        const estadoPedidos = {};
+        let wakeLock = null;
+        let locksActivos = 0;
+
+        async function activarWakeLock() {
+            locksActivos++;
+            if ('wakeLock' in navigator && wakeLock === null) {
+                try {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    wakeLock.addEventListener('release', function () { wakeLock = null; });
+                } catch (e) { }
+            }
+        }
+        function desactivarWakeLock() {
+            locksActivos = Math.max(0, locksActivos - 1);
+            if (locksActivos === 0 && wakeLock !== null) {
+                try { wakeLock.release(); } catch (e) { }
+                wakeLock = null;
+            }
+        }
+        document.addEventListener('visibilitychange', async function () {
+            if (document.visibilityState === 'visible' && locksActivos > 0 && wakeLock === null && 'wakeLock' in navigator) {
+                try { wakeLock = await navigator.wakeLock.request('screen'); } catch (e) { }
+            }
+        });
+
+        function obtenerEstado(id) {
+            if (!estadoPedidos[id]) estadoPedidos[id] = { watchId: null, intervalId: null, ultimoEnvio: 0, modo: null };
+            return estadoPedidos[id];
+        }
+
+        // tipo: 'ok' (verde), 'error' (rojo), 'neutro' (gris)
+        function mostrarEstado(id, texto, tipo) {
+            const el = document.getElementById('status-' + id);
+            if (!el) return;
+            el.textContent = texto;
+            const clase = tipo === 'error' ? 'text-danger fw-semibold' : tipo === 'neutro' ? 'text-secondary' : 'text-success';
+            el.className = 'small tracking-status ' + clase;
+        }
+
+        function setBtn(btn, icono, texto) {
+            if (btn) btn.innerHTML = '<i class="bi ' + icono + ' me-1"></i>' + texto;
+        }
+
+        async function enviarUbicacion(id, lat, lng, textoBase) {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+            const fd = new FormData();
+            fd.append('pedidoId', id);
+            fd.append('lat', lat);
+            fd.append('lng', lng);
+            fd.append('__RequestVerificationToken', token);
+            try {
+                const res = await fetch('/Repartidor/ActualizarUbicacion', {
+                    method: 'POST',
+                    headers: { 'RequestVerificationToken': token },
+                    body: fd
+                });
+                if (!res.ok) { mostrarEstado(id, 'Error del servidor (' + res.status + ')', 'error'); return; }
+                const data = await res.json();
+                if (data.ok) {
+                    const hora = new Date().toLocaleTimeString('es-CO', { timeZone: 'America/Bogota' });
+                    mostrarEstado(id, textoBase + ' (Última act.: ' + hora + ')', 'ok');
+                } else {
+                    const m = data.error || 'Error al actualizar ubicación';
+                    mostrarEstado(id, m, 'error');
+                    if (m.includes('en camino') || m.includes('finalizado') || m.includes('no fue encontrado')) {
+                        detenerCompartir(id);
+                        detenerSimulacion(id);
+                    }
+                }
+            } catch (e) {
+                mostrarEstado(id, 'Error de red al enviar ubicación', 'error');
+            }
+        }
+
+        function btns(id) {
+            return {
+                c: document.querySelector('.btn-compartir[data-pedido-id="' + id + '"]'),
+                s: document.querySelector('.btn-simular[data-pedido-id="' + id + '"]')
+            };
+        }
+
+        function iniciarCompartir(id) {
+            const est = obtenerEstado(id);
+            if (est.modo === 'simulacion') detenerSimulacion(id);
+            if (!navigator.geolocation) { mostrarEstado(id, 'Geolocalización no soportada en este navegador', 'error'); return; }
+
+            est.modo = 'real';
+            est.ultimoEnvio = 0;
+            activarWakeLock();
+
+            const b = btns(id);
+            if (b.c) {
+                setBtn(b.c, 'bi-stop-circle', 'Detener');
+                b.c.classList.remove('btn-outline-primary');
+                b.c.classList.add('btn-danger');
+            }
+            if (b.s) b.s.disabled = true;
+
+            mostrarEstado(id, 'Compartiendo ubicación…', 'ok');
+
+            est.watchId = navigator.geolocation.watchPosition(
+                function (pos) {
+                    const ahora = Date.now();
+                    if (ahora - est.ultimoEnvio < 10000) return;
+                    est.ultimoEnvio = ahora;
+                    enviarUbicacion(id, pos.coords.latitude, pos.coords.longitude, 'Compartiendo ubicación…');
+                },
+                function (err) {
+                    if (err.code === 1) {
+                        mostrarEstado(id, 'Permiso de ubicación denegado', 'error');
+                        detenerCompartir(id);
+                    } else {
+                        mostrarEstado(id, err.message || 'Error al obtener ubicación', 'error');
+                    }
+                },
+                { enableHighAccuracy: true, maximumAge: 0 }
+            );
+        }
+
+        function detenerCompartir(id) {
+            const est = obtenerEstado(id);
+            if (est.watchId !== null) { navigator.geolocation.clearWatch(est.watchId); est.watchId = null; }
+            if (est.modo === 'real') { est.modo = null; desactivarWakeLock(); }
+            const b = btns(id);
+            if (b.c) {
+                setBtn(b.c, 'bi-geo-alt-fill', 'Compartir mi ubicación');
+                b.c.classList.remove('btn-danger');
+                b.c.classList.add('btn-outline-primary');
+            }
+            if (b.s) b.s.disabled = false;
+        }
+
+        const TOTAL = 25;
+        const lat0 = 4.5981, lng0 = -74.0760, lat1 = 4.6760, lng1 = -74.0480;
+        const ruta = [];
+        for (let i = 0; i < TOTAL; i++) {
+            const t = i / (TOTAL - 1);
+            ruta.push({ lat: +(lat0 + (lat1 - lat0) * t).toFixed(6), lng: +(lng0 + (lng1 - lng0) * t).toFixed(6) });
+        }
+
+        function iniciarSimulacion(id) {
+            const est = obtenerEstado(id);
+            if (est.modo === 'real') detenerCompartir(id);
+            est.modo = 'simulacion';
+            activarWakeLock();
+
+            const b = btns(id);
+            if (b.s) {
+                setBtn(b.s, 'bi-stop-circle', 'Detener simulación');
+                b.s.classList.remove('btn-outline-secondary');
+                b.s.classList.add('btn-danger');
+            }
+            if (b.c) b.c.disabled = true;
+
+            let i = 0;
+            const enviar = function () {
+                enviarUbicacion(id, ruta[i].lat, ruta[i].lng, 'Simulando recorrido (' + (i + 1) + '/' + TOTAL + ')…');
+            };
+            enviar();
+            est.intervalId = setInterval(function () {
+                i++;
+                if (i >= TOTAL) {
+                    detenerSimulacion(id);
+                    const hora = new Date().toLocaleTimeString('es-CO', { timeZone: 'America/Bogota' });
+                    mostrarEstado(id, 'Simulación finalizada (' + hora + ')', 'neutro');
+                    return;
+                }
+                enviar();
+            }, 3500);
+        }
+
+        function detenerSimulacion(id) {
+            const est = obtenerEstado(id);
+            if (est.intervalId !== null) { clearInterval(est.intervalId); est.intervalId = null; }
+            if (est.modo === 'simulacion') { est.modo = null; desactivarWakeLock(); }
+            const b = btns(id);
+            if (b.s) {
+                setBtn(b.s, 'bi-play-circle', 'Simular recorrido');
+                b.s.classList.remove('btn-danger');
+                b.s.classList.add('btn-outline-secondary');
+            }
+            if (b.c) b.c.disabled = false;
+        }
+
+        document.addEventListener('click', function (e) {
+            const bc = e.target.closest('.btn-compartir');
+            if (bc) {
+                const id = bc.getAttribute('data-pedido-id');
+                if (obtenerEstado(id).modo === 'real') {
+                    detenerCompartir(id);
+                    mostrarEstado(id, 'Ubicación detenida', 'neutro');
+                } else {
+                    iniciarCompartir(id);
+                }
+                return;
+            }
+            const bs = e.target.closest('.btn-simular');
+            if (bs) {
+                const id = bs.getAttribute('data-pedido-id');
+                if (obtenerEstado(id).modo === 'simulacion') {
+                    detenerSimulacion(id);
+                    mostrarEstado(id, 'Simulación detenida', 'neutro');
+                } else {
+                    iniciarSimulacion(id);
+                }
+            }
+        });
+
+        window.addEventListener('beforeunload', function () {
+            Object.keys(estadoPedidos).forEach(function (id) { detenerCompartir(id); detenerSimulacion(id); });
+        });
+    })();
+</script>
+}

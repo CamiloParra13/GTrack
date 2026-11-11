@@ -4,13 +4,15 @@
 }
 
 <style>
-    .input-validation-error { border-color: #dc3545; }
+    .input-validation-error {
+        border-color: #dc3545;
+    }
 </style>
 
 <div class="mx-auto" style="max-width: 820px;">
-    <div class="card shadow-sm p-4">
+    <div class="card border-0 shadow-sm rounded-4 p-4">
         <p class="text-center text-primary fw-bold small mb-1">GTRACK</p>
-        <h2 class="text-center">Registrar Nuevo Pedido</h2>
+        <h2 class="text-center"><i class="bi bi-box-seam me-2"></i>Registrar Nuevo Pedido</h2>
         <p class="text-center text-muted mb-4">Ingresa la información del cliente y los productos solicitados</p>
 
         <form asp-action="Registrar" method="post" id="form-pedido">
@@ -21,39 +23,39 @@
                 </div>
             }
 
-            <h6 class="text-uppercase text-muted small mt-2">Información del cliente</h6>
+            <h6 class="text-uppercase text-muted small mt-2"><i class="bi bi-person me-1"></i>Información del cliente</h6>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label asp-for="ClienteTelefono" class="form-label"></label>
+                    <label asp-for="ClienteTelefono" class="form-label">Teléfono del cliente</label>
                     <input asp-for="ClienteTelefono" type="tel" inputmode="numeric" class="form-control" placeholder="Ej. 3109876543" id="ClienteTelefono" />
                     <span asp-validation-for="ClienteTelefono" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="ClienteNombre" class="form-label"></label>
+                    <label asp-for="ClienteNombre" class="form-label">Nombre del cliente</label>
                     <input asp-for="ClienteNombre" class="form-control" placeholder="Ej. Andrea Gómez" id="ClienteNombre" />
                     <span asp-validation-for="ClienteNombre" class="text-danger small"></span>
                 </div>
             </div>
 
             <div class="mb-3">
-                <label asp-for="DireccionEntrega" class="form-label"></label>
+                <label asp-for="DireccionEntrega" class="form-label">Dirección de entrega</label>
                 <input asp-for="DireccionEntrega" class="form-control" placeholder="Ej. Calle 12 #4-56 Apto 201" id="DireccionEntrega" />
                 <span asp-validation-for="DireccionEntrega" class="text-danger small"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="MetodoPago" class="form-label"></label>
+                <label asp-for="MetodoPago" class="form-label">Método de pago</label>
                 <select asp-for="MetodoPago" class="form-select" asp-items="Html.GetEnumSelectList<MetodoPago>()">
                     <option value="">Selecciona un método de pago</option>
                 </select>
                 <span asp-validation-for="MetodoPago" class="text-danger small"></span>
             </div>
 
-            <h6 class="text-uppercase text-muted small mt-4">Productos</h6>
+            <h6 class="text-uppercase text-muted small mt-4"><i class="bi bi-basket me-1"></i>Productos</h6>
             <div class="mb-3">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <span class="text-muted small">Agrega los ítems que conforman este pedido</span>
-                    <button type="button" class="btn btn-outline-primary btn-sm" id="btn-agregar-producto">+ Agregar producto</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3" id="btn-agregar-producto"><i class="bi bi-plus-lg me-1"></i>Agregar producto</button>
                 </div>
                 <span asp-validation-for="Productos" class="text-danger small d-block mb-2"></span>
 
@@ -87,7 +89,7 @@
                                             $@((Model.Productos[i].Cantidad * Model.Productos[i].PrecioUnitario).ToString("N0", new System.Globalization.CultureInfo("es-CO")))
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-outline-danger btn-sm btn-eliminar-fila" title="Eliminar">&times;</button>
+                                            <button type="button" class="btn btn-outline-danger btn-sm btn-eliminar-fila" title="Eliminar" aria-label="Eliminar producto"><i class="bi bi-trash"></i></button>
                                         </td>
                                     </tr>
                                 }
@@ -108,7 +110,7 @@
                                         $0
                                     </td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-outline-danger btn-sm btn-eliminar-fila" title="Eliminar">&times;</button>
+                                        <button type="button" class="btn btn-outline-danger btn-sm btn-eliminar-fila" title="Eliminar" aria-label="Eliminar producto"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             }
@@ -126,12 +128,12 @@
                 </div>
             </div>
 
-            <button type="submit" id="btn-guardar-pedido" class="btn btn-primary btn-lg w-100 mt-2">Guardar Pedido</button>
+            <button type="submit" id="btn-guardar-pedido" class="btn btn-primary btn-lg w-100 mt-2 rounded-pill"><i class="bi bi-check2-circle me-1"></i>Guardar Pedido</button>
         </form>
 
         <hr />
         <p class="text-center small mb-0">
-            <a asp-controller="Home" asp-action="Index">← Volver al Inicio</a>
+            <a asp-controller="Home" asp-action="Index"><i class="bi bi-arrow-left me-1"></i>Volver al Inicio</a>
         </p>
     </div>
 </div>
@@ -153,22 +155,22 @@
 
             function crearFilaHtml(indice) {
                 return `
-                    <tr class="fila-producto">
-                        <td>
-                            <input name="Productos[${indice}].Descripcion" class="form-control item-desc" placeholder="Ej. Hamburguesa doble" required />
-                        </td>
-                        <td>
-                            <input type="number" name="Productos[${indice}].Cantidad" value="1" class="form-control item-cant" min="1" step="1" required />
-                        </td>
-                        <td>
-                            <input type="number" name="Productos[${indice}].PrecioUnitario" value="0.00" class="form-control item-precio" min="0.01" step="0.01" required />
-                        </td>
-                        <td class="text-end fw-semibold item-subtotal">$0</td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-outline-danger btn-sm btn-eliminar-fila" title="Eliminar">&times;</button>
-                        </td>
-                    </tr>
-                `;
+                            <tr class="fila-producto">
+                                <td>
+                                    <input name="Productos[${indice}].Descripcion" class="form-control item-desc" placeholder="Ej. Hamburguesa doble" required />
+                                </td>
+                                <td>
+                                    <input type="number" name="Productos[${indice}].Cantidad" value="1" class="form-control item-cant" min="1" step="1" required />
+                                </td>
+                                <td>
+                                    <input type="number" name="Productos[${indice}].PrecioUnitario" value="0.00" class="form-control item-precio" min="0.01" step="0.01" required />
+                                </td>
+                                <td class="text-end fw-semibold item-subtotal">$0</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-outline-danger btn-sm btn-eliminar-fila" title="Eliminar" aria-label="Eliminar producto"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        `;
             }
 
             function actualizarTotalesEIndices() {
@@ -245,7 +247,7 @@
                                     }
                                 }
                             })
-                            .catch(() => {});
+                            .catch(() => { });
                     }
                 });
             }
@@ -254,4 +256,3 @@
         })();
     </script>
 }
-

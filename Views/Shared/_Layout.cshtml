@@ -6,6 +6,7 @@
     var accion = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
     var esNegocio = User.IsInRole("Negocio");
     var esAdmin = User.IsInRole("Administrador");
+    var esRepartidor = User.IsInRole("Repartidor");
     var rol = esNegocio ? "Negocio" : esAdmin ? "Administrador" : "Repartidor";
     var landing = !autenticado && controlador == "Home" && accion == "Index";
 
@@ -13,17 +14,25 @@
     var enPedido = controlador == "Pedido" && accion == "Registrar";
     var enPedidoActivo = controlador == "Pedido" && accion == "Activos";
     var enHistorial = controlador == "Pedido" && accion == "Historial";
-    var enRepartidores = controlador == "Repartidor";
+    var enRepartidores = controlador == "Repartidor" && accion != "MisPedidos";
+    var enMisPedidos = controlador == "Repartidor" && accion == "MisPedidos";
     var enPerfil = controlador == "Negocio";
     var enNegocios = controlador == "Admin" && accion == "Negocios";
     var enAdmins = controlador == "Admin" && accion != "Negocios";
     var enNotificaciones = controlador == "Notificaciones";
-}<!DOCTYPE html><html lang="es"><head>
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GTrack</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /></head><body>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/gtrack-ui.css" asp-append-version="true" />
+</head>
+<body>
     @if (autenticado)
     {
         <div class="app-shell">
@@ -34,20 +43,24 @@
                 </a>
 
                 <nav class="d-flex flex-column gap-1">
-                    <a class="side-link @(enHome ? "active" : "")" asp-controller="Home" asp-action="Index">🏠 Inicio</a>
+                    <a class="side-link @(enHome ? "active" : "")" asp-controller="Home" asp-action="Index"><i class="bi bi-house-door me-2"></i>Inicio</a>
 
                     @if (esNegocio)
                     {
-                        <a class="side-link @(enPedido ? "active" : "")" asp-controller="Pedido" asp-action="Registrar">📦 Registrar Pedido</a>
-                        <a class="side-link @(enPedidoActivo ? "active" : "")" asp-controller="Pedido" asp-action="Activos">📋 Pedidos Activos</a>
-                        <a class="side-link @(enHistorial ? "active" : "")" asp-controller="Pedido" asp-action="Historial">📂 Historial de Pedidos</a>
-                        <a class="side-link @(enRepartidores ? "active" : "")" asp-controller="Repartidor" asp-action="Index">🛵 Repartidores</a>
+                        <a class="side-link @(enPedido ? "active" : "")" asp-controller="Pedido" asp-action="Registrar"><i class="bi bi-box-seam me-2"></i>Registrar Pedido</a>
+                        <a class="side-link @(enPedidoActivo ? "active" : "")" asp-controller="Pedido" asp-action="Activos"><i class="bi bi-list-check me-2"></i>Pedidos Activos</a>
+                        <a class="side-link @(enHistorial ? "active" : "")" asp-controller="Pedido" asp-action="Historial"><i class="bi bi-folder2-open me-2"></i>Historial de Pedidos</a>
+                        <a class="side-link @(enRepartidores ? "active" : "")" asp-controller="Repartidor" asp-action="Index"><i class="bi bi-people me-2"></i>Repartidores</a>
                         @* Nota: "Mi Perfil" se quitó de aquí para que solo aparezca en el menú desplegable inferior *@
+                    }
+                    @if (esRepartidor)
+                    {
+                        <a class="side-link @(enMisPedidos ? "active" : "")" asp-controller="Repartidor" asp-action="MisPedidos"><i class="bi bi-box-seam me-2"></i>Mis Pedidos Asignados</a>
                     }
                     @if (esAdmin)
                     {
-                        <a class="side-link @(enNegocios ? "active" : "")" asp-controller="Admin" asp-action="Negocios">🏪 Negocios</a>
-                        <a class="side-link @(enAdmins ? "active" : "")" asp-controller="Admin" asp-action="Administradores">🛡️ Administradores</a>
+                        <a class="side-link @(enNegocios ? "active" : "")" asp-controller="Admin" asp-action="Negocios"><i class="bi bi-shop me-2"></i>Negocios</a>
+                        <a class="side-link @(enAdmins ? "active" : "")" asp-controller="Admin" asp-action="Administradores"><i class="bi bi-shield-check me-2"></i>Administradores</a>
                     }
 
                 </nav>
@@ -125,7 +138,30 @@
         </div>
     }
 
+    @* Contenedor de notificaciones y confirmación global (ver gtrack-ui.js) *@
+    <div id="toast-container" class="toast-stack" aria-live="polite"></div>
+
+    <div class="modal fade" id="modal-confirmacion" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-body text-center p-4">
+                    <i id="confirmacion-icono" class="bi bi-exclamation-triangle text-danger fs-1 d-block mb-2"></i>
+                    <h6 id="confirmacion-titulo" class="fw-bold mb-1">¿Estás seguro?</h6>
+                    <p id="confirmacion-mensaje" class="text-muted small mb-4"></p>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-light border rounded-pill flex-fill" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="confirmacion-ok" class="btn btn-danger rounded-pill flex-fill">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)</body></html>
+    <script src="~/js/gtrack-ui.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

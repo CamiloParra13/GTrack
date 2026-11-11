@@ -11,6 +11,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Pedido> Pedidos => Set<Pedido>();
     public DbSet<ItemPedido> ItemsPedido => Set<ItemPedido>();
     public DbSet<SuspensionRepartidor> SuspensionRepartidor { get; set; }
+    public DbSet<UbicacionPedido> UbicacionesPedido => Set<UbicacionPedido>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -103,6 +104,21 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.ToTable("ItemPedido");
             e.Property(i => i.Descripcion).HasMaxLength(100);
             e.Property(i => i.PrecioUnitario).HasPrecision(18, 2);
+        });
+
+        modelBuilder.Entity<UbicacionPedido>(e =>
+        {
+            e.ToTable("UbicacionPedido");
+            e.HasKey(u => u.PedidoId);
+            e.Property(u => u.PedidoId).ValueGeneratedNever();
+            e.Property(u => u.Latitud).HasPrecision(9, 6);
+            e.Property(u => u.Longitud).HasPrecision(9, 6);
+            e.Property(u => u.FechaActualizacion).HasColumnType("datetime2(0)");
+
+            e.HasOne(u => u.Pedido)
+                .WithOne()
+                .HasForeignKey<UbicacionPedido>(u => u.PedidoId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

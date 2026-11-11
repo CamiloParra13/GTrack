@@ -1,0 +1,110 @@
+/* GTrack - detalles de interfaz: notificaciones, estados, confirmaciones, animaciones */
+
+/* ---------- Notificaciones (toasts) ---------- */
+.toast-stack {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    width: min(380px, calc(100vw - 2rem));
+    pointer-events: none;
+}
+.gt-toast {
+    --gt-color: #0d6efd;
+    --gt-dur: 5s;
+    pointer-events: auto;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    background: #fff;
+    color: #212529;
+    border-radius: .9rem;
+    border-left: 5px solid var(--gt-color);
+    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .16);
+    padding: .9rem 1rem 1.1rem;
+    animation: gt-toast-in .35s ease-out;
+}
+.gt-toast.gt-success { --gt-color: #198754; }
+.gt-toast.gt-danger  { --gt-color: #dc3545; --gt-dur: 8s; }
+.gt-toast.gt-warning { --gt-color: #f59f00; }
+.gt-toast.gt-info    { --gt-color: #0d6efd; }
+.gt-toast.saliendo   { animation: gt-toast-out .3s ease-in forwards; }
+.gt-toast-icon { font-size: 1.35rem; color: var(--gt-color); line-height: 1.2; }
+.gt-toast-body { flex: 1; font-size: .92rem; word-break: break-word; }
+.gt-toast-copiar {
+    display: inline-flex; align-items: center; gap: .3rem; margin-top: .4rem;
+    border: 1px solid var(--gt-color); color: var(--gt-color); background: transparent;
+    border-radius: 999px; padding: .15rem .7rem; font-size: .8rem; font-weight: 600;
+}
+.gt-toast-copiar:hover { background: var(--gt-color); color: #fff; }
+.gt-toast-close {
+    border: 0; background: transparent; color: #6c757d; font-size: 1.1rem; line-height: 1; padding: 0; cursor: pointer;
+}
+.gt-toast-close:hover { color: #212529; }
+.gt-toast-bar {
+    position: absolute; left: 0; bottom: 0; height: 4px; width: 100%;
+    background: var(--gt-color); transform-origin: left;
+    animation: gt-toast-bar var(--gt-dur) linear forwards;
+}
+.gt-toast:hover .gt-toast-bar { animation-play-state: paused; }
+
+@keyframes gt-toast-in  { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: none; } }
+@keyframes gt-toast-out { to { opacity: 0; transform: translateX(40px); } }
+@keyframes gt-toast-bar { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+/* ---------- Estados de pedido ---------- */
+.estado-badge {
+    display: inline-flex; align-items: center; gap: .35rem;
+    padding: .4rem .85rem; border-radius: 999px;
+    font-size: .85rem; font-weight: 600; border: 1px solid transparent;
+}
+.estado-recibido    { background: #e9ecef; color: #495057; border-color: #ced4da; }
+.estado-preparacion { background: #fff3cd; color: #8a6d00; border-color: #ffe08a; }
+.estado-listo       { background: #cff4fc; color: #087990; border-color: #9eeaf9; }
+.estado-asignado    { background: #ffe5d0; color: #b4540a; border-color: #fdc79c; }
+.estado-encamino    { background: #cfe2ff; color: #0a58ca; border-color: #9ec5fe; }
+.estado-entregado   { background: #d1e7dd; color: #146c43; border-color: #a3cfbb; }
+.estado-cancelado   { background: #f8d7da; color: #b02a37; border-color: #f1aeb5; }
+
+/* ---------- Estados vacíos ---------- */
+.empty-state { text-align: center; padding: 3rem 1rem; color: #6c757d; }
+.empty-state > i { display: block; font-size: 3.2rem; margin-bottom: .6rem; opacity: .55; }
+.empty-state p { margin: 0; }
+
+/* ---------- Tarjetas de resumen ---------- */
+.resumen-tile {
+    display: flex; align-items: center; gap: .9rem;
+    background: #fff; border-radius: 1rem; padding: 1rem 1.2rem;
+    box-shadow: 0 .15rem .6rem rgba(0, 0, 0, .07);
+}
+.resumen-tile .resumen-icono {
+    width: 2.8rem; height: 2.8rem; border-radius: .8rem;
+    display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+}
+.resumen-tile .resumen-valor { font-size: 1.6rem; font-weight: 700; line-height: 1; }
+.resumen-tile .resumen-texto { font-size: .8rem; color: #6c757d; }
+
+/* ---------- Animaciones suaves ---------- */
+main[role="main"], .app-main { animation: gt-fade .35s ease-out; }
+@keyframes gt-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.dash-card, .tarjeta-pedido .card { transition: transform .2s ease, box-shadow .2s ease; }
+.dash-card:hover, .tarjeta-pedido .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .12) !important;
+}
+
+.timeline-pulse { animation: gt-pulse 1.6s ease-in-out infinite; }
+@keyframes gt-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.25); opacity: .6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

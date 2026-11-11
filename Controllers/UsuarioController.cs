@@ -33,10 +33,14 @@ public class UsuarioController(IAuthService auth, IRecuperacionService recuperac
             new(ClaimTypes.Role, usuario.Rol.ToString())
         };
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-            new ClaimsPrincipal(identity));
 
-        // TODO: cuando existan los paneles, redirigir según el rol (PE-5-CU02)
+        // Cookie de sesión (no persistente): se descarta al cerrar el navegador.
+        // Además caduca tras 30 minutos sin actividad (ver Program.cs).
+        var propiedades = new AuthenticationProperties { IsPersistent = false };
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(identity), propiedades);
+
+        // PE-5-CU02: el usuario entra al Home, donde elige a qué sección ir según su rol
         return RedirectToAction("Index", "Home");
     }
 
