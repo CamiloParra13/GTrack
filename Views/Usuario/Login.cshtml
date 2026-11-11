@@ -38,7 +38,7 @@
                     <input asp-for="Password" class="form-control" id="password" />
                     <button type="button" class="btn btn-outline-secondary" id="toggle-password"
                             aria-label="Mostrar u ocultar contraseña">
-                        👁
+                        <i class="bi bi-eye" id="icono-password"></i>
                     </button>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                 <a asp-action="RecuperarContrasena" class="small">¿Olvidaste tu contraseña?</a>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Ingresar →</button>
+            <button type="submit" class="btn btn-primary w-100">Ingresar <i class="bi bi-arrow-right ms-1"></i></button>
         </form>
 
         <hr />
@@ -55,7 +55,7 @@
             ¿No tienes una cuenta?
             <a asp-controller="Negocio" asp-action="Registrar">Registrarse en Gtrack</a>
         </p>
-        <p class="text-center small mb-0"><a asp-controller="Home" asp-action="Index">← Volver al Inicio</a></p>
+        <p class="text-center small mb-0"><a asp-controller="Home" asp-action="Index"><i class="bi bi-arrow-left me-1"></i>Volver al Inicio</a></p>
     </div>
 </div>
 
@@ -63,7 +63,10 @@
     <script>
         document.getElementById('toggle-password').addEventListener('click', function () {
             var campo = document.getElementById('password');
-            campo.type = campo.type === 'password' ? 'text' : 'password';
+            var icono = document.getElementById('icono-password');
+            var visible = campo.type === 'text';
+            campo.type = visible ? 'password' : 'text';
+            icono.className = visible ? 'bi bi-eye' : 'bi bi-eye-slash';
         });
     </script>
 }

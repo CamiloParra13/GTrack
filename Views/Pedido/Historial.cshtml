@@ -1,5 +1,16 @@
 ﻿@model IEnumerable<Pedido>
 
+@{
+    ViewData["Title"] = "Historial de Pedidos";
+    var lista = Model?.ToList() ?? new List<Pedido>();
+
+    // Fechas guardadas en UTC -> hora de Colombia (UTC-5, sin horario de verano)
+    string FechaCo(DateTime f) => f.AddHours(-5).ToString("dd/MM/yyyy hh:mm tt", new System.Globalization.CultureInfo("es-CO"));
+
+    var entregados = lista.Count(p => p.EstadoPedidoId == (int)EstadoPedido.Entregado);
+    var cancelados = lista.Count(p => p.EstadoPedidoId == (int)EstadoPedido.Cancelado);
+}
+
 <div class="container mt-4">
     <h2>Historial de Pedidos</h2>
     <p class="text-muted">Consulta los pedidos que ya han sido entregados o cancelados.</p>
@@ -9,45 +20,82 @@
         <div class="alert alert-success">@TempData["Mensaje"]</div>
     }
 
-    <table class="table table-striped align-middle">
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Cliente</th>
-                <th>Dirección</th>
-                <th>Estado Final</th>
-                <th>Fecha</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null && Model.Any())
-            {
-                @foreach (var pedido in Model)
-                {
-                    <tr>
-                        <td class="fw-bold">@pedido.Codigo</td>
-                        <td>@(pedido.Cliente?.NombreCompleto ?? $"Cliente #{pedido.ClienteId}")</td>
-                        <td>@pedido.DireccionEntrega</td>
-                        <td>
-                            @if (pedido.EstadoPedidoId == (int)EstadoPedido.Entregado)
-                            {
-                                <span class="badge bg-success">Entregado</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-danger">Cancelado</span>
-                            }
-                        </td>
-                        <td>@pedido.FechaCreacion.ToLocalTime().ToString("g")</td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="5" class="text-center text-muted py-4">No hay registros en el historial de pedidos.</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    @if (lista.Count == 0)
+    {
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="empty-state">
+                <i class="bi bi-folder2-open"></i>
+                <p>No hay registros en el historial de pedidos.</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row g-3 mb-4">
+            <div class="col-12 col-md-4">
+                <div class="resumen-tile">
+                    <div class="resumen-icono bg-primary bg-opacity-10 text-primary"><i class="bi bi-archive"></i></div>
+                    <div>
+                        <div class="resumen-valor">@lista.Count</div>
+                        <div class="resumen-texto">Pedidos en el historial</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="resumen-tile">
+                    <div class="resumen-icono estado-entregado"><i class="bi bi-check2-circle"></i></div>
+                    <div>
+                        <div class="resumen-valor">@entregados</div>
+                        <div class="resumen-texto">Entregados</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="resumen-tile">
+                    <div class="resumen-icono estado-cancelado"><i class="bi bi-x-circle"></i></div>
+                    <div>
+                        <div class="resumen-valor">@cancelados</div>
+                        <div class="resumen-texto">Cancelados</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">Código</th>
+                            <th>Cliente</th>
+                            <th>Dirección</th>
+                            <th>Estado final</th>
+                            <th>Fecha de creación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pedido in lista)
+                        {
+                            <tr>
+                                <td class="ps-4"><span class="badge bg-light text-dark border font-monospace px-2 py-1">@pedido.Codigo</span></td>
+                                <td>@(pedido.Cliente?.NombreCompleto ?? $"Cliente #{pedido.ClienteId}")</td>
+                                <td>@pedido.DireccionEntrega</td>
+                                <td>
+                                    @if (pedido.EstadoPedidoId == (int)EstadoPedido.Entregado)
+                                    {
+                                        <span class="estado-badge estado-entregado"><i class="bi bi-check2-circle"></i>Entregado</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="estado-badge estado-cancelado"><i class="bi bi-x-circle"></i>Cancelado</span>
+                                    }
+                                </td>
+                                <td>@FechaCo(pedido.FechaCreacion)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
 </div>

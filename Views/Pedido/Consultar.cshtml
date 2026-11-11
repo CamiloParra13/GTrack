@@ -2,7 +2,48 @@
 
 @{
     ViewData["Title"] = "Consultar Estado de Pedido";
+
+    // Fechas guardadas en UTC -> hora de Colombia (UTC-5, sin horario de verano)
+    string FechaCo(DateTime f) => f.AddHours(-5).ToString("dd/MM/yyyy hh:mm tt", new System.Globalization.CultureInfo("es-CO"));
+
+    string Etiqueta(int id) => id switch
+    {
+        0 => "Recibido",
+        1 => "En preparación",
+        2 => "Listo para entrega",
+        3 => "Asignado",
+        4 => "En camino",
+        5 => "Entregado",
+        6 => "Cancelado",
+        _ => "Desconocido"
+    };
+
+    string ClaseEstado(int id) => id switch
+    {
+        0 => "estado-recibido",
+        1 => "estado-preparacion",
+        2 => "estado-listo",
+        3 => "estado-asignado",
+        4 => "estado-encamino",
+        5 => "estado-entregado",
+        6 => "estado-cancelado",
+        _ => "estado-recibido"
+    };
+
+    var historial = ViewBag.Historial as List<HistorialEstadoItem> ?? new List<HistorialEstadoItem>();
+    var cancelado = Model != null && Model.EstadoPedidoId == (int)EstadoPedido.Cancelado;
+    DateTime? fechaCancelacion = historial.Where(h => h.EstadoPedidoId == (int)EstadoPedido.Cancelado)
+                                          .OrderByDescending(h => h.FechaCambio)
+                                          .Select(h => (DateTime?)h.FechaCambio)
+                                          .FirstOrDefault();
 }
+
+@if (Model != null && Model.EstadoPedidoId == (int)EstadoPedido.EnCamino)
+{
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
 <div class="container py-5">
     <div class="row justify-content-center">
@@ -33,8 +74,8 @@
                     <!-- Formulario de búsqueda estilizado con input tipo píldora -->
                     <form asp-action="Consultar" method="post" class="mb-2">
                         <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden border">
-                            <span class="input-group-text bg-white border-0 ps-4 text-muted">🔍</span>
-                            <input type="text" name="codigo" class="form-control border-0 py-3 shadow-none" placeholder="Ingresa tu código de pedido..." required autocomplete="off" />
+                            <span class="input-group-text bg-white border-0 ps-4 text-muted"><i class="bi bi-search"></i></span>
+                            <input type="text" name="codigo" class="form-control border-0 py-3 shadow-none" placeholder="Ingresa tu código de pedido" required autocomplete="off" maxlength="8" />
                             <button class="btn btn-dark px-5 fw-semibold" type="submit">Buscar</button>
                         </div>
                     </form>
@@ -50,23 +91,52 @@
                                 <h5 class="text-primary fw-bold mb-0">@Model.Codigo</h5>
                             </div>
                             <div class="mt-2 mt-sm-0">
-                                <span class="badge bg-success fs-6 px-3 py-2 rounded-pill shadow-sm">
-                                    @((EstadoPedido)Model.EstadoPedidoId)
+                                <span class="estado-badge @ClaseEstado(Model.EstadoPedidoId) fs-6 px-3 py-2" id="badge-estado-pedido">
+                                    @Etiqueta(Model.EstadoPedidoId)
                                 </span>
                             </div>
                         </div>
 
+                        @if (Model.EstadoPedidoId == (int)EstadoPedido.EnCamino)
+                        {
+                            <!-- Sección Tu pedido va en camino con mapa interactivo -->
+                            <div class="card border-0 bg-light rounded-4 p-3 mb-4 shadow-sm" id="seccion-pedido-en-camino">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <h5 class="fw-bold text-dark mb-0"><i class="bi bi-truck me-1"></i>Tu pedido va en camino</h5>
+                                        <small class="text-muted" id="texto-estado-ubicacion">Esperando la ubicación del repartidor…</small>
+                                    </div>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold" id="badge-estado-rastreo">
+                                        Rastreo en vivo
+                                    </span>
+                                </div>
+                                <div id="mapa-pedido" style="height: 320px; width: 100%; border-radius: 0.75rem;" class="border bg-white shadow-sm"></div>
+                            </div>
+                        }
+
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <div class="p-3 border-0 bg-light rounded-3 h-100">
-                                    <small class="text-muted d-block mb-1">Negocio Establecimiento</small>
-                                    <strong class="text-dark">@(Model.Negocio?.Nombre ?? "No especificado")</strong>
+                                    <small class="text-muted d-block mb-1">Negocio</small>
+                                    <strong class="text-dark d-block">@(Model.Negocio?.Nombre ?? "No especificado")</strong>
+                                    @if (!string.IsNullOrWhiteSpace(Model.Negocio?.Telefono))
+                                    {
+                                        <small class="text-muted d-block"><i class="bi bi-telephone me-1"></i>@Model.Negocio.Telefono</small>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(Model.Negocio?.Usuario?.Correo))
+                                    {
+                                        <small class="text-muted d-block"><i class="bi bi-envelope me-1"></i>@Model.Negocio.Usuario.Correo</small>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(Model.Negocio?.Direccion))
+                                    {
+                                        <small class="text-muted d-block"><i class="bi bi-geo-alt me-1"></i>@Model.Negocio.Direccion</small>
+                                    }
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="p-3 border-0 bg-light rounded-3 h-100">
                                     <small class="text-muted d-block mb-1">Fecha de Creación</small>
-                                    <strong class="text-dark">@Model.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</strong>
+                                    <strong class="text-dark">@FechaCo(Model.FechaCreacion)</strong>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -76,6 +146,49 @@
                                 </div>
                             </div>
                         </div>
+
+                        @if (cancelado)
+                        {
+                            <div class="alert alert-danger border-0 rounded-3 mb-4">
+                                <i class="bi bi-x-circle me-1"></i>Este pedido fue cancelado
+                                @if (fechaCancelacion.HasValue)
+                                {
+                                    <span class="d-block small mt-1">Fecha de cancelación: @FechaCo(fechaCancelacion.Value)</span>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <h6 class="fw-bold mb-3 text-dark">Seguimiento del pedido</h6>
+                            <ul class="list-unstyled mb-4">
+                                @for (var estadoId = 0; estadoId <= 5; estadoId++)
+                                {
+                                    var alcanzado = estadoId <= Model.EstadoPedidoId;
+                                    DateTime? fecha = historial.Where(h => h.EstadoPedidoId == estadoId)
+                                                               .OrderBy(h => h.FechaCambio)
+                                                               .Select(h => (DateTime?)h.FechaCambio)
+                                                               .FirstOrDefault();
+                                    if (fecha is null && estadoId == 0) { fecha = Model.FechaCreacion; }
+
+                                    <li class="d-flex align-items-start gap-3 mb-3">
+                                        @{
+                                            var esActual = estadoId == Model.EstadoPedidoId && estadoId < 5;
+                                            var claseIcono = esActual ? "bi-record-circle-fill text-primary timeline-pulse"
+                                                           : alcanzado ? "bi-check-circle-fill text-success"
+                                                           : "bi-circle text-secondary";
+                                        }
+                                        <i class="bi @claseIcono fs-5"></i>
+                                        <div>
+                                            <div class="@(alcanzado ? "fw-semibold text-dark" : "text-muted")">@Etiqueta(estadoId)</div>
+                                            @if (alcanzado && fecha.HasValue)
+                                            {
+                                                <small class="text-muted">@FechaCo(fecha.Value)</small>
+                                            }
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        }
 
                         @if (Model.Items != null && Model.Items.Any())
                         {
@@ -111,10 +224,125 @@
             <!-- Enlace para volver a la página principal -->
             <div class="text-center mt-4">
                 <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted fw-medium">
-                    ← Volver a la página principal
+                    <i class="bi bi-arrow-left me-1"></i>Volver a la página principal
                 </a>
             </div>
 
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @if (Model != null && Model.EstadoPedidoId == (int)EstadoPedido.EnCamino)
+    {
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script>
+            (function () {
+                const codigoPedido = '@Model.Codigo';
+                const textoEstadoEl = document.getElementById('texto-estado-ubicacion');
+                const badgeRastreoEl = document.getElementById('badge-estado-rastreo');
+                const badgeEstadoPedidoEl = document.getElementById('badge-estado-pedido');
+                let map = null;
+                let marker = null;
+                let intervalId = null;
+
+                function inicializarMapa() {
+                    // Inicializar mapa centrado en Bogotá por defecto
+                    map = L.map('mapa-pedido', {
+                        zoomControl: true
+                    }).setView([4.6097, -74.0817], 13);
+
+                    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(map);
+
+                    setTimeout(function () {
+                        map.invalidateSize();
+                    }, 250);
+                }
+
+                async function consultarUbicacion() {
+                    try {
+                        const res = await fetch('/Pedido/Ubicacion?codigo=' + encodeURIComponent(codigoPedido));
+                        if (!res.ok) return;
+
+                        const data = await res.json();
+
+                        // 4. Si el estado deja de ser EnCamino, detén las consultas y muestra el nuevo estado o aviso
+                        if (data.estado && data.estado !== "EnCamino") {
+                            if (intervalId) {
+                                clearInterval(intervalId);
+                                intervalId = null;
+                            }
+
+                            if (badgeEstadoPedidoEl) {
+                                const etiquetas = { Recibido: 'Recibido', EnPreparacion: 'En preparación', ListoParaEntrega: 'Listo para entrega', Asignado: 'Asignado', EnCamino: 'En camino', Entregado: 'Entregado', Cancelado: 'Cancelado' };
+                                const clases = { Recibido: 'estado-recibido', EnPreparacion: 'estado-preparacion', ListoParaEntrega: 'estado-listo', Asignado: 'estado-asignado', EnCamino: 'estado-encamino', Entregado: 'estado-entregado', Cancelado: 'estado-cancelado' };
+                                badgeEstadoPedidoEl.textContent = etiquetas[data.estado] || data.estado;
+                                badgeEstadoPedidoEl.className = 'estado-badge ' + (clases[data.estado] || 'estado-recibido') + ' fs-6 px-3 py-2';
+                            }
+
+                            if (data.estado === "Entregado") {
+                                if (textoEstadoEl) {
+                                    textoEstadoEl.textContent = "¡Tu pedido ha sido entregado exitosamente!";
+                                    textoEstadoEl.className = "text-success fw-bold";
+                                }
+                                if (badgeRastreoEl) {
+                                    badgeRastreoEl.className = "badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold";
+                                    badgeRastreoEl.textContent = "Entregado";
+                                }
+                            } else {
+                                if (textoEstadoEl) {
+                                    textoEstadoEl.textContent = "El estado del pedido ahora es: " + data.estado;
+                                    textoEstadoEl.className = "text-muted fw-semibold";
+                                }
+                                if (badgeRastreoEl) {
+                                    badgeRastreoEl.className = "badge bg-secondary px-3 py-2 rounded-pill fw-semibold";
+                                    badgeRastreoEl.textContent = data.estado;
+                                }
+                            }
+                            return;
+                        }
+
+                        // 3. Colocar o mover marcador, centrar mapa y mostrar hora
+                        if (data.disponible && typeof data.lat === 'number' && typeof data.lng === 'number') {
+                            const latLng = [data.lat, data.lng];
+
+                            if (!marker) {
+                                marker = L.marker(latLng).addTo(map);
+                            } else {
+                                marker.setLatLng(latLng);
+                            }
+
+                            map.setView(latLng, 16);
+
+                            let horaStr = "";
+                            if (data.fechaUtc) {
+                                const fecha = new Date(data.fechaUtc);
+                                horaStr = fecha.toLocaleTimeString('es-CO', { timeZone: 'America/Bogota' });
+                            } else {
+                                horaStr = new Date().toLocaleTimeString('es-CO', { timeZone: 'America/Bogota' });
+                            }
+
+                            if (textoEstadoEl) {
+                                textoEstadoEl.textContent = "Última actualización: " + horaStr;
+                                textoEstadoEl.className = "text-muted";
+                            }
+                        } else {
+                            if (textoEstadoEl) {
+                                textoEstadoEl.textContent = "Esperando la ubicación del repartidor…";
+                                textoEstadoEl.className = "text-muted";
+                            }
+                        }
+                    } catch (e) {
+                        // Error de red temporal en el polling
+                    }
+                }
+
+                inicializarMapa();
+                consultarUbicacion();
+                intervalId = setInterval(consultarUbicacion, 8000);
+            })();
+        </script>
+    }
+}
