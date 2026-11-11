@@ -3,16 +3,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-[Authorize(Roles = "Negocio")]
+[Authorize]
 public class RepartidorController(
     IRepartidorRepository repartidorRepo,
     INegocioRepository negocioRepo,
     IWebHostEnvironment env,
-    AppDbContext context) : Controller
+    AppDbContext context,
+    IPedidoService pedidos,
+    IUbicacionService ubicacionService,
+    ILogger<RepartidorController> logger) : Controller
 {
     private int UsuarioId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
     [HttpGet]
+    [Authorize(Roles = "Negocio")]
     public async Task<IActionResult> Index()
     {
         var negocio = await negocioRepo.ObtenerPorUsuarioIdAsync(UsuarioId);
@@ -23,12 +27,14 @@ public class RepartidorController(
     }
 
     [HttpGet]
+    [Authorize(Roles = "Negocio")]
     public IActionResult Registrar()
     {
         return View(new RegistroRepartidorDto());
     }
 
     [HttpPost, ValidateAntiForgeryToken]
+    [Authorize(Roles = "Negocio")]
     public async Task<IActionResult> Registrar(RegistroRepartidorDto dto)
     {
         if (!ModelState.IsValid)
@@ -86,6 +92,7 @@ public class RepartidorController(
     }
 
     [HttpPost, ValidateAntiForgeryToken]
+    [Authorize(Roles = "Negocio")]
     public async Task<IActionResult> CambiarEstado(int id)
     {
         var negocio = await negocioRepo.ObtenerPorUsuarioIdAsync(UsuarioId);
@@ -111,5 +118,92 @@ public class RepartidorController(
 
         TempData["Mensaje"] = "El estado del repartidor ha sido actualizado correctamente.";
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "Repartidor")]
+    public async Task<IActionResult> MisPedidos()
+    {
+        try
+        {
+            var repartidor = await context.Repartidores
+                .AsNoTracking()
+                .FirstOrDefaultAsync(r => r.UsuarioId == UsuarioId);
+
+            if (repartidor == null)
+            {
+                TempData["Error"] = "No se encontró el perfil de repartidor para tu cuenta.";
+                return View(new List<Pedido>());
+            }
+
+            var misPedidos = await context.Pedidos
+                .AsNoTracking()
+                .Include(p => p.Items)
+                .Include(p => p.Cliente)
+                .Where(p => p.RepartidorId == repartidor.Id &&
+                           (p.EstadoPedidoId == (int)EstadoPedido.Asignado || p.EstadoPedidoId == (int)EstadoPedido.EnCamino))
+                .OrderByDescending(p => p.FechaCreacion)
+                .ToListAsync();
+
+            return View(misPedidos);
+        }
+        catch (Exception ex)
+        {
+            // FE-23-CU10: plataforma no disponible; se registra el error para soporte
+            logger.LogError(ex, "Error al cargar los pedidos del repartidor (usuario {UsuarioId})", UsuarioId);
+            return View((List<Pedido>?)null); // la vista muestra "No fue posible cargar tus pedidos. Intenta Nuevamente"
+        }
+    }
+
+    [HttpPost, ValidateAntiForgeryToken]
+    [Authorize(Roles = "Repartidor")]
+    public async Task<IActionResult> ActualizarEstado(int id, int nuevoEstadoId)
+    {
+        // CU-08: el repartidor solo puede pasar a "En camino" o "Entregado"
+        if (nuevoEstadoId != (int)EstadoPedido.EnCamino && nuevoEstadoId != (int)EstadoPedido.Entregado)
+        {
+            TempData["Error"] = "Este pedido ya no se puede actualizar";
+            return RedirectToAction(nameof(MisPedidos));
+        }
+
+        try
+        {
+            var (ok, error) = await pedidos.ActualizarEstadoAsync(UsuarioId, id, nuevoEstadoId);
+            if (!ok)
+            {
+                TempData["Error"] = error ?? "Este pedido ya no se puede actualizar";
+            }
+            else
+            {
+                TempData["Mensaje"] = nuevoEstadoId == (int)EstadoPedido.EnCamino
+                    ? "Entrega iniciada: el pedido ahora está en camino."
+                    : "Entrega registrada exitosamente";
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error al actualizar el estado del pedido {PedidoId}", id);
+            TempData["Error"] = "No fue posible actualizar el estado del pedido. Intenta nuevamente.";
+        }
+
+        return RedirectToAction(nameof(MisPedidos));
+    }
+
+    [HttpPost, ValidateAntiForgeryToken]
+    [Authorize(Roles = "Repartidor")]
+    public async Task<IActionResult> IniciarEntrega(int id) =>
+        await ActualizarEstado(id, (int)EstadoPedido.EnCamino);
+
+    [HttpPost, ValidateAntiForgeryToken]
+    [Authorize(Roles = "Repartidor")]
+    public async Task<IActionResult> MarcarEntregado(int id) =>
+        await ActualizarEstado(id, (int)EstadoPedido.Entregado);
+
+    [HttpPost, ValidateAntiForgeryToken]
+    [Authorize(Roles = "Repartidor")]
+    public async Task<IActionResult> ActualizarUbicacion(int pedidoId, decimal lat, decimal lng)
+    {
+        var (ok, error) = await ubicacionService.ActualizarAsync(UsuarioId, pedidoId, lat, lng);
+        return Json(new { ok, error });
     }
 }

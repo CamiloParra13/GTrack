@@ -7,7 +7,8 @@ using System.Security.Claims;
 public class PedidoController(
     IPedidoService pedidos,
     INegocioRepository negocios,
-    AppDbContext context) : Controller
+    AppDbContext context,
+    IUbicacionService ubicaciones) : Controller
 {
     private int UsuarioId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
@@ -47,8 +48,8 @@ public class PedidoController(
         if (negocio != null)
         {
             listaRepartidores = await context.Set<Repartidor>()
-                .Include(r => r.Usuario) 
-                .Where(r => r.NegocioId == negocio.Id && r.Usuario.Estado == EstadoCuenta.Activo) 
+                .Include(r => r.Usuario)
+                .Where(r => r.NegocioId == negocio.Id && r.Usuario.Estado == EstadoCuenta.Activo)
                 .ToListAsync();
         }
 
@@ -95,25 +96,80 @@ public class PedidoController(
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Consultar(string codigo)
     {
-        if (string.IsNullOrWhiteSpace(codigo))
+        const string CodigoNoEncontrado = "Código no encontrado, verifica e intenta nuevamente";
+
+        // RN-1-CU05: el código debe cumplir el formato definido (8 caracteres alfanuméricos)
+        var codigoLimpio = codigo?.Trim().ToUpperInvariant() ?? "";
+        if (!System.Text.RegularExpressions.Regex.IsMatch(codigoLimpio, "^[A-Z0-9]{8}$"))
         {
-            ModelState.AddModelError("", "Por favor, ingresa el código del pedido.");
+            ModelState.AddModelError("", CodigoNoEncontrado);
             return View();
         }
 
-        // Consultamos directamente incluyendo las relaciones necesarias para mostrarlas en la vista
-        var pedido = await context.Pedidos
-            .Include(p => p.Items)
-            .Include(p => p.Negocio)
-            .Include(p => p.Repartidor)
-            .FirstOrDefaultAsync(p => p.Codigo == codigo.Trim());
-
-        if (pedido == null)
+        try
         {
-            ModelState.AddModelError("", "No se encontró ningún pedido con el código ingresado.");
+            var pedido = await context.Pedidos
+                .AsNoTracking()
+                .Include(p => p.Items)
+                .Include(p => p.Negocio).ThenInclude(n => n!.Usuario)
+                .Include(p => p.Repartidor)
+                .FirstOrDefaultAsync(p => p.Codigo == codigoLimpio);
+
+            if (pedido == null)
+            {
+                ModelState.AddModelError("", CodigoNoEncontrado);
+                return View();
+            }
+
+            // Línea de tiempo: cada cambio de estado con su fecha/hora (UTC)
+            ViewBag.Historial = await context.Database
+                .SqlQuery<HistorialEstadoItem>($"SELECT EstadoPedidoId, FechaCambio FROM dbo.HistorialEstadoPedido WHERE PedidoId = {pedido.Id} ORDER BY FechaCambio")
+                .ToListAsync();
+
+            return View(pedido);
+        }
+        catch (Exception)
+        {
+            // FE-14-CU05: plataforma no disponible
+            ModelState.AddModelError("", "No fue posible cargar la información. Intenta nuevamente");
             return View();
         }
-
-        return View(pedido);
     }
+
+    [AllowAnonymous]
+    [HttpGet]
+    public async Task<IActionResult> Ubicacion(string codigo)
+    {
+        if (string.IsNullOrWhiteSpace(codigo) || !System.Text.RegularExpressions.Regex.IsMatch(codigo.Trim(), "^[A-Za-z0-9]{8}$"))
+        {
+            return Json(new { disponible = false });
+        }
+
+        var (ok, _, lat, lng, fechaUtc, estado) = await ubicaciones.ObtenerPorCodigoAsync(codigo.Trim().ToUpperInvariant());
+
+        if (ok && lat.HasValue && lng.HasValue && fechaUtc.HasValue)
+        {
+            return Json(new
+            {
+                disponible = true,
+                lat = lat.Value,
+                lng = lng.Value,
+                fechaUtc = fechaUtc.Value.ToString("yyyy-MM-ddTHH:mm:ss'Z'"),
+                estado
+            });
+        }
+
+        return Json(new
+        {
+            disponible = false,
+            estado
+        });
+    }
+}
+
+// Fila de HistorialEstadoPedido usada por la línea de tiempo del CU-05
+public class HistorialEstadoItem
+{
+    public int EstadoPedidoId { get; set; }
+    public DateTime FechaCambio { get; set; }
 }

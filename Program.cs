@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddAntiforgery(o => o.HeaderName = "RequestVerificationToken");
 
 // Conexión a SQL Server (cadena "GtrackDb" en appsettings.json)
 builder.Services.AddDbContext<AppDbContext>(o =>
@@ -17,6 +18,7 @@ builder.Services.AddScoped<ICodigoVerificacionRepository, CodigoVerificacionRepo
 builder.Services.AddScoped<IRepartidorRepository, RepartidorRepository>();
 builder.Services.AddScoped<IAdministracionRepository, AdministracionRepository>();
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
+builder.Services.AddScoped<IUbicacionRepository, UbicacionRepository>();
 
 builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -26,12 +28,19 @@ builder.Services.AddScoped<IRepartidorService, RepartidorService>();
 builder.Services.AddScoped<IAdministracionService, AdministracionService>();
 builder.Services.AddScoped<IEmailService, EmailDesarrolloService>();
 builder.Services.AddScoped<IPedidoService, PedidoService>();
+builder.Services.AddScoped<IUbicacionService, UbicacionService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(o =>
     {
         o.LoginPath = "/Usuario/Login";
         o.AccessDeniedPath = "/Usuario/Login";
+
+        // La sesión caduca tras 30 minutos sin actividad
+        o.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        o.SlidingExpiration = true;
+        o.Cookie.HttpOnly = true;
+        o.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     });
 
 var app = builder.Build();
@@ -41,6 +50,9 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
+// Páginas de error con la marca de GTrack (404, 403, etc.)
+app.UseStatusCodePagesWithReExecute("/Home/StatusCode", "?code={0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
