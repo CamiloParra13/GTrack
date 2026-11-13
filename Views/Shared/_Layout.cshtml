@@ -16,7 +16,8 @@
     var enRepartidores = controlador == "Repartidor";
     var enPerfil = controlador == "Negocio";
     var enNegocios = controlador == "Admin" && accion == "Negocios";
-    var enAdmins = controlador == "Admin" && accion != "Negocios";
+    var enAdmins = controlador == "Admin" && accion != "Negocios" && accion != "Reportes";
+    var enReportes = (controlador == "Reporte") || (controlador == "Admin" && accion == "Reportes");
     var enNotificaciones = controlador == "Notificaciones";
 }<!DOCTYPE html><html lang="es"><head>
     <meta charset="utf-8" />
@@ -42,12 +43,14 @@
                         <a class="side-link @(enPedidoActivo ? "active" : "")" asp-controller="Pedido" asp-action="Activos">📋 Pedidos Activos</a>
                         <a class="side-link @(enHistorial ? "active" : "")" asp-controller="Pedido" asp-action="Historial">📂 Historial de Pedidos</a>
                         <a class="side-link @(enRepartidores ? "active" : "")" asp-controller="Repartidor" asp-action="Index">🛵 Repartidores</a>
+                        <a class="side-link @(enReportes ? "active" : "")" asp-controller="Reporte" asp-action="Index">📊 Reportes</a>
                         @* Nota: "Mi Perfil" se quitó de aquí para que solo aparezca en el menú desplegable inferior *@
                     }
                     @if (esAdmin)
                     {
                         <a class="side-link @(enNegocios ? "active" : "")" asp-controller="Admin" asp-action="Negocios">🏪 Negocios</a>
                         <a class="side-link @(enAdmins ? "active" : "")" asp-controller="Admin" asp-action="Administradores">🛡️ Administradores</a>
+                        <a class="side-link @(enReportes ? "active" : "")" asp-controller="Admin" asp-action="Reportes">📊 Reportes</a>
                     }
 
                 </nav>

@@ -2,7 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 
 [Authorize(Roles = "Administrador")]
-public class AdminController(IAdministracionService admin, IWebHostEnvironment env) : Controller
+public class AdminController(
+    IAdministracionService admin,
+    IWebHostEnvironment env,
+    IReporteService reportes,
+    IExportadorReportes exportador,
+    ILogger<AdminController> logger) : Controller
 {
     // ----- Validación de negocios (versión mínima de CU-18 para poder activar cuentas nuevas) -----
     [HttpGet]
@@ -48,5 +53,76 @@ public class AdminController(IAdministracionService admin, IWebHostEnvironment e
             TempData["Credenciales"] = $"Usuario: {dto.Correo.Trim()} — Contraseña temporal: {r.PasswordTemporal}";
 
         return RedirectToAction(nameof(Administradores));
+    }
+
+    // ----- Reportes del administrador: negocios que ingresaron a la plataforma y actividad de pedidos -----
+    private const string MimeExcel = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    private const string MimePdf = "application/pdf";
+    private const string SinInformacion = "No hay información registrada en este rango para generar el reporte";
+
+    private static string Dia(DateTime? d) => d!.Value.ToString("yyyy-MM-dd");
+
+    [HttpGet]
+    public async Task<IActionResult> Reportes(DateTime? desde, DateTime? hasta)
+    {
+        var hoy = DateTime.Today;
+        var vista = new ReporteAdminVista
+        {
+            Desde = desde?.Date ?? new DateTime(hoy.Year, hoy.Month, 1),
+            Hasta = hasta?.Date ?? hoy
+        };
+
+        if (desde is null && hasta is null) return View(vista);
+
+        vista.Error = RangoReporte.Validar(desde, hasta);
+        if (vista.Error is not null) return View(vista);
+
+        try
+        {
+            var reporte = await reportes.GenerarReporteAdminAsync(desde!.Value, hasta!.Value);
+            if (reporte.NegociosRegistrados == 0 && reporte.RepartidoresRegistrados == 0 && reporte.TotalPedidos == 0)
+                vista.Aviso = SinInformacion;
+            else
+                vista.Reporte = reporte;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error al generar el reporte general de la plataforma");
+            vista.Error = "No fue posible generar el reporte. Intenta nuevamente";
+        }
+
+        return View(vista);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> DescargarReporte(DateTime? desde, DateTime? hasta, string formato = "excel")
+    {
+        var error = RangoReporte.Validar(desde, hasta);
+        if (error is not null)
+        {
+            TempData["Error"] = error;
+            return RedirectToAction(nameof(Reportes));
+        }
+
+        try
+        {
+            var reporte = await reportes.GenerarReporteAdminAsync(desde!.Value, hasta!.Value);
+            if (reporte.NegociosRegistrados == 0 && reporte.RepartidoresRegistrados == 0 && reporte.TotalPedidos == 0)
+            {
+                TempData["Error"] = SinInformacion;
+                return RedirectToAction(nameof(Reportes), new { desde = Dia(desde), hasta = Dia(hasta) });
+            }
+
+            var nombre = $"Reporte_Plataforma_{desde.Value:yyyyMMdd}_{hasta.Value:yyyyMMdd}";
+            return formato.Equals("pdf", StringComparison.OrdinalIgnoreCase)
+                ? File(exportador.ReporteAdminPdf(reporte), MimePdf, nombre + ".pdf")
+                : File(exportador.ReporteAdminExcel(reporte), MimeExcel, nombre + ".xlsx");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error al exportar el reporte general de la plataforma");
+            TempData["Error"] = "No fue posible generar el archivo. Intenta nuevamente";
+            return RedirectToAction(nameof(Reportes), new { desde = Dia(desde), hasta = Dia(hasta) });
+        }
     }
 }

@@ -1,8 +1,11 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Licencia Community de QuestPDF (gratuita para proyectos académicos y organizaciones pequeñas)
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
 builder.Services.AddControllersWithViews();
 
@@ -24,8 +27,10 @@ builder.Services.AddScoped<IRecuperacionService, RecuperacionService>();
 builder.Services.AddScoped<INegocioService, NegocioService>();
 builder.Services.AddScoped<IRepartidorService, RepartidorService>();
 builder.Services.AddScoped<IAdministracionService, AdministracionService>();
-builder.Services.AddScoped<IEmailService, EmailDesarrolloService>();
+builder.Services.AddScoped<IEmailService, EmailSmtpService>();
 builder.Services.AddScoped<IPedidoService, PedidoService>();
+builder.Services.AddScoped<IReporteService, ReporteService>();
+builder.Services.AddSingleton<IExportadorReportes, ExportadorReportes>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(o =>

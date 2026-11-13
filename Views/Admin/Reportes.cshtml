@@ -1,0 +1,204 @@
+﻿@model ReporteAdminVista
+@{
+    ViewData["Title"] = "Reportes";
+    var es = new System.Globalization.CultureInfo("es-CO");
+    string Dinero(decimal v) => v.ToString("C0", es);
+    var desde = Model.Desde.ToString("yyyy-MM-dd");
+    var hasta = Model.Hasta.ToString("yyyy-MM-dd");
+}
+
+<div class="mx-auto" style="max-width: 1000px;">
+    <h2 class="mb-0">Reportes</h2>
+    <p class="text-muted">Negocios que ingresaron a la plataforma y actividad de pedidos en un rango de fechas (máximo 12 meses).</p>
+
+    @if (TempData["Error"] is string errorTemp)
+    {
+        <div class="alert alert-danger">@errorTemp</div>
+    }
+    @if (Model.Error is string error)
+    {
+        <div class="alert alert-danger">@error</div>
+    }
+    @if (Model.Aviso is string aviso)
+    {
+        <div class="alert alert-warning">@aviso</div>
+    }
+
+    <div class="card shadow-sm p-3 mb-4">
+        <form asp-action="Reportes" method="get" data-sin-aviso class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label for="desde" class="form-label">Fecha inicial</label>
+                <input type="date" id="desde" name="desde" value="@desde" class="form-control" required />
+            </div>
+            <div class="col-md-4">
+                <label for="hasta" class="form-label">Fecha final</label>
+                <input type="date" id="hasta" name="hasta" value="@hasta" class="form-control" required />
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">Generar Reporte</button>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.Reporte is { } r)
+    {
+        var barrasMes = r.NegociosPorMes.Select(m => new BarraGrafica(m.Mes, m.Total, "#1f5eff")).ToList();
+        var barrasCuenta = r.NegociosPorEstado.Select(e => new BarraGrafica(e.Etiqueta, e.Cantidad, e.Color)).ToList();
+        var barrasActividad = r.NegociosPorActividad.Select(e => new BarraGrafica(e.Etiqueta, e.Cantidad, e.Color)).ToList();
+        var barrasPedidos = r.PedidosPorEstado.Select(e => new BarraGrafica(e.Estado, e.Cantidad, e.Color)).ToList();
+
+        <div class="alert alert-success">Reporte generado exitosamente</div>
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <small class="text-muted">Del @r.Desde.ToString("dd/MM/yyyy") al @r.Hasta.ToString("dd/MM/yyyy")</small>
+            <div class="d-flex gap-2">
+                <a class="btn btn-outline-success" asp-action="DescargarReporte"
+                   asp-route-desde="@desde" asp-route-hasta="@hasta" asp-route-formato="excel">⬇ Excel</a>
+                <a class="btn btn-outline-danger" asp-action="DescargarReporte"
+                   asp-route-desde="@desde" asp-route-hasta="@hasta" asp-route-formato="pdf">⬇ PDF</a>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-md-4">
+                <div class="card shadow-sm p-3 h-100">
+                    <small class="text-muted">Negocios nuevos</small>
+                    <div class="fs-3 fw-semibold">@r.NegociosRegistrados.ToString("N0", es)</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card shadow-sm p-3 h-100">
+                    <small class="text-muted">Negocios activos (hoy)</small>
+                    <div class="fs-3 fw-semibold">@r.NegociosActivosTotal.ToString("N0", es)</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card shadow-sm p-3 h-100">
+                    <small class="text-muted">Repartidores nuevos</small>
+                    <div class="fs-3 fw-semibold">@r.RepartidoresRegistrados.ToString("N0", es)</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card shadow-sm p-3 h-100">
+                    <small class="text-muted">Pedidos creados</small>
+                    <div class="fs-3 fw-semibold">@r.TotalPedidos.ToString("N0", es)</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card shadow-sm p-3 h-100">
+                    <small class="text-muted">Pedidos entregados</small>
+                    <div class="fs-3 fw-semibold text-success">@r.PedidosEntregados.ToString("N0", es)</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card shadow-sm p-3 h-100">
+                    <small class="text-muted">Valor entregado</small>
+                    <div class="fs-4 fw-semibold">@Dinero(r.ValorEntregado)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm p-3 mb-4">
+            <h5>Negocios nuevos por mes</h5>
+            <partial name="_GraficaBarras" model="barrasMes" />
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-lg-6">
+                <div class="card shadow-sm p-3 h-100">
+                    <h5>Negocios nuevos por estado de cuenta</h5>
+                    @if (r.NegociosPorEstado.Count == 0)
+                    {
+                        <p class="text-muted mb-0">Ningún negocio ingresó en el rango.</p>
+                    }
+                    else
+                    {
+                        <partial name="_GraficaBarras" model="barrasCuenta" />
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card shadow-sm p-3 h-100">
+                    <h5>Negocios nuevos por actividad</h5>
+                    @if (r.NegociosPorActividad.Count == 0)
+                    {
+                        <p class="text-muted mb-0">Ningún negocio ingresó en el rango.</p>
+                    }
+                    else
+                    {
+                        <partial name="_GraficaBarras" model="barrasActividad" />
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm p-3 mb-4">
+            <h5>Pedidos de la plataforma por estado</h5>
+            <partial name="_GraficaBarras" model="barrasPedidos" />
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body pb-0"><h5 class="mb-0">Top 10 negocios con más pedidos</h5></div>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Negocio</th>
+                            <th class="text-end">Pedidos</th>
+                            <th class="text-end">Entregados</th>
+                            <th class="text-end">Valor entregado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var t in r.TopNegocios)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@t.Nombre</td>
+                                <td class="text-end">@t.Pedidos.ToString("N0", es)</td>
+                                <td class="text-end">@t.Entregados.ToString("N0", es)</td>
+                                <td class="text-end">@Dinero(t.ValorEntregado)</td>
+                            </tr>
+                        }
+                        @if (r.TopNegocios.Count == 0)
+                        {
+                            <tr><td colspan="4" class="text-center text-muted py-3">No hay pedidos en el rango.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body pb-0"><h5 class="mb-0">Negocios que ingresaron en el rango</h5></div>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Negocio</th>
+                            <th>Actividad</th>
+                            <th>NIT / CC</th>
+                            <th>Registro</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var n in r.Negocios)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@n.Nombre</td>
+                                <td>@n.Actividad</td>
+                                <td>@n.Documento</td>
+                                <td>@n.FechaRegistro.ToString("dd/MM/yyyy")</td>
+                                <td>@n.Estado</td>
+                            </tr>
+                        }
+                        @if (r.Negocios.Count == 0)
+                        {
+                            <tr><td colspan="5" class="text-center text-muted py-3">Ningún negocio ingresó en el rango.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
