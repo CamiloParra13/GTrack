@@ -51,7 +51,8 @@
         </form>
 
         <hr />
-        <p class="text-center small mb-1">
+        @* Solo los negocios pueden registrarse: repartidores y administradores los registra la plataforma *@
+        <p id="bloque-registro" class="text-center small mb-1 @(Model.Rol == RolUsuario.Negocio ? "" : "d-none")">
             ¿No tienes una cuenta?
             <a asp-controller="Negocio" asp-action="Registrar">Registrarse en Gtrack</a>
         </p>
@@ -61,6 +62,14 @@
 
 @section Scripts {
     <script>
+        // Mostrar el enlace de registro solo cuando el perfil seleccionado es "Negocio"
+        var bloqueRegistro = document.getElementById('bloque-registro');
+        document.querySelectorAll('input[name="Rol"]').forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                bloqueRegistro.classList.toggle('d-none', this.value !== 'Negocio');
+            });
+        });
+
         document.getElementById('toggle-password').addEventListener('click', function () {
             var campo = document.getElementById('password');
             var icono = document.getElementById('icono-password');

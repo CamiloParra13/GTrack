@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!modal) return;
 
     var hayCambios = false;
-    document.querySelectorAll('main form').forEach(function (f) {
+    document.querySelectorAll('main form:not([data-sin-aviso])').forEach(function (f) {
         f.addEventListener('input', function () { hayCambios = true; });
         f.addEventListener('submit', function () { hayCambios = false; });
     });
