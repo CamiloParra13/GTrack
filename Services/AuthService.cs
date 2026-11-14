@@ -50,20 +50,12 @@ public class AuthService(IUsuarioRepository repo, IPasswordHasher<Usuario> hashe
         }
 
         // Credenciales correctas: reiniciar contador
-        var hayCambios = usuario.IntentosFallidos != 0 || usuario.BloqueadoHasta is not null;
-        usuario.IntentosFallidos = 0;
-        usuario.BloqueadoHasta = null;
-
-        // RNF-01: la contraseña estaba guardada con el hash anterior (o con un factor de bcrypt más bajo).
-        // Como en este momento tenemos la contraseña correcta, se vuelve a guardar cifrada con bcrypt.
-        if (resultado == PasswordVerificationResult.SuccessRehashNeeded)
+        if (usuario.IntentosFallidos != 0 || usuario.BloqueadoHasta is not null)
         {
-            usuario.PasswordHash = hasher.HashPassword(usuario, dto.Password);
-            hayCambios = true;
-        }
-
-        if (hayCambios)
+            usuario.IntentosFallidos = 0;
+            usuario.BloqueadoHasta = null;
             await repo.ActualizarAsync(usuario);
+        }
 
         // 4) cuenta activa (FA-02 y FE-7)
         return usuario.Estado switch

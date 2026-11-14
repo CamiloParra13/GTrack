@@ -4,6 +4,6 @@ public class RecuperarDto
 {
     [Display(Name = "Correo electrónico registrado")]
     [Required(ErrorMessage = "Ingresa tu correo electrónico")]
-    [RegularExpression(ReglasValidacion.Correo, ErrorMessage = ReglasValidacion.CorreoMensaje)]
+    [EmailAddress(ErrorMessage = "Correo no válido")]
     public string Correo { get; set; } = "";
 }

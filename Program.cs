@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Licencia Community de QuestPDF (gratuita para proyectos académicos y organizaciones pequeñas)
 QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
-builder.Services.AddControllersWithViews(o => o.ModelBinderProviders.Insert(0, new InvariantDecimalModelBinderProvider())); // decimales siempre con punto (coordenadas, precios)
+builder.Services.AddControllersWithViews();
 builder.Services.AddAntiforgery(o => o.HeaderName = "RequestVerificationToken");
 builder.Services.AddControllersWithViews();
 
@@ -26,14 +26,12 @@ builder.Services.AddScoped<IAdministracionRepository>(sp => sp.GetRequiredServic
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
 builder.Services.AddScoped<INotificacionRepository, NotificacionRepository>();
 
-// RNF-01: contraseñas cifradas con bcrypt (ver Utilities/BCryptPasswordHasher.cs)
-builder.Services.AddScoped<IPasswordHasher<Usuario>, BCryptPasswordHasher>();
+builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRecuperacionService, RecuperacionService>();
 builder.Services.AddScoped<INegocioService, NegocioService>();
 builder.Services.AddScoped<IActivacionCuentaService, ActivacionCuentaService>();
 builder.Services.AddScoped<IRepartidorService, RepartidorService>();
-builder.Services.AddScoped<IPerfilRepartidorService, PerfilRepartidorService>(); // CU-12 y CU-14
 builder.Services.AddScoped<IAdministracionService, AdministracionService>();
 builder.Services.AddScoped<IEmailService, EmailSmtpService>();
 builder.Services.AddScoped<IPedidoService, PedidoService>();

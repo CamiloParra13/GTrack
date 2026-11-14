@@ -32,12 +32,12 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label asp-for="Correo" class="form-label"></label>
-                    <input type="email" maxlength="150" asp-for="Correo" class="form-control" />
+                    <input asp-for="Correo" class="form-control" />
                     <span asp-validation-for="Correo" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="Telefono" class="form-label"></label>
-                    <input maxlength="10" data-solo-digitos asp-for="Telefono" type="tel" class="form-control" inputmode="numeric" />
+                    <input asp-for="Telefono" type="tel" class="form-control" inputmode="numeric" />
                     <span asp-validation-for="Telefono" class="text-danger small"></span>
                 </div>
             </div>
@@ -66,9 +66,8 @@
             // RN-2-CU13: el botón solo se activa con datos en formato válido
             function actualizar() {
                 const llenos = campos.every(c => c.value.trim() !== '');
-                const telefonoOk = GTrackReglas.telefono.test(form.Telefono.value.trim());
-                const correoOk = GTrackReglas.correo.test(form.Correo.value.trim());
-                boton.disabled = !(llenos && telefonoOk && correoOk && form.checkValidity());
+                const telefonoOk = /^\d{7,10}$/.test(form.Telefono.value.trim());
+                boton.disabled = !(llenos && telefonoOk && form.checkValidity());
             }
 
             form.addEventListener('input', actualizar);

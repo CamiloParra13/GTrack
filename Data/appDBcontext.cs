@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 
-// Mapea los modelos de C# a las tablas de la base gTrack (SQL Server).
-// La base ya existe (script gTrack.sql): NO se usan migraciones.
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Usuario> Usuarios => Set<Usuario>();
@@ -14,8 +12,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<ItemPedido> ItemsPedido => Set<ItemPedido>();
     public DbSet<SuspensionRepartidor> SuspensionRepartidor { get; set; }
     public DbSet<UbicacionPedido> UbicacionesPedido => Set<UbicacionPedido>();
-    public DbSet<SolicitudCancelacion> SolicitudesCancelacion => Set<SolicitudCancelacion>();
-    public DbSet<Notificacion> Notificaciones => Set<Notificacion>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -46,6 +42,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(n => n.TipoActividad).HasMaxLength(100);
             e.Property(n => n.Telefono).HasMaxLength(15).IsUnicode(false);
             e.Property(n => n.Direccion).HasMaxLength(200);
+            // Columna de la BD que no está en el modelo: se llena al aprobar el negocio
             e.Property<DateTime?>("FechaValidacion");
             e.HasIndex(n => n.Telefono).IsUnique();
             e.HasOne(n => n.Usuario).WithOne()
@@ -87,15 +84,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         {
             e.ToTable("Pedido");
             e.Property(p => p.Codigo).HasMaxLength(8).IsFixedLength().IsUnicode(false);
-            e.Property(p => p.MetodoPago).HasColumnName("MetodoPagoId");
-            e.Property(p => p.Estado).HasColumnName("EstadoPedidoId");
-            e.Property(p => p.ClienteNombre).HasMaxLength(100);
-            e.Property(p => p.ClienteTelefono).HasMaxLength(15).IsUnicode(false);
             e.Property(p => p.DireccionEntrega).HasMaxLength(200);
-            e.Property(p => p.ValorTotal).HasPrecision(18, 2);
+
             e.HasOne(p => p.Negocio).WithMany()
                 .HasForeignKey(p => p.NegocioId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            e.HasOne(p => p.Cliente).WithMany()
+                .HasForeignKey(p => p.ClienteId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             e.HasMany(p => p.Items).WithOne(i => i.Pedido)
                 .HasForeignKey(i => i.PedidoId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -108,26 +106,19 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(i => i.PrecioUnitario).HasPrecision(18, 2);
         });
 
-        // CU-17: tabla creada con Database/cambios_02_cancelacion_cliente.sql
-        modelBuilder.Entity<SolicitudCancelacion>(e =>
-        {
-            e.ToTable("SolicitudCancelacion");
-            e.Property(s => s.Motivo).HasMaxLength(250);
-            e.HasIndex(s => s.PedidoId).IsUnique();
-            e.HasOne(s => s.Pedido).WithMany()
-                .HasForeignKey(s => s.PedidoId)
-                .OnDelete(DeleteBehavior.Restrict);
-        });
-
         modelBuilder.Entity<UbicacionPedido>(e =>
-        modelBuilder.Entity<Notificacion>(e =>
         {
-            e.ToTable("Notificacion");
-            e.Property(n => n.Titulo).HasMaxLength(100);
-            e.Property(n => n.Mensaje).HasMaxLength(300);
-            e.Property(n => n.Enlace).HasMaxLength(200);
-            e.HasIndex(n => new { n.UsuarioId, n.Leida, n.FechaCreacion });
+            e.ToTable("UbicacionPedido");
+            e.HasKey(u => u.PedidoId);
+            e.Property(u => u.PedidoId).ValueGeneratedNever();
+            e.Property(u => u.Latitud).HasPrecision(9, 6);
+            e.Property(u => u.Longitud).HasPrecision(9, 6);
+            e.Property(u => u.FechaActualizacion).HasColumnType("datetime2(0)");
+
+            e.HasOne(u => u.Pedido)
+                .WithOne()
+                .HasForeignKey<UbicacionPedido>(u => u.PedidoId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 }

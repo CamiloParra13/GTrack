@@ -1,6 +1,4 @@
 ﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +12,6 @@ public class RepartidorController(
     AppDbContext context,
     IPedidoService pedidos,
     IUbicacionService ubicacionService,
-    IPerfilRepartidorService perfilService,
     ILogger<RepartidorController> logger) : Controller
 {
     private int UsuarioId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -212,159 +209,5 @@ public class RepartidorController(
     {
         var (ok, error) = await ubicacionService.ActualizarAsync(UsuarioId, pedidoId, lat, lng);
         return Json(new { ok, error });
-    }
-
-    // =====================================================================
-    // Perfil del repartidor (CU-12 y CU-14 arrancan aquí)
-    // =====================================================================
-    [HttpGet]
-    [Authorize(Roles = "Repartidor")]
-    public async Task<IActionResult> Perfil()
-    {
-        var perfil = await perfilService.ObtenerPerfilAsync(UsuarioId);
-        if (perfil is null) return NotFound();
-        return View(perfil);
-    }
-
-    // ---------- CU-14 Editar repartidor ----------
-    // Paso 2: valida que pueda editar (RN-1 y RN-2-CU14) y envía el código al correo
-    [HttpPost, ValidateAntiForgeryToken]
-    [Authorize(Roles = "Repartidor")]
-    public async Task<IActionResult> EnviarCodigo()
-    {
-        var (ok, error) = await perfilService.SolicitarCodigoAsync(UsuarioId);
-        if (!ok)
-        {
-            TempData["Error"] = error;
-            // FE-35-CU14: con pedidos asignados se redirige a la página principal
-            return error == PerfilRepartidorService.MensajeConPedidos
-                ? RedirectToAction("Index", "Home")
-                : RedirectToAction(nameof(Perfil));
-        }
-
-        TempData["Mensaje"] = "Te enviamos un código de verificación a tu correo";
-        return RedirectToAction(nameof(VerificarCodigo));
-    }
-
-    [HttpGet]
-    [Authorize(Roles = "Repartidor")]
-    public IActionResult VerificarCodigo() => View(new VerificarCodigoDto());
-
-    // Pasos 3 y 4: valida el código (máximo 3 intentos)
-    [HttpPost, ValidateAntiForgeryToken]
-    [Authorize(Roles = "Repartidor")]
-    public async Task<IActionResult> VerificarCodigo(VerificarCodigoDto dto)
-    {
-        if (!ModelState.IsValid) return View(dto);
-
-        var (ok, error) = await perfilService.VerificarCodigoAsync(UsuarioId, dto.Codigo);
-        if (!ok)
-        {
-            ModelState.AddModelError("", error!);
-            return View(dto);
-        }
-
-        return RedirectToAction(nameof(Editar));
-    }
-
-    [HttpGet]
-    [Authorize(Roles = "Repartidor")]
-    public async Task<IActionResult> Editar()
-    {
-        if (!await perfilService.EdicionAutorizadaAsync(UsuarioId))
-        {
-            TempData["Error"] = PerfilRepartidorService.MensajeSinVerificacion;
-            return RedirectToAction(nameof(Perfil));
-        }
-
-        var dto = await perfilService.ObtenerParaEditarAsync(UsuarioId);
-        if (dto is null) return NotFound();
-        return View(dto);
-    }
-
-    // Pasos 5 y 6: guarda los cambios
-    [HttpPost, ValidateAntiForgeryToken]
-    [Authorize(Roles = "Repartidor")]
-    public async Task<IActionResult> Editar(EditarRepartidorDto dto)
-    {
-        if (!ModelState.IsValid) return View(dto); // FE-34-CU14
-
-        var (ok, error) = await perfilService.EditarAsync(UsuarioId, dto);
-        if (!ok)
-        {
-            if (error == PerfilRepartidorService.MensajeSinVerificacion || error == PerfilRepartidorService.MensajeSuspendido)
-            {
-                TempData["Error"] = error;
-                return RedirectToAction(nameof(Perfil));
-            }
-            if (error == PerfilRepartidorService.MensajeConPedidos)
-            {
-                TempData["Error"] = error;
-                return RedirectToAction("Index", "Home");
-            }
-
-            ModelState.AddModelError("", error!);
-            return View(dto);
-        }
-
-        TempData["Mensaje"] = "Los cambios han sido guardados exitosamente";
-        return RedirectToAction(nameof(Perfil));
-    }
-
-    // ---------- CU-12 Eliminar repartidor (el propio repartidor) ----------
-    // Paso 4: valida que no tenga entregas pendientes. Responde JSON para mostrar el campo de contraseña.
-    [HttpPost, ValidateAntiForgeryToken]
-    [Authorize(Roles = "Repartidor")]
-    public async Task<IActionResult> VerificarEliminacion()
-    {
-        var (ok, error) = await perfilService.ValidarEliminacionPropiaAsync(UsuarioId);
-        return Json(new { ok, error });
-    }
-
-    // Pasos 5 y 6: "Confirmar eliminación" con la contraseña
-    [HttpPost, ValidateAntiForgeryToken]
-    [Authorize(Roles = "Repartidor")]
-    public async Task<IActionResult> EliminarCuenta(EliminarCuentaDto dto)
-    {
-        if (!ModelState.IsValid)
-        {
-            TempData["Error"] = "Ingresa tu contraseña";
-            return RedirectToAction(nameof(Perfil));
-        }
-
-        var (ok, error) = await perfilService.EliminarCuentaPropiaAsync(UsuarioId, dto.Password);
-        if (!ok)
-        {
-            TempData["Error"] = error;
-            return RedirectToAction(nameof(Perfil));
-        }
-
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        TempData["Mensaje"] = "Tu cuenta ha sido eliminada";
-        return RedirectToAction("Index", "Home");
-    }
-
-    // ---------- FA-13-CU12 Eliminación gestionada por el negocio ----------
-    [HttpPost, ValidateAntiForgeryToken]
-    [Authorize(Roles = "Negocio")]
-    public async Task<IActionResult> VerificarEliminacionRepartidor(int id)
-    {
-        var (ok, error) = await perfilService.ValidarEliminacionPorNegocioAsync(UsuarioId, id);
-        return Json(new { ok, error });
-    }
-
-    [HttpPost, ValidateAntiForgeryToken]
-    [Authorize(Roles = "Negocio")]
-    public async Task<IActionResult> EliminarRepartidor(int id, EliminarCuentaDto dto)
-    {
-        if (!ModelState.IsValid)
-        {
-            TempData["Error"] = "Ingresa tu contraseña para confirmar la eliminación";
-            return RedirectToAction(nameof(Index));
-        }
-
-        var (ok, error, nombre) = await perfilService.EliminarPorNegocioAsync(UsuarioId, id, dto.Password);
-        TempData[ok ? "Mensaje" : "Error"] = ok ? $"El repartidor {nombre} fue eliminado" : error;
-        return RedirectToAction(nameof(Index));
     }
 }

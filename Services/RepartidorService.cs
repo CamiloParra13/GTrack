@@ -65,7 +65,7 @@ public class RepartidorService(
             NombreCompleto = dto.NombreCompleto.Trim(),
             Telefono = telefono,
             Vehiculo = dto.Vehiculo!.Value,
-            Placa = conPlaca ? ReglasValidacion.NormalizarPlaca(dto.Placa) : null
+            Placa = conPlaca ? dto.Placa!.Trim().Replace("-", "").ToUpperInvariant() : null
         };
 
         await repartidores.RegistrarRepartidorAsync(usuario, repartidor);
