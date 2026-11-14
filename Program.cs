@@ -5,20 +5,20 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddAntiforgery(o => o.HeaderName = "RequestVerificationToken");
 
-// Conexión a SQL Server (cadena "GtrackDb" en appsettings.json)
+// Base de datos SQL Server (cadena "gTrack" en appsettings.json)
 builder.Services.AddDbContext<AppDbContext>(o =>
-    o.UseSqlServer(builder.Configuration.GetConnectionString("GtrackDb")));
+    o.UseSqlServer(builder.Configuration.GetConnectionString("gTrack")));
 
+// Repositorios con EF Core (Scoped: uno por solicitud, igual que el DbContext)
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ITokenRecuperacionRepository, TokenRecuperacionRepository>();
 builder.Services.AddScoped<INegocioRepository, NegocioRepository>();
 builder.Services.AddScoped<ICodigoVerificacionRepository, CodigoVerificacionRepository>();
-builder.Services.AddScoped<IRepartidorRepository, RepartidorRepository>();
-builder.Services.AddScoped<IAdministracionRepository, AdministracionRepository>();
+builder.Services.AddScoped<PersonalRepository>();
+builder.Services.AddScoped<IRepartidorRepository>(sp => sp.GetRequiredService<PersonalRepository>());
+builder.Services.AddScoped<IAdministracionRepository>(sp => sp.GetRequiredService<PersonalRepository>());
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
-builder.Services.AddScoped<IUbicacionRepository, UbicacionRepository>();
 
 builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -26,33 +26,30 @@ builder.Services.AddScoped<IRecuperacionService, RecuperacionService>();
 builder.Services.AddScoped<INegocioService, NegocioService>();
 builder.Services.AddScoped<IRepartidorService, RepartidorService>();
 builder.Services.AddScoped<IAdministracionService, AdministracionService>();
-builder.Services.AddScoped<IEmailService, EmailDesarrolloService>();
 builder.Services.AddScoped<IPedidoService, PedidoService>();
-builder.Services.AddScoped<IUbicacionService, UbicacionService>();
+builder.Services.AddScoped<IEmailService, EmailDesarrolloService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(o =>
     {
         o.LoginPath = "/Usuario/Login";
         o.AccessDeniedPath = "/Usuario/Login";
-
-        // La sesión caduca tras 30 minutos sin actividad
-        o.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-        o.SlidingExpiration = true;
-        o.Cookie.HttpOnly = true;
-        o.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     });
 
 var app = builder.Build();
+
+// Perfiles de prueba (solo Development y solo si no hay usuarios)
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    await DbSeeder.SembrarAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>());
+}
 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
-
-// Páginas de error con la marca de GTrack (404, 403, etc.)
-app.UseStatusCodePagesWithReExecute("/Home/StatusCode", "?code={0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
