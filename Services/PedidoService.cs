@@ -26,13 +26,21 @@ public class PedidoService(
         };
     }
 
+    // FE-9-CU03
+    public const string MensajeCamposObligatorios = "Debes completar todos los campos obligatorios del pedido";
+
     public async Task<(bool Ok, string? Error, string? Codigo)> RegistrarAsync(int usuarioNegocioId, RegistrarPedidoDto dto)
     {
         var negocio = await negocios.ObtenerPorUsuarioIdAsync(usuarioNegocioId);
         if (negocio is null)
             return (false, "No fue posible identificar tu negocio", null);
 
-        var items = dto.Productos
+        // FE-9-CU03: se valida también aquí, aunque el formulario ya lo revise (RN-2-CU03: al menos un producto)
+        var nombre = dto.ClienteNombre?.Trim() ?? "";
+        var telefono = dto.ClienteTelefono?.Trim() ?? "";
+        var direccion = dto.DireccionEntrega?.Trim() ?? "";
+
+        var items = (dto.Productos ?? [])
             .Where(p => !string.IsNullOrWhiteSpace(p.Descripcion))
             .Select(p => new ItemPedido
             {
@@ -42,62 +50,53 @@ public class PedidoService(
             })
             .ToList();
 
-        if (items.Count == 0)
-            return (false, "Debes completar todos los campos obligatorios del pedido", null);
+        if (nombre.Length == 0 || telefono.Length == 0 || direccion.Length == 0 ||
+            dto.MetodoPago is not { } metodoPago || !Enum.IsDefined(metodoPago) || items.Count == 0)
+            return (false, MensajeCamposObligatorios, null);
 
-        int clienteId = 1;
+        if (items.Any(i => i.Cantidad < 1 || i.PrecioUnitario <= 0))
+            return (false, "La cantidad y el precio de cada producto deben ser mayores que cero", null);
+
+        // FA-03-CU03: el cliente se identifica por su teléfono dentro del negocio; si ya existe se actualizan
+        // su nombre y su dirección (MEJORA 2), y si no, se crea. Si esto falla, el pedido no se registra.
+        // Cada negocio tiene sus propios clientes (UQ_Cliente_Negocio_Telefono y FK_Pedido_Cliente_Negocio):
+        // buscarlo en todos los negocios tomaba el cliente de otro negocio y el pedido no se podía guardar.
+        int clienteId;
         try
         {
-            var telefono = dto.ClienteTelefono?.Trim();
-            var nombre = dto.ClienteNombre?.Trim();
-            var direccion = dto.DireccionEntrega?.Trim();
+            var clienteDb = await context.Set<Cliente>()
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(c => c.NegocioId == negocio.Id && c.Telefono == telefono);
 
-            if (!string.IsNullOrEmpty(telefono))
+            if (clienteDb != null)
             {
-                var clienteDb = await context.Set<Cliente>()
-                    .IgnoreQueryFilters()
-                    .FirstOrDefaultAsync(c => c.Telefono == telefono);
+                if (clienteDb.NombreCompleto != nombre) clienteDb.NombreCompleto = nombre;
+                if (clienteDb.DireccionPredeterminada != direccion) clienteDb.DireccionPredeterminada = direccion;
 
-                if (clienteDb != null)
+                await context.SaveChangesAsync();
+                clienteId = clienteDb.Id;
+            }
+            else
+            {
+                var nuevoCliente = new Cliente
                 {
-                    clienteId = clienteDb.Id;
+                    NombreCompleto = nombre,
+                    Telefono = telefono,
+                    DireccionPredeterminada = direccion,
+                    FechaRegistro = DateTime.UtcNow,
+                    NegocioId = negocio.Id
+                };
 
-                    // Actualizamos nombre si cambió
-                    if (!string.IsNullOrEmpty(nombre) && clienteDb.NombreCompleto != nombre)
-                    {
-                        clienteDb.NombreCompleto = nombre;
-                    }
-
-                    // MEJORA 2: Actualizar la dirección predeterminada si el usuario introdujo una nueva
-                    if (!string.IsNullOrEmpty(direccion) && clienteDb.DireccionPredeterminada != direccion)
-                    {
-                        clienteDb.DireccionPredeterminada = direccion;
-                    }
-
-                    await context.SaveChangesAsync();
-                }
-                else
-                {
-                    var nuevoCliente = new Cliente
-                    {
-                        NombreCompleto = !string.IsNullOrEmpty(nombre) ? nombre : "Cliente Frecuente",
-                        Telefono = telefono,
-                        DireccionPredeterminada = !string.IsNullOrEmpty(direccion) ? direccion : "Sin dirección",
-                        FechaRegistro = DateTime.UtcNow,
-                        NegocioId = negocio.Id
-                    };
-
-                    context.Set<Cliente>().Add(nuevoCliente);
-                    await context.SaveChangesAsync();
-                    clienteId = nuevoCliente.Id;
-                }
+                context.Set<Cliente>().Add(nuevoCliente);
+                await context.SaveChangesAsync();
+                clienteId = nuevoCliente.Id;
             }
         }
         catch (Exception ex)
         {
             context.ChangeTracker.Clear();
-            logger.LogWarning(ex, "No se pudo registrar/buscar el cliente automáticamente, usando valor por defecto.");
-            clienteId = 1;
+            logger.LogError(ex, "No se pudo registrar o actualizar el cliente del pedido para el negocio {NegocioId}", negocio.Id);
+            return (false, "No fue posible registrar el pedido. Intenta nuevamente", null);
         }
 
         string? codigo = null;
@@ -122,8 +121,8 @@ public class PedidoService(
             Codigo = codigo,
             NegocioId = negocio.Id,
             ClienteId = clienteId,
-            DireccionEntrega = dto.DireccionEntrega.Trim(),
-            MetodoPagoId = (int)dto.MetodoPago!.Value,
+            DireccionEntrega = direccion,
+            MetodoPagoId = (int)metodoPago,
             EstadoPedidoId = 0,
             FechaCreacion = DateTime.UtcNow,
             Items = items
@@ -143,6 +142,37 @@ public class PedidoService(
         return (true, null, codigo);
     }
 
+    // ================= Regla de estados del pedido =================
+    // Orden: Recibido(0) → En preparación(1) → Listo para entrega(2) → Asignado(3) → En camino(4) → Entregado(5). Cancelado = 6
+    private static readonly string[] NombresEstado =
+        ["Recibido", "En preparación", "Listo para entrega", "Asignado", "En camino", "Entregado", "Cancelado"];
+
+    private const string MensajeEstadoCambiado = "El pedido cambió de estado mientras lo actualizabas. Revisa su estado e intenta nuevamente";
+
+    private static string NombreEstado(int estadoId) =>
+        estadoId >= 0 && estadoId < NombresEstado.Length ? NombresEstado[estadoId] : "Desconocido";
+
+    // El pedido solo avanza al estado siguiente: no puede retroceder ni saltarse estados.
+    // Cancelar se permite mientras no esté finalizado (Entregado/Cancelado se revisa antes).
+    // Devuelve el mensaje de error, o null si el cambio está permitido.
+    public static string? ValidarCambioEstado(int estadoActual, int nuevoEstadoId)
+    {
+        if (nuevoEstadoId < (int)EstadoPedido.Recibido || nuevoEstadoId > (int)EstadoPedido.Cancelado)
+            return "El estado seleccionado no es válido";
+
+        // Mismo estado (por ejemplo, cambiar el repartidor de un pedido Asignado) o cancelación
+        if (nuevoEstadoId == estadoActual || nuevoEstadoId == (int)EstadoPedido.Cancelado)
+            return null;
+
+        if (nuevoEstadoId < estadoActual)
+            return $"Un pedido no puede volver a un estado anterior: está en \"{NombreEstado(estadoActual)}\" y no puede pasar a \"{NombreEstado(nuevoEstadoId)}\"";
+
+        if (nuevoEstadoId > estadoActual + 1)
+            return $"Un pedido no puede saltarse estados: de \"{NombreEstado(estadoActual)}\" primero debe pasar a \"{NombreEstado(estadoActual + 1)}\"";
+
+        return null;
+    }
+
     public async Task<(bool Ok, string? Error)> ActualizarEstadoAsync(int usuarioId, int pedidoId, int nuevoEstadoId, int? repartidorId = null)
     {
         var negocio = await negocios.ObtenerPorUsuarioIdAsync(usuarioId);
@@ -158,12 +188,17 @@ public class PedidoService(
                 return (false, "Este pedido ya se encuentra finalizado y no puede ser modificado.");
             }
 
-            // MEJORA 3: Validación básica de secuencia de estados (Evitar saltos extraños si es necesario)
-            // (Opcional según tu flujo: Asegurar que un pedido no pase directamente a Entregado sin estar Asignado o En Camino)
-            if (nuevoEstadoId == (int)EstadoPedido.Entregado && pedido.EstadoPedidoId < (int)EstadoPedido.Asignado)
+            // MEJORA 3: el pedido no puede retroceder ni saltarse estados; solo avanza al siguiente.
+            // Ej.: si está "En preparación" no puede pasar a "Asignado" (primero va "Listo para entrega"),
+            // y si está "Asignado" no puede volver a "En preparación". Cancelarlo sí se permite.
+            var estadoActual = pedido.EstadoPedidoId;
+            var errorTransicion = ValidarCambioEstado(estadoActual, nuevoEstadoId);
+            if (errorTransicion is not null)
             {
-                return (false, "El pedido debe ser asignado y despachado antes de poder marcarse como entregado.");
+                return (false, errorTransicion);
             }
+
+            int? nuevoRepartidorId = null;
 
             if (nuevoEstadoId >= (int)EstadoPedido.Asignado && nuevoEstadoId <= (int)EstadoPedido.Entregado)
             {
@@ -173,8 +208,9 @@ public class PedidoService(
 
                 if (repartidorAValidar.HasValue && repartidorAValidar.Value > 0)
                 {
+                    // Solo cuenta la suspensión abierta: una suspensión con fecha de reactivación ya terminó (CU-27)
                     var estaSuspendido = await context.Set<SuspensionRepartidor>()
-                        .AnyAsync(s => s.RepartidorId == repartidorAValidar.Value);
+                        .AnyAsync(s => s.RepartidorId == repartidorAValidar.Value && s.FechaReactivacion == null);
 
                     if (estaSuspendido)
                     {
@@ -183,7 +219,7 @@ public class PedidoService(
 
                     if (repartidorId.HasValue && repartidorId.Value > 0)
                     {
-                        pedido.RepartidorId = repartidorId.Value;
+                        nuevoRepartidorId = repartidorId.Value;
                     }
                 }
                 else if (pedido.RepartidorId is null)
@@ -194,8 +230,19 @@ public class PedidoService(
 
             try
             {
-                pedido.EstadoPedidoId = nuevoEstadoId;
-                await pedidos.ActualizarAsync(pedido);
+                // Se guarda solo si el pedido sigue en el estado que se validó: si el cliente lo canceló
+                // o el repartidor lo avanzó un instante antes, no se cambia nada (así nunca retrocede).
+                var filas = await context.Pedidos
+                    .Where(p => p.Id == pedido.Id && p.EstadoPedidoId == estadoActual)
+                    .ExecuteUpdateAsync(s => s
+                        .SetProperty(p => p.EstadoPedidoId, nuevoEstadoId)
+                        .SetProperty(p => p.RepartidorId, p => nuevoRepartidorId ?? p.RepartidorId));
+
+                if (filas == 0)
+                {
+                    return (false, MensajeEstadoCambiado);
+                }
+
                 await RegistrarHistorialAsync(pedido.Id, nuevoEstadoId, usuarioId, null);
             }
             catch (Exception ex)
@@ -215,7 +262,7 @@ public class PedidoService(
         if (repartidor is not null)
         {
             var estaSuspendido = await context.Set<SuspensionRepartidor>()
-                .AnyAsync(s => s.RepartidorId == repartidor.Id);
+                .AnyAsync(s => s.RepartidorId == repartidor.Id && s.FechaReactivacion == null);
 
             if (estaSuspendido)
             {
@@ -239,8 +286,17 @@ public class PedidoService(
 
             try
             {
-                pedido.EstadoPedidoId = nuevoEstadoId;
-                await pedidos.ActualizarAsync(pedido);
+                // Igual que con el negocio: si el cliente lo canceló un instante antes, no se cambia nada
+                var estadoActual = pedido.EstadoPedidoId;
+                var filas = await context.Pedidos
+                    .Where(p => p.Id == pedido.Id && p.EstadoPedidoId == estadoActual && p.RepartidorId == repartidor.Id)
+                    .ExecuteUpdateAsync(s => s.SetProperty(p => p.EstadoPedidoId, nuevoEstadoId));
+
+                if (filas == 0)
+                {
+                    return (false, "Este pedido ya no se puede actualizar");  // FE-18-CU08
+                }
+
                 await RegistrarHistorialAsync(pedido.Id, nuevoEstadoId, usuarioId, null);
             }
             catch (Exception ex)
