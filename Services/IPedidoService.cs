@@ -8,4 +8,7 @@ public interface IPedidoService
 
     // CU-17: el cliente cancela su pedido con el código único (sin iniciar sesión)
     Task<(bool Ok, string? Error)> CancelarPorClienteAsync(string? codigo, string? motivo);
+
+    // CU-16: el repartidor reporta una novedad sobre uno de sus pedidos activos
+    Task<(bool Ok, string? Error)> RegistrarNovedadAsync(int usuarioRepartidorId, int pedidoId, int? tipoNovedadId, string? observaciones);
 }

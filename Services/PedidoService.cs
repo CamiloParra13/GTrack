@@ -416,4 +416,59 @@ public class PedidoService(
             logger.LogError(ex, "No se pudo avisar al negocio la cancelación del pedido {Codigo}", pedido.Codigo);
         }
     }
+
+    // ================= CU-16 Novedad de pedido (repartidor) =================
+    public const int MaxCaracteresObservaciones = 500;
+
+    private const string MensajeTipoNovedad = "Debes seleccionar un tipo de novedad";                     // FE-39-CU16
+    private const string MensajeNovedadNoPermitida = "No se pueden reportar novedades sobre este pedido"; // FE-40-CU16
+    private const string MensajeErrorNovedad = "No fue posible registrar la novedad. Intenta Nuevamente"; // FE-41-CU16
+
+    public async Task<(bool Ok, string? Error)> RegistrarNovedadAsync(int usuarioRepartidorId, int pedidoId, int? tipoNovedadId, string? observaciones)
+    {
+        if (tipoNovedadId is null || !Enum.IsDefined(typeof(TipoNovedad), tipoNovedadId.Value))
+            return (false, MensajeTipoNovedad);
+
+        var texto = observaciones?.Trim() ?? "";
+        if (texto.Length > MaxCaracteresObservaciones)
+            return (false, $"Las observaciones pueden tener máximo {MaxCaracteresObservaciones} caracteres");
+
+        try
+        {
+            var repartidor = await context.Repartidores
+                .AsNoTracking()
+                .FirstOrDefaultAsync(r => r.UsuarioId == usuarioRepartidorId);
+
+            if (repartidor is null)
+                return (false, "No se encontró el perfil de repartidor para tu cuenta.");
+
+            var pedido = await context.Pedidos
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == pedidoId && p.RepartidorId == repartidor.Id);
+
+            if (pedido is null)
+                return (false, "El pedido no fue encontrado o no está asignado a tu cuenta.");
+
+            // RN-1-CU16: solo pedidos activos (ni entregados ni cancelados)
+            if (pedido.EstadoPedidoId == (int)EstadoPedido.Entregado || pedido.EstadoPedidoId == (int)EstadoPedido.Cancelado)
+                return (false, MensajeNovedadNoPermitida);
+
+            // PE-31-CU16: la novedad queda registrada con fecha y hora. PE-32-CU16: el pedido no cambia de estado.
+            context.NovedadesPedido.Add(new NovedadPedido
+            {
+                PedidoId = pedido.Id,
+                TipoNovedadId = tipoNovedadId.Value,
+                Observaciones = texto.Length == 0 ? null : texto,
+                Fecha = DateTime.UtcNow
+            });
+            await context.SaveChangesAsync();
+            return (true, null);
+        }
+        catch (Exception ex)
+        {
+            context.ChangeTracker.Clear();
+            logger.LogError(ex, "Error al registrar la novedad del pedido {PedidoId}", pedidoId);
+            return (false, MensajeErrorNovedad);
+        }
+    }
 }

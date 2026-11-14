@@ -152,6 +152,9 @@ public class RepartidorController(
                 .OrderByDescending(p => p.FechaCreacion)
                 .ToListAsync();
 
+            // CU-16: novedades ya reportadas, para mostrarlas en el detalle de cada pedido
+            ViewBag.Novedades = await NovedadesDeAsync(misPedidos.Select(p => p.Id).ToList());
+
             return View(misPedidos);
         }
         catch (Exception ex)
@@ -205,6 +208,40 @@ public class RepartidorController(
     [Authorize(Roles = "Repartidor")]
     public async Task<IActionResult> MarcarEntregado(int id) =>
         await ActualizarEstado(id, (int)EstadoPedido.Entregado);
+
+    // CU-16: el repartidor reporta una novedad (cliente ausente, dirección incorrecta, etc.).
+    // El pedido conserva su estado; la novedad queda guardada con su fecha y hora.
+    [HttpPost, ValidateAntiForgeryToken]
+    [Authorize(Roles = "Repartidor")]
+    public async Task<IActionResult> ReportarNovedad(int id, int? tipoNovedadId, string? observaciones)
+    {
+        var (ok, error) = await pedidos.RegistrarNovedadAsync(UsuarioId, id, tipoNovedadId, observaciones);
+        if (ok)
+            TempData["Mensaje"] = "Novedad registrada exitosamente";
+        else
+            TempData["Error"] = error ?? "No fue posible registrar la novedad. Intenta Nuevamente";
+
+        return RedirectToAction(nameof(MisPedidos));
+    }
+
+    // Si no se pueden leer las novedades, la lista de pedidos se muestra igual
+    private async Task<ILookup<int, NovedadPedido>> NovedadesDeAsync(List<int> pedidoIds)
+    {
+        try
+        {
+            var novedades = await context.NovedadesPedido
+                .AsNoTracking()
+                .Where(n => pedidoIds.Contains(n.PedidoId))
+                .OrderBy(n => n.Fecha)
+                .ToListAsync();
+            return novedades.ToLookup(n => n.PedidoId);
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "No se pudieron cargar las novedades de los pedidos del repartidor (usuario {UsuarioId})", UsuarioId);
+            return Enumerable.Empty<NovedadPedido>().ToLookup(n => n.PedidoId);
+        }
+    }
 
     [HttpPost, ValidateAntiForgeryToken]
     [Authorize(Roles = "Repartidor")]

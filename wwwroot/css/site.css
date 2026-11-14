@@ -46,6 +46,13 @@ a {
     --bs-btn-active-border-color: var(--gt-blue-dark);
 }
 
+/* Botones con borde y fondo blanco (página de inicio). Se usa esta clase en lugar de bg-white,
+   porque bg-white deja el fondo blanco también al pasar el cursor y el texto, que se vuelve
+   blanco, deja de verse. Así el botón se rellena de color y el texto queda en blanco. */
+.btn.btn-fondo-blanco {
+    --bs-btn-bg: #fff;
+}
+
 .text-primary {
     color: var(--gt-blue) !important;
 }

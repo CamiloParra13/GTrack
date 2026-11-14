@@ -13,6 +13,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<SuspensionRepartidor> SuspensionRepartidor { get; set; }
     public DbSet<UbicacionPedido> UbicacionesPedido => Set<UbicacionPedido>();
     public DbSet<SolicitudCancelacion> SolicitudesCancelacion => Set<SolicitudCancelacion>();
+    public DbSet<NovedadPedido> NovedadesPedido => Set<NovedadPedido>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -115,6 +116,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.HasIndex(s => s.PedidoId).IsUnique();
             e.HasOne(s => s.Pedido).WithMany()
                 .HasForeignKey(s => s.PedidoId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // CU-16: novedades que reporta el repartidor (la tabla ya existe en la base de datos)
+        modelBuilder.Entity<NovedadPedido>(e =>
+        {
+            e.ToTable("NovedadPedido");
+            e.Property(n => n.Observaciones).HasMaxLength(500);
+            e.Property(n => n.Fecha).HasColumnType("datetime2(0)");
+            e.HasIndex(n => n.PedidoId);
+            e.HasOne(n => n.Pedido).WithMany()
+                .HasForeignKey(n => n.PedidoId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
