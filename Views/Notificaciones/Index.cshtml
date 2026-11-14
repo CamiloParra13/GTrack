@@ -1,0 +1,55 @@
+@model List<Notificacion>
+@{
+    ViewData["Title"] = "Notificaciones";
+    var hayNoLeidas = Model.Any(n => !n.Leida);
+}
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <div>
+        <h2 class="mb-0">Notificaciones</h2>
+        <p class="text-muted mb-0">Avisos de tu cuenta en GTrack</p>
+    </div>
+    @if (hayNoLeidas)
+    {
+        <form asp-action="MarcarTodas" method="post">
+            <button type="submit" class="btn btn-outline-primary btn-sm">Marcar todas como leídas</button>
+        </form>
+    }
+</div>
+
+@if (Model.Count == 0)
+{
+    <div class="card shadow-sm">
+        <div class="card-body text-center text-muted py-5">
+            <div style="font-size: 2rem;">🔔</div>
+            <p class="mb-0">No tienes notificaciones por ahora</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card shadow-sm">
+        <div class="list-group list-group-flush">
+            @foreach (var n in Model)
+            {
+                <form asp-action="Abrir" asp-route-id="@n.Id" method="post" class="m-0">
+                    <button type="submit" class="list-group-item list-group-item-action text-start d-flex gap-3 align-items-start border-0 @(n.Leida ? "" : "bg-primary bg-opacity-10")">
+                        <span class="fs-5">@(n.Leida ? "✉️" : "🔔")</span>
+                        <span class="flex-grow-1">
+                            <span class="d-block fw-semibold">
+                                @n.Titulo
+                                @if (!n.Leida)
+                                {
+                                    <span class="badge bg-primary ms-1">Nueva</span>
+                                }
+                            </span>
+                            <span class="d-block text-muted">@n.Mensaje</span>
+                            <span class="d-block text-muted small">@FechaLocal.DesdeUtc(n.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt")</span>
+                        </span>
+                    </button>
+                </form>
+            }
+        </div>
+    </div>
+    <p class="text-muted small mt-2">Se muestran tus 50 notificaciones más recientes.</p>
+}

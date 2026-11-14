@@ -28,6 +28,17 @@ public class RecuperacionService(
             Expira = DateTime.UtcNow.AddMinutes(MinutosVigencia)
         });
 
+        await email.EnviarAsync(usuario.Correo, "Restablece tu contraseña de GTrack", PlantillaCorreo.Crear(
+            titulo: "Restablece tu contraseña",
+            saludo: "Hola",
+            parrafos:
+            [
+                "Recibimos una solicitud para restablecer la contraseña de tu cuenta de GTrack.",
+                "Haz clic en el botón para crear una nueva contraseña."
+            ],
+            textoBoton: "Restablecer contraseña",
+            urlBoton: construirEnlace(token),
+            nota: $"El enlace es válido por {MinutosVigencia} minutos y solo puede usarse una vez. Si no lo solicitaste, ignora este mensaje: tu contraseña actual seguirá funcionando."));
         var enlace = construirEnlace(token);
         await email.EnviarAsync(usuario.Correo, "Restablece tu contraseña de GTrack",
             "Recibimos una solicitud para restablecer la contraseña de tu cuenta de GTrack.\n\n" +
@@ -59,6 +70,7 @@ public class RecuperacionService(
         var usuario = await usuarios.ObtenerPorIdAsync(t.UsuarioId);
         if (usuario is null) return (false, MensajeTokenInvalido);
 
+        if (hasher.VerifyHashedPassword(usuario, usuario.PasswordHash, nueva) != PasswordVerificationResult.Failed)
         // RN-3: no puede ser igual a la anterior
         if (EsLaMismaContrasena(usuario, nueva))
             return (false, "La nueva contraseña no puede ser igual a la anterior");
@@ -66,9 +78,25 @@ public class RecuperacionService(
         usuario.PasswordHash = hasher.HashPassword(usuario, nueva);
         await usuarios.ActualizarAsync(usuario);
 
-        t.Usado = true; // RN-2: un solo uso
+        t.Usado = true;
         await tokens.ActualizarAsync(t);
 
+        try
+        {
+            await email.EnviarAsync(usuario.Correo, "Tu contraseña fue restablecida", PlantillaCorreo.Crear(
+                titulo: "Tu contraseña fue restablecida",
+                saludo: "Hola",
+                parrafos:
+                [
+                    "Tu contraseña de GTrack fue restablecida exitosamente.",
+                    "Ya puedes iniciar sesión con tu nueva contraseña."
+                ],
+                nota: "Si no fuiste tú, contacta a soporte de inmediato."));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "No se pudo enviar el correo de confirmación de cambio de contraseña a {Correo}", usuario.Correo);
+        }
         try
         {
             await email.EnviarAsync(usuario.Correo, "Tu contraseña fue restablecida",
