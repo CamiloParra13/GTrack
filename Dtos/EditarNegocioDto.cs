@@ -5,7 +5,7 @@ public class EditarNegocioDto
 {
     [Display(Name = "Nombre comercial")]
     [Required(ErrorMessage = RegistroNegocioDto.Obligatorio)]
-    [StringLength(100, ErrorMessage = "Máximo 100 caracteres")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "Debe tener entre 2 y 100 caracteres")]
     public string Nombre { get; set; } = "";
 
     [Display(Name = "Categoría de actividad")]
@@ -14,17 +14,17 @@ public class EditarNegocioDto
 
     [Display(Name = "Correo electrónico")]
     [Required(ErrorMessage = RegistroNegocioDto.Obligatorio)]
-    [EmailAddress(ErrorMessage = "Correo no válido")]
+    [RegularExpression(ReglasValidacion.Correo, ErrorMessage = ReglasValidacion.CorreoMensaje)]
     [StringLength(150, ErrorMessage = "Máximo 150 caracteres")]
     public string Correo { get; set; } = "";
 
     [Display(Name = "Teléfono de contacto")]
     [Required(ErrorMessage = RegistroNegocioDto.Obligatorio)]
-    [RegularExpression(@"^\d{7,10}$", ErrorMessage = "Debe tener entre 7 y 10 dígitos")]
+    [RegularExpression(ReglasValidacion.Telefono, ErrorMessage = ReglasValidacion.TelefonoMensaje)]
     public string Telefono { get; set; } = "";
 
     [Display(Name = "Dirección")]
     [Required(ErrorMessage = RegistroNegocioDto.Obligatorio)]
-    [StringLength(200, ErrorMessage = "Máximo 200 caracteres")]
+    [StringLength(200, MinimumLength = 5, ErrorMessage = "Debe tener entre 5 y 200 caracteres")]
     public string Direccion { get; set; } = "";
 }

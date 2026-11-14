@@ -94,7 +94,33 @@ public class PedidoController(
 
     [AllowAnonymous]
     [HttpPost, ValidateAntiForgeryToken]
-    public async Task<IActionResult> Consultar(string codigo)
+    public Task<IActionResult> Consultar(string codigo) => MostrarPedidoAsync(codigo);
+
+    // ---------- CU-17 Cancelar pedido (cliente, sin sesión) ----------
+    // Pasos 7 y 8: el cliente envía el motivo desde la consulta del pedido
+    [AllowAnonymous]
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> Cancelar(string codigo, string? motivo)
+    {
+        var (ok, error) = await pedidos.CancelarPorClienteAsync(codigo, motivo);
+
+        if (!ok && error == PedidoService.MensajeCodigoNoEncontrado)
+        {
+            ModelState.AddModelError("", error); // FE-43-CU17
+            return View(nameof(Consultar));
+        }
+
+        if (ok)
+            ViewBag.MensajeCancelacion = "Pedido cancelado exitosamente";
+        else
+            ModelState.AddModelError("", error!); // FE-42, FE-44 o FE-45
+
+        // Se vuelve a mostrar el pedido con su estado actualizado
+        return await MostrarPedidoAsync(codigo);
+    }
+
+    // CU-05: busca el pedido por su código y arma la vista de consulta
+    private async Task<IActionResult> MostrarPedidoAsync(string? codigo)
     {
         const string CodigoNoEncontrado = "Código no encontrado, verifica e intenta nuevamente";
 
@@ -103,7 +129,7 @@ public class PedidoController(
         if (!System.Text.RegularExpressions.Regex.IsMatch(codigoLimpio, "^[A-Z0-9]{8}$"))
         {
             ModelState.AddModelError("", CodigoNoEncontrado);
-            return View();
+            return View(nameof(Consultar));
         }
 
         try
@@ -118,7 +144,7 @@ public class PedidoController(
             if (pedido == null)
             {
                 ModelState.AddModelError("", CodigoNoEncontrado);
-                return View();
+                return View(nameof(Consultar));
             }
 
             // Línea de tiempo: cada cambio de estado con su fecha/hora (UTC)
@@ -126,13 +152,29 @@ public class PedidoController(
                 .SqlQuery<HistorialEstadoItem>($"SELECT EstadoPedidoId, FechaCambio FROM dbo.HistorialEstadoPedido WHERE PedidoId = {pedido.Id} ORDER BY FechaCambio")
                 .ToListAsync();
 
-            return View(pedido);
+            // CU-17: motivo y fecha de la cancelación hecha por el cliente (si existe).
+            // Va aparte para que la consulta siga funcionando aunque falte la tabla SolicitudCancelacion.
+            if (pedido.EstadoPedidoId == (int)EstadoPedido.Cancelado)
+            {
+                try
+                {
+                    ViewBag.Cancelacion = await context.SolicitudesCancelacion
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(s => s.PedidoId == pedido.Id);
+                }
+                catch (Exception)
+                {
+                    ViewBag.Cancelacion = null;
+                }
+            }
+
+            return View(nameof(Consultar), pedido);
         }
         catch (Exception)
         {
             // FE-14-CU05: plataforma no disponible
             ModelState.AddModelError("", "No fue posible cargar la información. Intenta nuevamente");
-            return View();
+            return View(nameof(Consultar));
         }
     }
 

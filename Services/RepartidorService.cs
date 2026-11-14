@@ -62,7 +62,7 @@ public class RepartidorService(
             NombreCompleto = dto.NombreCompleto.Trim(),
             Telefono = telefono,
             Vehiculo = dto.Vehiculo!.Value,
-            Placa = conPlaca ? dto.Placa!.Trim().Replace("-", "").ToUpperInvariant() : null
+            Placa = conPlaca ? ReglasValidacion.NormalizarPlaca(dto.Placa) : null
         };
 
         try

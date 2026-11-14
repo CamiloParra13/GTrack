@@ -6,7 +6,7 @@ public class RegistroNegocioDto
 
     [Display(Name = "Nombre del negocio")]
     [Required(ErrorMessage = Obligatorio)]
-    [StringLength(100, ErrorMessage = "Máximo 100 caracteres")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "Debe tener entre 2 y 100 caracteres")]
     public string Nombre { get; set; } = "";
 
     [Display(Name = "Tipo de actividad económica")]
@@ -15,23 +15,23 @@ public class RegistroNegocioDto
 
     [Display(Name = "Número de documento (NIT/CC)")]
     [Required(ErrorMessage = Obligatorio)]
-    [RegularExpression(@"^\d{6,12}$", ErrorMessage = "Debe tener entre 6 y 12 dígitos, sin puntos ni guiones")]
+    [RegularExpression(ReglasValidacion.Documento, ErrorMessage = ReglasValidacion.DocumentoMensaje)]
     public string Documento { get; set; } = "";
 
     [Display(Name = "Correo electrónico corporativo")]
     [Required(ErrorMessage = Obligatorio)]
-    [EmailAddress(ErrorMessage = "Correo no válido")]
+    [RegularExpression(ReglasValidacion.Correo, ErrorMessage = ReglasValidacion.CorreoMensaje)]
     [StringLength(150, ErrorMessage = "Máximo 150 caracteres")]
     public string Correo { get; set; } = "";
 
     [Display(Name = "Teléfono de contacto")]
     [Required(ErrorMessage = Obligatorio)]
-    [RegularExpression(@"^\d{7,10}$", ErrorMessage = "Debe tener entre 7 y 10 dígitos")]
+    [RegularExpression(ReglasValidacion.Telefono, ErrorMessage = ReglasValidacion.TelefonoMensaje)]
     public string Telefono { get; set; } = "";
 
     [Display(Name = "Dirección legal/comercial")]
     [Required(ErrorMessage = Obligatorio)]
-    [StringLength(200, ErrorMessage = "Máximo 200 caracteres")]
+    [StringLength(200, MinimumLength = 5, ErrorMessage = "Debe tener entre 5 y 200 caracteres")]
     public string Direccion { get; set; } = "";
 
     [Display(Name = "Contraseña")]
