@@ -1,0 +1,82 @@
+﻿@model LoginDto
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="mx-auto" style="max-width: 420px;">
+    <div class="card shadow-sm p-4">
+        <p class="text-center text-primary fw-bold small mb-1">GTRACK</p>
+        <h2 class="text-center">Iniciar Sesión</h2>
+        <p class="text-center text-muted">Ingresa a tu cuenta para continuar en la plataforma</p>
+
+        @if (TempData["Mensaje"] is string mensaje)
+        {
+            <div class="alert alert-info">@mensaje</div>
+        }
+
+        <form asp-action="Login" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+
+            <p class="small text-uppercase text-center text-muted mb-1">Selecciona tu perfil</p>
+            <div class="btn-group w-100 mb-3" role="group">
+                @foreach (var rol in Enum.GetValues<RolUsuario>())
+                {
+                    <input type="radio" class="btn-check" name="Rol" id="rol-@rol" value="@rol"
+                           checked="@(Model.Rol == rol)" />
+                    <label class="btn btn-outline-primary" for="rol-@rol">@rol</label>
+                }
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Identificador" class="form-label"></label>
+                <input asp-for="Identificador" class="form-control" placeholder="ejemplo@gtrack.com o 102345678" />
+            </div>
+
+            <div class="mb-2">
+                <label asp-for="Password" class="form-label"></label>
+                <div class="input-group">
+                    <input asp-for="Password" class="form-control" id="password" />
+                    <button type="button" class="btn btn-outline-secondary" id="toggle-password"
+                            aria-label="Mostrar u ocultar contraseña">
+                        <i class="bi bi-eye" id="icono-password"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-end mb-3">
+                <a asp-action="RecuperarContrasena" class="small">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Ingresar <i class="bi bi-arrow-right ms-1"></i></button>
+        </form>
+
+        <hr />
+        @* Solo los negocios pueden registrarse: repartidores y administradores los registra la plataforma *@
+        <p id="bloque-registro" class="text-center small mb-1 @(Model.Rol == RolUsuario.Negocio ? "" : "d-none")">
+            ¿No tienes una cuenta?
+            <a asp-controller="Negocio" asp-action="Registrar">Registrarse en Gtrack</a>
+        </p>
+        <p class="text-center small mb-0"><a asp-controller="Home" asp-action="Index"><i class="bi bi-arrow-left me-1"></i>Volver al Inicio</a></p>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Mostrar el enlace de registro solo cuando el perfil seleccionado es "Negocio"
+        var bloqueRegistro = document.getElementById('bloque-registro');
+        document.querySelectorAll('input[name="Rol"]').forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                bloqueRegistro.classList.toggle('d-none', this.value !== 'Negocio');
+            });
+        });
+
+        document.getElementById('toggle-password').addEventListener('click', function () {
+            var campo = document.getElementById('password');
+            var icono = document.getElementById('icono-password');
+            var visible = campo.type === 'text';
+            campo.type = visible ? 'password' : 'text';
+            icono.className = visible ? 'bi bi-eye' : 'bi bi-eye-slash';
+        });
+    </script>
+}

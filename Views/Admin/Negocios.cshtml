@@ -1,0 +1,127 @@
+﻿@model List<NegocioAdminDto>
+@{
+    ViewData["Title"] = "Negocios";
+
+    (string Texto, string Clase, string Icono) Est(EstadoCuenta e) => e switch
+    {
+        EstadoCuenta.Activo => ("Activo", "estado-entregado", "bi-check-circle"),
+        EstadoCuenta.PendienteValidacion => ("Pendiente de validación", "estado-preparacion", "bi-hourglass-split"),
+        EstadoCuenta.Suspendido => ("Suspendido", "estado-recibido", "bi-pause-circle"),
+        EstadoCuenta.Rechazado => ("Rechazado", "estado-cancelado", "bi-x-circle"),
+        _ => ("Eliminado", "estado-recibido", "bi-trash")
+    };
+
+    var lista = Model ?? new List<NegocioAdminDto>();
+    var pendientes = lista.Count(n => n.Estado == EstadoCuenta.PendienteValidacion);
+    var activos = lista.Count(n => n.Estado == EstadoCuenta.Activo);
+    var otros = lista.Count - pendientes - activos;
+}
+
+<h2 class="mb-0"><i class="bi bi-shop me-2"></i>Negocios</h2>
+<p class="text-muted">Negocios registrados en la plataforma</p>
+
+@if (TempData["Mensaje"] is string ok)
+{
+    <div class="alert alert-success">@ok</div>
+}
+@if (TempData["Aviso"] is string aviso)
+{
+    <div class="alert alert-warning">@aviso</div>
+}
+
+@if (lista.Count == 0)
+{
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="empty-state">
+            <i class="bi bi-shop"></i>
+            <p>No hay negocios registrados.</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <div class="resumen-tile">
+                <div class="resumen-icono bg-primary bg-opacity-10 text-primary"><i class="bi bi-shop"></i></div>
+                <div>
+                    <div class="resumen-valor">@lista.Count</div>
+                    <div class="resumen-texto">Negocios registrados</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="resumen-tile">
+                <div class="resumen-icono estado-preparacion"><i class="bi bi-hourglass-split"></i></div>
+                <div>
+                    <div class="resumen-valor">@pendientes</div>
+                    <div class="resumen-texto">Pendientes de validación</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="resumen-tile">
+                <div class="resumen-icono estado-entregado"><i class="bi bi-check-circle"></i></div>
+                <div>
+                    <div class="resumen-valor">@activos</div>
+                    <div class="resumen-texto">Activos</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="resumen-tile">
+                <div class="resumen-icono estado-recibido"><i class="bi bi-slash-circle"></i></div>
+                <div>
+                    <div class="resumen-valor">@otros</div>
+                    <div class="resumen-texto">Otros estados</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Negocio</th>
+                        <th>Actividad</th>
+                        <th>NIT / CC</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var n in lista)
+                    {
+                        var est = Est(n.Estado);
+                        <tr>
+                            <td class="ps-4 fw-semibold">@n.Nombre</td>
+                            <td>@n.TipoActividad</td>
+                            <td>@n.Documento</td>
+                            <td>@n.Correo</td>
+                            <td>@n.Telefono</td>
+                            <td><span class="estado-badge @est.Clase"><i class="bi @est.Icono"></i>@est.Texto</span></td>
+                            <td class="text-end pe-4">
+                                @if (n.Estado == EstadoCuenta.PendienteValidacion)
+                                {
+                                    <form asp-action="AprobarNegocio" asp-route-id="@n.Id" method="post">
+                                        <button type="submit" class="btn btn-sm btn-primary rounded-pill px-3"
+                                                data-confirm="El negocio @n.Nombre quedará activo y podrá iniciar sesión en la plataforma."
+                                                data-confirm-titulo="¿Aprobar negocio?"
+                                                data-confirm-ok="Sí, aprobar"
+                                                data-confirm-tipo="primary">
+                                            <i class="bi bi-check2 me-1"></i>Aprobar
+                                        </button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

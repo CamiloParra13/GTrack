@@ -1,0 +1,194 @@
+@model IEnumerable<Pedido>
+
+@{
+    ViewData["Title"] = "Pedidos Activos";
+    var lista = Model?.ToList() ?? new List<Pedido>();
+
+    int Contar(params int[] estados) => lista.Count(p => estados.Contains(p.EstadoPedidoId));
+
+    string ClaseEstado(int id) => id switch
+    {
+        0 => "estado-recibido",
+        1 => "estado-preparacion",
+        2 => "estado-listo",
+        3 => "estado-asignado",
+        4 => "estado-encamino",
+        5 => "estado-entregado",
+        6 => "estado-cancelado",
+        _ => "estado-recibido"
+    };
+
+    string IconoEstado(int id) => id switch
+    {
+        0 => "bi-inbox",
+        1 => "bi-hourglass-split",
+        2 => "bi-box-seam",
+        3 => "bi-person-check",
+        4 => "bi-truck",
+        5 => "bi-check2-circle",
+        6 => "bi-x-circle",
+        _ => "bi-circle"
+    };
+
+    string Etiqueta(int id) => id switch
+    {
+        0 => "Recibido",
+        1 => "En preparación",
+        2 => "Listo para entrega",
+        3 => "Asignado",
+        4 => "En camino",
+        5 => "Entregado",
+        6 => "Cancelado",
+        _ => "Desconocido"
+    };
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+        <h2 class="mb-0">Gestión de Pedidos Activos</h2>
+        <a asp-action="Registrar" class="btn btn-primary rounded-pill px-4">
+            <i class="bi bi-plus-lg me-1"></i>Registrar pedido
+        </a>
+    </div>
+
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-success">@TempData["Mensaje"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <!-- Resumen -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <div class="resumen-tile">
+                <div class="resumen-icono bg-primary bg-opacity-10 text-primary"><i class="bi bi-list-check"></i></div>
+                <div>
+                    <div class="resumen-valor">@lista.Count</div>
+                    <div class="resumen-texto">Pedidos activos</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="resumen-tile">
+                <div class="resumen-icono bg-warning bg-opacity-25 text-warning"><i class="bi bi-hourglass-split"></i></div>
+                <div>
+                    <div class="resumen-valor">@Contar(0, 1, 2)</div>
+                    <div class="resumen-texto">Por asignar</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="resumen-tile">
+                <div class="resumen-icono estado-asignado"><i class="bi bi-person-check"></i></div>
+                <div>
+                    <div class="resumen-valor">@Contar(3)</div>
+                    <div class="resumen-texto">Asignados</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="resumen-tile">
+                <div class="resumen-icono estado-encamino"><i class="bi bi-truck"></i></div>
+                <div>
+                    <div class="resumen-valor">@Contar(4)</div>
+                    <div class="resumen-texto">En camino</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (lista.Count == 0)
+    {
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="empty-state">
+                <i class="bi bi-inbox"></i>
+                <p class="mb-3">No hay pedidos activos en este momento.</p>
+                <a asp-action="Registrar" class="btn btn-outline-primary rounded-pill px-4">Registrar el primer pedido</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">Código</th>
+                            <th>Cliente</th>
+                            <th>Dirección</th>
+                            <th>Estado actual</th>
+                            <th>Acciones / Cambiar estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pedido in lista)
+                        {
+                            <tr>
+                                <td class="ps-4"><span class="badge bg-light text-dark border font-monospace px-2 py-1">@pedido.Codigo</span></td>
+                                <td>@(pedido.Cliente?.NombreCompleto ?? "Cliente")</td>
+                                <td>@pedido.DireccionEntrega</td>
+                                <td>
+                                    <span class="estado-badge @ClaseEstado(pedido.EstadoPedidoId)">
+                                        <i class="bi @IconoEstado(pedido.EstadoPedidoId)"></i>@Etiqueta(pedido.EstadoPedidoId)
+                                    </span>
+                                </td>
+                                <td>
+                                    <form asp-action="ActualizarEstado" method="post" class="form-estado d-inline-flex flex-column gap-2"
+                                          data-confirm-titulo="¿Cancelar el pedido?" data-confirm-ok="Sí, cancelar" data-confirm-tipo="danger">
+                                        <input type="hidden" name="id" value="@pedido.Id" />
+                                        <div class="d-flex gap-2">
+                                            <select name="repartidorId" class="form-select form-select-sm" style="width: 150px;">
+                                                <option value="">-- Repartidor --</option>
+                                                @if (ViewBag.Repartidores != null)
+                                                {
+                                                    @foreach (var rep in (IEnumerable<Repartidor>)ViewBag.Repartidores)
+                                                    {
+                                                        <option value="@rep.Id" selected="@(pedido.RepartidorId == rep.Id)">@rep.NombreCompleto</option>
+                                                    }
+                                                }
+                                            </select>
+
+                                            <select name="nuevoEstadoId" class="form-select form-select-sm select-estado" style="width: 160px;">
+                                                <option value="0" selected="@(pedido.EstadoPedidoId == 0)">Recibido</option>
+                                                <option value="1" selected="@(pedido.EstadoPedidoId == 1)">En Preparación</option>
+                                                <option value="2" selected="@(pedido.EstadoPedidoId == 2)">Listo Para Entrega</option>
+                                                <option value="3" selected="@(pedido.EstadoPedidoId == 3)">Asignado</option>
+                                                <option value="4" selected="@(pedido.EstadoPedidoId == 4)">En Camino</option>
+                                                <option value="5" selected="@(pedido.EstadoPedidoId == 5)">Entregado</option>
+                                                <option value="6" selected="@(pedido.EstadoPedidoId == 6)">Cancelado</option>
+                                            </select>
+
+                                            <button type="submit" class="btn btn-primary btn-sm rounded-pill px-3">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // Pide confirmación solo cuando se va a cancelar un pedido
+        document.querySelectorAll('.form-estado').forEach(function (form) {
+            var select = form.querySelector('.select-estado');
+            function actualizar() {
+                if (select.value === '6') {
+                    form.dataset.confirm = 'Esta acción no se puede deshacer. El cliente verá el pedido como cancelado.';
+                } else {
+                    delete form.dataset.confirm;
+                }
+            }
+            select.addEventListener('change', actualizar);
+            actualizar();
+        });
+    </script>
+}
