@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label asp-for="ClienteTelefono" class="form-label">Teléfono del cliente</label>
-                    <input asp-for="ClienteTelefono" type="tel" inputmode="numeric" class="form-control" placeholder="Ej. 3109876543" id="ClienteTelefono" />
+                    <input maxlength="10" data-solo-digitos asp-for="ClienteTelefono" type="tel" inputmode="numeric" class="form-control" placeholder="Ej. 3109876543" id="ClienteTelefono" />
                     <span asp-validation-for="ClienteTelefono" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -234,7 +234,7 @@
             if (telInput) {
                 telInput.addEventListener('blur', function () {
                     const tel = this.value.trim();
-                    if (/^\d{7,10}$/.test(tel)) {
+                    if (/^\d{10}$/.test(tel)) {
                         fetch(`/Pedido/BuscarCliente?telefono=${encodeURIComponent(tel)}`)
                             .then(res => res.json())
                             .then(data => {

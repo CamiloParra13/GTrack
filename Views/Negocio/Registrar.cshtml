@@ -33,7 +33,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Documento" class="form-label"></label>
-                <input asp-for="Documento" class="form-control" inputmode="numeric" placeholder="901458762" />
+                <input maxlength="10" data-solo-digitos asp-for="Documento" class="form-control" inputmode="numeric" placeholder="9014587620" />
                 <span asp-validation-for="Documento" class="text-danger small"></span>
             </div>
 
@@ -41,12 +41,12 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label asp-for="Correo" class="form-label"></label>
-                    <input asp-for="Correo" class="form-control" placeholder="contacto@tuempresa.com" />
+                    <input type="email" maxlength="150" asp-for="Correo" class="form-control" placeholder="contacto@tuempresa.com" />
                     <span asp-validation-for="Correo" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="Telefono" class="form-label"></label>
-                    <input asp-for="Telefono" type="tel" class="form-control" inputmode="numeric" placeholder="3109876543" />
+                    <input maxlength="10" data-solo-digitos asp-for="Telefono" type="tel" class="form-control" inputmode="numeric" placeholder="3109876543" />
                     <span asp-validation-for="Telefono" class="text-danger small"></span>
                 </div>
             </div>
@@ -139,11 +139,12 @@
 
             function actualizarBoton() {
                 const llenos = campos.every(c => c.value.trim() !== '');
-                const documentoOk = /^\d{6,12}$/.test(form.Documento.value.trim());
-                const telefonoOk = /^\d{7,10}$/.test(form.Telefono.value.trim());
+                const documentoOk = GTrackReglas.documento.test(form.Documento.value.trim());
+                const telefonoOk = GTrackReglas.telefono.test(form.Telefono.value.trim());
+                const correoOk = GTrackReglas.correo.test(form.Correo.value.trim());
                 const passOk = /^(?=.*\d)(?=.*\p{L}).{6,}$/u.test(pass.value);
                 const coinciden = pass.value === confirmar.value;
-                boton.disabled = !(llenos && documentoOk && telefonoOk && passOk && coinciden && form.checkValidity());
+                boton.disabled = !(llenos && documentoOk && telefonoOk && correoOk && passOk && coinciden && form.checkValidity());
             }
 
             form.addEventListener('input', function () { actualizarBarra(); actualizarBoton(); });

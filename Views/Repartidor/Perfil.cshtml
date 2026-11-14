@@ -1,0 +1,165 @@
+@model PerfilRepartidorDto
+@{
+    ViewData["Title"] = "Mi perfil";
+
+    var vehiculo = Model.Vehiculo switch
+    {
+        TipoVehiculo.Bicicleta => "Bicicleta",
+        TipoVehiculo.Moto => "Moto",
+        TipoVehiculo.Carro => "Carro",
+        _ => "A pie"
+    };
+
+    var estado = Model.Estado switch
+    {
+        EstadoCuenta.Activo => ("Activo", "estado-entregado", "bi-check-circle"),
+        EstadoCuenta.Suspendido => ("Suspendido", "estado-cancelado", "bi-slash-circle"),
+        _ => (EstadoPedidoInfo.NombreCuenta(Model.Estado), "estado-recibido", "bi-info-circle")
+    };
+
+    var puedeEditar = Model.Estado != EstadoCuenta.Suspendido && Model.PedidosPendientes == 0;
+}
+
+<div class="mx-auto" style="max-width: 720px;">
+
+    @if (TempData["Mensaje"] is string mensaje)
+    {
+        <div class="alert alert-success">@mensaje</div>
+    }
+    @if (TempData["Error"] is string error)
+    {
+        <div class="alert alert-danger">@error</div>
+    }
+
+    <div class="card shadow-sm p-4">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h2 class="mb-0"><i class="bi bi-person-badge me-2"></i>Mi perfil</h2>
+                <p class="text-muted">Tu información como repartidor</p>
+            </div>
+            <span class="estado-badge @estado.Item2"><i class="bi @estado.Item3"></i>@estado.Item1</span>
+        </div>
+
+        <dl class="row mb-4">
+            <dt class="col-sm-4">Nombre completo</dt>
+            <dd class="col-sm-8">@Model.NombreCompleto</dd>
+            <dt class="col-sm-4">Documento</dt>
+            <dd class="col-sm-8">@Model.Documento</dd>
+            <dt class="col-sm-4">Teléfono</dt>
+            <dd class="col-sm-8">@Model.Telefono</dd>
+            <dt class="col-sm-4">Correo</dt>
+            <dd class="col-sm-8">@Model.Correo</dd>
+            <dt class="col-sm-4">Vehículo</dt>
+            <dd class="col-sm-8">@(vehiculo + (string.IsNullOrEmpty(Model.Placa) ? "" : $" · Placa {Model.Placa}"))</dd>
+            <dt class="col-sm-4">Negocio</dt>
+            <dd class="col-sm-8">@Model.Negocio</dd>
+            <dt class="col-sm-4">Registrado desde</dt>
+            <dd class="col-sm-8">@Model.FechaRegistro.AddHours(-5).ToString("dd/MM/yyyy")</dd>
+        </dl>
+
+        @if (Model.PedidosPendientes > 0)
+        {
+            <div class="alert alert-warning small">
+                <i class="bi bi-info-circle me-1"></i>Tienes @Model.PedidosPendientes pedido(s) por entregar. No podrás editar ni eliminar tu perfil hasta completarlos.
+            </div>
+        }
+
+        <form asp-action="EnviarCodigo" method="post">
+            <button type="submit" class="btn btn-primary rounded-pill px-4" disabled="@(!puedeEditar)">
+                <i class="bi bi-pencil-square me-1"></i>Editar perfil
+            </button>
+        </form>
+
+        <hr class="mt-4" />
+        <p class="mb-0">
+            <a href="#" class="text-danger text-decoration-none fw-medium" data-bs-toggle="modal" data-bs-target="#modal-eliminar"><i class="bi bi-trash me-1"></i>Eliminar mi cuenta</a>
+        </p>
+    </div>
+</div>
+
+@* CU-12: paso 2 (confirmación) y paso 4 (contraseña) en el mismo cuadro *@
+<div class="modal fade" id="modal-eliminar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-exclamation-triangle text-danger me-2"></i>¿Estás seguro de eliminar tu cuenta?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            @* Paso 2 y 3: "Continuar" / "Cancelar" *@
+            <form asp-action="VerificarEliminacion" method="post" id="form-continuar">
+                <div class="modal-body">
+                    <p class="mb-0">Tu cuenta quedará eliminada y no podrás volver a iniciar sesión. Tu historial de entregas se conserva para el negocio.</p>
+                    <div id="error-eliminacion" class="alert alert-danger d-none mt-3 mb-0"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger rounded-pill">Continuar</button>
+                </div>
+            </form>
+
+            @* Pasos 4 y 5: contraseña y "Confirmar eliminación" *@
+            <form asp-action="EliminarCuenta" method="post" id="form-eliminar" class="d-none">
+                <div class="modal-body">
+                    <p class="text-muted">Ingresa tu contraseña para confirmar la eliminación.</p>
+                    <label for="pwd-eliminar" class="form-label">Contraseña</label>
+                    <div class="input-group">
+                        <input type="password" name="Password" id="pwd-eliminar" class="form-control" autocomplete="current-password" required />
+                        <button type="button" class="btn btn-outline-secondary toggle-password" data-target="pwd-eliminar"
+                                aria-label="Mostrar u ocultar contraseña">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger rounded-pill">Confirmar eliminación</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const modal = document.getElementById('modal-eliminar');
+            const formContinuar = document.getElementById('form-continuar');
+            const formEliminar = document.getElementById('form-eliminar');
+            const campo = document.getElementById('pwd-eliminar');
+            const aviso = document.getElementById('error-eliminacion');
+
+            function mostrarError(texto) {
+                aviso.textContent = texto;
+                aviso.classList.remove('d-none');
+            }
+
+            // Paso 4: el sistema valida que no haya entregas pendientes antes de pedir la contraseña
+            formContinuar.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                aviso.classList.add('d-none');
+                try {
+                    const resp = await fetch(formContinuar.action, { method: 'POST', body: new FormData(formContinuar) });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        formContinuar.classList.add('d-none');
+                        formEliminar.classList.remove('d-none');
+                        campo.focus();
+                    } else {
+                        mostrarError(data.error); // FE-27-CU12
+                    }
+                } catch {
+                    mostrarError('No fue posible validar la eliminación. Intenta nuevamente');
+                }
+            });
+
+            // FA-12-CU12: al cancelar o cerrar se vuelve al estado inicial sin cambios
+            modal.addEventListener('hidden.bs.modal', function () {
+                formContinuar.classList.remove('d-none');
+                formEliminar.classList.add('d-none');
+                campo.value = '';
+                aviso.classList.add('d-none');
+            });
+        })();
+    </script>
+}

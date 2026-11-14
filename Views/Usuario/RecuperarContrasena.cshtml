@@ -11,7 +11,8 @@
 
             <div class="mb-3">
                 <label asp-for="Correo" class="form-label"></label>
-                <input asp-for="Correo" class="form-control" placeholder="ejemplo@correo.com" />
+                <input type="email" maxlength="150" asp-for="Correo" class="form-control" placeholder="ejemplo@correo.com" />
+                <span asp-validation-for="Correo" class="text-danger small"></span>
             </div>
 
             <button type="submit" class="btn btn-primary w-100">Enviar Enlace <i class="bi bi-arrow-right ms-1"></i></button>
@@ -20,3 +21,7 @@
         <p class="text-center small mt-3 mb-0"><a asp-action="Login">Iniciar sesión</a></p>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

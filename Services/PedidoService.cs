@@ -6,6 +6,7 @@ public class PedidoService(
     IPedidoRepository pedidos,
     INegocioRepository negocios,
     AppDbContext context,
+    IEmailService email,
     ILogger<PedidoService> logger) : IPedidoService
 {
     private const string AlfabetoCodigo = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
@@ -292,5 +293,127 @@ public class PedidoService(
         return listaPedidos
             .Where(p => p.EstadoPedidoId == (int)EstadoPedido.Entregado || p.EstadoPedidoId == (int)EstadoPedido.Cancelado)
             .ToList();
+    }
+
+    // ================= CU-17 Cancelar pedido (cliente) =================
+    public const string MensajeCodigoNoEncontrado = "Código no encontrado, verifica e intenta nuevamente";     // FE-43-CU17
+    public const int MaxCaracteresMotivo = 250;
+
+    private const string MensajeNoCancelable = "Este pedido ya no puede ser cancelado";                        // FE-42-CU17
+    private const string MensajeSolicitudDuplicada = "Ya existe una solicitud de cancelación para este pedido"; // FE-44-CU17
+    private const string MensajeErrorCancelacion = "No fue posible cancelar el pedido. Intenta nuevamente";    // FE-45-CU17
+
+    // Estados en los que el cliente puede cancelar: Recibido, En preparación, Listo para entrega o Asignado
+    public static bool EsCancelablePorCliente(int estadoId) =>
+        estadoId >= (int)EstadoPedido.Recibido && estadoId <= (int)EstadoPedido.Asignado;
+
+    public async Task<(bool Ok, string? Error)> CancelarPorClienteAsync(string? codigo, string? motivo)
+    {
+        var codigoLimpio = codigo?.Trim().ToUpperInvariant() ?? "";
+        if (!System.Text.RegularExpressions.Regex.IsMatch(codigoLimpio, "^[A-Z0-9]{8}$"))
+            return (false, MensajeCodigoNoEncontrado);
+
+        var motivoLimpio = motivo?.Trim() ?? "";
+        if (motivoLimpio.Length == 0)
+            return (false, "Escribe el motivo de la cancelación");
+        if (motivoLimpio.Length > MaxCaracteresMotivo)
+            return (false, $"El motivo puede tener máximo {MaxCaracteresMotivo} caracteres");
+
+        try
+        {
+            var pedido = await context.Pedidos
+                .AsNoTracking()
+                .Include(p => p.Cliente)
+                .Include(p => p.Negocio).ThenInclude(n => n!.Usuario)
+                .FirstOrDefaultAsync(p => p.Codigo == codigoLimpio);
+
+            if (pedido is null) return (false, MensajeCodigoNoEncontrado);
+
+            // RN-1-CU17: una sola solicitud por pedido
+            if (await context.SolicitudesCancelacion.AnyAsync(s => s.PedidoId == pedido.Id))
+                return (false, MensajeSolicitudDuplicada);
+
+            // RN-2-CU17: "En camino", "Entregado" (o ya cancelado por el negocio) no se pueden cancelar
+            if (!EsCancelablePorCliente(pedido.EstadoPedidoId))
+                return (false, MensajeNoCancelable);
+
+            var ahora = DateTime.UtcNow;
+            await using (var tx = await context.Database.BeginTransactionAsync())
+            {
+                // Se cambia el estado solo si sigue siendo cancelable: si el repartidor lo marcó
+                // "En camino" justo antes, no se actualiza ninguna fila.
+                var filas = await context.Pedidos
+                    .Where(p => p.Id == pedido.Id &&
+                                p.EstadoPedidoId >= (int)EstadoPedido.Recibido &&
+                                p.EstadoPedidoId <= (int)EstadoPedido.Asignado)
+                    .ExecuteUpdateAsync(s => s.SetProperty(p => p.EstadoPedidoId, (int)EstadoPedido.Cancelado));
+
+                if (filas == 0)
+                {
+                    await tx.RollbackAsync();
+                    return (false, MensajeNoCancelable);
+                }
+
+                context.SolicitudesCancelacion.Add(new SolicitudCancelacion
+                {
+                    PedidoId = pedido.Id,
+                    Motivo = motivoLimpio,
+                    FechaSolicitud = ahora
+                });
+                await context.SaveChangesAsync();
+                await tx.CommitAsync();
+            }
+
+            // Línea de tiempo (CU-05). El cliente no tiene cuenta, por eso no hay usuario asociado.
+            await RegistrarHistorialAsync(pedido.Id, (int)EstadoPedido.Cancelado, null, "Cancelado por el cliente");
+
+            await NotificarCancelacionAsync(pedido, motivoLimpio, ahora);
+            return (true, null);
+        }
+        catch (DbUpdateException ex)
+        {
+            // Dos solicitudes al mismo tiempo: el índice único deja pasar solo una
+            context.ChangeTracker.Clear();
+            logger.LogWarning(ex, "No se pudo guardar la solicitud de cancelación del pedido {Codigo}", codigoLimpio);
+            return (false, MensajeSolicitudDuplicada);
+        }
+        catch (Exception ex)
+        {
+            context.ChangeTracker.Clear();
+            logger.LogError(ex, "Error al cancelar el pedido {Codigo} por parte del cliente", codigoLimpio);
+            return (false, MensajeErrorCancelacion);
+        }
+    }
+
+    // Paso 8: aviso al negocio por correo. Si falla, la cancelación ya quedó guardada.
+    private async Task NotificarCancelacionAsync(Pedido pedido, string motivo, DateTime fechaUtc)
+    {
+        var correo = pedido.Negocio?.Usuario?.Correo;
+        if (string.IsNullOrWhiteSpace(correo)) return;
+
+        try
+        {
+            var fecha = fechaUtc.AddHours(-5).ToString("dd/MM/yyyy hh:mm tt", new System.Globalization.CultureInfo("es-CO"));
+            await email.EnviarAsync(correo, $"Pedido {pedido.Codigo} cancelado por el cliente", PlantillaCorreo.Crear(
+                etiqueta: "Pedido cancelado",
+                titulo: "Un cliente canceló su pedido",
+                saludo: $"Hola, {pedido.Negocio!.Nombre}:",
+                parrafos: [$"El cliente canceló el pedido **{pedido.Codigo}** desde la consulta de GTrack. El pedido ya aparece como \"Cancelado\" en tu historial."],
+                datos:
+                [
+                    ("Código", pedido.Codigo),
+                    ("Cliente", pedido.Cliente?.NombreCompleto ?? ""),
+                    ("Dirección de entrega", pedido.DireccionEntrega),
+                    ("Motivo", motivo),
+                    ("Fecha", fecha)
+                ],
+                nota: "No es necesario preparar ni despachar este pedido.",
+                tipoNota: TipoNota.Aviso,
+                resumen: $"El cliente canceló el pedido {pedido.Codigo}. Motivo: {motivo}"));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "No se pudo avisar al negocio la cancelación del pedido {Codigo}", pedido.Codigo);
+        }
     }
 }
