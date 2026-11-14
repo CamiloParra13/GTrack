@@ -7,33 +7,30 @@ public class NegocioService(
     ICodigoVerificacionRepository codigos,
     IPasswordHasher<Usuario> hasher,
     IEmailService email,
-    INotificacionService avisos,
     ILogger<NegocioService> logger) : INegocioService
 {
     public const string MensajeSinVerificacion = "Debes verificar tu identidad para editar tu perfil";
 
-    private const int MaxIntentosCodigo = 3;
-    private const int MinutosBloqueo = 15;
+    private const int MaxIntentosCodigo = 3;        // RN-1-CU13
+    private const int MinutosBloqueo = 15;          // FE-31-CU13
     private const int MinutosVigenciaCodigo = 10;
-    private const int MinutosVentanaEdicion = 10;
+    private const int MinutosVentanaEdicion = 10;   // tiempo para guardar después de validar el código
 
-    private const string MensajeErrorEnvio = "No fue posible enviar el código. Intenta nuevamente";
-    private const string MensajeErrorGuardado = "No fue posible actualizar la información. Intenta Nuevamente";
     private const string MensajeErrorEnvio = "No fue posible enviar el código. Intenta nuevamente";        // FE-32
     private const string MensajeErrorGuardado = "No fue posible actualizar la información. Intenta Nuevamente"; // FE-33
     private const string MensajeCodigoExpirado = "El código expiró o ya no es válido. Solicita uno nuevo";
 
     // ================= CU-01 Registrar negocio =================
     public async Task<(bool Ok, string? Error, bool CorreoEnviado)> RegistrarAsync(RegistroNegocioDto dto, string urlRevision)
-    public async Task<(bool Ok, string? Error, bool CorreoEnviado)> RegistrarAsync(RegistroNegocioDto dto)
     {
         var nombre = dto.Nombre.Trim();
         var documento = dto.Documento.Trim();
         var correo = dto.Correo.Trim();
         var telefono = dto.Telefono.Trim();
 
+        // Validación en cascada (paso 6): obligatorios (DTO) → documento → correo → teléfono → contraseña
         if (await negocios.ExisteDocumentoAsync(documento) || await usuarios.ObtenerPorCorreoAsync(correo) is not null)
-            return (false, "El documento o correo ya está registrado. Inicia sesión o recupera tu contraseña", false);
+            return (false, "El documento o correo ya está registrado. Inicia sesión o recupera tu contraseña", false); // FA-01
 
         if (await negocios.ExisteTelefonoAsync(telefono))
             return (false, "El teléfono ya está registrado", false);
@@ -46,7 +43,7 @@ public class NegocioService(
             Correo = correo,
             Documento = documento,
             Rol = RolUsuario.Negocio,
-            Estado = EstadoCuenta.PendienteValidacion
+            Estado = EstadoCuenta.PendienteValidacion // RN-4-CU01
         };
         usuario.PasswordHash = hasher.HashPassword(usuario, dto.Password);
 
@@ -65,8 +62,6 @@ public class NegocioService(
         await AvisarAdministradoresAsync(negocio, documento, correo, urlRevision);
 
         // FE-3-CU01: si falla el correo, el registro se mantiene
-        await avisos.NegocioPendienteAsync(nombre, documento, correo);
-
         try
         {
             await email.EnviarAsync(correo, "Bienvenido a GTrack", PlantillaCorreo.Crear(
@@ -81,16 +76,6 @@ public class NegocioService(
                 datos: [("Negocio", nombre), ("Documento", documento), ("Correo", correo), ("Estado", "Pendiente de validación")],
                 nota: "Mientras tu cuenta no sea validada no podrás iniciar sesión.",
                 tipoNota: TipoNota.Info));
-            await email.EnviarAsync(correo, "Bienvenido a GTrack", PlantillaCorreo.Crear(
-                titulo: "¡Recibimos el registro de tu negocio!",
-                saludo: $"Hola, {nombre}",
-                parrafos:
-                [
-                    "Gracias por unirte a GTrack. Tu solicitud ya está en revisión.",
-                    "Un administrador validará la información de tu negocio y te avisaremos por este mismo medio cuando tu cuenta esté activa."
-                ],
-                datos: [("Negocio", nombre), ("Documento", documento), ("Correo", correo)],
-                nota: "Mientras tu cuenta esté en revisión no podrás iniciar sesión."));
             return (true, null, true);
         }
         catch (Exception ex)
@@ -100,6 +85,54 @@ public class NegocioService(
         }
     }
 
+    // Correo a cada administrador activo con los datos del negocio y el botón para revisarlo
+    private async Task AvisarAdministradoresAsync(Negocio negocio, string documento, string correo, string urlRevision)
+    {
+        try
+        {
+            var administradores = await usuarios.CorreosAdministradoresActivosAsync();
+            if (administradores.Count == 0) return;
+
+            var aviso = PlantillaCorreo.Crear(
+                etiqueta: "Validación pendiente",
+                titulo: "Hay un negocio esperando tu aprobación",
+                saludo: "Hola,",
+                parrafos:
+                [
+                    $"**{negocio.Nombre}** completó su registro en GTrack y está pendiente de validación.",
+                    "Revisa su información y apruébalo para que pueda iniciar sesión."
+                ],
+                datos:
+                [
+                    ("Negocio", negocio.Nombre), ("Actividad", negocio.TipoActividad), ("Documento", documento),
+                    ("Correo", correo), ("Teléfono", negocio.Telefono), ("Dirección", negocio.Direccion)
+                ],
+                textoBoton: "Revisar solicitud",
+                urlBoton: urlRevision,
+                nota: "Mientras no apruebes la cuenta, el negocio no podrá iniciar sesión.",
+                tipoNota: TipoNota.Info,
+                resumen: $"{negocio.Nombre} se registró y espera tu aprobación.");
+
+            // Un correo por administrador (nadie ve el correo de los demás), enviados al mismo tiempo
+            await Task.WhenAll(administradores.Select(async para =>
+            {
+                try
+                {
+                    await email.EnviarAsync(para, "Nuevo negocio pendiente de validación en GTrack", aviso);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogWarning(ex, "No se pudo avisar al administrador {Correo} del negocio {Negocio}", para, negocio.Nombre);
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "No se pudo avisar a los administradores del negocio {Negocio}", negocio.Nombre);
+        }
+    }
+
+    // ================= Perfil =================
     public async Task<PerfilNegocioDto?> ObtenerPerfilAsync(int usuarioId)
     {
         var usuario = await usuarios.ObtenerPorIdAsync(usuarioId);
@@ -120,6 +153,7 @@ public class NegocioService(
         };
     }
 
+    // ================= CU-25 Ver perfil público =================
     public async Task<PerfilPublicoNegocioDto?> ObtenerPerfilPublicoAsync(int negocioId)
     {
         var negocio = await negocios.BuscarPorIdAsync(negocioId);
@@ -135,11 +169,13 @@ public class NegocioService(
         };
     }
 
+    // ================= CU-13 Editar negocio =================
     public async Task<(bool Ok, string? Error)> SolicitarCodigoAsync(int usuarioId)
     {
         var usuario = await usuarios.ObtenerPorIdAsync(usuarioId);
         if (usuario is null) return (false, MensajeErrorEnvio);
 
+        // Si la solicitud de edición está bloqueada, no se envía otro código
         var ultimo = await codigos.ObtenerUltimoAsync(usuarioId);
         if (ultimo?.BloqueadoHasta is { } hasta && hasta > DateTime.UtcNow)
             return (false, MensajeBloqueo(hasta));
@@ -164,19 +200,12 @@ public class NegocioService(
                 nota: $"El código es válido por {MinutosVigenciaCodigo} minutos. Si no fuiste tú, ignora este mensaje: sin el código nadie puede editar tu perfil.",
                 tipoNota: TipoNota.Aviso,
                 resumen: $"Tu código de verificación es {codigo}. Vence en {MinutosVigenciaCodigo} minutos."));
-            var negocioActual = await negocios.ObtenerPorUsuarioIdAsync(usuarioId);
-            await email.EnviarAsync(usuario.Correo, "Tu código de verificación de GTrack", PlantillaCorreo.Crear(
-                titulo: "Tu código de verificación",
-                saludo: negocioActual is null ? "Hola" : $"Hola, {negocioActual.Nombre}",
-                parrafos: ["Usa este código para confirmar tu identidad y poder editar el perfil de tu negocio en GTrack."],
-                codigo: codigo,
-                nota: $"El código es válido por {MinutosVigenciaCodigo} minutos. Si no fuiste tú, ignora este mensaje y no compartas este código con nadie."));
             return (true, null);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "No se pudo enviar el código de verificación al usuario {UsuarioId}", usuarioId);
-            return (false, MensajeErrorEnvio);
+            return (false, MensajeErrorEnvio); // FE-32-CU13
         }
     }
 
@@ -196,9 +225,9 @@ public class NegocioService(
         if (actual.CodigoHash != TokenUtil.Hash(codigo.Trim()))
         {
             actual.Intentos++;
-            var error = "Código incorrecto, intenta nuevamente";
+            var error = "Código incorrecto, intenta nuevamente"; // FE-31-CU13
 
-            if (actual.Intentos >= MaxIntentosCodigo)
+            if (actual.Intentos >= MaxIntentosCodigo) // RN-1-CU13
             {
                 actual.BloqueadoHasta = ahora.AddMinutes(MinutosBloqueo);
                 error = $"Superaste {MaxIntentosCodigo} intentos fallidos. La edición de tu perfil quedó bloqueada durante {MinutosBloqueo} minutos.";
@@ -265,6 +294,7 @@ public class NegocioService(
             await negocios.ActualizarAsync(negocio);
             await usuarios.ActualizarAsync(usuario);
 
+            // El código solo sirve para una edición
             var codigo = await codigos.ObtenerUltimoAsync(usuarioId);
             if (codigo is not null)
             {
@@ -277,38 +307,41 @@ public class NegocioService(
         catch (Exception ex)
         {
             logger.LogError(ex, "Error al actualizar el perfil del usuario {UsuarioId}", usuarioId);
-            return (false, MensajeErrorGuardado);
+            return (false, MensajeErrorGuardado); // FE-33-CU13
         }
     }
 
+    // ================= CU-11 Eliminar negocio =================
     public async Task<(bool Ok, string? Error)> ValidarEliminacionAsync(int usuarioId, string password)
     {
         var usuario = await usuarios.ObtenerPorIdAsync(usuarioId);
         if (usuario is null) return (false, "No fue posible validar tu cuenta");
 
         if (hasher.VerifyHashedPassword(usuario, usuario.PasswordHash, password) == PasswordVerificationResult.Failed)
-            return (false, "Contraseña incorrecta");
+            return (false, "Contraseña incorrecta"); // FE-25-CU11
 
         var negocio = await negocios.ObtenerPorUsuarioIdAsync(usuarioId);
         if (negocio is null) return (false, "No fue posible validar tu cuenta");
 
-        if (await negocios.TienePedidosActivosAsync(negocio.Id))
-            return (false, "No puedes eliminar tu cuenta mientras tengas pedidos en curso");
+        if (await negocios.TienePedidosActivosAsync(negocio.Id)) // RN-1-CU11
+            return (false, "No puedes eliminar tu cuenta mientras tengas pedidos en curso"); // FE-24-CU11
 
         if (await negocios.TieneRepartidoresVinculadosAsync(negocio.Id))
-            return (false, "Debes gestionar tus repartidores vinculados antes de eliminar la cuenta");
+            return (false, "Debes gestionar tus repartidores vinculados antes de eliminar la cuenta"); // FE-26-CU11
 
         return (true, null);
     }
 
     public async Task<(bool Ok, string? Error)> EliminarCuentaAsync(int usuarioId, string password)
     {
+        // Se valida de nuevo: entre el primer modal y el segundo pudo cambiar algo
         var (ok, error) = await ValidarEliminacionAsync(usuarioId, password);
         if (!ok) return (false, error);
 
         var usuario = await usuarios.ObtenerPorIdAsync(usuarioId);
         if (usuario is null) return (false, "No fue posible validar tu cuenta");
 
+        // Baja lógica: se conservan pedidos y transacciones (PE-22-CU11)
         usuario.Estado = EstadoCuenta.Eliminado;
         await usuarios.ActualizarAsync(usuario);
         return (true, null);

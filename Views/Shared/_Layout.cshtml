@@ -65,7 +65,6 @@
                         <a class="side-link @(enAdmins ? "active" : "")" asp-controller="Admin" asp-action="Administradores"><i class="bi bi-shield-check me-2"></i>Administradores</a>
                         <a class="side-link @(enReportes ? "active" : "")" asp-controller="Admin" asp-action="Reportes"><i class="bi bi-bar-chart-line me-2"></i>Reportes</a>
                     }
-                    <a class="side-link @(enNotificaciones ? "active" : "")" asp-controller="Notificaciones" asp-action="Index">🔔 Notificaciones @await Component.InvokeAsync("Notificaciones")</a>
 
                 </nav>
 

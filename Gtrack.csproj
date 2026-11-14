@@ -5,7 +5,6 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>b14db22f-fc06-4d45-9725-39dbb152dfe2</UserSecretsId>
-    <UserSecretsId>9e3ee745-6b4d-47e9-aa4e-a6686ecceadd</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +16,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.12" />
     <PackageReference Include="ClosedXML" Version="0.105.1" />
     <PackageReference Include="QuestPDF" Version="2026.9.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.13" />
   </ItemGroup>
 
   <ItemGroup>

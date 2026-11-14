@@ -16,9 +16,6 @@ public class RepartidorService(
     INegocioRepository negocios,
     IUsuarioRepository usuarios,
     IActivacionCuentaService activacion,
-    IPasswordHasher<Usuario> hasher,
-    IEmailService email,
-    INotificacionService avisos,
     ILogger<RepartidorService> logger) : IRepartidorService
 {
     // Evita que el repartidor reciba una ráfaga de correos de activación
@@ -39,9 +36,9 @@ public class RepartidorService(
         var correo = dto.Correo.Trim();
         var telefono = dto.Telefono.Trim();
 
+        // RN-1-CU09: documento, correo y teléfono únicos (FA-09-CU09)
         if (await negocios.ExisteDocumentoAsync(documento))
             return new(false, "Este número de documento ya se encuentra registrado.", false, null, nameof(dto.Documento));
-            return new(false, "Este repartidor ya se encuentra registrado", false, null);
         if (await usuarios.ObtenerPorCorreoAsync(correo) is not null)
             return new(false, "Este correo electrónico ya se encuentra registrado.", false, null, nameof(dto.Correo));
         if (await repartidores.TelefonoEnUsoAsync(telefono))
@@ -61,27 +58,16 @@ public class RepartidorService(
 
         var repartidor = new Repartidor
         {
-            NegocioId = negocio.Id,
+            NegocioId = negocio.Id,          // RN-2-CU09
             NombreCompleto = dto.NombreCompleto.Trim(),
             Telefono = telefono,
             Vehiculo = dto.Vehiculo!.Value,
             Placa = conPlaca ? dto.Placa!.Trim().Replace("-", "").ToUpperInvariant() : null
         };
 
-        await repartidores.RegistrarRepartidorAsync(usuario, repartidor);
-
-        await avisos.RepartidorRegistradoAsync(usuarioNegocioId, repartidor.NombreCompleto);
-
         try
         {
             await repartidores.RegistrarRepartidorAsync(usuario, repartidor);
-            await email.EnviarAsync(correo, "Tus credenciales de acceso a GTrack", PlantillaCorreo.Crear(
-                titulo: "Tu cuenta de repartidor está lista",
-                saludo: $"Hola, {repartidor.NombreCompleto}",
-                parrafos: [$"El negocio {negocio.Nombre} te registró como repartidor en GTrack. Estas son tus credenciales de acceso:"],
-                datos: [("Usuario", correo), ("O tu documento", documento), ("Contraseña temporal", password)],
-                nota: "Guarda esta información en un lugar seguro y no la compartas con nadie."));
-            return new(true, null, true, password);
         }
         catch (DbUpdateException ex)
         {

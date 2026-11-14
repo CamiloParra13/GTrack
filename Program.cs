@@ -9,22 +9,19 @@ QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddAntiforgery(o => o.HeaderName = "RequestVerificationToken");
-builder.Services.AddControllersWithViews();
 
-// Base de datos SQL Server (cadena "gTrack" en appsettings.json)
+// Conexión a SQL Server (cadena "GtrackDb" en appsettings.json)
 builder.Services.AddDbContext<AppDbContext>(o =>
-    o.UseSqlServer(builder.Configuration.GetConnectionString("gTrack")));
+    o.UseSqlServer(builder.Configuration.GetConnectionString("GtrackDb")));
 
-// Repositorios con EF Core (Scoped: uno por solicitud, igual que el DbContext)
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ITokenRecuperacionRepository, TokenRecuperacionRepository>();
 builder.Services.AddScoped<INegocioRepository, NegocioRepository>();
 builder.Services.AddScoped<ICodigoVerificacionRepository, CodigoVerificacionRepository>();
-builder.Services.AddScoped<PersonalRepository>();
-builder.Services.AddScoped<IRepartidorRepository>(sp => sp.GetRequiredService<PersonalRepository>());
-builder.Services.AddScoped<IAdministracionRepository>(sp => sp.GetRequiredService<PersonalRepository>());
+builder.Services.AddScoped<IRepartidorRepository, RepartidorRepository>();
+builder.Services.AddScoped<IAdministracionRepository, AdministracionRepository>();
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
-builder.Services.AddScoped<INotificacionRepository, NotificacionRepository>();
+builder.Services.AddScoped<IUbicacionRepository, UbicacionRepository>();
 
 builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -35,41 +32,24 @@ builder.Services.AddScoped<IRepartidorService, RepartidorService>();
 builder.Services.AddScoped<IAdministracionService, AdministracionService>();
 builder.Services.AddScoped<IEmailService, EmailSmtpService>();
 builder.Services.AddScoped<IPedidoService, PedidoService>();
-builder.Services.AddScoped<INotificacionService, NotificacionService>();
-
-builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection("Email"));
-var passwordCorreo = builder.Configuration["Email:Password"];
-if (string.IsNullOrWhiteSpace(passwordCorreo))
-    builder.Services.AddScoped<IEmailService, EmailDesarrolloService>();
-else
-    builder.Services.AddScoped<IEmailService, EmailSmtpService>();
-builder.Services.AddScoped<IPedidoService, PedidoService>();
 builder.Services.AddScoped<IUbicacionService, UbicacionService>();
 builder.Services.AddScoped<IReporteService, ReporteService>();
 builder.Services.AddSingleton<IExportadorReportes, ExportadorReportes>();
-builder.Services.AddScoped<IEmailService, EmailDesarrolloService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(o =>
     {
         o.LoginPath = "/Usuario/Login";
         o.AccessDeniedPath = "/Usuario/Login";
+
+        // La sesión caduca tras 30 minutos sin actividad
+        o.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        o.SlidingExpiration = true;
+        o.Cookie.HttpOnly = true;
+        o.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     });
 
 var app = builder.Build();
-
-if (string.IsNullOrWhiteSpace(passwordCorreo))
-    app.Logger.LogWarning("CORREO EN MODO DESARROLLO: los correos NO se envían, solo se escriben en la consola. Configura Email:Password para enviarlos por Gmail.");
-else
-    app.Logger.LogInformation("CORREO ACTIVO: se enviará por {Host} desde {Usuario}",
-        builder.Configuration["Email:Host"], builder.Configuration["Email:Usuario"]);
-
-// Perfiles de prueba (solo Development y solo si no hay usuarios)
-if (app.Environment.IsDevelopment())
-{
-    using var scope = app.Services.CreateScope();
-    await DbSeeder.SembrarAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>());
-}
 
 if (!app.Environment.IsDevelopment())
 {
@@ -77,12 +57,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Páginas de error con la marca de GTrack (404, 403, etc.)
+app.UseStatusCodePagesWithReExecute("/Home/StatusCode", "?code={0}");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// CU-01 paso 1: la URL principal muestra la página de inicio con los dos botones
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
