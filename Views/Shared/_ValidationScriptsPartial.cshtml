@@ -1,0 +1,27 @@
+﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    // Reglas compartidas (mismas que Dtos/ReglasValidacion.cs)
+    window.GTrackReglas = {
+        telefono: /^\d{10}$/,
+        documento: /^\d{6,10}$/,
+        correo: /^[A-Za-z0-9._%+\-]+@@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)*\.[A-Za-z]{2,}$/
+    };
+
+    // Placa según el vehículo: carro ABC123 · moto ABC12D (bicicleta no lleva placa)
+    window.placaValida = function (vehiculo, placa) {
+        var reglas = { Moto: /^[A-Z]{3}\d{2}[A-Z]$/, Carro: /^[A-Z]{3}\d{3}$/ };
+        var re = reglas[vehiculo];
+        if (!re) return true;
+        return re.test((placa || '').trim().replace(/[-\s]/g, '').toUpperCase());
+    };
+
+    if (window.jQuery && jQuery.validator && jQuery.validator.unobtrusive) {
+        jQuery.validator.addMethod('placa', function (value) {
+            var v = document.getElementById('Vehiculo');
+            return window.placaValida(v ? v.value : '', value);
+        });
+        jQuery.validator.unobtrusive.adapters.addBool('placa');
+    }
+</script>
