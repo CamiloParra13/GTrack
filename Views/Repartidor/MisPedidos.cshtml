@@ -89,7 +89,7 @@
                                 {
                                     <div class="d-flex gap-2 flex-wrap mb-2">
                                         <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3 btn-compartir" data-pedido-id="@pedido.Id">
-                                            <i class="bi bi-geo-alt-fill me-1"></i>Compartir mi ubicación
+                                            <i class="bi bi-geo-alt me-1"></i>Compartir mi ubicación
                                         </button>
                                         <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3 btn-simular" data-pedido-id="@pedido.Id">
                                             <i class="bi bi-play-circle me-1"></i>Simular recorrido
@@ -353,7 +353,7 @@
             if (est.modo === 'real') { est.modo = null; desactivarWakeLock(); }
             const b = btns(id);
             if (b.c) {
-                setBtn(b.c, 'bi-geo-alt-fill', 'Compartir mi ubicación');
+                setBtn(b.c, 'bi-geo-alt', 'Compartir mi ubicación');
                 b.c.classList.remove('btn-danger');
                 b.c.classList.add('btn-outline-primary');
             }

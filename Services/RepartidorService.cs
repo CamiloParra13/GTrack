@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.EntityFrameworkCore;
 
 public interface IRepartidorService
 {
-    Task<ResultadoRegistro> RegistrarAsync(int usuarioNegocioId, RegistroRepartidorDto dto);
+    // CU-09: registra al repartidor sin contraseña y le envía el correo para activar su cuenta
+    Task<ResultadoRegistro> RegistrarAsync(int usuarioNegocioId, RegistroRepartidorDto dto, Func<string, string> construirEnlace);
+
+    // Vuelve a enviar el correo de activación a un repartidor que aún no activa su cuenta
+    Task<(bool Ok, string Mensaje)> ReenviarActivacionAsync(int usuarioNegocioId, int repartidorId, Func<string, string> construirEnlace);
+
     Task<List<Repartidor>> ListarAsync(int usuarioNegocioId);
 }
 
@@ -10,18 +15,22 @@ public class RepartidorService(
     IRepartidorRepository repartidores,
     INegocioRepository negocios,
     IUsuarioRepository usuarios,
+    IActivacionCuentaService activacion,
     IPasswordHasher<Usuario> hasher,
     IEmailService email,
     INotificacionService avisos,
     ILogger<RepartidorService> logger) : IRepartidorService
 {
+    // Evita que el repartidor reciba una ráfaga de correos de activación
+    private const int MaxCorreosActivacionPorHora = 3;
+
     public async Task<List<Repartidor>> ListarAsync(int usuarioNegocioId)
     {
         var negocio = await negocios.ObtenerPorUsuarioIdAsync(usuarioNegocioId);
         return negocio is null ? [] : await repartidores.ListarPorNegocioAsync(negocio.Id);
     }
 
-    public async Task<ResultadoRegistro> RegistrarAsync(int usuarioNegocioId, RegistroRepartidorDto dto)
+    public async Task<ResultadoRegistro> RegistrarAsync(int usuarioNegocioId, RegistroRepartidorDto dto, Func<string, string> construirEnlace)
     {
         var negocio = await negocios.ObtenerPorUsuarioIdAsync(usuarioNegocioId);
         if (negocio is null) return new(false, "No fue posible identificar tu negocio", false, null);
@@ -31,23 +40,24 @@ public class RepartidorService(
         var telefono = dto.Telefono.Trim();
 
         if (await negocios.ExisteDocumentoAsync(documento))
+            return new(false, "Este número de documento ya se encuentra registrado.", false, null, nameof(dto.Documento));
             return new(false, "Este repartidor ya se encuentra registrado", false, null);
         if (await usuarios.ObtenerPorCorreoAsync(correo) is not null)
-            return new(false, "El correo ya está registrado en el sistema", false, null);
+            return new(false, "Este correo electrónico ya se encuentra registrado.", false, null, nameof(dto.Correo));
         if (await repartidores.TelefonoEnUsoAsync(telefono))
-            return new(false, "El teléfono ya está registrado en el sistema", false, null);
+            return new(false, "Este teléfono ya se encuentra registrado.", false, null, nameof(dto.Telefono));
 
         var conPlaca = dto.Vehiculo is TipoVehiculo.Moto or TipoVehiculo.Carro;
-        var password = GeneradorPassword.Temporal();
 
+        // La cuenta nace sin contraseña: el repartidor la crea cuando activa su cuenta desde el correo
         var usuario = new Usuario
         {
             Correo = correo,
             Documento = documento,
+            PasswordHash = "",
             Rol = RolUsuario.Repartidor,
-            Estado = EstadoCuenta.Activo
+            Estado = EstadoCuenta.PendienteActivacion
         };
-        usuario.PasswordHash = hasher.HashPassword(usuario, password);
 
         var repartidor = new Repartidor
         {
@@ -55,7 +65,7 @@ public class RepartidorService(
             NombreCompleto = dto.NombreCompleto.Trim(),
             Telefono = telefono,
             Vehiculo = dto.Vehiculo!.Value,
-            Placa = conPlaca ? dto.Placa!.Trim().Replace("-", "").ToUpperInvariant() : null
+            Placa = conPlaca ? ReglasValidacion.NormalizarPlaca(dto.Placa) : null
         };
 
         await repartidores.RegistrarRepartidorAsync(usuario, repartidor);
@@ -64,6 +74,7 @@ public class RepartidorService(
 
         try
         {
+            await repartidores.RegistrarRepartidorAsync(usuario, repartidor);
             await email.EnviarAsync(correo, "Tus credenciales de acceso a GTrack", PlantillaCorreo.Crear(
                 titulo: "Tu cuenta de repartidor está lista",
                 saludo: $"Hola, {repartidor.NombreCompleto}",
@@ -72,10 +83,35 @@ public class RepartidorService(
                 nota: "Guarda esta información en un lugar seguro y no la compartas con nadie."));
             return new(true, null, true, password);
         }
-        catch (Exception ex)
+        catch (DbUpdateException ex)
         {
-            logger.LogError(ex, "No se pudieron enviar las credenciales al repartidor {Correo}", correo);
-            return new(true, null, false, password);
+            logger.LogError(ex, "No se pudo guardar el repartidor {Correo}", correo);
+            return new(false, "No fue posible registrar al repartidor. Intenta nuevamente", false, null);
         }
+
+        // FE-21-CU09: si falla el correo, el repartidor queda registrado igual y el negocio puede reenviarlo
+        var enviado = await activacion.EnviarEnlaceAsync(usuario, repartidor.NombreCompleto, negocio.Nombre, construirEnlace);
+        return new(true, null, enviado, null);
+    }
+
+    public async Task<(bool Ok, string Mensaje)> ReenviarActivacionAsync(int usuarioNegocioId, int repartidorId, Func<string, string> construirEnlace)
+    {
+        var negocio = await negocios.ObtenerPorUsuarioIdAsync(usuarioNegocioId);
+        if (negocio is null) return (false, "No fue posible identificar tu negocio");
+
+        var repartidor = await repartidores.ObtenerDeNegocioAsync(negocio.Id, repartidorId);
+        if (repartidor?.Usuario is null) return (false, "El repartidor no existe o no pertenece a tu negocio.");
+
+        var usuario = repartidor.Usuario;
+        if (usuario.Estado != EstadoCuenta.PendienteActivacion)
+            return (false, $"{repartidor.NombreCompleto} ya activó su cuenta.");
+
+        if (await activacion.EnviosUltimaHoraAsync(usuario.Id) >= MaxCorreosActivacionPorHora)
+            return (false, "Ya enviaste varios correos de activación a este repartidor en la última hora. Intenta más tarde.");
+
+        var enviado = await activacion.EnviarEnlaceAsync(usuario, repartidor.NombreCompleto, negocio.Nombre, construirEnlace);
+        return enviado
+            ? (true, $"Reenviamos el correo de activación a {usuario.Correo}.")
+            : (false, "No fue posible enviar el correo de activación. Intenta nuevamente.");
     }
 }

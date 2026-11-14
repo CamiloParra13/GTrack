@@ -33,7 +33,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Documento" class="form-label"></label>
-                <input asp-for="Documento" class="form-control" inputmode="numeric" placeholder="901458762" />
+                <input maxlength="10" data-solo-digitos asp-for="Documento" class="form-control" inputmode="numeric" placeholder="9014587620" />
                 <span asp-validation-for="Documento" class="text-danger small"></span>
             </div>
 
@@ -41,12 +41,12 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label asp-for="Correo" class="form-label"></label>
-                    <input asp-for="Correo" class="form-control" placeholder="contacto@tuempresa.com" />
+                    <input type="email" maxlength="150" asp-for="Correo" class="form-control" placeholder="contacto@tuempresa.com" />
                     <span asp-validation-for="Correo" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="Telefono" class="form-label"></label>
-                    <input asp-for="Telefono" type="tel" class="form-control" inputmode="numeric" placeholder="3109876543" />
+                    <input maxlength="10" data-solo-digitos asp-for="Telefono" type="tel" class="form-control" inputmode="numeric" placeholder="3109876543" />
                     <span asp-validation-for="Telefono" class="text-danger small"></span>
                 </div>
             </div>
@@ -63,7 +63,9 @@
                     <div class="input-group">
                         <input asp-for="Password" class="form-control" autocomplete="new-password" />
                         <button type="button" class="btn btn-outline-secondary toggle-password" data-target="Password"
-                                aria-label="Mostrar u ocultar contraseña">👁</button>
+                                aria-label="Mostrar u ocultar contraseña">
+                            <i class="bi bi-eye"></i>
+                        </button>
                     </div>
                     <span asp-validation-for="Password" class="text-danger small"></span>
                 </div>
@@ -72,7 +74,9 @@
                     <div class="input-group">
                         <input asp-for="ConfirmarPassword" class="form-control" autocomplete="new-password" />
                         <button type="button" class="btn btn-outline-secondary toggle-password" data-target="ConfirmarPassword"
-                                aria-label="Mostrar u ocultar contraseña">👁</button>
+                                aria-label="Mostrar u ocultar contraseña">
+                            <i class="bi bi-eye"></i>
+                        </button>
                     </div>
                     <span asp-validation-for="ConfirmarPassword" class="text-danger small"></span>
                 </div>
@@ -95,7 +99,7 @@
         <p class="text-center small mb-1">
             ¿Ya tienes una cuenta? <a asp-controller="Usuario" asp-action="Login">Iniciar sesión</a>
         </p>
-        <p class="text-center small mb-0"><a asp-controller="Home" asp-action="Index">← Volver al Inicio</a></p>
+        <p class="text-center small mb-0"><a asp-controller="Home" asp-action="Index"><i class="bi bi-arrow-left me-1"></i>Volver al Inicio</a></p>
     </div>
 </div>
 
@@ -135,22 +139,18 @@
 
             function actualizarBoton() {
                 const llenos = campos.every(c => c.value.trim() !== '');
-                const documentoOk = /^\d{6,12}$/.test(form.Documento.value.trim());
-                const telefonoOk = /^\d{7,10}$/.test(form.Telefono.value.trim());
+                const documentoOk = GTrackReglas.documento.test(form.Documento.value.trim());
+                const telefonoOk = GTrackReglas.telefono.test(form.Telefono.value.trim());
+                const correoOk = GTrackReglas.correo.test(form.Correo.value.trim());
                 const passOk = /^(?=.*\d)(?=.*\p{L}).{6,}$/u.test(pass.value);
                 const coinciden = pass.value === confirmar.value;
-                boton.disabled = !(llenos && documentoOk && telefonoOk && passOk && coinciden && form.checkValidity());
+                boton.disabled = !(llenos && documentoOk && telefonoOk && correoOk && passOk && coinciden && form.checkValidity());
             }
 
             form.addEventListener('input', function () { actualizarBarra(); actualizarBoton(); });
             form.addEventListener('change', actualizarBoton);
 
-            document.querySelectorAll('.toggle-password').forEach(function (b) {
-                b.addEventListener('click', function () {
-                    const campo = document.getElementById(b.dataset.target);
-                    campo.type = campo.type === 'password' ? 'text' : 'password';
-                });
-            });
+            // El botón del ojo (.toggle-password) lo maneja gtrack-ui.js en todas las páginas
 
             actualizarBarra();
             actualizarBoton();

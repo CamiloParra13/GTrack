@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!modal) return;
 
     var hayCambios = false;
-    document.querySelectorAll('main form').forEach(function (f) {
+    document.querySelectorAll('main form:not([data-sin-aviso])').forEach(function (f) {
         f.addEventListener('input', function () { hayCambios = true; });
         f.addEventListener('submit', function () { hayCambios = false; });
     });
@@ -18,4 +18,13 @@ document.addEventListener('DOMContentLoaded', function () {
         var aviso = document.getElementById('aviso-cambios');
         if (aviso) aviso.classList.toggle('d-none', !hayCambios);
     });
+});
+
+// Campos numéricos (documento, teléfono, código): solo deja escribir dígitos y respeta maxlength, también al pegar
+document.addEventListener('input', function (e) {
+    var el = e.target;
+    if (!el.matches || !el.matches('input[data-solo-digitos]')) return;
+    var limpio = el.value.replace(/\D/g, '');
+    if (el.maxLength > 0) limpio = limpio.slice(0, el.maxLength);
+    if (el.value !== limpio) el.value = limpio;
 });

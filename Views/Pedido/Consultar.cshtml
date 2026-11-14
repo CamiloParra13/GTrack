@@ -32,10 +32,16 @@
 
     var historial = ViewBag.Historial as List<HistorialEstadoItem> ?? new List<HistorialEstadoItem>();
     var cancelado = Model != null && Model.EstadoPedidoId == (int)EstadoPedido.Cancelado;
+
+    // CU-17: solicitud de cancelación del cliente (motivo y fecha), si la hay
+    var solicitudCancelacion = ViewBag.Cancelacion as SolicitudCancelacion;
+    var puedeCancelar = Model != null && PedidoService.EsCancelablePorCliente(Model.EstadoPedidoId);
+
     DateTime? fechaCancelacion = historial.Where(h => h.EstadoPedidoId == (int)EstadoPedido.Cancelado)
                                           .OrderByDescending(h => h.FechaCambio)
                                           .Select(h => (DateTime?)h.FechaCambio)
-                                          .FirstOrDefault();
+                                          .FirstOrDefault()
+                                 ?? solicitudCancelacion?.FechaSolicitud;
 }
 
 @if (Model != null && Model.EstadoPedidoId == (int)EstadoPedido.EnCamino)
@@ -84,6 +90,13 @@
                     @if (Model != null)
                     {
                         <hr class="my-4 text-muted opacity-25" />
+
+                        @if (ViewBag.MensajeCancelacion is string mensajeCancelacion)
+                        {
+                            <div class="alert alert-success rounded-3 border-0 shadow-sm mb-4" role="alert">
+                                <i class="bi bi-check-circle me-1"></i>@mensajeCancelacion
+                            </div>
+                        }
 
                         <div class="d-flex flex-wrap justify-content-between align-items-center bg-light p-3 rounded-3 mb-4">
                             <div>
@@ -155,6 +168,10 @@
                                 {
                                     <span class="d-block small mt-1">Fecha de cancelación: @FechaCo(fechaCancelacion.Value)</span>
                                 }
+                                @if (solicitudCancelacion != null)
+                                {
+                                    <span class="d-block small mt-1">Cancelado por el cliente. Motivo: @solicitudCancelacion.Motivo</span>
+                                }
                             </div>
                         }
                         else
@@ -217,6 +234,18 @@
                                 </table>
                             </div>
                         }
+
+                        @if (puedeCancelar)
+                        {
+                            @* CU-17 paso 2: botón rojo "Cancelar pedido" (solo en estados cancelables) *@
+                            <div class="text-center mt-4">
+                                <button type="button" class="btn btn-outline-danger rounded-pill px-4 fw-semibold"
+                                        data-bs-toggle="modal" data-bs-target="#modal-cancelar-pedido">
+                                    <i class="bi bi-x-circle me-1"></i>Cancelar pedido
+                                </button>
+                                <p class="text-muted small mt-2 mb-0">Puedes cancelarlo mientras no haya salido a entrega.</p>
+                            </div>
+                        }
                     }
                 </div>
             </div>
@@ -232,7 +261,77 @@
     </div>
 </div>
 
+@if (puedeCancelar)
+{
+    @* CU-17 pasos 4 a 7: confirmación "SI/NO" y luego el motivo, en el mismo cuadro *@
+    <div class="modal fade" id="modal-cancelar-pedido" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle text-danger me-2"></i>¿Deseas cancelar este pedido?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+
+                <div id="cancelar-paso-confirmar">
+                    <div class="modal-body">
+                        <p class="mb-0">El pedido <strong>@Model.Codigo</strong> quedará cancelado y el negocio recibirá un aviso. Esta acción no se puede deshacer.</p>
+                    </div>
+                    <div class="modal-footer">
+                        @* FA-18-CU17: "NO" cierra el cuadro sin cambios *@
+                        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger rounded-pill px-4" id="btn-cancelar-si">Sí</button>
+                    </div>
+                </div>
+
+                <form asp-action="Cancelar" method="post" id="cancelar-paso-motivo" class="d-none">
+                    <input type="hidden" name="codigo" value="@Model.Codigo" />
+                    <div class="modal-body">
+                        <label for="motivo-cancelacion" class="form-label fw-semibold">Motivo de la cancelación</label>
+                        <textarea name="motivo" id="motivo-cancelacion" class="form-control" rows="3" required
+                                  maxlength="@PedidoService.MaxCaracteresMotivo"
+                                  placeholder="Ej. Ya no necesito el pedido, me equivoqué en la dirección…"></textarea>
+                        <div class="form-text text-end"><span id="motivo-contador">0</span>/@PedidoService.MaxCaracteresMotivo</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Volver</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
 @section Scripts {
+    @if (puedeCancelar)
+    {
+        <script>
+            (function () {
+                const modal = document.getElementById('modal-cancelar-pedido');
+                const pasoConfirmar = document.getElementById('cancelar-paso-confirmar');
+                const pasoMotivo = document.getElementById('cancelar-paso-motivo');
+                const motivo = document.getElementById('motivo-cancelacion');
+                const contador = document.getElementById('motivo-contador');
+
+                // Paso 5 -> 6: al confirmar "Sí", el sistema pide el motivo
+                document.getElementById('btn-cancelar-si').addEventListener('click', function () {
+                    pasoConfirmar.classList.add('d-none');
+                    pasoMotivo.classList.remove('d-none');
+                    motivo.focus();
+                });
+
+                motivo.addEventListener('input', function () { contador.textContent = motivo.value.length; });
+
+                // Al cerrar el cuadro se vuelve a la pregunta inicial sin cambios
+                modal.addEventListener('hidden.bs.modal', function () {
+                    pasoConfirmar.classList.remove('d-none');
+                    pasoMotivo.classList.add('d-none');
+                    motivo.value = '';
+                    contador.textContent = '0';
+                });
+            })();
+        </script>
+    }
     @if (Model != null && Model.EstadoPedidoId == (int)EstadoPedido.EnCamino)
     {
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

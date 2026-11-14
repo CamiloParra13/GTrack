@@ -23,6 +23,8 @@ public class NegocioService(
     private const string MensajeErrorGuardado = "No fue posible actualizar la información. Intenta Nuevamente"; // FE-33
     private const string MensajeCodigoExpirado = "El código expiró o ya no es válido. Solicita uno nuevo";
 
+    // ================= CU-01 Registrar negocio =================
+    public async Task<(bool Ok, string? Error, bool CorreoEnviado)> RegistrarAsync(RegistroNegocioDto dto, string urlRevision)
     public async Task<(bool Ok, string? Error, bool CorreoEnviado)> RegistrarAsync(RegistroNegocioDto dto)
     {
         var nombre = dto.Nombre.Trim();
@@ -59,10 +61,26 @@ public class NegocioService(
 
         await negocios.RegistrarAsync(usuario, negocio);
 
+        // Aviso a los administradores: hay un negocio nuevo esperando validación (si falla, el registro se mantiene)
+        await AvisarAdministradoresAsync(negocio, documento, correo, urlRevision);
+
+        // FE-3-CU01: si falla el correo, el registro se mantiene
         await avisos.NegocioPendienteAsync(nombre, documento, correo);
 
         try
         {
+            await email.EnviarAsync(correo, "Bienvenido a GTrack", PlantillaCorreo.Crear(
+                etiqueta: "Registro recibido",
+                titulo: "¡Bienvenido a GTrack!",
+                saludo: $"Hola, {nombre}",
+                parrafos:
+                [
+                    "Recibimos el registro de tu negocio en GTrack.",
+                    "Tu cuenta será validada por un administrador y te avisaremos cuando esté activa."
+                ],
+                datos: [("Negocio", nombre), ("Documento", documento), ("Correo", correo), ("Estado", "Pendiente de validación")],
+                nota: "Mientras tu cuenta no sea validada no podrás iniciar sesión.",
+                tipoNota: TipoNota.Info));
             await email.EnviarAsync(correo, "Bienvenido a GTrack", PlantillaCorreo.Crear(
                 titulo: "¡Recibimos el registro de tu negocio!",
                 saludo: $"Hola, {nombre}",
@@ -137,6 +155,15 @@ public class NegocioService(
                 Expira = DateTime.UtcNow.AddMinutes(MinutosVigenciaCodigo)
             });
 
+            await email.EnviarAsync(usuario.Correo, "Tu código de verificación de GTrack", PlantillaCorreo.Crear(
+                etiqueta: "Verificación de identidad",
+                titulo: "Confirma que eres tú",
+                saludo: "Hola,",
+                parrafos: ["Usa este código para continuar con la edición del perfil de tu negocio:"],
+                codigo: codigo,
+                nota: $"El código es válido por {MinutosVigenciaCodigo} minutos. Si no fuiste tú, ignora este mensaje: sin el código nadie puede editar tu perfil.",
+                tipoNota: TipoNota.Aviso,
+                resumen: $"Tu código de verificación es {codigo}. Vence en {MinutosVigenciaCodigo} minutos."));
             var negocioActual = await negocios.ObtenerPorUsuarioIdAsync(usuarioId);
             await email.EnviarAsync(usuario.Correo, "Tu código de verificación de GTrack", PlantillaCorreo.Crear(
                 titulo: "Tu código de verificación",

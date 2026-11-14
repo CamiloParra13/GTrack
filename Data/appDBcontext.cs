@@ -12,6 +12,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Administrador> Administradores => Set<Administrador>();
     public DbSet<Pedido> Pedidos => Set<Pedido>();
     public DbSet<ItemPedido> ItemsPedido => Set<ItemPedido>();
+    public DbSet<SuspensionRepartidor> SuspensionRepartidor { get; set; }
+    public DbSet<UbicacionPedido> UbicacionesPedido => Set<UbicacionPedido>();
+    public DbSet<SolicitudCancelacion> SolicitudesCancelacion => Set<SolicitudCancelacion>();
     public DbSet<Notificacion> Notificaciones => Set<Notificacion>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -105,6 +108,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(i => i.PrecioUnitario).HasPrecision(18, 2);
         });
 
+        // CU-17: tabla creada con Database/cambios_02_cancelacion_cliente.sql
+        modelBuilder.Entity<SolicitudCancelacion>(e =>
+        {
+            e.ToTable("SolicitudCancelacion");
+            e.Property(s => s.Motivo).HasMaxLength(250);
+            e.HasIndex(s => s.PedidoId).IsUnique();
+            e.HasOne(s => s.Pedido).WithMany()
+                .HasForeignKey(s => s.PedidoId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<UbicacionPedido>(e =>
         modelBuilder.Entity<Notificacion>(e =>
         {
             e.ToTable("Notificacion");
