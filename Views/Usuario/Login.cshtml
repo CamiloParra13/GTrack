@@ -16,6 +16,7 @@
 
         <form asp-action="Login" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
 
             <p class="small text-uppercase text-center text-muted mb-1">Selecciona tu perfil</p>
             <div class="btn-group w-100 mb-3" role="group">

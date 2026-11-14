@@ -15,7 +15,7 @@
 <div class="mx-auto" style="max-width: 640px;">
     <div class="card shadow-sm p-4">
         <h2>Registrar Nuevo Repartidor</h2>
-        <p class="text-muted">Se generarán credenciales temporales y se enviarán al correo del repartidor.</p>
+        <p class="text-muted">Le enviaremos un correo al repartidor para que active su cuenta y cree su propia contraseña.</p>
 
         <form asp-action="Registrar" method="post" id="form-repartidor">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -42,6 +42,7 @@
             <div class="mb-3">
                 <label asp-for="Correo" class="form-label"></label>
                 <input asp-for="Correo" class="form-control" placeholder="repartidor@correo.com" />
+                <div class="form-text"><i class="bi bi-envelope me-1"></i>A este correo le llegará el enlace para activar su cuenta.</div>
                 <span asp-validation-for="Correo" class="text-danger small"></span>
             </div>
 

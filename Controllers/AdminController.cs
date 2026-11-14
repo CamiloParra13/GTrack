@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 [Authorize(Roles = "Administrador")]
 public class AdminController(
     IAdministracionService admin,
-    IWebHostEnvironment env,
     IReporteService reportes,
     IExportadorReportes exportador,
     ILogger<AdminController> logger) : Controller
 {
+    // Enlace absoluto que llega al correo del nuevo administrador para activar su cuenta
+    private string EnlaceActivacion(string token) =>
+        Url.Action("ActivarCuenta", "Usuario", new { token }, Request.Scheme)!;
+
     // ----- Validación de negocios (versión mínima de CU-18 para poder activar cuentas nuevas) -----
     [HttpGet]
     public async Task<IActionResult> Negocios() => View(await admin.ListarNegociosAsync());
@@ -16,8 +19,23 @@ public class AdminController(
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> AprobarNegocio(int id)
     {
-        if (await admin.AprobarNegocioAsync(id)) TempData["Mensaje"] = "Negocio validado correctamente";
-        else TempData["Aviso"] = "No fue posible validar el negocio";
+        var urlLogin = Url.Action("Login", "Usuario", new { rol = nameof(RolUsuario.Negocio) }, Request.Scheme)!;
+        var (ok, correoEnviado) = await admin.AprobarNegocioAsync(id, urlLogin);
+
+        if (!ok)
+        {
+            TempData["Aviso"] = "No fue posible validar el negocio";
+        }
+        else if (correoEnviado)
+        {
+            TempData["Mensaje"] = "Negocio validado correctamente. Le avisamos por correo que su cuenta ya está activa.";
+        }
+        else
+        {
+            TempData["Mensaje"] = "Negocio validado correctamente";
+            TempData["Aviso"] = "No fue posible enviarle al negocio el correo de aviso, pero su cuenta ya está activa.";
+        }
+
         return RedirectToAction(nameof(Negocios));
     }
 
@@ -39,19 +57,28 @@ public class AdminController(
             return View(dto);
         }
 
-        var r = await admin.RegistrarAdministradorAsync(dto);
+        // La cuenta queda "pendiente de activación": el administrador crea su contraseña desde el correo
+        var r = await admin.RegistrarAdministradorAsync(dto, EnlaceActivacion);
         if (!r.Ok)
         {
             ModelState.AddModelError("", r.Error!);
             return View(dto);
         }
 
-        TempData["Mensaje"] = "Administrador registrado exitosamente";
-        if (!r.CorreoEnviado) // FE-64-CU26
-            TempData["Aviso"] = "No fue posible enviar las credenciales por correo. Puedes enviarlas manualmente";
-        if (!r.CorreoEnviado || env.IsDevelopment())
-            TempData["Credenciales"] = $"Usuario: {dto.Correo.Trim()} — Contraseña temporal: {r.PasswordTemporal}";
+        var correo = dto.Correo.Trim();
+        if (r.CorreoEnviado)
+            TempData["Mensaje"] = $"Administrador registrado. Le enviamos un correo a {correo} para que active su cuenta y cree su contraseña.";
+        else // FE-64-CU26
+            TempData["Aviso"] = $"El administrador quedó registrado, pero no pudimos enviar el correo de activación a {correo}. Usa \"Reenviar correo\" para intentarlo de nuevo.";
 
+        return RedirectToAction(nameof(Administradores));
+    }
+
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> ReenviarActivacion(int id)
+    {
+        var (ok, mensaje) = await admin.ReenviarActivacionAsync(id, EnlaceActivacion);
+        TempData[ok ? "Mensaje" : "Error"] = mensaje;
         return RedirectToAction(nameof(Administradores));
     }
 

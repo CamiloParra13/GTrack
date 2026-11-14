@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 public class RepartidorController(
     IRepartidorRepository repartidorRepo,
     INegocioRepository negocioRepo,
+    IRepartidorService repartidorService,
     IWebHostEnvironment env,
     AppDbContext context,
     IPedidoService pedidos,
@@ -14,6 +15,10 @@ public class RepartidorController(
     ILogger<RepartidorController> logger) : Controller
 {
     private int UsuarioId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+    // Enlace absoluto que llega al correo del repartidor para activar su cuenta
+    private string EnlaceActivacion(string token) =>
+        Url.Action("ActivarCuenta", "Usuario", new { token }, Request.Scheme)!;
 
     [HttpGet]
     [Authorize(Roles = "Negocio")]
@@ -42,52 +47,29 @@ public class RepartidorController(
             return View(dto);
         }
 
-        // 1. Validar si el correo ya existe en la base de datos
-        var correoExiste = await context.Usuarios.AnyAsync(u => u.Correo == dto.Correo);
-        if (correoExiste)
+        // La cuenta queda "pendiente de activación": el repartidor crea su contraseña desde el correo
+        var resultado = await repartidorService.RegistrarAsync(UsuarioId, dto, EnlaceActivacion);
+        if (!resultado.Ok)
         {
-            ModelState.AddModelError("Correo", "Este correo electrónico ya se encuentra registrado.");
+            ModelState.AddModelError(resultado.Campo ?? string.Empty, resultado.Error!);
             return View(dto);
         }
 
-        // 2. Validar si el documento ya existe en la base de datos (en la tabla Usuario)
-        var documentoExiste = await context.Usuarios.AnyAsync(u => u.Documento == dto.Documento);
-        if (documentoExiste)
-        {
-            ModelState.AddModelError("Documento", "Este número de documento ya se encuentra registrado.");
-            return View(dto);
-        }
+        var correo = dto.Correo.Trim();
+        if (resultado.CorreoEnviado)
+            TempData["Mensaje"] = $"¡Repartidor registrado! Le enviamos un correo a {correo} para que active su cuenta y cree su contraseña.";
+        else // FE-21-CU09
+            TempData["Aviso"] = $"El repartidor quedó registrado, pero no pudimos enviar el correo de activación a {correo}. Usa \"Reenviar correo\" para intentarlo de nuevo.";
 
-        var negocio = await negocioRepo.ObtenerPorUsuarioIdAsync(UsuarioId);
-        if (negocio == null) return NotFound();
+        return RedirectToAction(nameof(Index));
+    }
 
-        // 3. Creamos la cuenta de usuario base para el repartidor
-        var nuevoUsuario = new Usuario
-        {
-            Correo = dto.Correo,
-            Documento = dto.Documento,
-            Rol = RolUsuario.Repartidor,
-            Estado = EstadoCuenta.Activo
-        };
-
-        context.Usuarios.Add(nuevoUsuario);
-        await context.SaveChangesAsync(); // Genera el Id del usuario
-
-        // 4. Creamos el repartidor vinculado al negocio y al usuario (sin la propiedad Documento si no la tiene el modelo)
-        var repartidor = new Repartidor
-        {
-            NombreCompleto = dto.NombreCompleto,
-            Telefono = dto.Telefono,
-            Vehiculo = dto.Vehiculo ?? TipoVehiculo.Moto, // Conversión segura si es nullable
-            Placa = dto.Placa,
-            NegocioId = negocio.Id,
-            UsuarioId = nuevoUsuario.Id
-        };
-
-        context.Repartidores.Add(repartidor);
-        await context.SaveChangesAsync();
-
-        TempData["Mensaje"] = "¡El repartidor ha sido registrado exitosamente!";
+    [HttpPost, ValidateAntiForgeryToken]
+    [Authorize(Roles = "Negocio")]
+    public async Task<IActionResult> ReenviarActivacion(int id)
+    {
+        var (ok, mensaje) = await repartidorService.ReenviarActivacionAsync(UsuarioId, id, EnlaceActivacion);
+        TempData[ok ? "Mensaje" : "Error"] = mensaje;
         return RedirectToAction(nameof(Index));
     }
 
@@ -105,6 +87,28 @@ public class RepartidorController(
         if (repartidor == null || repartidor.Usuario == null)
         {
             TempData["Error"] = "El repartidor no existe o no pertenece a tu negocio.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Solo el repartidor puede activar su cuenta (creando su contraseña desde el correo)
+        if (repartidor.Usuario.Estado == EstadoCuenta.PendienteActivacion)
+        {
+            TempData["Error"] = $"{repartidor.NombreCompleto} aún no ha activado su cuenta. Puedes reenviarle el correo de activación.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Repartidor registrado antes de la activación por correo, sin contraseña: en lugar de quedar
+        // activo pasa a "pendiente de activación" y se le envía el correo para que cree su contraseña.
+        if (repartidor.Usuario.Estado != EstadoCuenta.Activo && string.IsNullOrEmpty(repartidor.Usuario.PasswordHash))
+        {
+            repartidor.Usuario.Estado = EstadoCuenta.PendienteActivacion;
+            await context.SaveChangesAsync();
+
+            var (enviado, _) = await repartidorService.ReenviarActivacionAsync(UsuarioId, repartidor.Id, EnlaceActivacion);
+            if (enviado)
+                TempData["Mensaje"] = $"{repartidor.NombreCompleto} aún no tenía contraseña: le enviamos un correo para que active su cuenta.";
+            else
+                TempData["Aviso"] = $"{repartidor.NombreCompleto} aún no tiene contraseña y no pudimos enviarle el correo de activación. Usa \"Reenviar correo\".";
             return RedirectToAction(nameof(Index));
         }
 

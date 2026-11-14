@@ -19,4 +19,15 @@ public class TokenRecuperacionRepository(AppDbContext db) : ITokenRecuperacionRe
         db.TokensRecuperacion.Update(token);
         await db.SaveChangesAsync();
     }
+
+    public async Task InvalidarPendientesAsync(int usuarioId)
+    {
+        var pendientes = await db.TokensRecuperacion
+            .Where(t => t.UsuarioId == usuarioId && !t.Usado)
+            .ToListAsync();
+        if (pendientes.Count == 0) return;
+
+        foreach (var t in pendientes) t.Usado = true;
+        await db.SaveChangesAsync();
+    }
 }

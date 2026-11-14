@@ -63,7 +63,9 @@
                     <div class="input-group">
                         <input asp-for="Password" class="form-control" autocomplete="new-password" />
                         <button type="button" class="btn btn-outline-secondary toggle-password" data-target="Password"
-                                aria-label="Mostrar u ocultar contraseña">👁</button>
+                                aria-label="Mostrar u ocultar contraseña">
+                            <i class="bi bi-eye"></i>
+                        </button>
                     </div>
                     <span asp-validation-for="Password" class="text-danger small"></span>
                 </div>
@@ -72,7 +74,9 @@
                     <div class="input-group">
                         <input asp-for="ConfirmarPassword" class="form-control" autocomplete="new-password" />
                         <button type="button" class="btn btn-outline-secondary toggle-password" data-target="ConfirmarPassword"
-                                aria-label="Mostrar u ocultar contraseña">👁</button>
+                                aria-label="Mostrar u ocultar contraseña">
+                            <i class="bi bi-eye"></i>
+                        </button>
                     </div>
                     <span asp-validation-for="ConfirmarPassword" class="text-danger small"></span>
                 </div>
@@ -95,7 +99,7 @@
         <p class="text-center small mb-1">
             ¿Ya tienes una cuenta? <a asp-controller="Usuario" asp-action="Login">Iniciar sesión</a>
         </p>
-        <p class="text-center small mb-0"><a asp-controller="Home" asp-action="Index">← Volver al Inicio</a></p>
+        <p class="text-center small mb-0"><a asp-controller="Home" asp-action="Index"><i class="bi bi-arrow-left me-1"></i>Volver al Inicio</a></p>
     </div>
 </div>
 
@@ -145,12 +149,7 @@
             form.addEventListener('input', function () { actualizarBarra(); actualizarBoton(); });
             form.addEventListener('change', actualizarBoton);
 
-            document.querySelectorAll('.toggle-password').forEach(function (b) {
-                b.addEventListener('click', function () {
-                    const campo = document.getElementById(b.dataset.target);
-                    campo.type = campo.type === 'password' ? 'text' : 'password';
-                });
-            });
+            // El botón del ojo (.toggle-password) lo maneja gtrack-ui.js en todas las páginas
 
             actualizarBarra();
             actualizarBoton();

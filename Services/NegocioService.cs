@@ -21,7 +21,7 @@ public class NegocioService(
     private const string MensajeCodigoExpirado = "El código expiró o ya no es válido. Solicita uno nuevo";
 
     // ================= CU-01 Registrar negocio =================
-    public async Task<(bool Ok, string? Error, bool CorreoEnviado)> RegistrarAsync(RegistroNegocioDto dto)
+    public async Task<(bool Ok, string? Error, bool CorreoEnviado)> RegistrarAsync(RegistroNegocioDto dto, string urlRevision)
     {
         var nombre = dto.Nombre.Trim();
         var documento = dto.Documento.Trim();
@@ -58,18 +58,77 @@ public class NegocioService(
 
         await negocios.RegistrarAsync(usuario, negocio);
 
+        // Aviso a los administradores: hay un negocio nuevo esperando validación (si falla, el registro se mantiene)
+        await AvisarAdministradoresAsync(negocio, documento, correo, urlRevision);
+
         // FE-3-CU01: si falla el correo, el registro se mantiene
         try
         {
-            await email.EnviarAsync(correo, "Bienvenido a Gtrack",
-                $"Hola {nombre}, recibimos el registro de tu negocio en Gtrack. " +
-                "Tu cuenta será validada por un administrador y te avisaremos cuando esté activa.");
+            await email.EnviarAsync(correo, "Bienvenido a GTrack", PlantillaCorreo.Crear(
+                etiqueta: "Registro recibido",
+                titulo: "¡Bienvenido a GTrack!",
+                saludo: $"Hola, {nombre}",
+                parrafos:
+                [
+                    "Recibimos el registro de tu negocio en GTrack.",
+                    "Tu cuenta será validada por un administrador y te avisaremos cuando esté activa."
+                ],
+                datos: [("Negocio", nombre), ("Documento", documento), ("Correo", correo), ("Estado", "Pendiente de validación")],
+                nota: "Mientras tu cuenta no sea validada no podrás iniciar sesión.",
+                tipoNota: TipoNota.Info));
             return (true, null, true);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "No se pudo enviar el correo de confirmación de registro a {Correo}", correo);
             return (true, null, false);
+        }
+    }
+
+    // Correo a cada administrador activo con los datos del negocio y el botón para revisarlo
+    private async Task AvisarAdministradoresAsync(Negocio negocio, string documento, string correo, string urlRevision)
+    {
+        try
+        {
+            var administradores = await usuarios.CorreosAdministradoresActivosAsync();
+            if (administradores.Count == 0) return;
+
+            var aviso = PlantillaCorreo.Crear(
+                etiqueta: "Validación pendiente",
+                titulo: "Hay un negocio esperando tu aprobación",
+                saludo: "Hola,",
+                parrafos:
+                [
+                    $"**{negocio.Nombre}** completó su registro en GTrack y está pendiente de validación.",
+                    "Revisa su información y apruébalo para que pueda iniciar sesión."
+                ],
+                datos:
+                [
+                    ("Negocio", negocio.Nombre), ("Actividad", negocio.TipoActividad), ("Documento", documento),
+                    ("Correo", correo), ("Teléfono", negocio.Telefono), ("Dirección", negocio.Direccion)
+                ],
+                textoBoton: "Revisar solicitud",
+                urlBoton: urlRevision,
+                nota: "Mientras no apruebes la cuenta, el negocio no podrá iniciar sesión.",
+                tipoNota: TipoNota.Info,
+                resumen: $"{negocio.Nombre} se registró y espera tu aprobación.");
+
+            // Un correo por administrador (nadie ve el correo de los demás), enviados al mismo tiempo
+            await Task.WhenAll(administradores.Select(async para =>
+            {
+                try
+                {
+                    await email.EnviarAsync(para, "Nuevo negocio pendiente de validación en GTrack", aviso);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogWarning(ex, "No se pudo avisar al administrador {Correo} del negocio {Negocio}", para, negocio.Nombre);
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "No se pudo avisar a los administradores del negocio {Negocio}", negocio.Nombre);
         }
     }
 
@@ -132,9 +191,15 @@ public class NegocioService(
                 Expira = DateTime.UtcNow.AddMinutes(MinutosVigenciaCodigo)
             });
 
-            await email.EnviarAsync(usuario.Correo, "Código de verificación de Gtrack",
-                $"Tu código para editar el perfil de tu negocio es: {codigo}\n" +
-                $"Es válido por {MinutosVigenciaCodigo} minutos. Si no fuiste tú, ignora este mensaje.");
+            await email.EnviarAsync(usuario.Correo, "Tu código de verificación de GTrack", PlantillaCorreo.Crear(
+                etiqueta: "Verificación de identidad",
+                titulo: "Confirma que eres tú",
+                saludo: "Hola,",
+                parrafos: ["Usa este código para continuar con la edición del perfil de tu negocio:"],
+                codigo: codigo,
+                nota: $"El código es válido por {MinutosVigenciaCodigo} minutos. Si no fuiste tú, ignora este mensaje: sin el código nadie puede editar tu perfil.",
+                tipoNota: TipoNota.Aviso,
+                resumen: $"Tu código de verificación es {codigo}. Vence en {MinutosVigenciaCodigo} minutos."));
             return (true, null);
         }
         catch (Exception ex)

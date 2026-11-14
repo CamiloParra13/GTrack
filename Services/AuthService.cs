@@ -13,6 +13,11 @@ public class AuthService(IUsuarioRepository repo, IPasswordHasher<Usuario> hashe
         var usuario = await repo.ObtenerPorIdentificadorYRolAsync(dto.Identificador.Trim(), dto.Rol);
         if (usuario is null) return (null, MsgGenerico);
 
+        // CU-09: repartidor que todavía no crea su contraseña desde el correo de activación.
+        // Se revisa antes que la contraseña porque la cuenta aún no tiene una.
+        if (usuario.Estado == EstadoCuenta.PendienteActivacion)
+            return (null, "Tu cuenta aún no está activada. Revisa tu correo y usa el enlace de activación que te enviamos para crear tu contraseña.");
+
         // Bloqueo vigente (RN-1-CU02)
         var ahora = DateTime.UtcNow;
         if (usuario.BloqueadoHasta is { } hasta)

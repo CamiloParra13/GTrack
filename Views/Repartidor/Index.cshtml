@@ -4,7 +4,8 @@
     ViewData["Title"] = "Gestión de Repartidores";
     var lista = Model ?? new List<Repartidor>();
     var activos = lista.Count(r => r.Usuario?.Estado == EstadoCuenta.Activo);
-    var suspendidos = lista.Count - activos;
+    var pendientes = lista.Count(r => r.Usuario?.Estado == EstadoCuenta.PendienteActivacion);
+    var suspendidos = lista.Count - activos - pendientes;
 }
 
 <div class="container py-4">
@@ -21,6 +22,10 @@
     @if (TempData["Mensaje"] is string msg)
     {
         <div class="alert alert-success border-0 shadow-sm rounded-3">@msg</div>
+    }
+    @if (TempData["Aviso"] is string aviso)
+    {
+        <div class="alert alert-warning border-0 shadow-sm rounded-3">@aviso</div>
     }
     @if (TempData["Error"] is string err)
     {
@@ -40,7 +45,7 @@
     else
     {
         <div class="row g-3 mb-4">
-            <div class="col-12 col-md-4">
+            <div class="col-6 col-lg-3">
                 <div class="resumen-tile">
                     <div class="resumen-icono bg-primary bg-opacity-10 text-primary"><i class="bi bi-people"></i></div>
                     <div>
@@ -49,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-4">
+            <div class="col-6 col-lg-3">
                 <div class="resumen-tile">
                     <div class="resumen-icono estado-entregado"><i class="bi bi-person-check"></i></div>
                     <div>
@@ -58,7 +63,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-4">
+            <div class="col-6 col-lg-3">
+                <div class="resumen-tile">
+                    <div class="resumen-icono estado-preparacion"><i class="bi bi-hourglass-split"></i></div>
+                    <div>
+                        <div class="resumen-valor">@pendientes</div>
+                        <div class="resumen-texto">Pendientes de activación</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
                 <div class="resumen-tile">
                     <div class="resumen-icono estado-cancelado"><i class="bi bi-person-x"></i></div>
                     <div>
@@ -85,6 +99,7 @@
                         @foreach (var rep in lista)
                         {
                             var esActivo = rep.Usuario?.Estado == EstadoCuenta.Activo;
+                            var esPendiente = rep.Usuario?.Estado == EstadoCuenta.PendienteActivacion;
                             <tr>
                                 <td class="ps-4 fw-semibold text-dark">@rep.NombreCompleto</td>
                                 <td>@rep.Telefono</td>
@@ -94,30 +109,52 @@
                                     {
                                         <span class="estado-badge estado-entregado"><i class="bi bi-check-circle"></i>Activo</span>
                                     }
+                                    else if (esPendiente)
+                                    {
+                                        <span class="estado-badge estado-preparacion" title="Le enviamos un correo para que active su cuenta y cree su contraseña">
+                                            <i class="bi bi-hourglass-split"></i>Pendiente de activación
+                                        </span>
+                                    }
                                     else
                                     {
                                         <span class="estado-badge estado-cancelado"><i class="bi bi-slash-circle"></i>Suspendido</span>
                                     }
                                 </td>
                                 <td class="text-end pe-4">
-                                    <form asp-action="CambiarEstado" asp-route-id="@rep.Id" method="post" class="d-inline">
-                                        @if (esActivo)
-                                        {
-                                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-medium"
-                                                    data-confirm="El repartidor @rep.NombreCompleto no podrá recibir ni gestionar pedidos hasta que lo actives de nuevo."
-                                                    data-confirm-titulo="¿Suspender repartidor?"
-                                                    data-confirm-ok="Sí, suspender"
-                                                    data-confirm-tipo="danger">
-                                                <i class="bi bi-pause-circle me-1"></i>Suspender
+                                    @if (esPendiente)
+                                    {
+                                        @* CU-09: el repartidor activa su cuenta desde el correo; el negocio solo puede reenviarlo *@
+                                        <form asp-action="ReenviarActivacion" asp-route-id="@rep.Id" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-medium"
+                                                    data-confirm="Le enviaremos a @(rep.Usuario?.Correo) un nuevo enlace para que active su cuenta y cree su contraseña."
+                                                    data-confirm-titulo="¿Reenviar correo de activación?"
+                                                    data-confirm-ok="Sí, reenviar"
+                                                    data-confirm-tipo="primary">
+                                                <i class="bi bi-send me-1"></i>Reenviar correo
                                             </button>
-                                        }
-                                        else
-                                        {
-                                            <button type="submit" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-medium">
-                                                <i class="bi bi-play-circle me-1"></i>Activar
-                                            </button>
-                                        }
-                                    </form>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="CambiarEstado" asp-route-id="@rep.Id" method="post" class="d-inline">
+                                            @if (esActivo)
+                                            {
+                                                <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-medium"
+                                                        data-confirm="El repartidor @rep.NombreCompleto no podrá recibir ni gestionar pedidos hasta que lo actives de nuevo."
+                                                        data-confirm-titulo="¿Suspender repartidor?"
+                                                        data-confirm-ok="Sí, suspender"
+                                                        data-confirm-tipo="danger">
+                                                    <i class="bi bi-pause-circle me-1"></i>Suspender
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="submit" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-medium">
+                                                    <i class="bi bi-play-circle me-1"></i>Activar
+                                                </button>
+                                            }
+                                        </form>
+                                    }
                                 </td>
                             </tr>
                         }

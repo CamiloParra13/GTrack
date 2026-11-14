@@ -1,7 +1,9 @@
 ﻿public enum RolUsuario { Negocio, Repartidor, Administrador }
 
-// Eliminado va al final para no cambiar los valores numéricos de los estados existentes
-public enum EstadoCuenta { PendienteValidacion, Activo, Suspendido, Rechazado, Eliminado }
+// Los estados nuevos van al final para no cambiar los valores numéricos de los existentes.
+// El número debe coincidir con dbo.EstadoCuenta (0 a 5).
+// PendienteActivacion (5): repartidor registrado por un negocio que aún no crea su contraseña desde el correo.
+public enum EstadoCuenta { PendienteValidacion, Activo, Suspendido, Rechazado, Eliminado, PendienteActivacion }
 
 public class Usuario
 {

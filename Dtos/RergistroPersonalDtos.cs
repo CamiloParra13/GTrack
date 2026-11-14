@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-public record ResultadoRegistro(bool Ok, string? Error, bool CorreoEnviado, string? PasswordTemporal);
+// Campo: propiedad del formulario donde se muestra el error (null = mensaje general)
+public record ResultadoRegistro(bool Ok, string? Error, bool CorreoEnviado, string? PasswordTemporal, string? Campo = null);
 
 // CU-09
 public class RegistroRepartidorDto : IValidatableObject
@@ -87,6 +88,7 @@ public class NegocioAdminDto
 
 public class AdministradorDto
 {
+    public int UsuarioId { get; set; }
     public string NombreCompleto { get; set; } = "";
     public string Documento { get; set; } = "";
     public string Correo { get; set; } = "";

@@ -3,6 +3,14 @@
 @{
     ViewData["Title"] = "Administradores";
     var lista = Model ?? new List<AdministradorDto>();
+
+    (string Texto, string Clase, string Icono) Est(EstadoCuenta e) => e switch
+    {
+        EstadoCuenta.Activo => ("Activo", "estado-entregado", "bi-check-circle"),
+        EstadoCuenta.PendienteActivacion => ("Pendiente de activación", "estado-preparacion", "bi-hourglass-split"),
+        EstadoCuenta.Suspendido => ("Suspendido", "estado-recibido", "bi-pause-circle"),
+        _ => (EstadoPedidoInfo.NombreCuenta(e), "estado-recibido", "bi-dash-circle")
+    };
 }
 
 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
@@ -23,12 +31,9 @@
 {
     <div class="alert alert-warning">@aviso</div>
 }
-@if (TempData["Credenciales"] is string cred)
+@if (TempData["Error"] is string error)
 {
-    @* Se queda fija en pantalla (data-no-toast) para que no desaparezca antes de copiar las credenciales *@
-    <div class="alert alert-info border-0 shadow-sm rounded-3" data-no-toast>
-        <i class="bi bi-key me-1"></i><strong>Credenciales temporales del administrador</strong><br />@cred
-    </div>
+    <div class="alert alert-danger">@error</div>
 }
 
 @if (lista.Count == 0)
@@ -53,11 +58,13 @@ else
                         <th>Teléfono</th>
                         <th>Registrado</th>
                         <th>Estado</th>
+                        <th class="text-end pe-4">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var a in lista)
                     {
+                        var est = Est(a.Estado);
                         <tr>
                             <td class="ps-4 fw-semibold">@a.NombreCompleto</td>
                             <td>@a.Documento</td>
@@ -65,7 +72,26 @@ else
                             <td>@a.Telefono</td>
                             @* Fecha guardada en UTC -> hora de Colombia (UTC-5) *@
                             <td>@(a.FechaRegistro?.AddHours(-5).ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("es-CO")) ?? "—")</td>
-                            <td><span class="estado-badge estado-entregado"><i class="bi bi-check-circle"></i>@a.Estado</span></td>
+                            <td>
+                                <span class="estado-badge @est.Clase" title="@(a.Estado == EstadoCuenta.PendienteActivacion ? "Le enviamos un correo para que active su cuenta y cree su contraseña" : null)">
+                                    <i class="bi @est.Icono"></i>@est.Texto
+                                </span>
+                            </td>
+                            <td class="text-end pe-4">
+                                @if (a.Estado == EstadoCuenta.PendienteActivacion)
+                                {
+                                    @* CU-26: el administrador activa su cuenta desde el correo; aquí solo se puede reenviar *@
+                                    <form asp-action="ReenviarActivacion" asp-route-id="@a.UsuarioId" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-medium"
+                                                data-confirm="Le enviaremos a @a.Correo un nuevo enlace para que active su cuenta y cree su contraseña."
+                                                data-confirm-titulo="¿Reenviar correo de activación?"
+                                                data-confirm-ok="Sí, reenviar"
+                                                data-confirm-tipo="primary">
+                                            <i class="bi bi-send me-1"></i>Reenviar correo
+                                        </button>
+                                    </form>
+                                }
+                            </td>
                         </tr>
                     }
                 </tbody>

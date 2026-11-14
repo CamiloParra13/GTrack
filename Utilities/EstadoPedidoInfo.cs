@@ -31,6 +31,7 @@ public static class EstadoPedidoInfo
         EstadoCuenta.PendienteValidacion => "Pendiente de validación",
         EstadoCuenta.Suspendido => "Suspendido",
         EstadoCuenta.Rechazado => "Rechazado",
+        EstadoCuenta.PendienteActivacion => "Pendiente de activación",
         _ => "Eliminado"
     };
 
@@ -40,6 +41,7 @@ public static class EstadoPedidoInfo
         EstadoCuenta.PendienteValidacion => "#f0ad00",
         EstadoCuenta.Suspendido => "#6c757d",
         EstadoCuenta.Rechazado => "#dc3545",
+        EstadoCuenta.PendienteActivacion => "#fd7e14",
         _ => "#343a40"
     };
 }

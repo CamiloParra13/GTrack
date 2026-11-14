@@ -23,4 +23,14 @@ public class RepartidorRepository(AppDbContext db) : IRepartidorRepository
         await db.Negocios.AnyAsync(n => n.Telefono == telefono) ||
         await db.Repartidores.AnyAsync(r => r.Telefono == telefono) ||
         await db.Administradores.AnyAsync(a => a.Telefono == telefono);
+
+    public Task<Repartidor?> ObtenerDeNegocioAsync(int negocioId, int repartidorId) =>
+        db.Repartidores
+            .Include(r => r.Usuario)
+            .FirstOrDefaultAsync(r => r.Id == repartidorId && r.NegocioId == negocioId);
+
+    public Task<Repartidor?> ObtenerPorUsuarioIdAsync(int usuarioId) =>
+        db.Repartidores
+            .AsNoTracking()
+            .FirstOrDefaultAsync(r => r.UsuarioId == usuarioId);
 }
