@@ -18,6 +18,7 @@ public class AdministracionRepository(AppDbContext db) : IAdministracionReposito
          orderby u.Id descending
          select new AdministradorDto
          {
+             UsuarioId = u.Id,
              NombreCompleto = a != null ? a.NombreCompleto : "Administrador principal",
              Documento = u.Documento,
              Correo = u.Correo,
@@ -59,6 +60,11 @@ public class AdministracionRepository(AppDbContext db) : IAdministracionReposito
 
     public async Task<bool> TelefonoEnUsoAsync(string telefono) =>
         await db.Negocios.AnyAsync(n => n.Telefono == telefono) ||
-        await db.Repartidores.AnyAsync(r => r.Telefono == telefono) ||
+        await db.Repartidores.AnyAsync(r => r.Telefono == telefono && r.Usuario!.Estado != EstadoCuenta.Eliminado) ||
         await db.Administradores.AnyAsync(a => a.Telefono == telefono);
+
+    public Task<Administrador?> ObtenerPorUsuarioIdAsync(int usuarioId) =>
+        db.Administradores
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a => a.UsuarioId == usuarioId);
 }

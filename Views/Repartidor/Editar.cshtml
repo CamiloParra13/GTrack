@@ -1,0 +1,107 @@
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model EditarRepartidorDto
+@{
+    ViewData["Title"] = "Editar perfil";
+    var vehiculos = new List<SelectListItem>
+    {
+        new("Bicicleta", nameof(TipoVehiculo.Bicicleta)),
+        new("Moto", nameof(TipoVehiculo.Moto)),
+        new("Carro", nameof(TipoVehiculo.Carro))
+    };
+    var mostrarPlaca = Model.Vehiculo is TipoVehiculo.Moto or TipoVehiculo.Carro;
+}
+
+<style>
+    .input-validation-error { border-color: #dc3545; }
+</style>
+
+@* CU-14 pasos 5 y 6 *@
+<div class="mx-auto" style="max-width: 640px;">
+    <div class="card shadow-sm p-4">
+        <h2>Editar Perfil</h2>
+        <p class="text-muted">Actualiza tu información personal. El número de documento no se puede modificar.</p>
+
+        <form asp-action="Editar" method="post" id="form-editar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="NombreCompleto" class="form-label"></label>
+                <input asp-for="NombreCompleto" class="form-control" />
+                <span asp-validation-for="NombreCompleto" class="text-danger small"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Correo" class="form-label"></label>
+                    <input type="email" maxlength="150" asp-for="Correo" class="form-control" />
+                    <span asp-validation-for="Correo" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Telefono" class="form-label"></label>
+                    <input maxlength="10" data-solo-digitos asp-for="Telefono" type="tel" class="form-control" inputmode="numeric" />
+                    <span asp-validation-for="Telefono" class="text-danger small"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Vehiculo" class="form-label"></label>
+                    <select asp-for="Vehiculo" class="form-select" asp-items="vehiculos">
+                        <option value="">Selecciona un vehículo</option>
+                    </select>
+                    <span asp-validation-for="Vehiculo" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3 @(mostrarPlaca ? "" : "d-none")" id="grupo-placa">
+                    <label asp-for="Placa" class="form-label"></label>
+                    <input asp-for="Placa" class="form-control text-uppercase" maxlength="7" placeholder="ABC123" autocomplete="off"
+                           data-val="true" data-val-placa="Placa no válida: carro ABC123 · moto ABC12D" />
+                    <span asp-validation-for="Placa" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                @* FA-15-CU14: descarta los cambios y vuelve al perfil *@
+                <a asp-action="Perfil" class="btn btn-outline-secondary">Cancelar</a>
+                <button type="submit" id="btn-guardar" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            const form = document.getElementById('form-editar');
+            const boton = document.getElementById('btn-guardar');
+            const vehiculo = document.getElementById('Vehiculo');
+            const grupo = document.getElementById('grupo-placa');
+            const placa = document.getElementById('Placa');
+
+            const conPlaca = () => vehiculo.value === 'Moto' || vehiculo.value === 'Carro';
+
+            // La placa solo se muestra si el vehículo es Moto o Carro
+            function actualizarPlaca() {
+                grupo.classList.toggle('d-none', !conPlaca());
+                if (!conPlaca()) placa.value = '';
+                // Carro: ABC123 · Moto: ABC12D
+                placa.placeholder = vehiculo.value === 'Moto' ? 'ABC12D' : 'ABC123';
+                if (conPlaca() && placa.value && window.jQuery) jQuery(placa).valid();
+            }
+
+            // El botón solo se activa cuando todos los campos tienen un formato válido
+            function actualizarBoton() {
+                const llenos = ['NombreCompleto', 'Correo', 'Telefono', 'Vehiculo']
+                    .every(id => document.getElementById(id).value.trim() !== '');
+                const telefonoOk = GTrackReglas.telefono.test(document.getElementById('Telefono').value.trim());
+                const correoOk = GTrackReglas.correo.test(document.getElementById('Correo').value.trim());
+                const placaOk = placaValida(vehiculo.value, placa.value);
+                boton.disabled = !(llenos && telefonoOk && correoOk && placaOk && form.checkValidity());
+            }
+
+            vehiculo.addEventListener('change', actualizarPlaca);
+            form.addEventListener('input', actualizarBoton);
+            form.addEventListener('change', actualizarBoton);
+            actualizarPlaca();
+            actualizarBoton();
+        })();
+    </script>
+}

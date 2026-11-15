@@ -15,7 +15,7 @@
         <!-- 1. ARRIBA A LA DERECHA: Botones de Iniciar Sesión y Registrarse -->
         <div class="w-100 d-flex justify-content-end">
             <div class="d-flex gap-2">
-                <a asp-controller="Usuario" asp-action="Login" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold bg-white">Iniciar Sesión</a>
+                <a asp-controller="Usuario" asp-action="Login" class="btn btn-outline-secondary btn-fondo-blanco rounded-pill px-4 fw-semibold">Iniciar Sesión</a>
                 <a asp-controller="Negocio" asp-action="Registrar" class="btn btn-primary rounded-pill px-4 fw-semibold shadow-sm">Registrarse</a>
             </div>
         </div>
@@ -31,7 +31,7 @@
 
         <!-- 3. ABAJO A LA DERECHA: Botón elegante de consultar pedido (CU-05) -->
         <div class="w-100 d-flex justify-content-end">
-            <a asp-controller="Pedido" asp-action="Consultar" class="btn btn-outline-dark rounded-pill px-4 py-2 shadow-sm d-inline-flex align-items-center gap-2 bg-white transition-all">
+            <a asp-controller="Pedido" asp-action="Consultar" class="btn btn-outline-dark btn-fondo-blanco rounded-pill px-4 py-2 shadow-sm d-inline-flex align-items-center gap-2 transition-all">
                 <i class="bi bi-search fs-5"></i>
                 <span class="fw-medium">Consultar Estado de Pedido</span>
             </a>
@@ -66,6 +66,12 @@ else
                     </a>
                 </div>
                 <div class="col-md-6">
+                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Reporte" asp-action="Index">
+                        <h5><i class="bi bi-bar-chart-line me-2"></i>Reportes</h5>
+                        <p class="text-muted mb-0">Genera reportes de tus pedidos y descárgalos en Excel o PDF.</p>
+                    </a>
+                </div>
+                <div class="col-md-6">
                     <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Negocio" asp-action="Perfil">
                         <h5><i class="bi bi-shop me-2"></i>Mi Perfil</h5>
                         <p class="text-muted mb-0">Consulta, edita o elimina la información de tu negocio.</p>
@@ -78,6 +84,12 @@ else
                     <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Admin" asp-action="Negocios">
                         <h5><i class="bi bi-shop me-2"></i>Negocios</h5>
                         <p class="text-muted mb-0">Revisa y valida los negocios registrados.</p>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a class="card shadow-sm h-100 p-4 text-decoration-none dash-card border-0" asp-controller="Admin" asp-action="Reportes">
+                        <h5><i class="bi bi-bar-chart-line me-2"></i>Reportes</h5>
+                        <p class="text-muted mb-0">Negocios que ingresaron y actividad de pedidos, en Excel o PDF.</p>
                     </a>
                 </div>
                 <div class="col-md-6">

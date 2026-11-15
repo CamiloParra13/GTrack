@@ -3,20 +3,40 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
-public class UsuarioController(IAuthService auth, IRecuperacionService recuperacion) : Controller
+public class UsuarioController(
+    IAuthService auth,
+    IRecuperacionService recuperacion,
+    IActivacionCuentaService activacion) : Controller
 {
     // ---------- CU-02 Iniciar sesión ----------
+    // "rol" abre el formulario con un perfil ya elegido (p. ej. después de activar la cuenta).
+    // "returnUrl" es la página a la que se vuelve después de ingresar (p. ej. el botón "Revisar solicitud"
+    // del correo que reciben los administradores); solo se aceptan direcciones de este mismo sitio.
     [HttpGet]
-    public IActionResult Login()
+    public IActionResult Login(string? rol = null, string? returnUrl = null)
     {
         if (User.Identity?.IsAuthenticated == true) return RedirectToAction("Index", "Home");
-        return View(new LoginDto());
+
+        var dto = new LoginDto();
+        var volverA = Url.IsLocalUrl(returnUrl) ? returnUrl : null;
+
+        if (Enum.TryParse<RolUsuario>(rol, true, out var perfil) && Enum.IsDefined(perfil))
+            dto.Rol = perfil;
+        else if (volverA?.StartsWith("/Admin", StringComparison.OrdinalIgnoreCase) == true)
+            dto.Rol = RolUsuario.Administrador;
+
+        if (TempData["Identificador"] is string identificador) dto.Identificador = identificador;
+        ViewData["ReturnUrl"] = volverA;
+        return View(dto);
     }
 
     [HttpPost, ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(LoginDto dto)
+    public async Task<IActionResult> Login(LoginDto dto, string? returnUrl = null)
     {
         if (User.Identity?.IsAuthenticated == true) return RedirectToAction("Index", "Home");
+
+        var volverA = Url.IsLocalUrl(returnUrl) ? returnUrl : null;
+        ViewData["ReturnUrl"] = volverA;
         if (!ModelState.IsValid) return View(dto);
 
         var (usuario, error) = await auth.IniciarSesionAsync(dto);
@@ -39,6 +59,9 @@ public class UsuarioController(IAuthService auth, IRecuperacionService recuperac
         var propiedades = new AuthenticationProperties { IsPersistent = false };
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
             new ClaimsPrincipal(identity), propiedades);
+
+        // Si venía de un enlace a una página del sitio, vuelve a esa página
+        if (volverA is not null) return LocalRedirect(volverA);
 
         // PE-5-CU02: el usuario entra al Home, donde elige a qué sección ir según su rol
         return RedirectToAction("Index", "Home");
@@ -113,4 +136,54 @@ public class UsuarioController(IAuthService auth, IRecuperacionService recuperac
         ModelState.AddModelError("", error!);
         return View(dto);
     }
+
+    // ---------- CU-09 / CU-26 Activar la cuenta (repartidor o administrador) desde el enlace del correo ----------
+    [HttpGet]
+    public async Task<IActionResult> ActivarCuenta(string? token)
+    {
+        var info = await activacion.ConsultarAsync(token);
+        if (info.Estado != EstadoEnlaceActivacion.Valido) return View("EnlaceActivacionInvalido", info);
+
+        return View(ConDatos(new ActivarCuentaDto { Token = token! }, info));
+    }
+
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> ActivarCuenta(ActivarCuentaDto dto)
+    {
+        if (!ModelState.IsValid)
+        {
+            var datos = await activacion.ConsultarAsync(dto.Token);
+            if (datos.Estado != EstadoEnlaceActivacion.Valido) return View("EnlaceActivacionInvalido", datos);
+            return View(ConDatos(dto, datos));
+        }
+
+        var (ok, error, info) = await activacion.ActivarAsync(dto.Token, dto.NuevaPassword, dto.ConfirmarPassword, UrlLogin);
+
+        if (ok)
+        {
+            var perfil = info.Rol ?? RolUsuario.Repartidor;
+            var nombrePerfil = perfil == RolUsuario.Administrador ? "administrador" : "repartidor";
+            TempData["Mensaje"] = $"¡Tu cuenta fue activada! Ya puedes iniciar sesión como {nombrePerfil}.";
+            TempData["Identificador"] = info.Correo;
+            return RedirectToAction(nameof(Login), new { rol = perfil.ToString() });
+        }
+
+        if (info.Estado != EstadoEnlaceActivacion.Valido) return View("EnlaceActivacionInvalido", info);
+
+        ModelState.AddModelError("", error!);
+        return View(ConDatos(dto, info));
+    }
+
+    private static ActivarCuentaDto ConDatos(ActivarCuentaDto dto, InfoActivacion info)
+    {
+        dto.Nombre = info.Nombre;
+        dto.Correo = info.Correo;
+        dto.Negocio = info.Negocio;
+        dto.Rol = info.Rol ?? RolUsuario.Repartidor;
+        return dto;
+    }
+
+    // Inicio de sesión con el perfil ya elegido (va en el correo de confirmación de la activación)
+    private string UrlLogin(RolUsuario rol) =>
+        Url.Action(nameof(Login), "Usuario", new { rol = rol.ToString() }, Request.Scheme)!;
 }

@@ -89,6 +89,19 @@
 .resumen-tile .resumen-valor { font-size: 1.6rem; font-weight: 700; line-height: 1; }
 .resumen-tile .resumen-texto { font-size: .8rem; color: #6c757d; }
 
+/* ---------- Activación de cuenta del repartidor ---------- */
+.activacion-usuario {
+    display: flex; align-items: center; gap: .75rem;
+    background: var(--gt-bg, #f5f7fb); border: 1px solid #e5e9f2; border-radius: .75rem;
+    padding: .65rem .9rem;
+}
+.activacion-usuario > i { font-size: 1.5rem; color: var(--gt-blue, #1f5eff); }
+.reglas-password li {
+    display: flex; align-items: center; gap: .45rem;
+    color: #6c757d; padding: .12rem 0; transition: color .15s ease;
+}
+.reglas-password li.cumple { color: #146c43; }
+
 /* ---------- Animaciones suaves ---------- */
 main[role="main"], .app-main { animation: gt-fade .35s ease-out; }
 @keyframes gt-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }

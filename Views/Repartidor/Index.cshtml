@@ -4,7 +4,8 @@
     ViewData["Title"] = "Gestión de Repartidores";
     var lista = Model ?? new List<Repartidor>();
     var activos = lista.Count(r => r.Usuario?.Estado == EstadoCuenta.Activo);
-    var suspendidos = lista.Count - activos;
+    var pendientes = lista.Count(r => r.Usuario?.Estado == EstadoCuenta.PendienteActivacion);
+    var suspendidos = lista.Count - activos - pendientes;
 }
 
 <div class="container py-4">
@@ -21,6 +22,10 @@
     @if (TempData["Mensaje"] is string msg)
     {
         <div class="alert alert-success border-0 shadow-sm rounded-3">@msg</div>
+    }
+    @if (TempData["Aviso"] is string aviso)
+    {
+        <div class="alert alert-warning border-0 shadow-sm rounded-3">@aviso</div>
     }
     @if (TempData["Error"] is string err)
     {
@@ -40,7 +45,7 @@
     else
     {
         <div class="row g-3 mb-4">
-            <div class="col-12 col-md-4">
+            <div class="col-6 col-lg-3">
                 <div class="resumen-tile">
                     <div class="resumen-icono bg-primary bg-opacity-10 text-primary"><i class="bi bi-people"></i></div>
                     <div>
@@ -49,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-4">
+            <div class="col-6 col-lg-3">
                 <div class="resumen-tile">
                     <div class="resumen-icono estado-entregado"><i class="bi bi-person-check"></i></div>
                     <div>
@@ -58,7 +63,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-4">
+            <div class="col-6 col-lg-3">
+                <div class="resumen-tile">
+                    <div class="resumen-icono estado-preparacion"><i class="bi bi-hourglass-split"></i></div>
+                    <div>
+                        <div class="resumen-valor">@pendientes</div>
+                        <div class="resumen-texto">Pendientes de activación</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
                 <div class="resumen-tile">
                     <div class="resumen-icono estado-cancelado"><i class="bi bi-person-x"></i></div>
                     <div>
@@ -85,6 +99,7 @@
                         @foreach (var rep in lista)
                         {
                             var esActivo = rep.Usuario?.Estado == EstadoCuenta.Activo;
+                            var esPendiente = rep.Usuario?.Estado == EstadoCuenta.PendienteActivacion;
                             <tr>
                                 <td class="ps-4 fw-semibold text-dark">@rep.NombreCompleto</td>
                                 <td>@rep.Telefono</td>
@@ -94,30 +109,59 @@
                                     {
                                         <span class="estado-badge estado-entregado"><i class="bi bi-check-circle"></i>Activo</span>
                                     }
+                                    else if (esPendiente)
+                                    {
+                                        <span class="estado-badge estado-preparacion" title="Le enviamos un correo para que active su cuenta y cree su contraseña">
+                                            <i class="bi bi-hourglass-split"></i>Pendiente de activación
+                                        </span>
+                                    }
                                     else
                                     {
                                         <span class="estado-badge estado-cancelado"><i class="bi bi-slash-circle"></i>Suspendido</span>
                                     }
                                 </td>
                                 <td class="text-end pe-4">
-                                    <form asp-action="CambiarEstado" asp-route-id="@rep.Id" method="post" class="d-inline">
-                                        @if (esActivo)
-                                        {
-                                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-medium"
-                                                    data-confirm="El repartidor @rep.NombreCompleto no podrá recibir ni gestionar pedidos hasta que lo actives de nuevo."
-                                                    data-confirm-titulo="¿Suspender repartidor?"
-                                                    data-confirm-ok="Sí, suspender"
-                                                    data-confirm-tipo="danger">
-                                                <i class="bi bi-pause-circle me-1"></i>Suspender
+                                    @if (esPendiente)
+                                    {
+                                        @* CU-09: el repartidor activa su cuenta desde el correo; el negocio solo puede reenviarlo *@
+                                        <form asp-action="ReenviarActivacion" asp-route-id="@rep.Id" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-medium"
+                                                    data-confirm="Le enviaremos a @(rep.Usuario?.Correo) un nuevo enlace para que active su cuenta y cree su contraseña."
+                                                    data-confirm-titulo="¿Reenviar correo de activación?"
+                                                    data-confirm-ok="Sí, reenviar"
+                                                    data-confirm-tipo="primary">
+                                                <i class="bi bi-send me-1"></i>Reenviar correo
                                             </button>
-                                        }
-                                        else
-                                        {
-                                            <button type="submit" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-medium">
-                                                <i class="bi bi-play-circle me-1"></i>Activar
-                                            </button>
-                                        }
-                                    </form>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="CambiarEstado" asp-route-id="@rep.Id" method="post" class="d-inline">
+                                            @if (esActivo)
+                                            {
+                                                <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-medium"
+                                                        data-confirm="El repartidor @rep.NombreCompleto no podrá recibir ni gestionar pedidos hasta que lo actives de nuevo."
+                                                        data-confirm-titulo="¿Suspender repartidor?"
+                                                        data-confirm-ok="Sí, suspender"
+                                                        data-confirm-tipo="danger">
+                                                    <i class="bi bi-pause-circle me-1"></i>Suspender
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="submit" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-medium">
+                                                    <i class="bi bi-play-circle me-1"></i>Activar
+                                                </button>
+                                            }
+                                        </form>
+                                    }
+                                    @* FA-13-CU12: el negocio elimina a un repartidor vinculado a él *@
+                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-medium ms-1 btn-eliminar-rep"
+                                            data-nombre="@rep.NombreCompleto"
+                                            data-url-validar="@Url.Action("VerificarEliminacionRepartidor", new { id = rep.Id })"
+                                            data-url-eliminar="@Url.Action("EliminarRepartidor", new { id = rep.Id })">
+                                        <i class="bi bi-trash me-1"></i>Eliminar
+                                    </button>
                                 </td>
                             </tr>
                         }
@@ -127,3 +171,95 @@
         </div>
     }
 </div>
+
+@* FA-13-CU12: confirmación y contraseña del negocio en el mismo cuadro *@
+<div class="modal fade" id="modal-eliminar-rep" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-exclamation-triangle text-danger me-2"></i>¿Eliminar a <span id="eliminar-nombre"></span>?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <form method="post" id="form-continuar-rep" asp-action="VerificarEliminacionRepartidor" data-no-spinner>
+                <div class="modal-body">
+                    <p class="mb-0">El repartidor no podrá volver a iniciar sesión y dejará de aparecer en tu lista. Su historial de entregas se conserva.</p>
+                    <div id="error-eliminar-rep" class="alert alert-danger d-none mt-3 mb-0"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger rounded-pill">Continuar</button>
+                </div>
+            </form>
+
+            <form method="post" id="form-eliminar-rep" asp-action="EliminarRepartidor" class="d-none">
+                <div class="modal-body">
+                    <p class="text-muted">Ingresa <strong>tu contraseña</strong> (la de tu negocio) para confirmar la eliminación.</p>
+                    <label for="pwd-eliminar-rep" class="form-label">Contraseña</label>
+                    <div class="input-group">
+                        <input type="password" name="Password" id="pwd-eliminar-rep" class="form-control" autocomplete="current-password" required />
+                        <button type="button" class="btn btn-outline-secondary toggle-password" data-target="pwd-eliminar-rep"
+                                aria-label="Mostrar u ocultar contraseña">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger rounded-pill">Confirmar eliminación</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const modalEl = document.getElementById('modal-eliminar-rep');
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            const formContinuar = document.getElementById('form-continuar-rep');
+            const formEliminar = document.getElementById('form-eliminar-rep');
+            const campo = document.getElementById('pwd-eliminar-rep');
+            const aviso = document.getElementById('error-eliminar-rep');
+            const nombre = document.getElementById('eliminar-nombre');
+
+            document.querySelectorAll('.btn-eliminar-rep').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    nombre.textContent = btn.dataset.nombre;
+                    formContinuar.action = btn.dataset.urlValidar;
+                    formEliminar.action = btn.dataset.urlEliminar;
+                    modal.show();
+                });
+            });
+
+            // Valida que no tenga entregas pendientes antes de pedir la contraseña
+            formContinuar.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                aviso.classList.add('d-none');
+                try {
+                    const resp = await fetch(formContinuar.action, { method: 'POST', body: new FormData(formContinuar) });
+                    const data = await resp.json();
+                    if (data.ok) {
+                        formContinuar.classList.add('d-none');
+                        formEliminar.classList.remove('d-none');
+                        campo.focus();
+                    } else {
+                        aviso.textContent = data.error;
+                        aviso.classList.remove('d-none');
+                    }
+                } catch {
+                    aviso.textContent = 'No fue posible validar la eliminación. Intenta nuevamente';
+                    aviso.classList.remove('d-none');
+                }
+            });
+
+            modalEl.addEventListener('hidden.bs.modal', function () {
+                formContinuar.classList.remove('d-none');
+                formEliminar.classList.add('d-none');
+                campo.value = '';
+                aviso.classList.add('d-none');
+            });
+        })();
+    </script>
+}

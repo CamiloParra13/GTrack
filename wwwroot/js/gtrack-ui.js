@@ -192,5 +192,30 @@
         });
     });
 
+    // ---------- Mostrar u ocultar contraseña ----------
+    // Botón con el ojo junto al campo, con el mismo estilo del inicio de sesión:
+    // <button type="button" class="btn btn-outline-secondary toggle-password" data-target="IdDelCampo"
+    //         aria-label="Mostrar u ocultar contraseña"><i class="bi bi-eye"></i></button>
+    function mostrarPassword(boton, mostrar) {
+        var campo = document.getElementById(boton.dataset.target);
+        if (!campo) return;
+        campo.type = mostrar ? 'text' : 'password';
+        var icono = boton.querySelector('i');
+        if (icono) icono.className = mostrar ? 'bi bi-eye-slash' : 'bi bi-eye';
+        boton.setAttribute('aria-pressed', mostrar ? 'true' : 'false');
+    }
+
+    document.addEventListener('click', function (e) {
+        var boton = e.target.closest ? e.target.closest('.toggle-password') : null;
+        if (!boton) return;
+        var campo = document.getElementById(boton.dataset.target);
+        if (campo) mostrarPassword(boton, campo.type === 'password');
+    });
+
+    // Al cerrar una ventana modal, sus contraseñas vuelven a quedar ocultas
+    document.addEventListener('hidden.bs.modal', function (e) {
+        e.target.querySelectorAll('.toggle-password').forEach(function (b) { mostrarPassword(b, false); });
+    });
+
     window.gtrack = { toast: toast, confirmar: mostrarConfirmacion };
 })();

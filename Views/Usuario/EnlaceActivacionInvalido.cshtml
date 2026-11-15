@@ -1,0 +1,60 @@
+﻿@model InfoActivacion
+@{
+    ViewData["Title"] = "Activación de cuenta";
+
+    var (icono, titulo) = Model.Estado switch
+    {
+        EstadoEnlaceActivacion.CuentaYaActiva => ("bi-check-circle text-success", "Tu cuenta ya está activa"),
+        EstadoEnlaceActivacion.Vencido => ("bi-clock-history text-warning", "Este enlace de activación venció"),
+        _ => ("bi-link-45deg text-danger", "Este enlace no es válido")
+    };
+
+    var esAdmin = Model.Rol == RolUsuario.Administrador;
+    var perfil = esAdmin ? "Administrador" : "Repartidor";
+
+    // A quién pedirle un correo de activación nuevo
+    var pideleA = esAdmin ? "a otro administrador de GTrack"
+        : !string.IsNullOrWhiteSpace(Model.Negocio) ? $"a {Model.Negocio}"
+        : Model.Rol == RolUsuario.Repartidor ? "al negocio que te registró"
+        : "a quien te registró en GTrack";
+}
+
+<div class="mx-auto" style="max-width: 460px;">
+    <div class="card shadow-sm p-4 text-center">
+        <p class="text-primary fw-bold small mb-2">GTRACK</p>
+        <i class="bi @icono d-block mb-2" style="font-size: 3rem; line-height: 1;"></i>
+        <h2 class="h4 mb-3">@titulo</h2>
+
+        @if (Model.Estado == EstadoEnlaceActivacion.CuentaYaActiva)
+        {
+            <p class="text-muted">
+                Ya creaste tu contraseña. Inicia sesión con el perfil <strong class="text-dark">@perfil</strong>
+                usando tu correo o tu número de documento.
+            </p>
+            <a asp-action="Login" asp-route-rol="@perfil" class="btn btn-primary w-100">
+                Iniciar sesión <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        }
+        else if (Model.Estado == EstadoEnlaceActivacion.Vencido)
+        {
+            <p class="text-muted">
+                Por seguridad, los enlaces de activación vencen a las @ActivacionCuentaService.HorasVigencia horas.
+                Pídele @pideleA que te reenvíe el correo de activación desde GTrack.
+            </p>
+            <p class="small text-muted">
+                También puedes crear tu contraseña desde
+                <a asp-action="RecuperarContrasena">¿Olvidaste tu contraseña?</a> usando el correo con el que te registraron.
+            </p>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary w-100">Volver al inicio</a>
+        }
+        else
+        {
+            <p class="text-muted">
+                El enlace no existe o ya fue utilizado. Si aún no has activado tu cuenta,
+                pídele @pideleA que te reenvíe el correo de activación.
+            </p>
+            <a asp-action="Login" asp-route-rol="@Model.Rol" class="btn btn-primary w-100 mb-2">Iniciar sesión</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary w-100">Volver al inicio</a>
+        }
+    </div>
+</div>

@@ -1,22 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>b14db22f-fc06-4d45-9725-39dbb152dfe2</UserSecretsId>
+		<DefaultItemExcludes>$(DefaultItemExcludes);Gtrack.Tests\**</DefaultItemExcludes>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Repositories\RepositorioEnMemoria.Pedido.cs" />
-    <Compile Remove="Repositories\RepositorioEnMemoria.Personal.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Repositories\RepositorioEnMemoria.Pedido.cs" />
+		<Compile Remove="Repositories\RepositorioEnMemoria.Personal.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.12" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.12" />
+		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+		<PackageReference Include="ClosedXML" Version="0.105.1" />
+		<PackageReference Include="QuestPDF" Version="2026.9.1" />
+		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\images\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="wwwroot\images\" />
+	</ItemGroup>
 
 </Project>

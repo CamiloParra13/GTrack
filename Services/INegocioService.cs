@@ -1,7 +1,7 @@
 ﻿public interface INegocioService
 {
-    // CU-01
-    Task<(bool Ok, string? Error, bool CorreoEnviado)> RegistrarAsync(RegistroNegocioDto dto);
+    // CU-01 (urlRevision: enlace a la lista de negocios que reciben los administradores)
+    Task<(bool Ok, string? Error, bool CorreoEnviado)> RegistrarAsync(RegistroNegocioDto dto, string urlRevision);
 
     // Perfil (CU-11 / CU-13) y perfil público (CU-25)
     Task<PerfilNegocioDto?> ObtenerPerfilAsync(int usuarioId);

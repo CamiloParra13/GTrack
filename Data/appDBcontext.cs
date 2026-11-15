@@ -12,12 +12,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<ItemPedido> ItemsPedido => Set<ItemPedido>();
     public DbSet<SuspensionRepartidor> SuspensionRepartidor { get; set; }
     public DbSet<UbicacionPedido> UbicacionesPedido => Set<UbicacionPedido>();
+    public DbSet<SolicitudCancelacion> SolicitudesCancelacion => Set<SolicitudCancelacion>();
+    public DbSet<NovedadPedido> NovedadesPedido => Set<NovedadPedido>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Usuario>(e =>
         {
-            e.ToTable("Usuario");
+            // La tabla tiene un trigger (script de triggers y procedimientos). Así EF no usa
+            // OUTPUT sin INTO, que SQL Server no permite en tablas con triggers.
+            e.ToTable("Usuario", t => t.HasTrigger("trg_Usuario_EliminacionLogica"));
             e.Property(u => u.PasswordHash).HasColumnName("ContrasenaHash");
             e.Property(u => u.Rol).HasColumnName("RolId");
             e.Property(u => u.Estado).HasColumnName("EstadoCuentaId");
@@ -82,7 +86,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<Pedido>(e =>
         {
-            e.ToTable("Pedido");
+            // Tabla con triggers (script de triggers y procedimientos): EF no debe usar OUTPUT sin INTO
+            e.ToTable("Pedido", t =>
+            {
+                t.HasTrigger("trg_Pedido_ValidarCambioEstado");
+                t.HasTrigger("trg_Pedido_Notificaciones");
+            });
             e.Property(p => p.Codigo).HasMaxLength(8).IsFixedLength().IsUnicode(false);
             e.Property(p => p.DireccionEntrega).HasMaxLength(200);
 
@@ -104,6 +113,29 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.ToTable("ItemPedido");
             e.Property(i => i.Descripcion).HasMaxLength(100);
             e.Property(i => i.PrecioUnitario).HasPrecision(18, 2);
+        });
+
+        // CU-17: tabla creada con Database/cambios_02_cancelacion_cliente.sql
+        modelBuilder.Entity<SolicitudCancelacion>(e =>
+        {
+            e.ToTable("SolicitudCancelacion");
+            e.Property(s => s.Motivo).HasMaxLength(250);
+            e.HasIndex(s => s.PedidoId).IsUnique();
+            e.HasOne(s => s.Pedido).WithMany()
+                .HasForeignKey(s => s.PedidoId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // CU-16: novedades que reporta el repartidor (la tabla ya existe en la base de datos)
+        modelBuilder.Entity<NovedadPedido>(e =>
+        {
+            e.ToTable("NovedadPedido");
+            e.Property(n => n.Observaciones).HasMaxLength(500);
+            e.Property(n => n.Fecha).HasColumnType("datetime2(0)");
+            e.HasIndex(n => n.PedidoId);
+            e.HasOne(n => n.Pedido).WithMany()
+                .HasForeignKey(n => n.PedidoId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<UbicacionPedido>(e =>

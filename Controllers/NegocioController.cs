@@ -30,7 +30,8 @@ public class NegocioController(INegocioService negocios) : Controller
             return View(dto);
         }
 
-        var (ok, error, correoEnviado) = await negocios.RegistrarAsync(dto);
+        var urlRevision = Url.Action("Negocios", "Admin", null, Request.Scheme)!;
+        var (ok, error, correoEnviado) = await negocios.RegistrarAsync(dto, urlRevision);
         if (!ok)
         {
             ModelState.AddModelError("", error!);

@@ -4,6 +4,16 @@
     ViewData["Title"] = "Mis Pedidos";
     var pedidos = Model ?? new List<Pedido>();
     var co = new System.Globalization.CultureInfo("es-CO");
+
+    // CU-16: novedades ya reportadas y nombres de los tipos de novedad
+    var novedades = ViewBag.Novedades as ILookup<int, NovedadPedido>;
+    var nombresNovedad = new Dictionary<int, string>
+    {
+        [(int)TipoNovedad.ClienteAusente] = "Cliente ausente",
+        [(int)TipoNovedad.DireccionIncorrecta] = "Dirección incorrecta",
+        [(int)TipoNovedad.ProductoNoDisponible] = "Producto no disponible",
+        [(int)TipoNovedad.Otro] = "Otro"
+    };
 }
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
@@ -59,6 +69,7 @@
                 var esAsignado = pedido.EstadoPedidoId == (int)EstadoPedido.Asignado;
                 var esEnCamino = pedido.EstadoPedidoId == (int)EstadoPedido.EnCamino;
                 var clave = esAsignado ? "asignado" : esEnCamino ? "encamino" : "otro";
+                var reportadas = novedades?[pedido.Id].ToList() ?? new List<NovedadPedido>();
 
                 <div class="col-12 col-md-6 col-lg-4 tarjeta-pedido" data-estado="@clave">
                     <div class="card border-0 shadow-sm rounded-4 h-100">
@@ -89,7 +100,7 @@
                                 {
                                     <div class="d-flex gap-2 flex-wrap mb-2">
                                         <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3 btn-compartir" data-pedido-id="@pedido.Id">
-                                            <i class="bi bi-geo-alt-fill me-1"></i>Compartir mi ubicación
+                                            <i class="bi bi-geo-alt me-1"></i>Compartir mi ubicación
                                         </button>
                                         <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3 btn-simular" data-pedido-id="@pedido.Id">
                                             <i class="bi bi-play-circle me-1"></i>Simular recorrido
@@ -130,6 +141,25 @@
                                     <dt class="col-5 text-muted fw-normal">Valor total</dt>
                                     <dd class="col-7 fw-bold">$@total.ToString("N0", co)</dd>
                                 </dl>
+                                @if (reportadas.Count > 0)
+                                {
+                                    <div class="border-top mt-3 pt-3">
+                                        <div class="text-muted small mb-2"><i class="bi bi-exclamation-triangle me-1"></i>Novedades reportadas</div>
+                                        <ul class="list-unstyled small mb-0">
+                                            @foreach (var novedad in reportadas)
+                                            {
+                                                <li class="mb-2">
+                                                    <span class="fw-semibold">@nombresNovedad.GetValueOrDefault(novedad.TipoNovedadId, "Otro")</span>
+                                                    <span class="text-muted">(@novedad.Fecha.AddHours(-5).ToString("dd/MM/yyyy h:mm tt", co))</span>
+                                                    @if (!string.IsNullOrEmpty(novedad.Observaciones))
+                                                    {
+                                                        <div class="text-muted">@novedad.Observaciones</div>
+                                                    }
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                }
                             </div>
                             <div class="modal-footer border-0 d-flex flex-column gap-2 align-items-stretch">
                                 @if (esAsignado)
@@ -150,8 +180,10 @@
                                         <i class="bi bi-check2-circle me-1"></i>Marcar Entregado
                                     </button>
                                 }
-                                <button type="button" class="btn btn-outline-secondary w-100 rounded-pill" disabled
-                                        title="Disponible con el registro de novedades (CU-16)">
+                                <button type="button" class="btn btn-outline-secondary w-100 rounded-pill btn-reportar-novedad"
+                                        data-pedido-id="@pedido.Id"
+                                        data-codigo="@pedido.Codigo"
+                                        data-detalle="#detalle-@pedido.Id">
                                     <i class="bi bi-exclamation-triangle me-1"></i>Reportar Novedad
                                 </button>
                             </div>
@@ -178,6 +210,47 @@
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reportar novedad (CU-16) -->
+<div class="modal fade" id="modal-novedad" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <form id="form-novedad" asp-controller="Repartidor" asp-action="ReportarNovedad" method="post" novalidate>
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" id="novedad-pedido-id" />
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Reportar novedad <span class="font-monospace" id="novedad-codigo"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="novedad-tipo" class="form-label fw-semibold">Tipo de novedad</label>
+                        <select class="form-select" id="novedad-tipo" name="tipoNovedadId">
+                            <option value="">Selecciona el tipo de novedad</option>
+                            <option value="@((int)TipoNovedad.ClienteAusente)">Cliente ausente</option>
+                            <option value="@((int)TipoNovedad.DireccionIncorrecta)">Dirección incorrecta</option>
+                            <option value="@((int)TipoNovedad.ProductoNoDisponible)">Producto no disponible</option>
+                            <option value="@((int)TipoNovedad.Otro)">Otro</option>
+                        </select>
+                        <div class="invalid-feedback">Debes seleccionar un tipo de novedad</div>
+                    </div>
+                    <div>
+                        <label for="novedad-observaciones" class="form-label fw-semibold">Observaciones</label>
+                        <textarea class="form-control" id="novedad-observaciones" name="observaciones" rows="3" maxlength="500"
+                                  placeholder="Cuenta qué pasó con la entrega"></textarea>
+                        <div class="form-text text-end"><span id="novedad-contador">0</span>/500</div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <div class="d-flex gap-2 w-100">
+                        <button type="button" class="btn btn-light border rounded-pill flex-fill" id="novedad-cancelar">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-pill flex-fill">Confirmar Novedad</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -224,6 +297,56 @@
         formConfirmar.addEventListener('submit', function () {
             const id = this.getAttribute('data-pedido-id');
             if (id) { detenerCompartir(id); detenerSimulacion(id); }
+        });
+
+        // ---------- Reportar novedad (CU-16) ----------
+        const modalNovedad = document.getElementById('modal-novedad');
+        const formNovedad = document.getElementById('form-novedad');
+        const tipoNovedad = document.getElementById('novedad-tipo');
+        const observaciones = document.getElementById('novedad-observaciones');
+        const contador = document.getElementById('novedad-contador');
+        let detalleNovedad = null;     // detalle del pedido al que se vuelve al cancelar (FA-17-CU16)
+        let volverAlDetalle = false;
+
+        document.querySelectorAll('.btn-reportar-novedad').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                formNovedad.reset();
+                tipoNovedad.classList.remove('is-invalid');
+                contador.textContent = '0';
+                document.getElementById('novedad-pedido-id').value = btn.getAttribute('data-pedido-id');
+                document.getElementById('novedad-codigo').textContent = btn.getAttribute('data-codigo');
+                detalleNovedad = btn.getAttribute('data-detalle');
+                const det = bootstrap.Modal.getInstance(document.querySelector(detalleNovedad));
+                if (det) det.hide();
+                bootstrap.Modal.getOrCreateInstance(modalNovedad).show();
+            });
+        });
+
+        document.getElementById('novedad-cancelar').addEventListener('click', function () {
+            volverAlDetalle = true;
+            bootstrap.Modal.getOrCreateInstance(modalNovedad).hide();
+        });
+
+        modalNovedad.addEventListener('hidden.bs.modal', function () {
+            if (volverAlDetalle && detalleNovedad) {
+                bootstrap.Modal.getOrCreateInstance(document.querySelector(detalleNovedad)).show();
+            }
+            volverAlDetalle = false;
+        });
+
+        tipoNovedad.addEventListener('change', function () { tipoNovedad.classList.remove('is-invalid'); });
+        observaciones.addEventListener('input', function () { contador.textContent = observaciones.value.length; });
+
+        formNovedad.addEventListener('submit', function (e) {
+            if (!tipoNovedad.value) {   // FE-39-CU16
+                e.preventDefault();
+                tipoNovedad.classList.add('is-invalid');
+                tipoNovedad.focus();
+                return;
+            }
+            const enviar = formNovedad.querySelector('button[type="submit"]');
+            enviar.disabled = true;
+            enviar.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Guardando...';
         });
 
         // ---------- Rastreo ----------
@@ -353,7 +476,7 @@
             if (est.modo === 'real') { est.modo = null; desactivarWakeLock(); }
             const b = btns(id);
             if (b.c) {
-                setBtn(b.c, 'bi-geo-alt-fill', 'Compartir mi ubicación');
+                setBtn(b.c, 'bi-geo-alt', 'Compartir mi ubicación');
                 b.c.classList.remove('btn-danger');
                 b.c.classList.add('btn-outline-primary');
             }
