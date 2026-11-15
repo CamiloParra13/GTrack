@@ -14,11 +14,12 @@
     var enPedido = controlador == "Pedido" && accion == "Registrar";
     var enPedidoActivo = controlador == "Pedido" && accion == "Activos";
     var enHistorial = controlador == "Pedido" && accion == "Historial";
-    var enRepartidores = controlador == "Repartidor" && accion != "MisPedidos";
+    var enRepartidores = controlador == "Repartidor" && accion != "MisPedidos" && esNegocio;
     var enMisPedidos = controlador == "Repartidor" && accion == "MisPedidos";
     var enPerfil = controlador == "Negocio";
     var enNegocios = controlador == "Admin" && accion == "Negocios";
-    var enAdmins = controlador == "Admin" && accion != "Negocios";
+    var enAdmins = controlador == "Admin" && accion != "Negocios" && accion != "Reportes";
+    var enReportes = (controlador == "Reporte") || (controlador == "Admin" && accion == "Reportes");
     var enNotificaciones = controlador == "Notificaciones";
 }
 <!DOCTYPE html>
@@ -51,6 +52,7 @@
                         <a class="side-link @(enPedidoActivo ? "active" : "")" asp-controller="Pedido" asp-action="Activos"><i class="bi bi-list-check me-2"></i>Pedidos Activos</a>
                         <a class="side-link @(enHistorial ? "active" : "")" asp-controller="Pedido" asp-action="Historial"><i class="bi bi-folder2-open me-2"></i>Historial de Pedidos</a>
                         <a class="side-link @(enRepartidores ? "active" : "")" asp-controller="Repartidor" asp-action="Index"><i class="bi bi-people me-2"></i>Repartidores</a>
+                        <a class="side-link @(enReportes ? "active" : "")" asp-controller="Reporte" asp-action="Index"><i class="bi bi-bar-chart-line me-2"></i>Reportes</a>
                         @* Nota: "Mi Perfil" se quitó de aquí para que solo aparezca en el menú desplegable inferior *@
                     }
                     @if (esRepartidor)
@@ -61,6 +63,7 @@
                     {
                         <a class="side-link @(enNegocios ? "active" : "")" asp-controller="Admin" asp-action="Negocios"><i class="bi bi-shop me-2"></i>Negocios</a>
                         <a class="side-link @(enAdmins ? "active" : "")" asp-controller="Admin" asp-action="Administradores"><i class="bi bi-shield-check me-2"></i>Administradores</a>
+                        <a class="side-link @(enReportes ? "active" : "")" asp-controller="Admin" asp-action="Reportes"><i class="bi bi-bar-chart-line me-2"></i>Reportes</a>
                     }
 
                 </nav>
@@ -76,6 +79,17 @@
                             <li><a class="dropdown-item" asp-controller="Negocio" asp-action="Perfil">Mi perfil</a></li>
                             <li>
                                 <form asp-controller="Negocio" asp-action="EnviarCodigo" method="post">
+                                    <button type="submit" class="dropdown-item">Editar perfil</button>
+                                </form>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                        }
+                        @if (esRepartidor)
+                        {
+                            @* CU-12 y CU-14 arrancan desde el perfil del repartidor *@
+                            <li><a class="dropdown-item" asp-controller="Repartidor" asp-action="Perfil">Mi perfil</a></li>
+                            <li>
+                                <form asp-controller="Repartidor" asp-action="EnviarCodigo" method="post">
                                     <button type="submit" class="dropdown-item">Editar perfil</button>
                                 </form>
                             </li>

@@ -84,7 +84,7 @@ public class NegocioControllerTests
     public async Task Registrar_Post_ServicioFalla_MuestraElError()
     {
         var e = new Escenario(autenticado: false);
-        e.Servicio.RegistrarAsync(Arg.Any<RegistroNegocioDto>()).Returns(Reg(false, "El teléfono ya está registrado", false));
+        e.Servicio.RegistrarAsync(Arg.Any<RegistroNegocioDto>(), Arg.Any<string>()).Returns(Reg(false, "El teléfono ya está registrado", false));
 
         var r = await e.Controlador.Registrar(new RegistroNegocioDto());
 
@@ -96,7 +96,7 @@ public class NegocioControllerTests
     public async Task Registrar_Post_Exitoso_RedirigeAlLogin()
     {
         var e = new Escenario(autenticado: false);
-        e.Servicio.RegistrarAsync(Arg.Any<RegistroNegocioDto>()).Returns(Reg(true, null, true));
+        e.Servicio.RegistrarAsync(Arg.Any<RegistroNegocioDto>(), Arg.Any<string>()).Returns(Reg(true, null, true));
 
         var r = await e.Controlador.Registrar(new RegistroNegocioDto());
 
@@ -108,7 +108,7 @@ public class NegocioControllerTests
     public async Task Registrar_Post_ExitosoSinCorreo_AgregaAvisoAlMensaje()
     {
         var e = new Escenario(autenticado: false);
-        e.Servicio.RegistrarAsync(Arg.Any<RegistroNegocioDto>()).Returns(Reg(true, null, false));
+        e.Servicio.RegistrarAsync(Arg.Any<RegistroNegocioDto>(), Arg.Any<string>()).Returns(Reg(true, null, false));
 
         await e.Controlador.Registrar(new RegistroNegocioDto());
 

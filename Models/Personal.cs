@@ -1,4 +1,5 @@
-﻿public enum TipoVehiculo { Bicicleta, Moto, Carro, APie }
+﻿// APie ya no se ofrece en los formularios; se conserva solo para no romper registros antiguos (TipoVehiculoId = 3)
+public enum TipoVehiculo { Bicicleta, Moto, Carro, APie }
 
 public class Repartidor
 {

@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 
 public class AdminControllerTests
@@ -7,13 +7,14 @@ public class AdminControllerTests
     private sealed class Escenario
     {
         public IAdministracionService Admin { get; } = Substitute.For<IAdministracionService>();
-        public IWebHostEnvironment Env { get; } = Substitute.For<IWebHostEnvironment>();
+        public IReporteService Reportes { get; } = Substitute.For<IReporteService>();
+        public IExportadorReportes Exportador { get; } = Substitute.For<IExportadorReportes>();
         public AdminController Controlador { get; }
 
-        public Escenario(string entorno = "Production")
+        public Escenario()
         {
-            Env.EnvironmentName.Returns(entorno);
-            Controlador = new AdminController(Admin, Env).Preparar(usuarioId: 1, rol: "Administrador");
+            Controlador = new AdminController(Admin, Reportes, Exportador, NullLogger<AdminController>.Instance)
+                .Preparar(usuarioId: 1, rol: "Administrador");
         }
     }
 
@@ -41,19 +42,19 @@ public class AdminControllerTests
     public async Task AprobarNegocio_Exitoso_GuardaMensajeYRedirige()
     {
         var e = new Escenario();
-        e.Admin.AprobarNegocioAsync(5).Returns(true);
+        e.Admin.AprobarNegocioAsync(5, Arg.Any<string>()).Returns((true, true));
 
         var r = Assert.IsType<RedirectToActionResult>(await e.Controlador.AprobarNegocio(5));
 
         Assert.Equal("Negocios", r.ActionName);
-        Assert.Equal("Negocio validado correctamente", e.Controlador.TempData["Mensaje"]);
+        Assert.StartsWith("Negocio validado correctamente", (string)e.Controlador.TempData["Mensaje"]!);
     }
 
     [Fact]
     public async Task AprobarNegocio_Falla_GuardaAviso()
     {
         var e = new Escenario();
-        e.Admin.AprobarNegocioAsync(5).Returns(false);
+        e.Admin.AprobarNegocioAsync(5, Arg.Any<string>()).Returns((false, false));
 
         await e.Controlador.AprobarNegocio(5);
 
@@ -111,7 +112,7 @@ public class AdminControllerTests
     public async Task RegistrarAdministrador_ServicioFalla_MuestraElErrorEnLaVista()
     {
         var e = new Escenario();
-        e.Admin.RegistrarAdministradorAsync(Arg.Any<RegistroAdministradorDto>())
+        e.Admin.RegistrarAdministradorAsync(Arg.Any<RegistroAdministradorDto>(), Arg.Any<Func<string, string>>())
             .Returns(new ResultadoRegistro(false, "Este documento o correo ya se encuentra registrado", false, null));
 
         var r = await e.Controlador.RegistrarAdministrador(Dto());
@@ -122,44 +123,27 @@ public class AdminControllerTests
     }
 
     [Fact]
-    public async Task RegistrarAdministrador_ExitoEnProduccionConCorreo_SoloMensaje()
+    public async Task RegistrarAdministrador_ConCorreo_RedirigeALaLista()
     {
-        var e = new Escenario("Production");
-        e.Admin.RegistrarAdministradorAsync(Arg.Any<RegistroAdministradorDto>())
-            .Returns(new ResultadoRegistro(true, null, true, "Clave123"));
+        var e = new Escenario();
+        e.Admin.RegistrarAdministradorAsync(Arg.Any<RegistroAdministradorDto>(), Arg.Any<Func<string, string>>())
+            .Returns(new ResultadoRegistro(true, null, true, null));
 
         var r = Assert.IsType<RedirectToActionResult>(await e.Controlador.RegistrarAdministrador(Dto()));
 
         Assert.Equal("Administradores", r.ActionName);
-        Assert.Equal("Administrador registrado exitosamente", e.Controlador.TempData["Mensaje"]);
-        Assert.False(e.Controlador.TempData.ContainsKey("Aviso"));
-        Assert.False(e.Controlador.TempData.ContainsKey("Credenciales"));
-    }
-
-    [Fact]
-    public async Task RegistrarAdministrador_ExitoEnDesarrollo_MuestraCredenciales()
-    {
-        var e = new Escenario("Development");
-        e.Admin.RegistrarAdministradorAsync(Arg.Any<RegistroAdministradorDto>())
-            .Returns(new ResultadoRegistro(true, null, true, "Clave123"));
-
-        await e.Controlador.RegistrarAdministrador(Dto());
-
-        Assert.Contains("Clave123", (string)e.Controlador.TempData["Credenciales"]!);
-        Assert.Contains("ana@gtrack.local", (string)e.Controlador.TempData["Credenciales"]!);
         Assert.False(e.Controlador.TempData.ContainsKey("Aviso"));
     }
 
     [Fact]
-    public async Task RegistrarAdministrador_CorreoNoEnviado_AvisaYMuestraCredenciales()
+    public async Task RegistrarAdministrador_CorreoNoEnviado_Avisa()
     {
-        var e = new Escenario("Production");
-        e.Admin.RegistrarAdministradorAsync(Arg.Any<RegistroAdministradorDto>())
-            .Returns(new ResultadoRegistro(true, null, false, "Clave123"));
+        var e = new Escenario();
+        e.Admin.RegistrarAdministradorAsync(Arg.Any<RegistroAdministradorDto>(), Arg.Any<Func<string, string>>())
+            .Returns(new ResultadoRegistro(true, null, false, null));
 
         await e.Controlador.RegistrarAdministrador(Dto());
 
         Assert.NotNull(e.Controlador.TempData["Aviso"]);
-        Assert.Contains("Clave123", (string)e.Controlador.TempData["Credenciales"]!);
     }
 }

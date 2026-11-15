@@ -6,8 +6,7 @@
     {
         new("Bicicleta", nameof(TipoVehiculo.Bicicleta)),
         new("Moto", nameof(TipoVehiculo.Moto)),
-        new("Carro", nameof(TipoVehiculo.Carro)),
-        new("A pie", nameof(TipoVehiculo.APie))
+        new("Carro", nameof(TipoVehiculo.Carro))
     };
     var mostrarPlaca = Model.Vehiculo is TipoVehiculo.Moto or TipoVehiculo.Carro;
 }
@@ -15,7 +14,7 @@
 <div class="mx-auto" style="max-width: 640px;">
     <div class="card shadow-sm p-4">
         <h2>Registrar Nuevo Repartidor</h2>
-        <p class="text-muted">Se generarán credenciales temporales y se enviarán al correo del repartidor.</p>
+        <p class="text-muted">Le enviaremos un correo al repartidor para que active su cuenta y cree su propia contraseña.</p>
 
         <form asp-action="Registrar" method="post" id="form-repartidor">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -29,19 +28,20 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label asp-for="Documento" class="form-label"></label>
-                    <input asp-for="Documento" class="form-control" inputmode="numeric" placeholder="1012345678" />
+                    <input maxlength="10" data-solo-digitos asp-for="Documento" class="form-control" inputmode="numeric" placeholder="1012345678" />
                     <span asp-validation-for="Documento" class="text-danger small"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="Telefono" class="form-label"></label>
-                    <input asp-for="Telefono" type="tel" class="form-control" inputmode="numeric" placeholder="3109876543" />
+                    <input maxlength="10" data-solo-digitos asp-for="Telefono" type="tel" class="form-control" inputmode="numeric" placeholder="3109876543" />
                     <span asp-validation-for="Telefono" class="text-danger small"></span>
                 </div>
             </div>
 
             <div class="mb-3">
                 <label asp-for="Correo" class="form-label"></label>
-                <input asp-for="Correo" class="form-control" placeholder="repartidor@correo.com" />
+                <input type="email" maxlength="150" asp-for="Correo" class="form-control" placeholder="repartidor@correo.com" />
+                <div class="form-text"><i class="bi bi-envelope me-1"></i>A este correo le llegará el enlace para activar su cuenta.</div>
                 <span asp-validation-for="Correo" class="text-danger small"></span>
             </div>
 
@@ -55,7 +55,8 @@
                 </div>
                 <div class="col-md-6 mb-3 @(mostrarPlaca ? "" : "d-none")" id="grupo-placa">
                     <label asp-for="Placa" class="form-label"></label>
-                    <input asp-for="Placa" class="form-control text-uppercase" maxlength="7" placeholder="ABC123" />
+                    <input asp-for="Placa" class="form-control text-uppercase" maxlength="7" placeholder="ABC123" autocomplete="off"
+                           data-val="true" data-val-placa="Placa no válida: carro ABC123 · moto ABC12D" />
                     <span asp-validation-for="Placa" class="text-danger small"></span>
                 </div>
             </div>
@@ -81,6 +82,9 @@
                 const visible = vehiculo.value === 'Moto' || vehiculo.value === 'Carro';
                 grupo.classList.toggle('d-none', !visible);
                 if (!visible) placa.value = '';
+                // Carro: ABC123 · Moto: ABC12D
+                placa.placeholder = vehiculo.value === 'Moto' ? 'ABC12D' : 'ABC123';
+                if (visible && placa.value && window.jQuery) jQuery(placa).valid();
             }
             vehiculo.addEventListener('change', actualizar);
             actualizar();

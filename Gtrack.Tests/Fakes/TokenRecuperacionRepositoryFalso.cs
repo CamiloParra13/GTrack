@@ -15,4 +15,12 @@
         Task.FromResult(Tokens.Count(t => t.UsuarioId == usuarioId && t.FechaCreacion >= desde));
 
     public Task ActualizarAsync(TokenRecuperacion token) => Task.CompletedTask;
+
+    // Igual que el real: marca como usados solo los tokens pendientes de ese usuario
+    public Task InvalidarPendientesAsync(int usuarioId)
+    {
+        foreach (var t in Tokens.Where(t => t.UsuarioId == usuarioId && !t.Usado))
+            t.Usado = true;
+        return Task.CompletedTask;
+    }
 }

@@ -17,4 +17,11 @@ public class UsuarioRepository(AppDbContext db) : IUsuarioRepository
         db.Usuarios.Update(usuario);
         await db.SaveChangesAsync();
     }
+
+    public Task<List<string>> CorreosAdministradoresActivosAsync() =>
+        db.Usuarios
+            .AsNoTracking()
+            .Where(u => u.Rol == RolUsuario.Administrador && u.Estado == EstadoCuenta.Activo)
+            .Select(u => u.Correo)
+            .ToListAsync();
 }

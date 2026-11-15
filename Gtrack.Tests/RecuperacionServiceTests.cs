@@ -81,13 +81,19 @@ public class RecuperacionServiceTests
     {
         var e = new Escenario();
         e.AgregarUsuario();
+        string? enlaceGenerado = null;
 
-        var r = await e.Servicio.SolicitarAsync(" negocio@gtrack.local ", t => "https://gtrack.local/restablecer?token=" + t);
+        var r = await e.Servicio.SolicitarAsync(" negocio@gtrack.local ", t =>
+        {
+            enlaceGenerado = "https://gtrack.local/restablecer?token=" + t;
+            return enlaceGenerado;
+        });
 
         Assert.Equal(ResultadoSolicitud.Procesada, r);
         Assert.Single(e.Tokens.Tokens);
-        Assert.Single(e.Email.Enviados);
-        Assert.Contains("https://gtrack.local/restablecer?token=", e.Email.Enviados[0].Cuerpo);
+        Assert.Single(e.Email.EnviadosHtml);
+        Assert.StartsWith("https://gtrack.local/restablecer?token=", enlaceGenerado);
+        Assert.Equal("negocio@gtrack.local", e.Email.EnviadosHtml[0].Para);
     }
 
     // ===== TokenVigenteAsync =====
@@ -211,7 +217,7 @@ public class RecuperacionServiceTests
         Assert.Null(error);
         Assert.Equal("HASH:NuevaClave1", usuario.PasswordHash);
         Assert.True(token.Usado);
-        Assert.Single(e.Email.Enviados);
+        Assert.Single(e.Email.EnviadosHtml);
     }
 
     [Fact]

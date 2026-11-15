@@ -8,8 +8,10 @@ public class PedidoServiceTests
         public PedidoRepositoryFalso Pedidos { get; } = new();
         public NegocioRepositoryFalso Negocios { get; } = new();
         public AppDbContext Contexto { get; set; } = ContextoFactory.Crear();
+        public EmailServiceFalso Email { get; } = new();
 
-        public PedidoService Servicio => new(Pedidos, Negocios, Contexto, NullLogger<PedidoService>.Instance);
+        public PedidoService Servicio => new(Pedidos, Negocios, Contexto, Email, NullLogger<PedidoService>.Instance);
+
 
         public Escenario ConNegocio()
         {

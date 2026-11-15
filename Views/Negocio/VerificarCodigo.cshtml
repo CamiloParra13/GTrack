@@ -18,7 +18,7 @@
 
             <div class="mb-3">
                 <label asp-for="Codigo" class="form-label"></label>
-                <input asp-for="Codigo" class="form-control text-center" inputmode="numeric" maxlength="6"
+                <input asp-for="Codigo" class="form-control text-center" inputmode="numeric" maxlength="6" data-solo-digitos
                        autocomplete="one-time-code" placeholder="123456" />
             </div>
 
@@ -32,3 +32,7 @@
         <p class="text-center small mt-2 mb-0"><a asp-action="Perfil">Cancelar</a></p>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

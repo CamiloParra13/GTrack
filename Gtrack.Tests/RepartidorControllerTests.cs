@@ -10,16 +10,29 @@ public class RepartidorControllerTests
     {
         public RepartidorRepositoryFalso Repartidores { get; } = new();
         public NegocioRepositoryFalso Negocios { get; } = new();
+        public UsuarioRepositoryFalso Usuarios { get; } = new();
+        public IActivacionCuentaService Activacion { get; } = Substitute.For<IActivacionCuentaService>();
         public IPedidoService Pedidos { get; } = Substitute.For<IPedidoService>();
         public IUbicacionService Ubicaciones { get; } = Substitute.For<IUbicacionService>();
+        public IPerfilRepartidorService Perfil { get; } = Substitute.For<IPerfilRepartidorService>();
         public AppDbContext Contexto { get; } = ContextoFactory.Crear();
         public RepartidorController Controlador { get; }
 
         public Escenario(int usuarioId = 1, string rol = "Negocio")
         {
+            Activacion.EnviarEnlaceAsync(
+                    Arg.Any<Usuario>(), Arg.Any<string>(), Arg.Any<string?>(), Arg.Any<Func<string, string>>())
+                .Returns(true);
+
+            var servicio = new RepartidorService(
+                Repartidores, Negocios, Usuarios, Activacion,
+                NullLogger<RepartidorService>.Instance);
+
             Controlador = new RepartidorController(
-                Repartidores, Negocios, Substitute.For<IWebHostEnvironment>(), Contexto,
-                Pedidos, Ubicaciones, NullLogger<RepartidorController>.Instance)
+                Repartidores, Negocios, servicio,
+                Substitute.For<IWebHostEnvironment>(), Contexto,
+                Pedidos, Ubicaciones, Perfil,
+                NullLogger<RepartidorController>.Instance)
                 .Preparar(usuarioId: usuarioId, rol: rol);
         }
 
@@ -37,6 +50,7 @@ public class RepartidorControllerTests
                 Id = usuarioId,
                 Correo = $"u{usuarioId}@gtrack.local",
                 Documento = $"{usuarioId}00000",
+                PasswordHash = "HASH:Clave123",
                 Rol = RolUsuario.Repartidor,
                 Estado = estado
             });
@@ -99,15 +113,14 @@ public class RepartidorControllerTests
         e.Controlador.ModelState.AddModelError("Correo", "Correo no válido");
 
         Assert.IsType<ViewResult>(await e.Controlador.Registrar(Dto()));
-        Assert.Equal(0, await e.Contexto.Repartidores.CountAsync());
+        Assert.Empty(e.Repartidores.Repartidores);
     }
 
     [Fact]
     public async Task Registrar_Post_CorreoYaExiste_MuestraErrorEnElCampo()
     {
         var e = new Escenario().ConNegocio();
-        e.Contexto.Usuarios.Add(new Usuario { Id = 9, Correo = "juan@gtrack.local", Documento = "111111" });
-        await e.Contexto.SaveChangesAsync();
+        e.Usuarios.Usuarios.Add(new Usuario { Id = 9, Correo = "juan@gtrack.local", Documento = "111111" });
 
         var r = await e.Controlador.Registrar(Dto());
 
@@ -120,8 +133,7 @@ public class RepartidorControllerTests
     public async Task Registrar_Post_DocumentoYaExiste_MuestraErrorEnElCampo()
     {
         var e = new Escenario().ConNegocio();
-        e.Contexto.Usuarios.Add(new Usuario { Id = 9, Correo = "otro@gtrack.local", Documento = "987654" });
-        await e.Contexto.SaveChangesAsync();
+        e.Negocios.DocumentosExistentes.Add("987654");
 
         var r = await e.Controlador.Registrar(Dto());
 
@@ -131,17 +143,21 @@ public class RepartidorControllerTests
     }
 
     [Fact]
-    public async Task Registrar_Post_NegocioNoExiste_RetornaNotFound()
+    public async Task Registrar_Post_NegocioNoExiste_MuestraError()
     {
         var e = new Escenario();
 
-        Assert.IsType<NotFoundResult>(await e.Controlador.Registrar(Dto()));
+        var r = await e.Controlador.Registrar(Dto());
+
+        Assert.IsType<ViewResult>(r);
+        Assert.Contains(e.Controlador.ModelState[""]!.Errors,
+            err => err.ErrorMessage == "No fue posible identificar tu negocio");
     }
 
     [Theory]
-    [InlineData(null, TipoVehiculo.Moto)]            // sin vehículo se asume moto
-    [InlineData(TipoVehiculo.Carro, TipoVehiculo.Carro)]
-    public async Task Registrar_Post_Exitoso_CreaUsuarioYRepartidor(TipoVehiculo? vehiculo, TipoVehiculo esperado)
+    [InlineData(TipoVehiculo.Moto)]
+    [InlineData(TipoVehiculo.Carro)]
+    public async Task Registrar_Post_Exitoso_CreaCuentaPendienteYRepartidor(TipoVehiculo vehiculo)
     {
         var e = new Escenario().ConNegocio();
         var dto = Dto();
@@ -150,16 +166,16 @@ public class RepartidorControllerTests
         var r = Assert.IsType<RedirectToActionResult>(await e.Controlador.Registrar(dto));
 
         Assert.Equal("Index", r.ActionName);
-        Assert.Equal("¡El repartidor ha sido registrado exitosamente!", e.Controlador.TempData["Mensaje"]);
+        Assert.StartsWith("¡Repartidor registrado!", (string)e.Controlador.TempData["Mensaje"]!);
 
-        var usuario = await e.Contexto.Usuarios.SingleAsync();
+        var usuario = e.Repartidores.UsuarioRegistrado!;
         Assert.Equal(RolUsuario.Repartidor, usuario.Rol);
-        Assert.Equal(EstadoCuenta.Activo, usuario.Estado);
+        Assert.Equal(EstadoCuenta.PendienteActivacion, usuario.Estado);
+        Assert.Equal("", usuario.PasswordHash);
 
-        var repartidor = await e.Contexto.Repartidores.SingleAsync();
+        var repartidor = Assert.Single(e.Repartidores.Repartidores);
         Assert.Equal(10, repartidor.NegocioId);
-        Assert.Equal(usuario.Id, repartidor.UsuarioId);
-        Assert.Equal(esperado, repartidor.Vehiculo);
+        Assert.Equal(vehiculo, repartidor.Vehiculo);
     }
 
     // ===== CambiarEstado =====

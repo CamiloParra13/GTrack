@@ -2,6 +2,8 @@
 
 public class NegocioServiceTests
 {
+    private const string UrlRevision = "https://prueba/revision";
+
     private static NegocioService Crear(
         NegocioRepositoryFalso negocios,
         UsuarioRepositoryFalso usuarios,
@@ -30,7 +32,7 @@ public class NegocioServiceTests
         negocios.DocumentosExistentes.Add("123456");
         var servicio = Crear(negocios, new UsuarioRepositoryFalso(), new CodigoVerificacionRepositoryFalso(), new EmailServiceFalso());
 
-        var (ok, error, _) = await servicio.RegistrarAsync(DtoValido());
+        var (ok, error, _) = await servicio.RegistrarAsync(DtoValido(), UrlRevision);
 
         Assert.False(ok);
         Assert.Contains("ya está registrado", error);
@@ -43,7 +45,7 @@ public class NegocioServiceTests
         usuarios.Usuarios.Add(new Usuario { Correo = "nuevo@gtrack.local" });
         var servicio = Crear(new NegocioRepositoryFalso(), usuarios, new CodigoVerificacionRepositoryFalso(), new EmailServiceFalso());
 
-        var (ok, error, _) = await servicio.RegistrarAsync(DtoValido());
+        var (ok, error, _) = await servicio.RegistrarAsync(DtoValido(), UrlRevision);
 
         Assert.False(ok);
         Assert.Contains("ya está registrado", error);
@@ -56,7 +58,7 @@ public class NegocioServiceTests
         negocios.TelefonosExistentes.Add("3001234567");
         var servicio = Crear(negocios, new UsuarioRepositoryFalso(), new CodigoVerificacionRepositoryFalso(), new EmailServiceFalso());
 
-        var (ok, error, _) = await servicio.RegistrarAsync(DtoValido());
+        var (ok, error, _) = await servicio.RegistrarAsync(DtoValido(), UrlRevision);
 
         Assert.False(ok);
         Assert.Equal("El teléfono ya está registrado", error);
@@ -72,7 +74,7 @@ public class NegocioServiceTests
         dto.ConfirmarPassword = confirmar;
         var servicio = Crear(new NegocioRepositoryFalso(), new UsuarioRepositoryFalso(), new CodigoVerificacionRepositoryFalso(), new EmailServiceFalso());
 
-        var (ok, error, _) = await servicio.RegistrarAsync(dto);
+        var (ok, error, _) = await servicio.RegistrarAsync(dto, UrlRevision);
 
         Assert.False(ok);
         Assert.Contains("contraseñas", error);
@@ -84,7 +86,7 @@ public class NegocioServiceTests
         var negocios = new NegocioRepositoryFalso();
         var servicio = Crear(negocios, new UsuarioRepositoryFalso(), new CodigoVerificacionRepositoryFalso(), new EmailServiceFalso());
 
-        var (ok, error, correoEnviado) = await servicio.RegistrarAsync(DtoValido());
+        var (ok, error, correoEnviado) = await servicio.RegistrarAsync(DtoValido(), UrlRevision);
 
         Assert.True(ok);
         Assert.Null(error);
@@ -98,7 +100,7 @@ public class NegocioServiceTests
         var email = new EmailServiceFalso { DebeFallar = true };
         var servicio = Crear(new NegocioRepositoryFalso(), new UsuarioRepositoryFalso(), new CodigoVerificacionRepositoryFalso(), email);
 
-        var (ok, error, correoEnviado) = await servicio.RegistrarAsync(DtoValido());
+        var (ok, error, correoEnviado) = await servicio.RegistrarAsync(DtoValido(), UrlRevision);
 
         Assert.True(ok);
         Assert.Null(error);
@@ -147,7 +149,7 @@ public class NegocioServiceTests
         Assert.True(ok);
         Assert.Null(error);
         Assert.Single(codigos.Codigos);
-        Assert.Single(email.Enviados);
+        Assert.Single(email.EnviadosHtml);
     }
 
     // ===== CU-13 Verificar código =====

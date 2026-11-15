@@ -27,4 +27,9 @@
     }
 
     public Task<bool> TelefonoEnUsoAsync(string telefono) => Task.FromResult(TelefonosEnUso.Contains(telefono));
+
+    // Devuelve null si no hay coincidencia, como el real
+    public Task<Administrador?> ObtenerPorUsuarioIdAsync(int usuarioId) =>
+        Task.FromResult(Administradores.FirstOrDefault(a =>
+            a.UsuarioId == usuarioId || a.Usuario?.Id == usuarioId));
 }

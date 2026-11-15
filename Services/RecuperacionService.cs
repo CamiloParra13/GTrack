@@ -29,12 +29,19 @@ public class RecuperacionService(
         });
 
         var enlace = construirEnlace(token);
-        await email.EnviarAsync(usuario.Correo, "Restablece tu contraseña de GTrack",
-            "Recibimos una solicitud para restablecer la contraseña de tu cuenta de GTrack.\n\n" +
-            "Haz clic en el siguiente enlace para crear una nueva contraseña:\n" +
-            enlace + "\n\n" +
-            $"El enlace es válido por {MinutosVigencia} minutos y solo puede usarse una vez. " +
-            "Si no lo solicitaste, ignora este mensaje: tu contraseña actual seguirá funcionando.");
+        await email.EnviarAsync(usuario.Correo, "Restablece tu contraseña de GTrack", PlantillaCorreo.Crear(
+            etiqueta: "Recuperación de contraseña",
+            titulo: "Restablece tu contraseña",
+            saludo: "Hola,",
+            parrafos:
+            [
+                "Recibimos una solicitud para restablecer la contraseña de tu cuenta de GTrack.",
+                "Haz clic en el botón para crear una nueva contraseña."
+            ],
+            textoBoton: "Crear nueva contraseña",
+            urlBoton: enlace,
+            nota: $"El enlace es válido por {MinutosVigencia} minutos y solo puede usarse una vez. Si no lo solicitaste, ignora este mensaje: tu contraseña actual seguirá funcionando.",
+            tipoNota: TipoNota.Aviso));
 
         return ResultadoSolicitud.Procesada;
     }
@@ -64,15 +71,25 @@ public class RecuperacionService(
             return (false, "La nueva contraseña no puede ser igual a la anterior");
 
         usuario.PasswordHash = hasher.HashPassword(usuario, nueva);
+
+        // Un repartidor que aún no activaba su cuenta y crea su contraseña por aquí también
+        // demuestra que el correo es suyo: su cuenta queda activa (CU-09)
+        if (usuario.Estado == EstadoCuenta.PendienteActivacion) usuario.Estado = EstadoCuenta.Activo;
+
         await usuarios.ActualizarAsync(usuario);
 
-        t.Usado = true; // RN-2: un solo uso
-        await tokens.ActualizarAsync(t);
+        // RN-2: un solo uso (se anula también cualquier otro enlace pendiente de la cuenta)
+        await tokens.InvalidarPendientesAsync(usuario.Id);
 
         try
         {
-            await email.EnviarAsync(usuario.Correo, "Tu contraseña fue restablecida",
-                "Tu contraseña de Gtrack fue restablecida exitosamente. Si no fuiste tú, contacta a soporte.");
+            await email.EnviarAsync(usuario.Correo, "Tu contraseña fue restablecida", PlantillaCorreo.Crear(
+                etiqueta: "Seguridad de la cuenta",
+                titulo: "Tu contraseña fue actualizada",
+                saludo: "Hola,",
+                parrafos: ["La contraseña de tu cuenta de GTrack se restableció correctamente. Ya puedes iniciar sesión con tu nueva contraseña."],
+                nota: "Si no fuiste tú, restablece tu contraseña de inmediato y comunícate con soporte.",
+                tipoNota: TipoNota.Aviso));
         }
         catch (Exception ex)
         {

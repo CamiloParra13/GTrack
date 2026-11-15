@@ -14,8 +14,14 @@
         Task.FromResult(Usuarios.FirstOrDefault(u => u.Id == id));
 
     public Task ActualizarAsync(Usuario usuario)
+
     {
         SeLlamoActualizar = true;
         return Task.CompletedTask;
     }
+    public Task<List<string>> CorreosAdministradoresActivosAsync() =>
+    Task.FromResult(Usuarios
+        .Where(u => u.Rol == RolUsuario.Administrador && u.Estado == EstadoCuenta.Activo)
+        .Select(u => u.Correo)
+        .ToList());
 }

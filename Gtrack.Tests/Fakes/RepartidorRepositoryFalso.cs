@@ -19,4 +19,10 @@
 
     public Task<bool> TelefonoEnUsoAsync(string telefono) =>
         Task.FromResult(TelefonosEnUso.Contains(telefono));
+
+    public Task<Repartidor?> ObtenerDeNegocioAsync(int negocioId, int repartidorId) =>
+    Task.FromResult(Repartidores.FirstOrDefault(r => r.Id == repartidorId && r.NegocioId == negocioId));
+
+    public Task<Repartidor?> ObtenerPorUsuarioIdAsync(int usuarioId) =>
+        Task.FromResult(Repartidores.FirstOrDefault(r => r.UsuarioId == usuarioId));
 }

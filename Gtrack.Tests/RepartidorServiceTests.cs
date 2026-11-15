@@ -1,16 +1,19 @@
 ﻿using Microsoft.Extensions.Logging.Abstractions;
+using NSubstitute;
 
 public class RepartidorServiceTests
 {
+    private static string Enlace(string token) => $"https://prueba/activar?t={token}";
+
     private sealed class Escenario
     {
         public RepartidorRepositoryFalso Repartidores { get; } = new();
         public NegocioRepositoryFalso Negocios { get; } = new();
         public UsuarioRepositoryFalso Usuarios { get; } = new();
-        public EmailServiceFalso Email { get; } = new();
+        public IActivacionCuentaService Activacion { get; } = Substitute.For<IActivacionCuentaService>();
 
         public RepartidorService Servicio => new(
-            Repartidores, Negocios, Usuarios, new PasswordHasherFalso(), Email,
+            Repartidores, Negocios, Usuarios, Activacion,
             NullLogger<RepartidorService>.Instance);
 
         public Escenario ConNegocio()
@@ -18,6 +21,12 @@ public class RepartidorServiceTests
             Negocios.Negocios.Add(new Negocio { Id = 10, UsuarioId = 1, Nombre = "Mi Negocio" });
             return this;
         }
+
+        // Simula que el correo de activación sale (true) o falla (false)
+        public void ActivacionEnvia(bool resultado) =>
+            Activacion.EnviarEnlaceAsync(
+                    Arg.Any<Usuario>(), Arg.Any<string>(), Arg.Any<string?>(), Arg.Any<Func<string, string>>())
+                .Returns(resultado);
     }
 
     private static RegistroRepartidorDto DtoValido() => new()
@@ -62,7 +71,7 @@ public class RepartidorServiceTests
     {
         var e = new Escenario();
 
-        var r = await e.Servicio.RegistrarAsync(1, DtoValido());
+        var r = await e.Servicio.RegistrarAsync(1, DtoValido(), Enlace);
 
         Assert.False(r.Ok);
         Assert.Equal("No fue posible identificar tu negocio", r.Error);
@@ -74,10 +83,10 @@ public class RepartidorServiceTests
         var e = new Escenario().ConNegocio();
         e.Negocios.DocumentosExistentes.Add("987654");
 
-        var r = await e.Servicio.RegistrarAsync(1, DtoValido());
+        var r = await e.Servicio.RegistrarAsync(1, DtoValido(), Enlace);
 
         Assert.False(r.Ok);
-        Assert.Equal("Este repartidor ya se encuentra registrado", r.Error);
+        Assert.Equal("Este número de documento ya se encuentra registrado.", r.Error);
     }
 
     [Fact]
@@ -86,10 +95,10 @@ public class RepartidorServiceTests
         var e = new Escenario().ConNegocio();
         e.Usuarios.Usuarios.Add(new Usuario { Correo = "juan@gtrack.local" });
 
-        var r = await e.Servicio.RegistrarAsync(1, DtoValido());
+        var r = await e.Servicio.RegistrarAsync(1, DtoValido(), Enlace);
 
         Assert.False(r.Ok);
-        Assert.Equal("El correo ya está registrado en el sistema", r.Error);
+        Assert.Equal("Este correo electrónico ya se encuentra registrado.", r.Error);
     }
 
     [Fact]
@@ -98,10 +107,10 @@ public class RepartidorServiceTests
         var e = new Escenario().ConNegocio();
         e.Repartidores.TelefonosEnUso.Add("3101234567");
 
-        var r = await e.Servicio.RegistrarAsync(1, DtoValido());
+        var r = await e.Servicio.RegistrarAsync(1, DtoValido(), Enlace);
 
         Assert.False(r.Ok);
-        Assert.Equal("El teléfono ya está registrado en el sistema", r.Error);
+        Assert.Equal("Este teléfono ya se encuentra registrado.", r.Error);
     }
 
     [Fact]
@@ -111,7 +120,7 @@ public class RepartidorServiceTests
         var dto = DtoValido();
         dto.Placa = " abc-12d ";
 
-        var r = await e.Servicio.RegistrarAsync(1, dto);
+        var r = await e.Servicio.RegistrarAsync(1, dto, Enlace);
 
         Assert.True(r.Ok);
         Assert.Equal("ABC12D", e.Repartidores.Repartidores[0].Placa);
@@ -125,43 +134,45 @@ public class RepartidorServiceTests
         dto.Vehiculo = TipoVehiculo.Bicicleta;
         dto.Placa = "XYZ123";
 
-        var r = await e.Servicio.RegistrarAsync(1, dto);
+        var r = await e.Servicio.RegistrarAsync(1, dto, Enlace);
 
         Assert.True(r.Ok);
         Assert.Null(e.Repartidores.Repartidores[0].Placa);
     }
 
     [Fact]
-    public async Task Registrar_DatosValidos_CreaCuentaConPasswordTemporalYEnviaCorreo()
+    public async Task Registrar_DatosValidos_CreaCuentaPendienteYEnviaEnlace()
     {
         var e = new Escenario().ConNegocio();
+        e.ActivacionEnvia(true);
 
-        var r = await e.Servicio.RegistrarAsync(1, DtoValido());
+        var r = await e.Servicio.RegistrarAsync(1, DtoValido(), Enlace);
 
         Assert.True(r.Ok);
         Assert.Null(r.Error);
         Assert.True(r.CorreoEnviado);
-        Assert.True(ValidadorPassword.EsValida(r.PasswordTemporal));
+        Assert.Null(r.PasswordTemporal);
 
         var usuario = e.Repartidores.UsuarioRegistrado!;
         Assert.Equal(RolUsuario.Repartidor, usuario.Rol);
-        Assert.Equal(EstadoCuenta.Activo, usuario.Estado);
-        Assert.Equal($"HASH:{r.PasswordTemporal}", usuario.PasswordHash);
+        Assert.Equal(EstadoCuenta.PendienteActivacion, usuario.Estado);
+        Assert.Equal("", usuario.PasswordHash);
         Assert.Equal(10, e.Repartidores.Repartidores[0].NegocioId);
-        Assert.Single(e.Email.Enviados);
+        await e.Activacion.Received(1).EnviarEnlaceAsync(
+            usuario, "Juan Pérez", "Mi Negocio", Arg.Any<Func<string, string>>());
     }
 
     [Fact]
     public async Task Registrar_FallaEnvioCorreo_IgualRegistraAlRepartidor()
     {
         var e = new Escenario().ConNegocio();
-        e.Email.DebeFallar = true;
+        e.ActivacionEnvia(false);
 
-        var r = await e.Servicio.RegistrarAsync(1, DtoValido());
+        var r = await e.Servicio.RegistrarAsync(1, DtoValido(), Enlace);
 
         Assert.True(r.Ok);
         Assert.False(r.CorreoEnviado);
-        Assert.NotNull(r.PasswordTemporal);
+        Assert.Null(r.PasswordTemporal);
         Assert.True(e.Repartidores.SeLlamoRegistrar);
     }
 }

@@ -12,18 +12,18 @@ public class UsuarioControllerTests
     {
         public IAuthService Auth { get; } = Substitute.For<IAuthService>();
         public IRecuperacionService Recuperacion { get; } = Substitute.For<IRecuperacionService>();
+        public IActivacionCuentaService Activacion { get; } = Substitute.For<IActivacionCuentaService>();
         public IAuthenticationService Autenticacion { get; } = Substitute.For<IAuthenticationService>();
         public UsuarioController Controlador { get; }
 
         public Escenario(bool autenticado = false)
         {
-            Controlador = new UsuarioController(Auth, Recuperacion).Preparar(
+            Controlador = new UsuarioController(Auth, Recuperacion, Activacion).Preparar(
                 usuarioId: autenticado ? 1 : null,
                 rol: autenticado ? "Negocio" : null,
                 autenticacion: Autenticacion);
         }
     }
-
     private static Task<(Usuario? Usuario, string? Error)> Login(Usuario? u, string? error) => Task.FromResult((u, error));
     private static Task<(bool Ok, string? Error)> Resultado(bool ok, string? error = null) => Task.FromResult((ok, error));
 

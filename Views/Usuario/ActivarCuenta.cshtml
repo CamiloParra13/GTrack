@@ -1,0 +1,115 @@
+﻿@model ActivarCuentaDto
+@{
+    ViewData["Title"] = "Activar cuenta";
+    var saludo = string.IsNullOrWhiteSpace(Model.Nombre) ? "¡Hola!" : $"¡Hola, {Model.Nombre}!";
+}
+
+<div class="mx-auto" style="max-width: 460px;">
+    <div class="card shadow-sm p-4">
+        <p class="text-center text-primary fw-bold small mb-1">GTRACK</p>
+        <h2 class="text-center">Activa tu cuenta</h2>
+        <p class="text-center fw-semibold mb-1">@saludo</p>
+        <p class="text-center text-muted mb-4">
+            @if (Model.Rol == RolUsuario.Administrador)
+            {
+                <span>Te registraron como <strong class="text-dark">administrador</strong> de GTrack.</span>
+            }
+            else if (!string.IsNullOrWhiteSpace(Model.Negocio))
+            {
+                <span><strong class="text-dark">@Model.Negocio</strong> te registró como repartidor.</span>
+            }
+            Crea la contraseña con la que ingresarás a la plataforma.
+        </p>
+
+        <div class="activacion-usuario mb-3">
+            <i class="bi bi-person-badge"></i>
+            <div class="text-truncate">
+                <small class="d-block text-muted">Tu usuario</small>
+                <strong>@Model.Correo</strong>
+            </div>
+        </div>
+
+        <form asp-action="ActivarCuenta" method="post" id="form-activar">
+            <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+            <input type="hidden" asp-for="Token" />
+
+            <div class="mb-3">
+                <label asp-for="NuevaPassword" class="form-label"></label>
+                <div class="input-group">
+                    <input asp-for="NuevaPassword" class="form-control" autocomplete="new-password" autofocus />
+                    <button type="button" class="btn btn-outline-secondary toggle-password" data-target="NuevaPassword"
+                            aria-label="Mostrar u ocultar contraseña">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+                <span asp-validation-for="NuevaPassword" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ConfirmarPassword" class="form-label"></label>
+                <div class="input-group">
+                    <input asp-for="ConfirmarPassword" class="form-control" autocomplete="new-password" />
+                    <button type="button" class="btn btn-outline-secondary toggle-password" data-target="ConfirmarPassword"
+                            aria-label="Mostrar u ocultar contraseña">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+                <span asp-validation-for="ConfirmarPassword" class="text-danger small"></span>
+            </div>
+
+            @* RN-2-CU01: mismas reglas de contraseña del registro *@
+            <ul class="reglas-password list-unstyled small mb-4">
+                <li data-regla="largo"><i class="bi bi-circle"></i>Mínimo 6 caracteres</li>
+                <li data-regla="letra"><i class="bi bi-circle"></i>Al menos una letra</li>
+                <li data-regla="numero"><i class="bi bi-circle"></i>Al menos un número</li>
+                <li data-regla="coinciden"><i class="bi bi-circle"></i>Las dos contraseñas coinciden</li>
+            </ul>
+
+            <button type="submit" id="btn-activar" class="btn btn-primary w-100" disabled>
+                Activar mi cuenta <i class="bi bi-arrow-right ms-1"></i>
+            </button>
+        </form>
+
+        <hr />
+        <p class="text-center small text-muted mb-0">
+            ¿Ya activaste tu cuenta? <a asp-action="Login" asp-route-rol="@Model.Rol">Inicia sesión</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            const pass = document.getElementById('NuevaPassword');
+            const confirmar = document.getElementById('ConfirmarPassword');
+            const boton = document.getElementById('btn-activar');
+
+            const reglas = {
+                largo: function (p) { return p.length >= 6; },
+                letra: function (p) { return /\p{L}/u.test(p); },
+                numero: function (p) { return /\d/.test(p); },
+                coinciden: function (p) { return p.length > 0 && p === confirmar.value; }
+            };
+
+            function actualizar() {
+                let todas = true;
+                Object.keys(reglas).forEach(function (nombre) {
+                    const cumple = reglas[nombre](pass.value);
+                    const item = document.querySelector('[data-regla="' + nombre + '"]');
+                    item.classList.toggle('cumple', cumple);
+                    item.querySelector('i').className = cumple ? 'bi bi-check-circle-fill' : 'bi bi-circle';
+                    todas = todas && cumple;
+                });
+                boton.disabled = !todas;
+            }
+
+            pass.addEventListener('input', actualizar);
+            confirmar.addEventListener('input', actualizar);
+
+            // El botón del ojo (.toggle-password) lo maneja gtrack-ui.js en todas las páginas
+
+            actualizar();
+        })();
+    </script>
+}
