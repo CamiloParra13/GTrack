@@ -16,4 +16,15 @@ public class Usuario
     public string? MotivoRechazo { get; set; }
     public int IntentosFallidos { get; set; }
     public DateTime? BloqueadoHasta { get; set; }
+
+    // Baja lógica: la fila se conserva (historial de pedidos), pero el correo y el documento
+    // tienen índice único. Se les agrega un prefijo con el Id para "liberarlos" y que se puedan
+    // volver a usar en un registro nuevo. El prefijo con el Id garantiza que sigan siendo únicos.
+    public void LiberarIdentificadores()
+    {
+        Correo = Recortar($"eliminado.{Id}.{Correo}", 150);
+        Documento = Recortar($"X{Id}-{Documento}", 20);
+    }
+
+    private static string Recortar(string valor, int max) => valor.Length <= max ? valor : valor[..max];
 }

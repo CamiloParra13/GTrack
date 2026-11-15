@@ -60,7 +60,7 @@ public class AdministracionRepository(AppDbContext db) : IAdministracionReposito
 
     public async Task<bool> TelefonoEnUsoAsync(string telefono) =>
         await db.Negocios.AnyAsync(n => n.Telefono == telefono) ||
-        await db.Repartidores.AnyAsync(r => r.Telefono == telefono) ||
+        await db.Repartidores.AnyAsync(r => r.Telefono == telefono && r.Usuario!.Estado != EstadoCuenta.Eliminado) ||
         await db.Administradores.AnyAsync(a => a.Telefono == telefono);
 
     public Task<Administrador?> ObtenerPorUsuarioIdAsync(int usuarioId) =>

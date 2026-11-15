@@ -9,6 +9,12 @@
 
     // Repartidor dueño de una cuenta de usuario
     Task<Repartidor?> ObtenerPorUsuarioIdAsync(int usuarioId);
+
+    // Repartidor eliminado (baja lógica) que corresponde a la misma persona por correo o documento
+    Task<Repartidor?> BuscarEliminadoAsync(string correo, string documento);
+
+    // Guarda los cambios de un repartidor eliminado que se vuelve a registrar
+    Task ReactivarAsync(Repartidor repartidor);
 }
 
 public interface IAdministracionRepository
