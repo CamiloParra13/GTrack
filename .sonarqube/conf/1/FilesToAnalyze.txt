@@ -33,5 +33,6 @@ C:\Users\camil\.nuget\packages\microsoft.testplatform.testhost\17.14.1\build\net
 C:\Users\camil\.nuget\packages\microsoft.testplatform.testhost\17.14.1\build\net8.0\x64\testhost.dll
 C:\Users\camil\.nuget\packages\xunit.runner.visualstudio\3.1.4\build\net8.0\xunit.abstractions.dll
 C:\Users\camil\.nuget\packages\xunit.runner.visualstudio\3.1.4\build\net8.0\xunit.runner.visualstudio.testadapter.dll
+C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\TestResults\048a885c-8060-47fb-9a3f-23472524f7ba\coverage.opencover.xml
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\TestResults\566d0706-89d8-4779-bbb0-1d15839255ec\coverage.opencover.xml
 C:\Users\camil\.nuget\packages\questpdf\2026.9.1\QuestPDF.Fonts.Lato.br

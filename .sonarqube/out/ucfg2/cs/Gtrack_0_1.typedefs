@@ -1,26 +1,7 @@
 \
 
 MetodoPagoSystem.EnumSystem.ValueTypeobject'
-MetodoPago()MetodoPago.MetodoPago()∑
-VerificarCodigoDtoobject?
-VerificarCodigoDto()'VerificarCodigoDto.VerificarCodigoDto()+
-
-Codigo.getVerificarCodigoDto.Codigo.get+
-
-Codigo.setVerificarCodigoDto.Codigo.set
-ITokenRecuperacionRepositoryø
-HistorialExportDtoobject?
-HistorialExportDto()'HistorialExportDto.HistorialExportDto()9
-NombreNegocio.get$HistorialExportDto.NombreNegocio.get9
-NombreNegocio.set$HistorialExportDto.NombreNegocio.set)
-	Desde.getHistorialExportDto.Desde.get)
-	Desde.setHistorialExportDto.Desde.set)
-	Hasta.getHistorialExportDto.Hasta.get)
-	Hasta.setHistorialExportDto.Hasta.set3
-GeneradoEn.get!HistorialExportDto.GeneradoEn.get3
-GeneradoEn.set!HistorialExportDto.GeneradoEn.set)
-	Filas.getHistorialExportDto.Filas.get)
-	Filas.setHistorialExportDto.Filas.set±
+MetodoPago()MetodoPago.MetodoPago()±
 PerfilPublicoNegocioDtoobjectN
 PerfilPublicoNegocioDto()1PerfilPublicoNegocioDto.PerfilPublicoNegocioDto()0
 
@@ -34,7 +15,13 @@ Nombre.set"PerfilPublicoNegocioDto.Nombre.set>
 Telefono.get$PerfilPublicoNegocioDto.Telefono.get4
 Telefono.set$PerfilPublicoNegocioDto.Telefono.set>
 FechaRegistro.get)PerfilPublicoNegocioDto.FechaRegistro.get>
-FechaRegistro.set)PerfilPublicoNegocioDto.FechaRegistro.setÀ
+FechaRegistro.set)PerfilPublicoNegocioDto.FechaRegistro.set∑
+VerificarCodigoDtoobject?
+VerificarCodigoDto()'VerificarCodigoDto.VerificarCodigoDto()+
+
+Codigo.getVerificarCodigoDto.Codigo.get+
+
+Codigo.setVerificarCodigoDto.Codigo.setÀ
 SuspensionRepartidorobjectE
 SuspensionRepartidor()+SuspensionRepartidor.SuspensionRepartidor()%
 Id.getSuspensionRepartidor.Id.get%
@@ -52,12 +39,101 @@ Motivo.setSuspensionRepartidor.Motivo.set?
  ReactivadoPorAdministradorId.get5SuspensionRepartidor.ReactivadoPorAdministradorId.getY
  ReactivadoPorAdministradorId.set5SuspensionRepartidor.ReactivadoPorAdministradorId.setC
 FechaReactivacion.get*SuspensionRepartidor.FechaReactivacion.getC
-FechaReactivacion.set*SuspensionRepartidor.FechaReactivacion.set
-IUbicacionRepository´
+FechaReactivacion.set*SuspensionRepartidor.FechaReactivacion.set
+ITokenRecuperacionRepository
+IExportadorReportesù
+RegistroNegocioDtoobject?
+RegistroNegocioDto()'RegistroNegocioDto.RegistroNegocioDto()+
+
+Nombre.getRegistroNegocioDto.Nombre.get+
+
+Nombre.setRegistroNegocioDto.Nombre.set9
+TipoActividad.get$RegistroNegocioDto.TipoActividad.get9
+TipoActividad.set$RegistroNegocioDto.TipoActividad.set1
+Documento.get RegistroNegocioDto.Documento.get1
+Documento.set RegistroNegocioDto.Documento.set+
+
+Correo.getRegistroNegocioDto.Correo.get+
+
+Correo.setRegistroNegocioDto.Correo.set/
+Telefono.getRegistroNegocioDto.Telefono.get/
+Telefono.setRegistroNegocioDto.Telefono.set1
+Direccion.get RegistroNegocioDto.Direccion.get1
+Direccion.set RegistroNegocioDto.Direccion.set/
+Password.getRegistroNegocioDto.Password.get/
+Password.setRegistroNegocioDto.Password.setA
+ConfirmarPassword.get(RegistroNegocioDto.ConfirmarPassword.getA
+ConfirmarPassword.set(RegistroNegocioDto.ConfirmarPassword.set´
 UbicacionRepositoryobjectIUbicacionRepositoryZ
 !UbicacionRepository(AppDbContext)5UbicacionRepository.UbicacionRepository(AppDbContext):
 ObtenerAsync(int)%UbicacionRepository.ObtenerAsync(int)^
-#GuardarAsync(int, decimal, decimal)7UbicacionRepository.GuardarAsync(int, decimal, decimal)∑
+#GuardarAsync(int, decimal, decimal)7UbicacionRepository.GuardarAsync(int, decimal, decimal)
+IUbicacionRepository˝
+PerfilRepartidorDtoobjectB
+PerfilRepartidorDto())PerfilRepartidorDto.PerfilRepartidorDto()<
+NombreCompleto.get&PerfilRepartidorDto.NombreCompleto.get<
+NombreCompleto.set&PerfilRepartidorDto.NombreCompleto.set2
+Documento.get!PerfilRepartidorDto.Documento.get2
+Documento.set!PerfilRepartidorDto.Documento.set0
+Telefono.get PerfilRepartidorDto.Telefono.get0
+Telefono.set PerfilRepartidorDto.Telefono.set,
+
+Correo.getPerfilRepartidorDto.Correo.get,
+
+Correo.setPerfilRepartidorDto.Correo.set0
+Vehiculo.get PerfilRepartidorDto.Vehiculo.get0
+Vehiculo.set PerfilRepartidorDto.Vehiculo.set*
+	Placa.getPerfilRepartidorDto.Placa.get*
+	Placa.setPerfilRepartidorDto.Placa.set.
+Negocio.getPerfilRepartidorDto.Negocio.get.
+Negocio.setPerfilRepartidorDto.Negocio.set:
+FechaRegistro.get%PerfilRepartidorDto.FechaRegistro.get:
+FechaRegistro.set%PerfilRepartidorDto.FechaRegistro.set,
+
+Estado.getPerfilRepartidorDto.Estado.get,
+
+Estado.setPerfilRepartidorDto.Estado.setB
+PedidosPendientes.get)PerfilRepartidorDto.PedidosPendientes.getB
+PedidosPendientes.set)PerfilRepartidorDto.PedidosPendientes.setÔ
+BarraGraficaobjectSystem.IEquatable<T>S
+!BarraGrafica(string, int, string).BarraGrafica.BarraGrafica(string, int, string)%
+
+ToString()BarraGrafica.ToString()_
+'PrintMembers(System.Text.StringBuilder)4BarraGrafica.PrintMembers(System.Text.StringBuilder)+
+GetHashCode()BarraGrafica.GetHashCode()/
+Equals(object?)BarraGrafica.Equals(object?);
+Equals(BarraGrafica?)"BarraGrafica.Equals(BarraGrafica?)%
+
+<Clone>$()BarraGrafica.<Clone>$()E
+BarraGrafica(BarraGrafica)'BarraGrafica.BarraGrafica(BarraGrafica)i
+,Deconstruct(out string, out int, out string)9BarraGrafica.Deconstruct(out string, out int, out string)9
+EqualityContract.get!BarraGrafica.EqualityContract.get9
+EqualityContract.set!BarraGrafica.EqualityContract.set)
+Etiqueta.getBarraGrafica.Etiqueta.get+
+Etiqueta.initBarraGrafica.Etiqueta.init)
+Cantidad.getBarraGrafica.Cantidad.get+
+Cantidad.initBarraGrafica.Cantidad.init#
+	Color.getBarraGrafica.Color.get%
+
+Color.initBarraGrafica.Color.init
+IUsuarioRepository≠
+
+ItemPedidoobject'
+ItemPedido()ItemPedido.ItemPedido()
+Id.getItemPedido.Id.get
+Id.setItemPedido.Id.set'
+PedidoId.getItemPedido.PedidoId.get'
+PedidoId.setItemPedido.PedidoId.set#
+
+Pedido.getItemPedido.Pedido.get#
+
+Pedido.setItemPedido.Pedido.set-
+Descripcion.getItemPedido.Descripcion.get-
+Descripcion.setItemPedido.Descripcion.set'
+Cantidad.getItemPedido.Cantidad.get'
+Cantidad.setItemPedido.Cantidad.set3
+PrecioUnitario.getItemPedido.PrecioUnitario.get3
+PrecioUnitario.setItemPedido.PrecioUnitario.set∑
 Pedidoobject
 Pedido()Pedido.Pedido()
 Id.getPedido.Id.get
@@ -87,87 +163,11 @@ Codigo.setPedido.Codigo.set%
 FechaCreacion.getPedido.FechaCreacion.get-
 FechaCreacion.setPedido.FechaCreacion.set
 	Items.getPedido.Items.get
-	Items.setPedido.Items.setù
-RegistroNegocioDtoobject?
-RegistroNegocioDto()'RegistroNegocioDto.RegistroNegocioDto()+
-
-Nombre.getRegistroNegocioDto.Nombre.get+
-
-Nombre.setRegistroNegocioDto.Nombre.set9
-TipoActividad.get$RegistroNegocioDto.TipoActividad.get9
-TipoActividad.set$RegistroNegocioDto.TipoActividad.set1
-Documento.get RegistroNegocioDto.Documento.get1
-Documento.set RegistroNegocioDto.Documento.set+
-
-Correo.getRegistroNegocioDto.Correo.get+
-
-Correo.setRegistroNegocioDto.Correo.set/
-Telefono.getRegistroNegocioDto.Telefono.get/
-Telefono.setRegistroNegocioDto.Telefono.set1
-Direccion.get RegistroNegocioDto.Direccion.get1
-Direccion.set RegistroNegocioDto.Direccion.set/
-Password.getRegistroNegocioDto.Password.get/
-Password.setRegistroNegocioDto.Password.setA
-ConfirmarPassword.get(RegistroNegocioDto.ConfirmarPassword.getA
-ConfirmarPassword.set(RegistroNegocioDto.ConfirmarPassword.set’
-FilaConteoReporteobject<
-FilaConteoReporte()%FilaConteoReporte.FilaConteoReporte().
-Etiqueta.getFilaConteoReporte.Etiqueta.get.
-Etiqueta.setFilaConteoReporte.Etiqueta.set(
-	Color.getFilaConteoReporte.Color.get(
-	Color.setFilaConteoReporte.Color.set.
-Cantidad.getFilaConteoReporte.Cantidad.get.
-Cantidad.setFilaConteoReporte.Cantidad.set2
-Porcentaje.get FilaConteoReporte.Porcentaje.get2
-Porcentaje.set FilaConteoReporte.Porcentaje.setÔ
-BarraGraficaobjectSystem.IEquatable<T>S
-!BarraGrafica(string, int, string).BarraGrafica.BarraGrafica(string, int, string)%
-
-ToString()BarraGrafica.ToString()_
-'PrintMembers(System.Text.StringBuilder)4BarraGrafica.PrintMembers(System.Text.StringBuilder)+
-GetHashCode()BarraGrafica.GetHashCode()/
-Equals(object?)BarraGrafica.Equals(object?);
-Equals(BarraGrafica?)"BarraGrafica.Equals(BarraGrafica?)%
-
-<Clone>$()BarraGrafica.<Clone>$()E
-BarraGrafica(BarraGrafica)'BarraGrafica.BarraGrafica(BarraGrafica)i
-,Deconstruct(out string, out int, out string)9BarraGrafica.Deconstruct(out string, out int, out string)9
-EqualityContract.get!BarraGrafica.EqualityContract.get9
-EqualityContract.set!BarraGrafica.EqualityContract.set)
-Etiqueta.getBarraGrafica.Etiqueta.get+
-Etiqueta.initBarraGrafica.Etiqueta.init)
-Cantidad.getBarraGrafica.Cantidad.get+
-Cantidad.initBarraGrafica.Cantidad.init#
-	Color.getBarraGrafica.Color.get%
-
-Color.initBarraGrafica.Color.init
-IUsuarioRepository˝
-PerfilRepartidorDtoobjectB
-PerfilRepartidorDto())PerfilRepartidorDto.PerfilRepartidorDto()<
-NombreCompleto.get&PerfilRepartidorDto.NombreCompleto.get<
-NombreCompleto.set&PerfilRepartidorDto.NombreCompleto.set2
-Documento.get!PerfilRepartidorDto.Documento.get2
-Documento.set!PerfilRepartidorDto.Documento.set0
-Telefono.get PerfilRepartidorDto.Telefono.get0
-Telefono.set PerfilRepartidorDto.Telefono.set,
-
-Correo.getPerfilRepartidorDto.Correo.get,
-
-Correo.setPerfilRepartidorDto.Correo.set0
-Vehiculo.get PerfilRepartidorDto.Vehiculo.get0
-Vehiculo.set PerfilRepartidorDto.Vehiculo.set*
-	Placa.getPerfilRepartidorDto.Placa.get*
-	Placa.setPerfilRepartidorDto.Placa.set.
-Negocio.getPerfilRepartidorDto.Negocio.get.
-Negocio.setPerfilRepartidorDto.Negocio.set:
-FechaRegistro.get%PerfilRepartidorDto.FechaRegistro.get:
-FechaRegistro.set%PerfilRepartidorDto.FechaRegistro.set,
-
-Estado.getPerfilRepartidorDto.Estado.get,
-
-Estado.setPerfilRepartidorDto.Estado.setB
-PedidosPendientes.get)PerfilRepartidorDto.PedidosPendientes.getB
-PedidosPendientes.set)PerfilRepartidorDto.PedidosPendientes.set…
+	Items.setPedido.Items.setd
+EstadoPedidoSystem.EnumSystem.ValueTypeobject-
+EstadoPedido()EstadoPedido.EstadoPedido()d
+TipoVehiculoSystem.EnumSystem.ValueTypeobject-
+TipoVehiculo()TipoVehiculo.TipoVehiculo()…
 AdministracionRepositoryobjectIAdministracionRepositoryi
 &AdministracionRepository(AppDbContext)?AdministracionRepository.AdministracionRepository(AppDbContext)É
 3RegistrarAdministradorAsync(Usuario, Administrador)LAdministracionRepository.RegistrarAdministradorAsync(Usuario, Administrador)U
@@ -175,27 +175,7 @@ Estado.setPerfilRepartidorDto.Estado.setB
 ListarNegociosAsync().AdministracionRepository.ListarNegociosAsync()M
 AprobarNegocioAsync(int)1AdministracionRepository.AprobarNegocioAsync(int)Q
 TelefonoEnUsoAsync(string)3AdministracionRepository.TelefonoEnUsoAsync(string)W
-ObtenerPorUsuarioIdAsync(int)6AdministracionRepository.ObtenerPorUsuarioIdAsync(int)≠
-FilaNegocioReporteobject?
-FilaNegocioReporte()'FilaNegocioReporte.FilaNegocioReporte()+
-
-Nombre.getFilaNegocioReporte.Nombre.get+
-
-Nombre.setFilaNegocioReporte.Nombre.set1
-Actividad.get FilaNegocioReporte.Actividad.get1
-Actividad.set FilaNegocioReporte.Actividad.set1
-Documento.get FilaNegocioReporte.Documento.get1
-Documento.set FilaNegocioReporte.Documento.set+
-
-Correo.getFilaNegocioReporte.Correo.get+
-
-Correo.setFilaNegocioReporte.Correo.set9
-FechaRegistro.get$FilaNegocioReporte.FechaRegistro.get9
-FechaRegistro.set$FilaNegocioReporte.FechaRegistro.set+
-
-Estado.getFilaNegocioReporte.Estado.get+
-
-Estado.setFilaNegocioReporte.Estado.setâ
+ObtenerPorUsuarioIdAsync(int)6AdministracionRepository.ObtenerPorUsuarioIdAsync(int)â
 TokenRecuperacionobject<
 TokenRecuperacion()%TokenRecuperacion.TokenRecuperacion()"
 Id.getTokenRecuperacion.Id.get"
@@ -211,40 +191,7 @@ Expira.getTokenRecuperacion.Expira.get*
 
 Expira.setTokenRecuperacion.Expira.set(
 	Usado.getTokenRecuperacion.Usado.get(
-	Usado.setTokenRecuperacion.Usado.set≠
-
-ItemPedidoobject'
-ItemPedido()ItemPedido.ItemPedido()
-Id.getItemPedido.Id.get
-Id.setItemPedido.Id.set'
-PedidoId.getItemPedido.PedidoId.get'
-PedidoId.setItemPedido.PedidoId.set#
-
-Pedido.getItemPedido.Pedido.get#
-
-Pedido.setItemPedido.Pedido.set-
-Descripcion.getItemPedido.Descripcion.get-
-Descripcion.setItemPedido.Descripcion.set'
-Cantidad.getItemPedido.Cantidad.get'
-Cantidad.setItemPedido.Cantidad.set3
-PrecioUnitario.getItemPedido.PrecioUnitario.get3
-PrecioUnitario.setItemPedido.PrecioUnitario.setd
-EstadoPedidoSystem.EnumSystem.ValueTypeobject-
-EstadoPedido()EstadoPedido.EstadoPedido()ù
-FilaTopNegocioReporteobjectH
-FilaTopNegocioReporte()-FilaTopNegocioReporte.FilaTopNegocioReporte().
-
-Nombre.get FilaTopNegocioReporte.Nombre.get.
-
-Nombre.set FilaTopNegocioReporte.Nombre.set0
-Pedidos.get!FilaTopNegocioReporte.Pedidos.get0
-Pedidos.set!FilaTopNegocioReporte.Pedidos.set6
-Entregados.get$FilaTopNegocioReporte.Entregados.get6
-Entregados.set$FilaTopNegocioReporte.Entregados.set>
-ValorEntregado.get(FilaTopNegocioReporte.ValorEntregado.get>
-ValorEntregado.set(FilaTopNegocioReporte.ValorEntregado.setå
-EstadoEnlaceActivacionSystem.EnumSystem.ValueTypeobjectK
-EstadoEnlaceActivacion()/EstadoEnlaceActivacion.EstadoEnlaceActivacion()ß
+	Usado.setTokenRecuperacion.Usado.setß
 UsuarioRepositoryobjectIUsuarioRepositoryT
 UsuarioRepository(AppDbContext)1UsuarioRepository.UsuarioRepository(AppDbContext)~
 4ObtenerPorIdentificadorYRolAsync(string, RolUsuario)FUsuarioRepository.ObtenerPorIdentificadorYRolAsync(string, RolUsuario)P
@@ -252,34 +199,8 @@ Nombre.set FilaTopNegocioReporte.Nombre.set0
 ObtenerPorIdAsync(int)(UsuarioRepository.ObtenerPorIdAsync(int)F
 ActualizarAsync(Usuario)*UsuarioRepository.ActualizarAsync(Usuario)^
 $CorreosAdministradoresActivosAsync()6UsuarioRepository.CorreosAdministradoresActivosAsync()b
-&LiberarEliminadosAsync(string, string)8UsuarioRepository.LiberarEliminadosAsync(string, string)d
-TipoVehiculoSystem.EnumSystem.ValueTypeobject-
-TipoVehiculo()TipoVehiculo.TipoVehiculo()Ÿ
-CodigoVerificacionRepositoryobjectICodigoVerificacionRepositoryu
-*CodigoVerificacionRepository(AppDbContext)GCodigoVerificacionRepository.CodigoVerificacionRepository(AppDbContext)a
- AgregarAsync(CodigoVerificacion)=CodigoVerificacionRepository.AgregarAsync(CodigoVerificacion)O
-ObtenerUltimoAsync(int)4CodigoVerificacionRepository.ObtenerUltimoAsync(int)g
-#ActualizarAsync(CodigoVerificacion)@CodigoVerificacionRepository.ActualizarAsync(CodigoVerificacion)
-ICodigoVerificacionRepository\
-
-RolUsuarioSystem.EnumSystem.ValueTypeobject'
-RolUsuario()RolUsuario.RolUsuario()π
-UbicacionPedidoobject6
-UbicacionPedido()!UbicacionPedido.UbicacionPedido(),
-PedidoId.getUbicacionPedido.PedidoId.get,
-PedidoId.setUbicacionPedido.PedidoId.set(
-
-Pedido.getUbicacionPedido.Pedido.get(
-
-Pedido.setUbicacionPedido.Pedido.set*
-Latitud.getUbicacionPedido.Latitud.get*
-Latitud.setUbicacionPedido.Latitud.set,
-Longitud.getUbicacionPedido.Longitud.get,
-Longitud.setUbicacionPedido.Longitud.set@
-FechaActualizacion.get&UbicacionPedido.FechaActualizacion.get@
-FechaActualizacion.set&UbicacionPedido.FechaActualizacion.setd
-EstadoCuentaSystem.EnumSystem.ValueTypeobject-
-EstadoCuenta()EstadoCuenta.EstadoCuenta()´
+&LiberarEliminadosAsync(string, string)8UsuarioRepository.LiberarEliminadosAsync(string, string)
+INegocioService´
 
 Repartidorobject'
 Repartidor()Repartidor.Repartidor()
@@ -326,8 +247,23 @@ Error.initResultadoRegistro.Error.init8
 PasswordTemporal.init'ResultadoRegistro.PasswordTemporal.init(
 	Campo.getResultadoRegistro.Campo.get*
 
-Campo.initResultadoRegistro.Campo.init
-INegocioRepository∞
+Campo.initResultadoRegistro.Campo.initå
+EstadoEnlaceActivacionSystem.EnumSystem.ValueTypeobjectK
+EstadoEnlaceActivacion()/EstadoEnlaceActivacion.EstadoEnlaceActivacion()π
+UbicacionPedidoobject6
+UbicacionPedido()!UbicacionPedido.UbicacionPedido(),
+PedidoId.getUbicacionPedido.PedidoId.get,
+PedidoId.setUbicacionPedido.PedidoId.set(
+
+Pedido.getUbicacionPedido.Pedido.get(
+
+Pedido.setUbicacionPedido.Pedido.set*
+Latitud.getUbicacionPedido.Latitud.get*
+Latitud.setUbicacionPedido.Latitud.set,
+Longitud.getUbicacionPedido.Longitud.get,
+Longitud.setUbicacionPedido.Longitud.set@
+FechaActualizacion.get&UbicacionPedido.FechaActualizacion.get@
+FechaActualizacion.set&UbicacionPedido.FechaActualizacion.set∞
 EditarRepartidorDtoobject8System.ComponentModel.DataAnnotations.IValidatableObjectö
 AValidate(System.ComponentModel.DataAnnotations.ValidationContext)UEditarRepartidorDto.Validate(System.ComponentModel.DataAnnotations.ValidationContext)B
 EditarRepartidorDto())EditarRepartidorDto.EditarRepartidorDto()<
@@ -342,7 +278,43 @@ Correo.setEditarRepartidorDto.Correo.set0
 Vehiculo.get EditarRepartidorDto.Vehiculo.get0
 Vehiculo.set EditarRepartidorDto.Vehiculo.set*
 	Placa.getEditarRepartidorDto.Placa.get*
-	Placa.setEditarRepartidorDto.Placa.setï
+	Placa.setEditarRepartidorDto.Placa.setŸ
+CodigoVerificacionRepositoryobjectICodigoVerificacionRepositoryu
+*CodigoVerificacionRepository(AppDbContext)GCodigoVerificacionRepository.CodigoVerificacionRepository(AppDbContext)a
+ AgregarAsync(CodigoVerificacion)=CodigoVerificacionRepository.AgregarAsync(CodigoVerificacion)O
+ObtenerUltimoAsync(int)4CodigoVerificacionRepository.ObtenerUltimoAsync(int)g
+#ActualizarAsync(CodigoVerificacion)@CodigoVerificacionRepository.ActualizarAsync(CodigoVerificacion)\
+
+RolUsuarioSystem.EnumSystem.ValueTypeobject'
+RolUsuario()RolUsuario.RolUsuario()ó
+NegocioRepositoryobjectINegocioRepositoryT
+NegocioRepository(AppDbContext)1NegocioRepository.NegocioRepository(AppDbContext)@
+BuscarPorIdAsync(int)'NegocioRepository.BuscarPorIdAsync(int)P
+ObtenerPorUsuarioIdAsync(int)/NegocioRepository.ObtenerPorUsuarioIdAsync(int)N
+ExisteDocumentoAsync(string).NegocioRepository.ExisteDocumentoAsync(string)X
+!ExisteTelefonoAsync(string, int?)3NegocioRepository.ExisteTelefonoAsync(string, int?)V
+ RegistrarAsync(Usuario, Negocio)2NegocioRepository.RegistrarAsync(Usuario, Negocio)F
+ActualizarAsync(Negocio)*NegocioRepository.ActualizarAsync(Negocio)P
+TienePedidosActivosAsync(int)/NegocioRepository.TienePedidosActivosAsync(int)`
+%TieneRepartidoresVinculadosAsync(int)7NegocioRepository.TieneRepartidoresVinculadosAsync(int)
+ICodigoVerificacionRepositoryd
+EstadoCuentaSystem.EnumSystem.ValueTypeobject-
+EstadoCuenta()EstadoCuenta.EstadoCuenta()
+INegocioRepositoryÌ
+Administradorobject0
+Administrador()Administrador.Administrador()
+Id.getAdministrador.Id.get
+Id.setAdministrador.Id.set,
+UsuarioId.getAdministrador.UsuarioId.get,
+UsuarioId.setAdministrador.UsuarioId.set(
+Usuario.getAdministrador.Usuario.get(
+Usuario.setAdministrador.Usuario.set6
+NombreCompleto.get Administrador.NombreCompleto.get6
+NombreCompleto.set Administrador.NombreCompleto.set*
+Telefono.getAdministrador.Telefono.get*
+Telefono.setAdministrador.Telefono.set4
+FechaRegistro.getAdministrador.FechaRegistro.get4
+FechaRegistro.setAdministrador.FechaRegistro.setï
 Clienteobject
 	Cliente()Cliente.Cliente()
 Id.getCliente.Id.get
@@ -358,17 +330,29 @@ Correo.setEditarRepartidorDto.Correo.set0
 NegocioId.getCliente.NegocioId.get&
 NegocioId.setCliente.NegocioId.set"
 Negocio.getCliente.Negocio.get"
-Negocio.setCliente.Negocio.setó
-NegocioRepositoryobjectINegocioRepositoryT
-NegocioRepository(AppDbContext)1NegocioRepository.NegocioRepository(AppDbContext)@
-BuscarPorIdAsync(int)'NegocioRepository.BuscarPorIdAsync(int)P
-ObtenerPorUsuarioIdAsync(int)/NegocioRepository.ObtenerPorUsuarioIdAsync(int)N
-ExisteDocumentoAsync(string).NegocioRepository.ExisteDocumentoAsync(string)X
-!ExisteTelefonoAsync(string, int?)3NegocioRepository.ExisteTelefonoAsync(string, int?)V
- RegistrarAsync(Usuario, Negocio)2NegocioRepository.RegistrarAsync(Usuario, Negocio)F
-ActualizarAsync(Negocio)*NegocioRepository.ActualizarAsync(Negocio)P
-TienePedidosActivosAsync(int)/NegocioRepository.TienePedidosActivosAsync(int)`
-%TieneRepartidoresVinculadosAsync(int)7NegocioRepository.TieneRepartidoresVinculadosAsync(int)È
+Negocio.setCliente.Negocio.set„
+CodigoVerificacionobject?
+CodigoVerificacion()'CodigoVerificacion.CodigoVerificacion()#
+Id.getCodigoVerificacion.Id.get#
+Id.setCodigoVerificacion.Id.set1
+UsuarioId.get CodigoVerificacion.UsuarioId.get1
+UsuarioId.set CodigoVerificacion.UsuarioId.set3
+CodigoHash.get!CodigoVerificacion.CodigoHash.get3
+CodigoHash.set!CodigoVerificacion.CodigoHash.set9
+FechaCreacion.get$CodigoVerificacion.FechaCreacion.get9
+FechaCreacion.set$CodigoVerificacion.FechaCreacion.set+
+
+Expira.getCodigoVerificacion.Expira.get+
+
+Expira.setCodigoVerificacion.Expira.set/
+Intentos.getCodigoVerificacion.Intentos.get/
+Intentos.setCodigoVerificacion.Intentos.set;
+BloqueadoHasta.get%CodigoVerificacion.BloqueadoHasta.get;
+BloqueadoHasta.set%CodigoVerificacion.BloqueadoHasta.set3
+Verificado.get!CodigoVerificacion.Verificado.get3
+Verificado.set!CodigoVerificacion.Verificado.set)
+	Usado.getCodigoVerificacion.Usado.get)
+	Usado.setCodigoVerificacion.Usado.setÈ
 
 InfoActivacionobjectSystem.IEquatable<T>©
 KInfoActivacion(EstadoEnlaceActivacion, RolUsuario?, string, string, string)ZInfoActivacion.InfoActivacion(EstadoEnlaceActivacion, RolUsuario?, string, string, string)'
@@ -396,21 +380,443 @@ Nombre.getInfoActivacion.Nombre.get)
 Correo.getInfoActivacion.Correo.get)
 Correo.initInfoActivacion.Correo.init)
 Negocio.getInfoActivacion.Negocio.get+
-Negocio.initInfoActivacion.Negocio.initÌ
-Administradorobject0
-Administrador()Administrador.Administrador()
-Id.getAdministrador.Id.get
-Id.setAdministrador.Id.set,
-UsuarioId.getAdministrador.UsuarioId.get,
-UsuarioId.setAdministrador.UsuarioId.set(
-Usuario.getAdministrador.Usuario.get(
-Usuario.setAdministrador.Usuario.set6
-NombreCompleto.get Administrador.NombreCompleto.get6
-NombreCompleto.set Administrador.NombreCompleto.set*
-Telefono.getAdministrador.Telefono.get*
-Telefono.setAdministrador.Telefono.set4
-FechaRegistro.getAdministrador.FechaRegistro.get4
-FechaRegistro.setAdministrador.FechaRegistro.set°
+Negocio.initInfoActivacion.Negocio.init∫
+RegistroRepartidorDtoobject8System.ComponentModel.DataAnnotations.IValidatableObjectú
+AValidate(System.ComponentModel.DataAnnotations.ValidationContext)WRegistroRepartidorDto.Validate(System.ComponentModel.DataAnnotations.ValidationContext)H
+RegistroRepartidorDto()-RegistroRepartidorDto.RegistroRepartidorDto()>
+NombreCompleto.get(RegistroRepartidorDto.NombreCompleto.get>
+NombreCompleto.set(RegistroRepartidorDto.NombreCompleto.set4
+Documento.get#RegistroRepartidorDto.Documento.get4
+Documento.set#RegistroRepartidorDto.Documento.set2
+Telefono.get"RegistroRepartidorDto.Telefono.get2
+Telefono.set"RegistroRepartidorDto.Telefono.set.
+
+Correo.get RegistroRepartidorDto.Correo.get.
+
+Correo.set RegistroRepartidorDto.Correo.set2
+Vehiculo.get"RegistroRepartidorDto.Vehiculo.get2
+Vehiculo.set"RegistroRepartidorDto.Vehiculo.set,
+	Placa.getRegistroRepartidorDto.Placa.get,
+	Placa.setRegistroRepartidorDto.Placa.setò
+AdministracionServiceobjectIAdministracionServiceò
+æAdministracionService(IAdministracionRepository, INegocioRepository, IUsuarioRepository, IActivacionCuentaService, IEmailService, Microsoft.Extensions.Logging.ILogger<AdministracionService>)‘AdministracionService.AdministracionService(IAdministracionRepository, INegocioRepository, IUsuarioRepository, IActivacionCuentaService, IEmailService, Microsoft.Extensions.Logging.ILogger<AdministracionService>)D
+ListarNegociosAsync()+AdministracionService.ListarNegociosAsync()R
+ListarAdministradoresAsync()2AdministracionService.ListarAdministradoresAsync()Z
+ AprobarNegocioAsync(int, string)6AdministracionService.AprobarNegocioAsync(int, string)æ
+RRegistrarAdministradorAsync(RegistroAdministradorDto, System.Func<string, string>)hAdministracionService.RegistrarAdministradorAsync(RegistroAdministradorDto, System.Func<string, string>)å
+9ReenviarActivacionAsync(int, System.Func<string, string>)OAdministracionService.ReenviarActivacionAsync(int, System.Func<string, string>)ø
+Usuarioobject<
+LiberarIdentificadores() Usuario.LiberarIdentificadores()
+	Usuario()Usuario.Usuario()
+Id.getUsuario.Id.get
+Id.setUsuario.Id.set 
+
+Correo.getUsuario.Correo.get 
+
+Correo.setUsuario.Correo.set&
+Documento.getUsuario.Documento.get&
+Documento.setUsuario.Documento.set,
+PasswordHash.getUsuario.PasswordHash.get,
+PasswordHash.setUsuario.PasswordHash.set
+Rol.getUsuario.Rol.get
+Rol.setUsuario.Rol.set 
+
+Estado.getUsuario.Estado.get 
+
+Estado.setUsuario.Estado.set.
+MotivoRechazo.getUsuario.MotivoRechazo.get.
+MotivoRechazo.setUsuario.MotivoRechazo.set4
+IntentosFallidos.getUsuario.IntentosFallidos.get4
+IntentosFallidos.setUsuario.IntentosFallidos.set0
+BloqueadoHasta.getUsuario.BloqueadoHasta.get0
+BloqueadoHasta.setUsuario.BloqueadoHasta.set
+IUbicacionService”
+SolicitudCancelacionobjectE
+SolicitudCancelacion()+SolicitudCancelacion.SolicitudCancelacion()%
+Id.getSolicitudCancelacion.Id.get%
+Id.setSolicitudCancelacion.Id.set1
+PedidoId.get!SolicitudCancelacion.PedidoId.get1
+PedidoId.set!SolicitudCancelacion.PedidoId.set-
+
+Pedido.getSolicitudCancelacion.Pedido.get-
+
+Pedido.setSolicitudCancelacion.Pedido.set-
+
+Motivo.getSolicitudCancelacion.Motivo.get-
+
+Motivo.setSolicitudCancelacion.Motivo.set=
+FechaSolicitud.get'SolicitudCancelacion.FechaSolicitud.get=
+FechaSolicitud.set'SolicitudCancelacion.FechaSolicitud.set1
+Programobject
+	Program()Program.Program()ô
+ErrorViewModelobject3
+ErrorViewModel()ErrorViewModel.ErrorViewModel()-
+RequestId.getErrorViewModel.RequestId.get-
+RequestId.setErrorViewModel.RequestId.set5
+ShowRequestId.get ErrorViewModel.ShowRequestId.get5
+ShowRequestId.set ErrorViewModel.ShowRequestId.set
+IPedidoService
+IPedidoRepositoryô
+PedidoRepositoryobjectIPedidoRepositoryQ
+PedidoRepository(AppDbContext)/PedidoRepository.PedidoRepository(AppDbContext)A
+ObtenerPorIdAsync(int)'PedidoRepository.ObtenerPorIdAsync(int)O
+ObtenerPorCodigoAsync(string).PedidoRepository.ObtenerPorCodigoAsync(string)i
+*ObtenerUltimoPorTelefonoAsync(int, string);PedidoRepository.ObtenerUltimoPorTelefonoAsync(int, string)G
+ExisteCodigoAsync(string)*PedidoRepository.ExisteCodigoAsync(string)=
+AgregarAsync(Pedido)%PedidoRepository.AgregarAsync(Pedido)C
+ActualizarAsync(Pedido)(PedidoRepository.ActualizarAsync(Pedido)K
+ObtenerPorNegocioAsync(int),PedidoRepository.ObtenerPorNegocioAsync(int)|
+ResultadoSolicitudSystem.EnumSystem.ValueTypeobject?
+ResultadoSolicitud()'ResultadoSolicitud.ResultadoSolicitud()
+IActivacionCuentaServiceÄ
+UsuarioController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobject¥
+OUsuarioController(IAuthService, IRecuperacionService, IActivacionCuentaService)aUsuarioController.UsuarioController(IAuthService, IRecuperacionService, IActivacionCuentaService)D
+Login(string?, string?))UsuarioController.Login(string?, string?)F
+Login(LoginDto, string?)*UsuarioController.Login(LoginDto, string?)&
+Logout()UsuarioController.Logout()@
+RecuperarContrasena()'UsuarioController.RecuperarContrasena()X
+!RecuperarContrasena(RecuperarDto)3UsuarioController.RecuperarContrasena(RecuperarDto)P
+RestablecerContrasena(string)/UsuarioController.RestablecerContrasena(string)`
+%RestablecerContrasena(RestablecerDto)7UsuarioController.RestablecerContrasena(RestablecerDto)B
+ActivarCuenta(string?)(UsuarioController.ActivarCuenta(string?)T
+ActivarCuenta(ActivarCuentaDto)1UsuarioController.ActivarCuenta(ActivarCuentaDto)>
+UrlLogin(RolUsuario)&UsuarioController.UrlLogin(RolUsuario)ù
+Negocioobject
+	Negocio()Negocio.Negocio()
+Id.getNegocio.Id.get
+Id.setNegocio.Id.set&
+UsuarioId.getNegocio.UsuarioId.get&
+UsuarioId.setNegocio.UsuarioId.set"
+Usuario.getNegocio.Usuario.get"
+Usuario.setNegocio.Usuario.set 
+
+Nombre.getNegocio.Nombre.get 
+
+Nombre.setNegocio.Nombre.set.
+TipoActividad.getNegocio.TipoActividad.get.
+TipoActividad.setNegocio.TipoActividad.set$
+Telefono.getNegocio.Telefono.get$
+Telefono.setNegocio.Telefono.set&
+Direccion.getNegocio.Direccion.get&
+Direccion.setNegocio.Direccion.set.
+FechaRegistro.getNegocio.FechaRegistro.get.
+FechaRegistro.setNegocio.FechaRegistro.set
+IRecuperacionService
+IRepartidorRepository
+IAdministracionRepository’
+NovedadPedidoobject0
+NovedadPedido()NovedadPedido.NovedadPedido()
+Id.getNovedadPedido.Id.get
+Id.setNovedadPedido.Id.set*
+PedidoId.getNovedadPedido.PedidoId.get*
+PedidoId.setNovedadPedido.PedidoId.set&
+
+Pedido.getNovedadPedido.Pedido.get&
+
+Pedido.setNovedadPedido.Pedido.set4
+TipoNovedadId.getNovedadPedido.TipoNovedadId.get4
+TipoNovedadId.setNovedadPedido.TipoNovedadId.set4
+Observaciones.getNovedadPedido.Observaciones.get4
+Observaciones.setNovedadPedido.Observaciones.set$
+	Fecha.getNovedadPedido.Fecha.get$
+	Fecha.setNovedadPedido.Fecha.set
+IReporteServiceÈ
+AdminController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobjectû
+ÑAdminController(IAdministracionService, IReporteService, IExportadorReportes, Microsoft.Extensions.Logging.ILogger<AdminController>)îAdminController.AdminController(IAdministracionService, IReporteService, IExportadorReportes, Microsoft.Extensions.Logging.ILogger<AdminController>)D
+EnlaceActivacion(string)(AdminController.EnlaceActivacion(string)(
+
+Negocios()AdminController.Negocios():
+AprobarNegocio(int)#AdminController.AprobarNegocio(int)6
+Administradores()!AdminController.Administradores()D
+RegistrarAdministrador()(AdminController.RegistrarAdministrador()t
+0RegistrarAdministrador(RegistroAdministradorDto)@AdminController.RegistrarAdministrador(RegistroAdministradorDto)B
+ReenviarActivacion(int)'AdminController.ReenviarActivacion(int)l
+,Reportes(System.DateTime?, System.DateTime?)<AdminController.Reportes(System.DateTime?, System.DateTime?)å
+<DescargarReporte(System.DateTime?, System.DateTime?, string)LAdminController.DescargarReporte(System.DateTime?, System.DateTime?, string)`
+TipoNovedadSystem.EnumSystem.ValueTypeobject*
+TipoNovedad()TipoNovedad.TipoNovedad()ì
+RecuperarDtoobject-
+RecuperarDto()RecuperarDto.RecuperarDto()%
+
+Correo.getRecuperarDto.Correo.get%
+
+Correo.setRecuperarDto.Correo.set˙
+RepartidorRepositoryobjectIRepartidorRepository]
+"RepartidorRepository(AppDbContext)7RepartidorRepository.RepartidorRepository(AppDbContext)s
+-RegistrarRepartidorAsync(Usuario, Repartidor)BRepartidorRepository.RegistrarRepartidorAsync(Usuario, Repartidor)a
+$BuscarEliminadoAsync(string, string)9RepartidorRepository.BuscarEliminadoAsync(string, string)M
+ReactivarAsync(Repartidor)/RepartidorRepository.ReactivarAsync(Repartidor)q
+,LiberarPlacaDeEliminadosAsync(string?, int?)ARepartidorRepository.LiberarPlacaDeEliminadosAsync(string?, int?)M
+ListarPorNegocioAsync(int)/RepartidorRepository.ListarPorNegocioAsync(int)M
+TelefonoEnUsoAsync(string)/RepartidorRepository.TelefonoEnUsoAsync(string)W
+ObtenerDeNegocioAsync(int, int)4RepartidorRepository.ObtenerDeNegocioAsync(int, int)S
+ObtenerPorUsuarioIdAsync(int)2RepartidorRepository.ObtenerPorUsuarioIdAsync(int)Æ
+AuthServiceobjectIAuthServiceæ
+WAuthService(IUsuarioRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>)cAuthService.AuthService(IUsuarioRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>)H
+IniciarSesionAsync(LoginDto)(AuthService.IniciarSesionAsync(LoginDto)
+IPerfilRepartidorServiceü
+TokenRecuperacionRepositoryobjectITokenRecuperacionRepositoryr
+)TokenRecuperacionRepository(AppDbContext)ETokenRecuperacionRepository.TokenRecuperacionRepository(AppDbContext)^
+AgregarAsync(TokenRecuperacion);TokenRecuperacionRepository.AgregarAsync(TokenRecuperacion)V
+ObtenerPorHashAsync(string)7TokenRecuperacionRepository.ObtenerPorHashAsync(string)l
+&ContarDesdeAsync(int, System.DateTime)BTokenRecuperacionRepository.ContarDesdeAsync(int, System.DateTime)d
+"ActualizarAsync(TokenRecuperacion)>TokenRecuperacionRepository.ActualizarAsync(TokenRecuperacion)Z
+InvalidarPendientesAsync(int)9TokenRecuperacionRepository.InvalidarPendientesAsync(int)√
+EmailDesarrolloServiceobjectIEmailService√
+TEmailDesarrolloService(Microsoft.Extensions.Logging.ILogger<EmailDesarrolloService>)kEmailDesarrolloService.EmailDesarrolloService(Microsoft.Extensions.Logging.ILogger<EmailDesarrolloService>)a
+#EnviarAsync(string, string, string):EmailDesarrolloService.EnviarAsync(string, string, string)i
+'EnviarAsync(string, string, CorreoHtml)>EmailDesarrolloService.EnviarAsync(string, string, CorreoHtml)Â
+BCryptPasswordHasherobject4Microsoft.AspNetCore.Identity.IPasswordHasher<TUser>S
+HashPassword(Usuario, string)2BCryptPasswordHasher.HashPassword(Usuario, string)s
+-VerifyHashedPassword(Usuario, string, string)BBCryptPasswordHasher.VerifyHashedPassword(Usuario, string, string)E
+BCryptPasswordHasher()+BCryptPasswordHasher.BCryptPasswordHasher()£
+RegistrarPedidoDtoobject?
+RegistrarPedidoDto()'RegistrarPedidoDto.RegistrarPedidoDto()9
+ClienteNombre.get$RegistrarPedidoDto.ClienteNombre.get9
+ClienteNombre.set$RegistrarPedidoDto.ClienteNombre.set=
+ClienteTelefono.get&RegistrarPedidoDto.ClienteTelefono.get=
+ClienteTelefono.set&RegistrarPedidoDto.ClienteTelefono.set?
+DireccionEntrega.get'RegistrarPedidoDto.DireccionEntrega.get?
+DireccionEntrega.set'RegistrarPedidoDto.DireccionEntrega.set3
+MetodoPago.get!RegistrarPedidoDto.MetodoPago.get3
+MetodoPago.set!RegistrarPedidoDto.MetodoPago.set1
+Productos.get RegistrarPedidoDto.Productos.get1
+Productos.set RegistrarPedidoDto.Productos.setü
+LoginDtoobject!
+
+LoginDto()LoginDto.LoginDto()
+Rol.getLoginDto.Rol.get
+Rol.setLoginDto.Rol.set/
+Identificador.getLoginDto.Identificador.get/
+Identificador.setLoginDto.Identificador.set%
+Password.getLoginDto.Password.get%
+Password.setLoginDto.Password.set≠
+!Gtrack.Controllers.HomeController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobject4
+Index())Gtrack.Controllers.HomeController.Index()8
+	Privacy()+Gtrack.Controllers.HomeController.Privacy()4
+Error())Gtrack.Controllers.HomeController.Error()D
+StatusCode(int)1Gtrack.Controllers.HomeController.StatusCode(int)F
+HomeController()2Gtrack.Controllers.HomeController.HomeController()≠
+FilaEstadoReporteobject<
+FilaEstadoReporte()%FilaEstadoReporte.FilaEstadoReporte().
+EstadoId.getFilaEstadoReporte.EstadoId.get.
+EstadoId.setFilaEstadoReporte.EstadoId.set*
+
+Estado.getFilaEstadoReporte.Estado.get*
+
+Estado.setFilaEstadoReporte.Estado.set(
+	Color.getFilaEstadoReporte.Color.get(
+	Color.setFilaEstadoReporte.Color.set.
+Cantidad.getFilaEstadoReporte.Cantidad.get.
+Cantidad.setFilaEstadoReporte.Cantidad.set2
+Porcentaje.get FilaEstadoReporte.Porcentaje.get2
+Porcentaje.set FilaEstadoReporte.Porcentaje.setâ
+FilaPedidoReporteobject<
+FilaPedidoReporte()%FilaPedidoReporte.FilaPedidoReporte()*
+
+Codigo.getFilaPedidoReporte.Codigo.get*
+
+Codigo.setFilaPedidoReporte.Codigo.set,
+Cliente.getFilaPedidoReporte.Cliente.get,
+Cliente.setFilaPedidoReporte.Cliente.set(
+	Fecha.getFilaPedidoReporte.Fecha.get(
+	Fecha.setFilaPedidoReporte.Fecha.set*
+
+Estado.getFilaPedidoReporte.Estado.get*
+
+Estado.setFilaPedidoReporte.Estado.set2
+Repartidor.get FilaPedidoReporte.Repartidor.get2
+Repartidor.set FilaPedidoReporte.Repartidor.set2
+ValorTotal.get FilaPedidoReporte.ValorTotal.get2
+ValorTotal.set FilaPedidoReporte.ValorTotal.setˆ
+RecuperacionServiceobjectIRecuperacionService®
+«RecuperacionService(IUsuarioRepository, ITokenRecuperacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<RecuperacionService>)€RecuperacionService.RecuperacionService(IUsuarioRepository, ITokenRecuperacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<RecuperacionService>)~
+3SolicitarAsync(string, System.Func<string, string>)GRecuperacionService.SolicitarAsync(string, System.Func<string, string>)J
+TokenVigenteAsync(string)-RecuperacionService.TokenVigenteAsync(string)h
+(RestablecerAsync(string, string, string)<RecuperacionService.RestablecerAsync(string, string, string)`
+$EsLaMismaContrasena(Usuario, string)8RecuperacionService.EsLaMismaContrasena(Usuario, string)ó
+FilaMesReporteobject3
+FilaMesReporte()FilaMesReporte.FilaMesReporte()!
+Mes.getFilaMesReporte.Mes.get!
+Mes.setFilaMesReporte.Mes.set%
+	Total.getFilaMesReporte.Total.get%
+	Total.setFilaMesReporte.Total.set/
+Entregados.getFilaMesReporte.Entregados.get/
+Entregados.setFilaMesReporte.Entregados.set/
+Cancelados.getFilaMesReporte.Cancelados.get/
+Cancelados.setFilaMesReporte.Cancelados.set7
+ValorEntregado.get!FilaMesReporte.ValorEntregado.get7
+ValorEntregado.set!FilaMesReporte.ValorEntregado.set¡
+RegistroAdministradorDtoobjectQ
+RegistroAdministradorDto()3RegistroAdministradorDto.RegistroAdministradorDto()A
+NombreCompleto.get+RegistroAdministradorDto.NombreCompleto.getA
+NombreCompleto.set+RegistroAdministradorDto.NombreCompleto.set7
+Documento.get&RegistroAdministradorDto.Documento.get7
+Documento.set&RegistroAdministradorDto.Documento.set1
+
+Correo.get#RegistroAdministradorDto.Correo.get1
+
+Correo.set#RegistroAdministradorDto.Correo.set5
+Telefono.get%RegistroAdministradorDto.Telefono.get5
+Telefono.set%RegistroAdministradorDto.Telefono.set’
+FilaConteoReporteobject<
+FilaConteoReporte()%FilaConteoReporte.FilaConteoReporte().
+Etiqueta.getFilaConteoReporte.Etiqueta.get.
+Etiqueta.setFilaConteoReporte.Etiqueta.set(
+	Color.getFilaConteoReporte.Color.get(
+	Color.setFilaConteoReporte.Color.set.
+Cantidad.getFilaConteoReporte.Cantidad.get.
+Cantidad.setFilaConteoReporte.Cantidad.set2
+Porcentaje.get FilaConteoReporte.Porcentaje.get2
+Porcentaje.set FilaConteoReporte.Porcentaje.set
+IRepartidorServiceô
+
+ReporteNegocioDtoobject<
+ReporteNegocioDto()%ReporteNegocioDto.ReporteNegocioDto()8
+NombreNegocio.get#ReporteNegocioDto.NombreNegocio.get8
+NombreNegocio.set#ReporteNegocioDto.NombreNegocio.set(
+	Desde.getReporteNegocioDto.Desde.get(
+	Desde.setReporteNegocioDto.Desde.set(
+	Hasta.getReporteNegocioDto.Hasta.get(
+	Hasta.setReporteNegocioDto.Hasta.set2
+GeneradoEn.get ReporteNegocioDto.GeneradoEn.get2
+GeneradoEn.set ReporteNegocioDto.GeneradoEn.set6
+TotalPedidos.get"ReporteNegocioDto.TotalPedidos.get6
+TotalPedidos.set"ReporteNegocioDto.TotalPedidos.set2
+Entregados.get ReporteNegocioDto.Entregados.get2
+Entregados.set ReporteNegocioDto.Entregados.set2
+Cancelados.get ReporteNegocioDto.Cancelados.get2
+Cancelados.set ReporteNegocioDto.Cancelados.set4
+TasaEntrega.get!ReporteNegocioDto.TasaEntrega.get4
+TasaEntrega.set!ReporteNegocioDto.TasaEntrega.set:
+ValorEntregado.get$ReporteNegocioDto.ValorEntregado.get:
+ValorEntregado.set$ReporteNegocioDto.ValorEntregado.set0
+PorEstado.getReporteNegocioDto.PorEstado.get0
+PorEstado.setReporteNegocioDto.PorEstado.set*
+
+PorMes.getReporteNegocioDto.PorMes.get*
+
+PorMes.setReporteNegocioDto.PorMes.set,
+Pedidos.getReporteNegocioDto.Pedidos.get,
+Pedidos.setReporteNegocioDto.Pedidos.set£
+PerfilNegocioDtoobject9
+PerfilNegocioDto()#PerfilNegocioDto.PerfilNegocioDto()!
+Id.getPerfilNegocioDto.Id.get!
+Id.setPerfilNegocioDto.Id.set)
+
+Nombre.getPerfilNegocioDto.Nombre.get)
+
+Nombre.setPerfilNegocioDto.Nombre.set7
+TipoActividad.get"PerfilNegocioDto.TipoActividad.get7
+TipoActividad.set"PerfilNegocioDto.TipoActividad.set/
+Documento.getPerfilNegocioDto.Documento.get/
+Documento.setPerfilNegocioDto.Documento.set)
+
+Correo.getPerfilNegocioDto.Correo.get)
+
+Correo.setPerfilNegocioDto.Correo.set-
+Telefono.getPerfilNegocioDto.Telefono.get-
+Telefono.setPerfilNegocioDto.Telefono.set/
+Direccion.getPerfilNegocioDto.Direccion.get/
+Direccion.setPerfilNegocioDto.Direccion.set7
+FechaRegistro.get"PerfilNegocioDto.FechaRegistro.get7
+FechaRegistro.set"PerfilNegocioDto.FechaRegistro.set)
+
+Estado.getPerfilNegocioDto.Estado.get)
+
+Estado.setPerfilNegocioDto.Estado.set≠
+FilaNegocioReporteobject?
+FilaNegocioReporte()'FilaNegocioReporte.FilaNegocioReporte()+
+
+Nombre.getFilaNegocioReporte.Nombre.get+
+
+Nombre.setFilaNegocioReporte.Nombre.set1
+Actividad.get FilaNegocioReporte.Actividad.get1
+Actividad.set FilaNegocioReporte.Actividad.set1
+Documento.get FilaNegocioReporte.Documento.get1
+Documento.set FilaNegocioReporte.Documento.set+
+
+Correo.getFilaNegocioReporte.Correo.get+
+
+Correo.setFilaNegocioReporte.Correo.set9
+FechaRegistro.get$FilaNegocioReporte.FechaRegistro.get9
+FechaRegistro.set$FilaNegocioReporte.FechaRegistro.set+
+
+Estado.getFilaNegocioReporte.Estado.get+
+
+Estado.setFilaNegocioReporte.Estado.setı
+ItemPedidoDtoobject0
+ItemPedidoDto()ItemPedidoDto.ItemPedidoDto()0
+Descripcion.getItemPedidoDto.Descripcion.get0
+Descripcion.setItemPedidoDto.Descripcion.set*
+Cantidad.getItemPedidoDto.Cantidad.get*
+Cantidad.setItemPedidoDto.Cantidad.set6
+PrecioUnitario.get ItemPedidoDto.PrecioUnitario.get6
+PrecioUnitario.set ItemPedidoDto.PrecioUnitario.setù
+FilaTopNegocioReporteobjectH
+FilaTopNegocioReporte()-FilaTopNegocioReporte.FilaTopNegocioReporte().
+
+Nombre.get FilaTopNegocioReporte.Nombre.get.
+
+Nombre.set FilaTopNegocioReporte.Nombre.set0
+Pedidos.get!FilaTopNegocioReporte.Pedidos.get0
+Pedidos.set!FilaTopNegocioReporte.Pedidos.set6
+Entregados.get$FilaTopNegocioReporte.Entregados.get6
+Entregados.set$FilaTopNegocioReporte.Entregados.set>
+ValorEntregado.get(FilaTopNegocioReporte.ValorEntregado.get>
+ValorEntregado.set(FilaTopNegocioReporte.ValorEntregado.setÚ
+InvariantDecimalModelBinderobject2Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinderb
+!InvariantDecimalModelBinder(bool)=InvariantDecimalModelBinder.InvariantDecimalModelBinder(bool)≤
+IBindModelAsync(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBindingContext)eInvariantDecimalModelBinder.BindModelAsync(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBindingContext)æ
+
+ActivacionCuentaServiceobjectIActivacionCuentaService»
+ïActivacionCuentaService(IUsuarioRepository, ITokenRecuperacionRepository, IRepartidorRepository, IAdministracionRepository, INegocioRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<ActivacionCuentaService>)≠ActivacionCuentaService.ActivacionCuentaService(IUsuarioRepository, ITokenRecuperacionRepository, IRepartidorRepository, IAdministracionRepository, INegocioRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<ActivacionCuentaService>)¨
+HEnviarEnlaceAsync(Usuario, string, string?, System.Func<string, string>)`ActivacionCuentaService.EnviarEnlaceAsync(Usuario, string, string?, System.Func<string, string>)P
+EnviosUltimaHoraAsync(int)2ActivacionCuentaService.EnviosUltimaHoraAsync(int)J
+ConsultarAsync(string?)/ActivacionCuentaService.ConsultarAsync(string?)¨
+HActivarAsync(string?, string?, string?, System.Func<RolUsuario, string>)`ActivacionCuentaService.ActivarAsync(string?, string?, string?, System.Func<RolUsuario, string>)F
+ValidarAsync(string?)-ActivacionCuentaService.ValidarAsync(string?)r
++InfoAsync(EstadoEnlaceActivacion, Usuario?)CActivacionCuentaService.InfoAsync(EstadoEnlaceActivacion, Usuario?)
+IAdministracionService°
+ReporteNegocioVistaobjectB
+ReporteNegocioVista())ReporteNegocioVista.ReporteNegocioVista()*
+	Desde.getReporteNegocioVista.Desde.get*
+	Desde.setReporteNegocioVista.Desde.set*
+	Hasta.getReporteNegocioVista.Hasta.get*
+	Hasta.setReporteNegocioVista.Hasta.set.
+Reporte.getReporteNegocioVista.Reporte.get.
+Reporte.setReporteNegocioVista.Reporte.set*
+	Error.getReporteNegocioVista.Error.get*
+	Error.setReporteNegocioVista.Error.set*
+	Aviso.getReporteNegocioVista.Aviso.get*
+	Aviso.setReporteNegocioVista.Aviso.setÖ
+ReporteAdminVistaobject<
+ReporteAdminVista()%ReporteAdminVista.ReporteAdminVista()(
+	Desde.getReporteAdminVista.Desde.get(
+	Desde.setReporteAdminVista.Desde.set(
+	Hasta.getReporteAdminVista.Hasta.get(
+	Hasta.setReporteAdminVista.Hasta.set,
+Reporte.getReporteAdminVista.Reporte.get,
+Reporte.setReporteAdminVista.Reporte.set(
+	Error.getReporteAdminVista.Error.get(
+	Error.setReporteAdminVista.Error.set(
+	Aviso.getReporteAdminVista.Aviso.get(
+	Aviso.setReporteAdminVista.Aviso.setû
+#InvariantDecimalModelBinderProviderobject:Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinderProvideræ
+KGetBinder(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderProviderContext)oInvariantDecimalModelBinderProvider.GetBinder(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderProviderContext)r
+%InvariantDecimalModelBinderProvider()IInvariantDecimalModelBinderProvider.InvariantDecimalModelBinderProvider()ˆ
+'Gtrack.Views.Admin.AdministradoresModel-Microsoft.AspNetCore.Mvc.RazorPages.PageModelobject:
+OnGet()/Gtrack.Views.Admin.AdministradoresModel.OnGet()X
+AdministradoresModel()>Gtrack.Views.Admin.AdministradoresModel.AdministradoresModel()Á
+&Gtrack.Views.Repartidor.RegistrarModel-Microsoft.AspNetCore.Mvc.RazorPages.PageModelobject9
+OnGet().Gtrack.Views.Repartidor.RegistrarModel.OnGet()K
+RegistrarModel()7Gtrack.Views.Repartidor.RegistrarModel.RegistrarModel()ô
+.Gtrack.Views.Admin.RegistrarAdministradorModel-Microsoft.AspNetCore.Mvc.RazorPages.PageModelobjectA
+OnGet()6Gtrack.Views.Admin.RegistrarAdministradorModel.OnGet()m
+RegistrarAdministradorModel()LGtrack.Views.Admin.RegistrarAdministradorModel.RegistrarAdministradorModel()”
+ Gtrack.Views.Admin.NegociosModel-Microsoft.AspNetCore.Mvc.RazorPages.PageModelobject3
+OnGet()(Gtrack.Views.Admin.NegociosModel.OnGet()C
+NegociosModel()0Gtrack.Views.Admin.NegociosModel.NegociosModel()°
 ReporteAdminDtoobject6
 ReporteAdminDto()!ReporteAdminDto.ReporteAdminDto()&
 	Desde.getReporteAdminDto.Desde.get&
@@ -442,300 +848,7 @@ Correo.getInfoActivacion.Correo.get)
 TopNegocios.getReporteAdminDto.TopNegocios.get2
 TopNegocios.setReporteAdminDto.TopNegocios.set,
 Negocios.getReporteAdminDto.Negocios.get,
-Negocios.setReporteAdminDto.Negocios.set
-IPedidoRepository”
-SolicitudCancelacionobjectE
-SolicitudCancelacion()+SolicitudCancelacion.SolicitudCancelacion()%
-Id.getSolicitudCancelacion.Id.get%
-Id.setSolicitudCancelacion.Id.set1
-PedidoId.get!SolicitudCancelacion.PedidoId.get1
-PedidoId.set!SolicitudCancelacion.PedidoId.set-
-
-Pedido.getSolicitudCancelacion.Pedido.get-
-
-Pedido.setSolicitudCancelacion.Pedido.set-
-
-Motivo.getSolicitudCancelacion.Motivo.get-
-
-Motivo.setSolicitudCancelacion.Motivo.set=
-FechaSolicitud.get'SolicitudCancelacion.FechaSolicitud.get=
-FechaSolicitud.set'SolicitudCancelacion.FechaSolicitud.set∫
-RegistroRepartidorDtoobject8System.ComponentModel.DataAnnotations.IValidatableObjectú
-AValidate(System.ComponentModel.DataAnnotations.ValidationContext)WRegistroRepartidorDto.Validate(System.ComponentModel.DataAnnotations.ValidationContext)H
-RegistroRepartidorDto()-RegistroRepartidorDto.RegistroRepartidorDto()>
-NombreCompleto.get(RegistroRepartidorDto.NombreCompleto.get>
-NombreCompleto.set(RegistroRepartidorDto.NombreCompleto.set4
-Documento.get#RegistroRepartidorDto.Documento.get4
-Documento.set#RegistroRepartidorDto.Documento.set2
-Telefono.get"RegistroRepartidorDto.Telefono.get2
-Telefono.set"RegistroRepartidorDto.Telefono.set.
-
-Correo.get RegistroRepartidorDto.Correo.get.
-
-Correo.set RegistroRepartidorDto.Correo.set2
-Vehiculo.get"RegistroRepartidorDto.Vehiculo.get2
-Vehiculo.set"RegistroRepartidorDto.Vehiculo.set,
-	Placa.getRegistroRepartidorDto.Placa.get,
-	Placa.setRegistroRepartidorDto.Placa.set„
-CodigoVerificacionobject?
-CodigoVerificacion()'CodigoVerificacion.CodigoVerificacion()#
-Id.getCodigoVerificacion.Id.get#
-Id.setCodigoVerificacion.Id.set1
-UsuarioId.get CodigoVerificacion.UsuarioId.get1
-UsuarioId.set CodigoVerificacion.UsuarioId.set3
-CodigoHash.get!CodigoVerificacion.CodigoHash.get3
-CodigoHash.set!CodigoVerificacion.CodigoHash.set9
-FechaCreacion.get$CodigoVerificacion.FechaCreacion.get9
-FechaCreacion.set$CodigoVerificacion.FechaCreacion.set+
-
-Expira.getCodigoVerificacion.Expira.get+
-
-Expira.setCodigoVerificacion.Expira.set/
-Intentos.getCodigoVerificacion.Intentos.get/
-Intentos.setCodigoVerificacion.Intentos.set;
-BloqueadoHasta.get%CodigoVerificacion.BloqueadoHasta.get;
-BloqueadoHasta.set%CodigoVerificacion.BloqueadoHasta.set3
-Verificado.get!CodigoVerificacion.Verificado.get3
-Verificado.set!CodigoVerificacion.Verificado.set)
-	Usado.getCodigoVerificacion.Usado.get)
-	Usado.setCodigoVerificacion.Usado.setô
-PedidoRepositoryobjectIPedidoRepositoryQ
-PedidoRepository(AppDbContext)/PedidoRepository.PedidoRepository(AppDbContext)A
-ObtenerPorIdAsync(int)'PedidoRepository.ObtenerPorIdAsync(int)O
-ObtenerPorCodigoAsync(string).PedidoRepository.ObtenerPorCodigoAsync(string)i
-*ObtenerUltimoPorTelefonoAsync(int, string);PedidoRepository.ObtenerUltimoPorTelefonoAsync(int, string)G
-ExisteCodigoAsync(string)*PedidoRepository.ExisteCodigoAsync(string)=
-AgregarAsync(Pedido)%PedidoRepository.AgregarAsync(Pedido)C
-ActualizarAsync(Pedido)(PedidoRepository.ActualizarAsync(Pedido)K
-ObtenerPorNegocioAsync(int),PedidoRepository.ObtenerPorNegocioAsync(int)
-IRepartidorRepositoryø
-Usuarioobject<
-LiberarIdentificadores() Usuario.LiberarIdentificadores()
-	Usuario()Usuario.Usuario()
-Id.getUsuario.Id.get
-Id.setUsuario.Id.set 
-
-Correo.getUsuario.Correo.get 
-
-Correo.setUsuario.Correo.set&
-Documento.getUsuario.Documento.get&
-Documento.setUsuario.Documento.set,
-PasswordHash.getUsuario.PasswordHash.get,
-PasswordHash.setUsuario.PasswordHash.set
-Rol.getUsuario.Rol.get
-Rol.setUsuario.Rol.set 
-
-Estado.getUsuario.Estado.get 
-
-Estado.setUsuario.Estado.set.
-MotivoRechazo.getUsuario.MotivoRechazo.get.
-MotivoRechazo.setUsuario.MotivoRechazo.set4
-IntentosFallidos.getUsuario.IntentosFallidos.get4
-IntentosFallidos.setUsuario.IntentosFallidos.set0
-BloqueadoHasta.getUsuario.BloqueadoHasta.get0
-BloqueadoHasta.setUsuario.BloqueadoHasta.set
-IAdministracionRepositoryô
-ErrorViewModelobject3
-ErrorViewModel()ErrorViewModel.ErrorViewModel()-
-RequestId.getErrorViewModel.RequestId.get-
-RequestId.setErrorViewModel.RequestId.set5
-ShowRequestId.get ErrorViewModel.ShowRequestId.get5
-ShowRequestId.set ErrorViewModel.ShowRequestId.set1
-Programobject
-	Program()Program.Program()°
-ReporteNegocioVistaobjectB
-ReporteNegocioVista())ReporteNegocioVista.ReporteNegocioVista()*
-	Desde.getReporteNegocioVista.Desde.get*
-	Desde.setReporteNegocioVista.Desde.set*
-	Hasta.getReporteNegocioVista.Hasta.get*
-	Hasta.setReporteNegocioVista.Hasta.set.
-Reporte.getReporteNegocioVista.Reporte.get.
-Reporte.setReporteNegocioVista.Reporte.set*
-	Error.getReporteNegocioVista.Error.get*
-	Error.setReporteNegocioVista.Error.set*
-	Aviso.getReporteNegocioVista.Aviso.get*
-	Aviso.setReporteNegocioVista.Aviso.set
-IActivacionCuentaServiceì
-RecuperarDtoobject-
-RecuperarDto()RecuperarDto.RecuperarDto()%
-
-Correo.getRecuperarDto.Correo.get%
-
-Correo.setRecuperarDto.Correo.set
-IExportadorReportesÖ
-ReporteAdminVistaobject<
-ReporteAdminVista()%ReporteAdminVista.ReporteAdminVista()(
-	Desde.getReporteAdminVista.Desde.get(
-	Desde.setReporteAdminVista.Desde.set(
-	Hasta.getReporteAdminVista.Hasta.get(
-	Hasta.setReporteAdminVista.Hasta.set,
-Reporte.getReporteAdminVista.Reporte.get,
-Reporte.setReporteAdminVista.Reporte.set(
-	Error.getReporteAdminVista.Error.get(
-	Error.setReporteAdminVista.Error.set(
-	Aviso.getReporteAdminVista.Aviso.get(
-	Aviso.setReporteAdminVista.Aviso.setù
-Negocioobject
-	Negocio()Negocio.Negocio()
-Id.getNegocio.Id.get
-Id.setNegocio.Id.set&
-UsuarioId.getNegocio.UsuarioId.get&
-UsuarioId.setNegocio.UsuarioId.set"
-Usuario.getNegocio.Usuario.get"
-Usuario.setNegocio.Usuario.set 
-
-Nombre.getNegocio.Nombre.get 
-
-Nombre.setNegocio.Nombre.set.
-TipoActividad.getNegocio.TipoActividad.get.
-TipoActividad.setNegocio.TipoActividad.set$
-Telefono.getNegocio.Telefono.get$
-Telefono.setNegocio.Telefono.set&
-Direccion.getNegocio.Direccion.get&
-Direccion.setNegocio.Direccion.set.
-FechaRegistro.getNegocio.FechaRegistro.get.
-FechaRegistro.setNegocio.FechaRegistro.set¡
-RegistroAdministradorDtoobjectQ
-RegistroAdministradorDto()3RegistroAdministradorDto.RegistroAdministradorDto()A
-NombreCompleto.get+RegistroAdministradorDto.NombreCompleto.getA
-NombreCompleto.set+RegistroAdministradorDto.NombreCompleto.set7
-Documento.get&RegistroAdministradorDto.Documento.get7
-Documento.set&RegistroAdministradorDto.Documento.set1
-
-Correo.get#RegistroAdministradorDto.Correo.get1
-
-Correo.set#RegistroAdministradorDto.Correo.set5
-Telefono.get%RegistroAdministradorDto.Telefono.get5
-Telefono.set%RegistroAdministradorDto.Telefono.set
-IUbicacionService˙
-RepartidorRepositoryobjectIRepartidorRepository]
-"RepartidorRepository(AppDbContext)7RepartidorRepository.RepartidorRepository(AppDbContext)s
--RegistrarRepartidorAsync(Usuario, Repartidor)BRepartidorRepository.RegistrarRepartidorAsync(Usuario, Repartidor)a
-$BuscarEliminadoAsync(string, string)9RepartidorRepository.BuscarEliminadoAsync(string, string)M
-ReactivarAsync(Repartidor)/RepartidorRepository.ReactivarAsync(Repartidor)q
-,LiberarPlacaDeEliminadosAsync(string?, int?)ARepartidorRepository.LiberarPlacaDeEliminadosAsync(string?, int?)M
-ListarPorNegocioAsync(int)/RepartidorRepository.ListarPorNegocioAsync(int)M
-TelefonoEnUsoAsync(string)/RepartidorRepository.TelefonoEnUsoAsync(string)W
-ObtenerDeNegocioAsync(int, int)4RepartidorRepository.ObtenerDeNegocioAsync(int, int)S
-ObtenerPorUsuarioIdAsync(int)2RepartidorRepository.ObtenerPorUsuarioIdAsync(int)
-INegocioService’
-NovedadPedidoobject0
-NovedadPedido()NovedadPedido.NovedadPedido()
-Id.getNovedadPedido.Id.get
-Id.setNovedadPedido.Id.set*
-PedidoId.getNovedadPedido.PedidoId.get*
-PedidoId.setNovedadPedido.PedidoId.set&
-
-Pedido.getNovedadPedido.Pedido.get&
-
-Pedido.setNovedadPedido.Pedido.set4
-TipoNovedadId.getNovedadPedido.TipoNovedadId.get4
-TipoNovedadId.setNovedadPedido.TipoNovedadId.set4
-Observaciones.getNovedadPedido.Observaciones.get4
-Observaciones.setNovedadPedido.Observaciones.set$
-	Fecha.getNovedadPedido.Fecha.get$
-	Fecha.setNovedadPedido.Fecha.set`
-TipoNovedadSystem.EnumSystem.ValueTypeobject*
-TipoNovedad()TipoNovedad.TipoNovedad()£
-RegistrarPedidoDtoobject?
-RegistrarPedidoDto()'RegistrarPedidoDto.RegistrarPedidoDto()9
-ClienteNombre.get$RegistrarPedidoDto.ClienteNombre.get9
-ClienteNombre.set$RegistrarPedidoDto.ClienteNombre.set=
-ClienteTelefono.get&RegistrarPedidoDto.ClienteTelefono.get=
-ClienteTelefono.set&RegistrarPedidoDto.ClienteTelefono.set?
-DireccionEntrega.get'RegistrarPedidoDto.DireccionEntrega.get?
-DireccionEntrega.set'RegistrarPedidoDto.DireccionEntrega.set3
-MetodoPago.get!RegistrarPedidoDto.MetodoPago.get3
-MetodoPago.set!RegistrarPedidoDto.MetodoPago.set1
-Productos.get RegistrarPedidoDto.Productos.get1
-Productos.set RegistrarPedidoDto.Productos.set
-IRepartidorService≠
-FilaEstadoReporteobject<
-FilaEstadoReporte()%FilaEstadoReporte.FilaEstadoReporte().
-EstadoId.getFilaEstadoReporte.EstadoId.get.
-EstadoId.setFilaEstadoReporte.EstadoId.set*
-
-Estado.getFilaEstadoReporte.Estado.get*
-
-Estado.setFilaEstadoReporte.Estado.set(
-	Color.getFilaEstadoReporte.Color.get(
-	Color.setFilaEstadoReporte.Color.set.
-Cantidad.getFilaEstadoReporte.Cantidad.get.
-Cantidad.setFilaEstadoReporte.Cantidad.set2
-Porcentaje.get FilaEstadoReporte.Porcentaje.get2
-Porcentaje.set FilaEstadoReporte.Porcentaje.setü
-TokenRecuperacionRepositoryobjectITokenRecuperacionRepositoryr
-)TokenRecuperacionRepository(AppDbContext)ETokenRecuperacionRepository.TokenRecuperacionRepository(AppDbContext)^
-AgregarAsync(TokenRecuperacion);TokenRecuperacionRepository.AgregarAsync(TokenRecuperacion)V
-ObtenerPorHashAsync(string)7TokenRecuperacionRepository.ObtenerPorHashAsync(string)l
-&ContarDesdeAsync(int, System.DateTime)BTokenRecuperacionRepository.ContarDesdeAsync(int, System.DateTime)d
-"ActualizarAsync(TokenRecuperacion)>TokenRecuperacionRepository.ActualizarAsync(TokenRecuperacion)Z
-InvalidarPendientesAsync(int)9TokenRecuperacionRepository.InvalidarPendientesAsync(int)Ä
-UsuarioController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobject¥
-OUsuarioController(IAuthService, IRecuperacionService, IActivacionCuentaService)aUsuarioController.UsuarioController(IAuthService, IRecuperacionService, IActivacionCuentaService)D
-Login(string?, string?))UsuarioController.Login(string?, string?)F
-Login(LoginDto, string?)*UsuarioController.Login(LoginDto, string?)&
-Logout()UsuarioController.Logout()@
-RecuperarContrasena()'UsuarioController.RecuperarContrasena()X
-!RecuperarContrasena(RecuperarDto)3UsuarioController.RecuperarContrasena(RecuperarDto)P
-RestablecerContrasena(string)/UsuarioController.RestablecerContrasena(string)`
-%RestablecerContrasena(RestablecerDto)7UsuarioController.RestablecerContrasena(RestablecerDto)B
-ActivarCuenta(string?)(UsuarioController.ActivarCuenta(string?)T
-ActivarCuenta(ActivarCuentaDto)1UsuarioController.ActivarCuenta(ActivarCuentaDto)>
-UrlLogin(RolUsuario)&UsuarioController.UrlLogin(RolUsuario)
-IPedidoService|
-ResultadoSolicitudSystem.EnumSystem.ValueTypeobject?
-ResultadoSolicitud()'ResultadoSolicitud.ResultadoSolicitud()È
-AdminController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobjectû
-ÑAdminController(IAdministracionService, IReporteService, IExportadorReportes, Microsoft.Extensions.Logging.ILogger<AdminController>)îAdminController.AdminController(IAdministracionService, IReporteService, IExportadorReportes, Microsoft.Extensions.Logging.ILogger<AdminController>)D
-EnlaceActivacion(string)(AdminController.EnlaceActivacion(string)(
-
-Negocios()AdminController.Negocios():
-AprobarNegocio(int)#AdminController.AprobarNegocio(int)6
-Administradores()!AdminController.Administradores()D
-RegistrarAdministrador()(AdminController.RegistrarAdministrador()t
-0RegistrarAdministrador(RegistroAdministradorDto)@AdminController.RegistrarAdministrador(RegistroAdministradorDto)B
-ReenviarActivacion(int)'AdminController.ReenviarActivacion(int)l
-,Reportes(System.DateTime?, System.DateTime?)<AdminController.Reportes(System.DateTime?, System.DateTime?)å
-<DescargarReporte(System.DateTime?, System.DateTime?, string)LAdminController.DescargarReporte(System.DateTime?, System.DateTime?, string)ó
-FilaMesReporteobject3
-FilaMesReporte()FilaMesReporte.FilaMesReporte()!
-Mes.getFilaMesReporte.Mes.get!
-Mes.setFilaMesReporte.Mes.set%
-	Total.getFilaMesReporte.Total.get%
-	Total.setFilaMesReporte.Total.set/
-Entregados.getFilaMesReporte.Entregados.get/
-Entregados.setFilaMesReporte.Entregados.set/
-Cancelados.getFilaMesReporte.Cancelados.get/
-Cancelados.setFilaMesReporte.Cancelados.set7
-ValorEntregado.get!FilaMesReporte.ValorEntregado.get7
-ValorEntregado.set!FilaMesReporte.ValorEntregado.setò
-AdministracionServiceobjectIAdministracionServiceò
-æAdministracionService(IAdministracionRepository, INegocioRepository, IUsuarioRepository, IActivacionCuentaService, IEmailService, Microsoft.Extensions.Logging.ILogger<AdministracionService>)‘AdministracionService.AdministracionService(IAdministracionRepository, INegocioRepository, IUsuarioRepository, IActivacionCuentaService, IEmailService, Microsoft.Extensions.Logging.ILogger<AdministracionService>)D
-ListarNegociosAsync()+AdministracionService.ListarNegociosAsync()R
-ListarAdministradoresAsync()2AdministracionService.ListarAdministradoresAsync()Z
- AprobarNegocioAsync(int, string)6AdministracionService.AprobarNegocioAsync(int, string)æ
-RRegistrarAdministradorAsync(RegistroAdministradorDto, System.Func<string, string>)hAdministracionService.RegistrarAdministradorAsync(RegistroAdministradorDto, System.Func<string, string>)å
-9ReenviarActivacionAsync(int, System.Func<string, string>)OAdministracionService.ReenviarActivacionAsync(int, System.Func<string, string>)â
-FilaPedidoReporteobject<
-FilaPedidoReporte()%FilaPedidoReporte.FilaPedidoReporte()*
-
-Codigo.getFilaPedidoReporte.Codigo.get*
-
-Codigo.setFilaPedidoReporte.Codigo.set,
-Cliente.getFilaPedidoReporte.Cliente.get,
-Cliente.setFilaPedidoReporte.Cliente.set(
-	Fecha.getFilaPedidoReporte.Fecha.get(
-	Fecha.setFilaPedidoReporte.Fecha.set*
-
-Estado.getFilaPedidoReporte.Estado.get*
-
-Estado.setFilaPedidoReporte.Estado.set2
-Repartidor.get FilaPedidoReporte.Repartidor.get2
-Repartidor.set FilaPedidoReporte.Repartidor.set2
-ValorTotal.get FilaPedidoReporte.ValorTotal.get2
-ValorTotal.set FilaPedidoReporte.ValorTotal.set
-IRecuperacionService≠
+Negocios.setReporteAdminDto.Negocios.set≠
 NegocioAdminDtoobject6
 NegocioAdminDto()!NegocioAdminDto.NegocioAdminDto() 
 Id.getNegocioAdminDto.Id.get 
@@ -759,19 +872,19 @@ Estado.getNegocioAdminDto.Estado.get(
 
 Estado.setNegocioAdminDto.Estado.set6
 FechaRegistro.get!NegocioAdminDto.FechaRegistro.get6
-FechaRegistro.set!NegocioAdminDto.FechaRegistro.set
-IReporteServiceÆ
-AuthServiceobjectIAuthServiceæ
-WAuthService(IUsuarioRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>)cAuthService.AuthService(IUsuarioRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>)H
-IniciarSesionAsync(LoginDto)(AuthService.IniciarSesionAsync(LoginDto)ı
-ItemPedidoDtoobject0
-ItemPedidoDto()ItemPedidoDto.ItemPedidoDto()0
-Descripcion.getItemPedidoDto.Descripcion.get0
-Descripcion.setItemPedidoDto.Descripcion.set*
-Cantidad.getItemPedidoDto.Cantidad.get*
-Cantidad.setItemPedidoDto.Cantidad.set6
-PrecioUnitario.get ItemPedidoDto.PrecioUnitario.get6
-PrecioUnitario.set ItemPedidoDto.PrecioUnitario.setã
+FechaRegistro.set!NegocioAdminDto.FechaRegistro.setø
+HistorialExportDtoobject?
+HistorialExportDto()'HistorialExportDto.HistorialExportDto()9
+NombreNegocio.get$HistorialExportDto.NombreNegocio.get9
+NombreNegocio.set$HistorialExportDto.NombreNegocio.set)
+	Desde.getHistorialExportDto.Desde.get)
+	Desde.setHistorialExportDto.Desde.set)
+	Hasta.getHistorialExportDto.Hasta.get)
+	Hasta.setHistorialExportDto.Hasta.set3
+GeneradoEn.get!HistorialExportDto.GeneradoEn.get3
+GeneradoEn.set!HistorialExportDto.GeneradoEn.set)
+	Filas.getHistorialExportDto.Filas.get)
+	Filas.setHistorialExportDto.Filas.setã
 AdministradorDtoobject9
 AdministradorDto()#AdministradorDto.AdministradorDto()/
 UsuarioId.getAdministradorDto.UsuarioId.get/
@@ -791,42 +904,13 @@ Estado.getAdministradorDto.Estado.get)
 
 Estado.setAdministradorDto.Estado.set7
 FechaRegistro.get"AdministradorDto.FechaRegistro.get7
-FechaRegistro.set"AdministradorDto.FechaRegistro.setô
-
-ReporteNegocioDtoobject<
-ReporteNegocioDto()%ReporteNegocioDto.ReporteNegocioDto()8
-NombreNegocio.get#ReporteNegocioDto.NombreNegocio.get8
-NombreNegocio.set#ReporteNegocioDto.NombreNegocio.set(
-	Desde.getReporteNegocioDto.Desde.get(
-	Desde.setReporteNegocioDto.Desde.set(
-	Hasta.getReporteNegocioDto.Hasta.get(
-	Hasta.setReporteNegocioDto.Hasta.set2
-GeneradoEn.get ReporteNegocioDto.GeneradoEn.get2
-GeneradoEn.set ReporteNegocioDto.GeneradoEn.set6
-TotalPedidos.get"ReporteNegocioDto.TotalPedidos.get6
-TotalPedidos.set"ReporteNegocioDto.TotalPedidos.set2
-Entregados.get ReporteNegocioDto.Entregados.get2
-Entregados.set ReporteNegocioDto.Entregados.set2
-Cancelados.get ReporteNegocioDto.Cancelados.get2
-Cancelados.set ReporteNegocioDto.Cancelados.set4
-TasaEntrega.get!ReporteNegocioDto.TasaEntrega.get4
-TasaEntrega.set!ReporteNegocioDto.TasaEntrega.set:
-ValorEntregado.get$ReporteNegocioDto.ValorEntregado.get:
-ValorEntregado.set$ReporteNegocioDto.ValorEntregado.set0
-PorEstado.getReporteNegocioDto.PorEstado.get0
-PorEstado.setReporteNegocioDto.PorEstado.set*
-
-PorMes.getReporteNegocioDto.PorMes.get*
-
-PorMes.setReporteNegocioDto.PorMes.set,
-Pedidos.getReporteNegocioDto.Pedidos.get,
-Pedidos.setReporteNegocioDto.Pedidos.set≠
-!Gtrack.Controllers.HomeController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobject4
-Index())Gtrack.Controllers.HomeController.Index()8
-	Privacy()+Gtrack.Controllers.HomeController.Privacy()4
-Error())Gtrack.Controllers.HomeController.Error()D
-StatusCode(int)1Gtrack.Controllers.HomeController.StatusCode(int)F
-HomeController()2Gtrack.Controllers.HomeController.HomeController()á
+FechaRegistro.set"AdministradorDto.FechaRegistro.setà
+RepartidorServiceobjectIRepartidorServiceﬁ
+£RepartidorService(IRepartidorRepository, INegocioRepository, IUsuarioRepository, IActivacionCuentaService, Microsoft.Extensions.Logging.ILogger<RepartidorService>)µRepartidorService.RepartidorService(IRepartidorRepository, INegocioRepository, IUsuarioRepository, IActivacionCuentaService, Microsoft.Extensions.Logging.ILogger<RepartidorService>)6
+ListarAsync(int)"RepartidorService.ListarAsync(int)§
+GRegistrarAsync(int, RegistroRepartidorDto, System.Func<string, string>)YRepartidorService.RegistrarAsync(int, RegistroRepartidorDto, System.Func<string, string>)Å
+uReactivarAsync(Repartidor, Negocio, RegistroRepartidorDto, string, string, string, bool, System.Func<string, string>)áRepartidorService.ReactivarAsync(Repartidor, Negocio, RegistroRepartidorDto, string, string, string, bool, System.Func<string, string>)í
+>ReenviarActivacionAsync(int, int, System.Func<string, string>)PRepartidorService.ReenviarActivacionAsync(int, int, System.Func<string, string>)á
 RestablecerDtoobject3
 RestablecerDto()RestablecerDto.RestablecerDto()%
 	Token.getRestablecerDto.Token.get%
@@ -834,132 +918,37 @@ PorMes.setReporteNegocioDto.PorMes.set,
 NuevaPassword.get RestablecerDto.NuevaPassword.get5
 NuevaPassword.set RestablecerDto.NuevaPassword.set=
 ConfirmarPassword.get$RestablecerDto.ConfirmarPassword.get=
-ConfirmarPassword.set$RestablecerDto.ConfirmarPassword.setπ
-EliminarCuentaDtoobject<
-EliminarCuentaDto()%EliminarCuentaDto.EliminarCuentaDto().
-Password.getEliminarCuentaDto.Password.get.
-Password.setEliminarCuentaDto.Password.set√
-EmailDesarrolloServiceobjectIEmailService√
-TEmailDesarrolloService(Microsoft.Extensions.Logging.ILogger<EmailDesarrolloService>)kEmailDesarrolloService.EmailDesarrolloService(Microsoft.Extensions.Logging.ILogger<EmailDesarrolloService>)a
-#EnviarAsync(string, string, string):EmailDesarrolloService.EnviarAsync(string, string, string)i
-'EnviarAsync(string, string, CorreoHtml)>EmailDesarrolloService.EnviarAsync(string, string, CorreoHtml)æ
-
-ActivacionCuentaServiceobjectIActivacionCuentaService»
-ïActivacionCuentaService(IUsuarioRepository, ITokenRecuperacionRepository, IRepartidorRepository, IAdministracionRepository, INegocioRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<ActivacionCuentaService>)≠ActivacionCuentaService.ActivacionCuentaService(IUsuarioRepository, ITokenRecuperacionRepository, IRepartidorRepository, IAdministracionRepository, INegocioRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<ActivacionCuentaService>)¨
-HEnviarEnlaceAsync(Usuario, string, string?, System.Func<string, string>)`ActivacionCuentaService.EnviarEnlaceAsync(Usuario, string, string?, System.Func<string, string>)P
-EnviosUltimaHoraAsync(int)2ActivacionCuentaService.EnviosUltimaHoraAsync(int)J
-ConsultarAsync(string?)/ActivacionCuentaService.ConsultarAsync(string?)¨
-HActivarAsync(string?, string?, string?, System.Func<RolUsuario, string>)`ActivacionCuentaService.ActivarAsync(string?, string?, string?, System.Func<RolUsuario, string>)F
-ValidarAsync(string?)-ActivacionCuentaService.ValidarAsync(string?)r
-+InfoAsync(EstadoEnlaceActivacion, Usuario?)CActivacionCuentaService.InfoAsync(EstadoEnlaceActivacion, Usuario?)Î
-ActivarCuentaDtoobject9
-ActivarCuentaDto()#ActivarCuentaDto.ActivarCuentaDto()'
-	Token.getActivarCuentaDto.Token.get'
-	Token.setActivarCuentaDto.Token.set7
-NuevaPassword.get"ActivarCuentaDto.NuevaPassword.get7
-NuevaPassword.set"ActivarCuentaDto.NuevaPassword.set?
-ConfirmarPassword.get&ActivarCuentaDto.ConfirmarPassword.get?
-ConfirmarPassword.set&ActivarCuentaDto.ConfirmarPassword.set#
-Rol.getActivarCuentaDto.Rol.get#
-Rol.setActivarCuentaDto.Rol.set)
-
-Nombre.getActivarCuentaDto.Nombre.get)
-
-Nombre.setActivarCuentaDto.Nombre.set)
-
-Correo.getActivarCuentaDto.Correo.get)
-
-Correo.setActivarCuentaDto.Correo.set+
-Negocio.getActivarCuentaDto.Negocio.get+
-Negocio.setActivarCuentaDto.Negocio.set
-IAdministracionService£
-PerfilNegocioDtoobject9
-PerfilNegocioDto()#PerfilNegocioDto.PerfilNegocioDto()!
-Id.getPerfilNegocioDto.Id.get!
-Id.setPerfilNegocioDto.Id.set)
-
-Nombre.getPerfilNegocioDto.Nombre.get)
-
-Nombre.setPerfilNegocioDto.Nombre.set7
-TipoActividad.get"PerfilNegocioDto.TipoActividad.get7
-TipoActividad.set"PerfilNegocioDto.TipoActividad.set/
-Documento.getPerfilNegocioDto.Documento.get/
-Documento.setPerfilNegocioDto.Documento.set)
-
-Correo.getPerfilNegocioDto.Correo.get)
-
-Correo.setPerfilNegocioDto.Correo.set-
-Telefono.getPerfilNegocioDto.Telefono.get-
-Telefono.setPerfilNegocioDto.Telefono.set/
-Direccion.getPerfilNegocioDto.Direccion.get/
-Direccion.setPerfilNegocioDto.Direccion.set7
-FechaRegistro.get"PerfilNegocioDto.FechaRegistro.get7
-FechaRegistro.set"PerfilNegocioDto.FechaRegistro.set)
-
-Estado.getPerfilNegocioDto.Estado.get)
-
-Estado.setPerfilNegocioDto.Estado.setà
-RepartidorServiceobjectIRepartidorServiceﬁ
-£RepartidorService(IRepartidorRepository, INegocioRepository, IUsuarioRepository, IActivacionCuentaService, Microsoft.Extensions.Logging.ILogger<RepartidorService>)µRepartidorService.RepartidorService(IRepartidorRepository, INegocioRepository, IUsuarioRepository, IActivacionCuentaService, Microsoft.Extensions.Logging.ILogger<RepartidorService>)6
-ListarAsync(int)"RepartidorService.ListarAsync(int)§
-GRegistrarAsync(int, RegistroRepartidorDto, System.Func<string, string>)YRepartidorService.RegistrarAsync(int, RegistroRepartidorDto, System.Func<string, string>)Å
-uReactivarAsync(Repartidor, Negocio, RegistroRepartidorDto, string, string, string, bool, System.Func<string, string>)áRepartidorService.ReactivarAsync(Repartidor, Negocio, RegistroRepartidorDto, string, string, string, bool, System.Func<string, string>)í
->ReenviarActivacionAsync(int, int, System.Func<string, string>)PRepartidorService.ReenviarActivacionAsync(int, int, System.Func<string, string>)ü
-LoginDtoobject!
-
-LoginDto()LoginDto.LoginDto()
-Rol.getLoginDto.Rol.get
-Rol.setLoginDto.Rol.set/
-Identificador.getLoginDto.Identificador.get/
-Identificador.setLoginDto.Identificador.set%
-Password.getLoginDto.Password.get%
-Password.setLoginDto.Password.setÁ
-&Gtrack.Views.Repartidor.RegistrarModel-Microsoft.AspNetCore.Mvc.RazorPages.PageModelobject9
-OnGet().Gtrack.Views.Repartidor.RegistrarModel.OnGet()K
-RegistrarModel()7Gtrack.Views.Repartidor.RegistrarModel.RegistrarModel()ô
-.Gtrack.Views.Admin.RegistrarAdministradorModel-Microsoft.AspNetCore.Mvc.RazorPages.PageModelobjectA
-OnGet()6Gtrack.Views.Admin.RegistrarAdministradorModel.OnGet()m
-RegistrarAdministradorModel()LGtrack.Views.Admin.RegistrarAdministradorModel.RegistrarAdministradorModel()ˆ
-'Gtrack.Views.Admin.AdministradoresModel-Microsoft.AspNetCore.Mvc.RazorPages.PageModelobject:
-OnGet()/Gtrack.Views.Admin.AdministradoresModel.OnGet()X
-AdministradoresModel()>Gtrack.Views.Admin.AdministradoresModel.AdministradoresModel()≥
-EditarNegocioDtoobject9
-EditarNegocioDto()#EditarNegocioDto.EditarNegocioDto())
-
-Nombre.getEditarNegocioDto.Nombre.get)
-
-Nombre.setEditarNegocioDto.Nombre.set7
-TipoActividad.get"EditarNegocioDto.TipoActividad.get7
-TipoActividad.set"EditarNegocioDto.TipoActividad.set)
-
-Correo.getEditarNegocioDto.Correo.get)
-
-Correo.setEditarNegocioDto.Correo.set-
-Telefono.getEditarNegocioDto.Telefono.get-
-Telefono.setEditarNegocioDto.Telefono.set/
-Direccion.getEditarNegocioDto.Direccion.get/
-Direccion.setEditarNegocioDto.Direccion.setî
-EmailSmtpServiceobjectIEmailServiceÒ
-≠EmailSmtpService(Microsoft.Extensions.Configuration.IConfiguration, Microsoft.AspNetCore.Hosting.IWebHostEnvironment, Microsoft.Extensions.Logging.ILogger<EmailSmtpService>)æEmailSmtpService.EmailSmtpService(Microsoft.Extensions.Configuration.IConfiguration, Microsoft.AspNetCore.Hosting.IWebHostEnvironment, Microsoft.Extensions.Logging.ILogger<EmailSmtpService>)[
-#EnviarAsync(string, string, string)4EmailSmtpService.EnviarAsync(string, string, string)c
-'EnviarAsync(string, string, CorreoHtml)8EmailSmtpService.EnviarAsync(string, string, CorreoHtml)3
-LeerLogoAsync() EmailSmtpService.LeerLogoAsync()”
- Gtrack.Views.Admin.NegociosModel-Microsoft.AspNetCore.Mvc.RazorPages.PageModelobject3
-OnGet()(Gtrack.Views.Admin.NegociosModel.OnGet()C
-NegociosModel()0Gtrack.Views.Admin.NegociosModel.NegociosModel()ˆ
-RecuperacionServiceobjectIRecuperacionService®
-«RecuperacionService(IUsuarioRepository, ITokenRecuperacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<RecuperacionService>)€RecuperacionService.RecuperacionService(IUsuarioRepository, ITokenRecuperacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<RecuperacionService>)~
-3SolicitarAsync(string, System.Func<string, string>)GRecuperacionService.SolicitarAsync(string, System.Func<string, string>)J
-TokenVigenteAsync(string)-RecuperacionService.TokenVigenteAsync(string)h
-(RestablecerAsync(string, string, string)<RecuperacionService.RestablecerAsync(string, string, string)`
-$EsLaMismaContrasena(Usuario, string)8RecuperacionService.EsLaMismaContrasena(Usuario, string)Â
-BCryptPasswordHasherobject4Microsoft.AspNetCore.Identity.IPasswordHasher<TUser>S
-HashPassword(Usuario, string)2BCryptPasswordHasher.HashPassword(Usuario, string)s
--VerifyHashedPassword(Usuario, string, string)BBCryptPasswordHasher.VerifyHashedPassword(Usuario, string, string)E
-BCryptPasswordHasher()+BCryptPasswordHasher.BCryptPasswordHasher()Ú
-InvariantDecimalModelBinderobject2Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinderb
-!InvariantDecimalModelBinder(bool)=InvariantDecimalModelBinder.InvariantDecimalModelBinder(bool)≤
-IBindModelAsync(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBindingContext)eInvariantDecimalModelBinder.BindModelAsync(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBindingContext)˝
+ConfirmarPassword.set$RestablecerDto.ConfirmarPassword.set≠
+NegocioServiceobjectINegocioServiceπ
+“NegocioService(INegocioRepository, IUsuarioRepository, ICodigoVerificacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<NegocioService>)·NegocioService.NegocioService(INegocioRepository, IUsuarioRepository, ICodigoVerificacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<NegocioService>)g
+*RegistrarAsync(RegistroNegocioDto, string)9NegocioService.RegistrarAsync(RegistroNegocioDto, string)â
+;AvisarAdministradoresAsync(Negocio, string, string, string)JNegocioService.AvisarAdministradoresAsync(Negocio, string, string, string)A
+ObtenerPerfilAsync(int)&NegocioService.ObtenerPerfilAsync(int)O
+ObtenerPerfilPublicoAsync(int)-NegocioService.ObtenerPerfilPublicoAsync(int)E
+SolicitarCodigoAsync(int)(NegocioService.SolicitarCodigoAsync(int)U
+!VerificarCodigoAsync(int, string)0NegocioService.VerificarCodigoAsync(int, string)I
+EdicionAutorizadaAsync(int)*NegocioService.EdicionAutorizadaAsync(int)I
+ObtenerParaEditarAsync(int)*NegocioService.ObtenerParaEditarAsync(int)W
+"EditarAsync(int, EditarNegocioDto)1NegocioService.EditarAsync(int, EditarNegocioDto)[
+$ValidarEliminacionAsync(int, string)3NegocioService.ValidarEliminacionAsync(int, string)S
+ EliminarCuentaAsync(int, string)/NegocioService.EliminarCuentaAsync(int, string)Ï
+PerfilRepartidorServiceobjectIPerfilRepartidorService∞
+âPerfilRepartidorService(AppDbContext, IRepartidorRepository, INegocioRepository, IUsuarioRepository, ICodigoVerificacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<PerfilRepartidorService>)°PerfilRepartidorService.PerfilRepartidorService(AppDbContext, IRepartidorRepository, INegocioRepository, IUsuarioRepository, ICodigoVerificacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<PerfilRepartidorService>)J
+ObtenerPerfilAsync(int)/PerfilRepartidorService.ObtenerPerfilAsync(int)^
+!ContarPedidosPendientesAsync(int)9PerfilRepartidorService.ContarPedidosPendientesAsync(int)P
+MotivoNoEditableAsync(int)2PerfilRepartidorService.MotivoNoEditableAsync(int)N
+SolicitarCodigoAsync(int)1PerfilRepartidorService.SolicitarCodigoAsync(int)^
+!VerificarCodigoAsync(int, string)9PerfilRepartidorService.VerificarCodigoAsync(int, string)R
+EdicionAutorizadaAsync(int)3PerfilRepartidorService.EdicionAutorizadaAsync(int)R
+ObtenerParaEditarAsync(int)3PerfilRepartidorService.ObtenerParaEditarAsync(int)f
+%EditarAsync(int, EditarRepartidorDto)=PerfilRepartidorService.EditarAsync(int, EditarRepartidorDto)`
+"ValidarEliminacionPropiaAsync(int):PerfilRepartidorService.ValidarEliminacionPropiaAsync(int)h
+&EliminarCuentaPropiaAsync(int, string)>PerfilRepartidorService.EliminarCuentaPropiaAsync(int, string)r
++ValidarEliminacionPorNegocioAsync(int, int)CPerfilRepartidorService.ValidarEliminacionPorNegocioAsync(int, int)n
+)EliminarPorNegocioAsync(int, int, string)APerfilRepartidorService.EliminarPorNegocioAsync(int, int, string)b
+#RepartidorDelNegocioAsync(int, int);PerfilRepartidorService.RepartidorDelNegocioAsync(int, int)J
+DarDeBajaAsync(Usuario)/PerfilRepartidorService.DarDeBajaAsync(Usuario)^
+!PasswordCorrecta(Usuario, string)9PerfilRepartidorService.PasswordCorrecta(Usuario, string)˝
 NegocioController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobjectZ
 "NegocioController(INegocioService)4NegocioController.NegocioController(INegocioService),
 Registrar()NegocioController.Registrar()P
@@ -974,40 +963,57 @@ IBindModelAsync(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBindingContext)eInva
 !EliminarCuenta(EliminarCuentaDto)3NegocioController.EliminarCuenta(EliminarCuentaDto).
 Publico(int)NegocioController.Publico(int)0
 UsuarioId.getNegocioController.UsuarioId.get0
-UsuarioId.setNegocioController.UsuarioId.setû
-#InvariantDecimalModelBinderProviderobject:Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinderProvideræ
-KGetBinder(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderProviderContext)oInvariantDecimalModelBinderProvider.GetBinder(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderProviderContext)r
-%InvariantDecimalModelBinderProvider()IInvariantDecimalModelBinderProvider.InvariantDecimalModelBinderProvider()Œ
+UsuarioId.setNegocioController.UsuarioId.setî
+EmailSmtpServiceobjectIEmailServiceÒ
+≠EmailSmtpService(Microsoft.Extensions.Configuration.IConfiguration, Microsoft.AspNetCore.Hosting.IWebHostEnvironment, Microsoft.Extensions.Logging.ILogger<EmailSmtpService>)æEmailSmtpService.EmailSmtpService(Microsoft.Extensions.Configuration.IConfiguration, Microsoft.AspNetCore.Hosting.IWebHostEnvironment, Microsoft.Extensions.Logging.ILogger<EmailSmtpService>)[
+#EnviarAsync(string, string, string)4EmailSmtpService.EnviarAsync(string, string, string)c
+'EnviarAsync(string, string, CorreoHtml)8EmailSmtpService.EnviarAsync(string, string, CorreoHtml)3
+LeerLogoAsync() EmailSmtpService.LeerLogoAsync()ª
+
+CorreoHtmlobjectSystem.IEquatable<T>C
+CorreoHtml(string, string)%CorreoHtml.CorreoHtml(string, string)#
+
+ToString()CorreoHtml.ToString()]
+'PrintMembers(System.Text.StringBuilder)2CorreoHtml.PrintMembers(System.Text.StringBuilder))
+GetHashCode()CorreoHtml.GetHashCode()-
+Equals(object?)CorreoHtml.Equals(object?)5
+Equals(CorreoHtml?)CorreoHtml.Equals(CorreoHtml?)#
+
+<Clone>$()CorreoHtml.<Clone>$();
+CorreoHtml(CorreoHtml)!CorreoHtml.CorreoHtml(CorreoHtml)U
+#Deconstruct(out string, out string).CorreoHtml.Deconstruct(out string, out string)7
+EqualityContract.getCorreoHtml.EqualityContract.get7
+EqualityContract.setCorreoHtml.EqualityContract.set
+Html.getCorreoHtml.Html.get!
+	Html.initCorreoHtml.Html.init!
+	Texto.getCorreoHtml.Texto.get#
+
+Texto.initCorreoHtml.Texto.initT
+TipoNotaSystem.EnumSystem.ValueTypeobject!
+
+TipoNota()TipoNota.TipoNota()Ç
+UbicacionServiceobjectIUbicacionServiceî
+UbicacionService(IUbicacionRepository, IPedidoRepository, AppDbContext, Microsoft.Extensions.Logging.ILogger<UbicacionService>)êUbicacionService.UbicacionService(IUbicacionRepository, IPedidoRepository, AppDbContext, Microsoft.Extensions.Logging.ILogger<UbicacionService>)k
++ActualizarAsync(int, int, decimal, decimal)<UbicacionService.ActualizarAsync(int, int, decimal, decimal)O
+ObtenerPorCodigoAsync(string).UbicacionService.ObtenerPorCodigoAsync(string)Œ
 ReporteServiceobjectIReporteServices
 0ReporteService(AppDbContext, INegocioRepository)?ReporteService.ReporteService(AppDbContext, INegocioRepository)ï
 AGenerarReporteNegocioAsync(int, System.DateTime, System.DateTime)PReporteService.GenerarReporteNegocioAsync(int, System.DateTime, System.DateTime)ã
 <ObtenerHistorialAsync(int, System.DateTime, System.DateTime)KReporteService.ObtenerHistorialAsync(int, System.DateTime, System.DateTime)á
-:GenerarReporteAdminAsync(System.DateTime, System.DateTime)IReporteService.GenerarReporteAdminAsync(System.DateTime, System.DateTime)Ç
-UbicacionServiceobjectIUbicacionServiceî
-UbicacionService(IUbicacionRepository, IPedidoRepository, AppDbContext, Microsoft.Extensions.Logging.ILogger<UbicacionService>)êUbicacionService.UbicacionService(IUbicacionRepository, IPedidoRepository, AppDbContext, Microsoft.Extensions.Logging.ILogger<UbicacionService>)k
-+ActualizarAsync(int, int, decimal, decimal)<UbicacionService.ActualizarAsync(int, int, decimal, decimal)O
-ObtenerPorCodigoAsync(string).UbicacionService.ObtenerPorCodigoAsync(string)≈
-ClienteAutocompletarDtoobjectN
-ClienteAutocompletarDto()1ClienteAutocompletarDto.ClienteAutocompletarDto()0
-
-Nombre.get"ClienteAutocompletarDto.Nombre.get0
-
-Nombre.set"ClienteAutocompletarDto.Nombre.set6
-Direccion.get%ClienteAutocompletarDto.Direccion.get6
-Direccion.set%ClienteAutocompletarDto.Direccion.set≠
-NegocioServiceobjectINegocioServiceπ
-“NegocioService(INegocioRepository, IUsuarioRepository, ICodigoVerificacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<NegocioService>)·NegocioService.NegocioService(INegocioRepository, IUsuarioRepository, ICodigoVerificacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<NegocioService>)g
-*RegistrarAsync(RegistroNegocioDto, string)9NegocioService.RegistrarAsync(RegistroNegocioDto, string)â
-;AvisarAdministradoresAsync(Negocio, string, string, string)JNegocioService.AvisarAdministradoresAsync(Negocio, string, string, string)A
-ObtenerPerfilAsync(int)&NegocioService.ObtenerPerfilAsync(int)O
-ObtenerPerfilPublicoAsync(int)-NegocioService.ObtenerPerfilPublicoAsync(int)E
-SolicitarCodigoAsync(int)(NegocioService.SolicitarCodigoAsync(int)U
-!VerificarCodigoAsync(int, string)0NegocioService.VerificarCodigoAsync(int, string)I
-EdicionAutorizadaAsync(int)*NegocioService.EdicionAutorizadaAsync(int)I
-ObtenerParaEditarAsync(int)*NegocioService.ObtenerParaEditarAsync(int)W
-"EditarAsync(int, EditarNegocioDto)1NegocioService.EditarAsync(int, EditarNegocioDto)[
-$ValidarEliminacionAsync(int, string)3NegocioService.ValidarEliminacionAsync(int, string)S
- EliminarCuentaAsync(int, string)/NegocioService.EliminarCuentaAsync(int, string)©
+:GenerarReporteAdminAsync(System.DateTime, System.DateTime)IReporteService.GenerarReporteAdminAsync(System.DateTime, System.DateTime)´	
+1AspNetCoreGeneratedDocument.Views_Negocio_Publico0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectR
+ExecuteAsync()@AspNetCoreGeneratedDocument.Views_Negocio_Publico.ExecuteAsync()d
+Views_Negocio_Publico()IAspNetCoreGeneratedDocument.Views_Negocio_Publico.Views_Negocio_Publico()l
+ModelExpressionProvider.getMAspNetCoreGeneratedDocument.Views_Negocio_Publico.ModelExpressionProvider.getl
+ModelExpressionProvider.setMAspNetCoreGeneratedDocument.Views_Negocio_Publico.ModelExpressionProvider.setD
+Url.get9AspNetCoreGeneratedDocument.Views_Negocio_Publico.Url.getD
+Url.set9AspNetCoreGeneratedDocument.Views_Negocio_Publico.Url.setP
+Component.get?AspNetCoreGeneratedDocument.Views_Negocio_Publico.Component.getP
+Component.set?AspNetCoreGeneratedDocument.Views_Negocio_Publico.Component.setF
+Json.get:AspNetCoreGeneratedDocument.Views_Negocio_Publico.Json.getF
+Json.set:AspNetCoreGeneratedDocument.Views_Negocio_Publico.Json.setF
+Html.get:AspNetCoreGeneratedDocument.Views_Negocio_Publico.Html.getF
+Html.set:AspNetCoreGeneratedDocument.Views_Negocio_Publico.Html.set©
 AppDbContext'Microsoft.EntityFrameworkCore.DbContextobject•
 JAppDbContext(Microsoft.EntityFrameworkCore.DbContextOptions<AppDbContext>)WAppDbContext.AppDbContext(Microsoft.EntityFrameworkCore.DbContextOptions<AppDbContext>)á
 ;OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)HAppDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder))
@@ -1034,46 +1040,7 @@ JAppDbContext(Microsoft.EntityFrameworkCore.DbContextOptions<AppDbContext>)WApp
 SolicitudesCancelacion.get'AppDbContext.SolicitudesCancelacion.getE
 SolicitudesCancelacion.set'AppDbContext.SolicitudesCancelacion.set7
 NovedadesPedido.get AppDbContext.NovedadesPedido.get7
-NovedadesPedido.set AppDbContext.NovedadesPedido.set
-IAuthService
-IEmailService´	
-1AspNetCoreGeneratedDocument.Views_Negocio_Publico0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectR
-ExecuteAsync()@AspNetCoreGeneratedDocument.Views_Negocio_Publico.ExecuteAsync()d
-Views_Negocio_Publico()IAspNetCoreGeneratedDocument.Views_Negocio_Publico.Views_Negocio_Publico()l
-ModelExpressionProvider.getMAspNetCoreGeneratedDocument.Views_Negocio_Publico.ModelExpressionProvider.getl
-ModelExpressionProvider.setMAspNetCoreGeneratedDocument.Views_Negocio_Publico.ModelExpressionProvider.setD
-Url.get9AspNetCoreGeneratedDocument.Views_Negocio_Publico.Url.getD
-Url.set9AspNetCoreGeneratedDocument.Views_Negocio_Publico.Url.setP
-Component.get?AspNetCoreGeneratedDocument.Views_Negocio_Publico.Component.getP
-Component.set?AspNetCoreGeneratedDocument.Views_Negocio_Publico.Component.setF
-Json.get:AspNetCoreGeneratedDocument.Views_Negocio_Publico.Json.getF
-Json.set:AspNetCoreGeneratedDocument.Views_Negocio_Publico.Json.setF
-Html.get:AspNetCoreGeneratedDocument.Views_Negocio_Publico.Html.getF
-Html.set:AspNetCoreGeneratedDocument.Views_Negocio_Publico.Html.set≠
-PedidoController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobjectø
-UPedidoController(IPedidoService, INegocioRepository, AppDbContext, IUbicacionService)fPedidoController.PedidoController(IPedidoService, INegocioRepository, AppDbContext, IUbicacionService)+
-Registrar()PedidoController.Registrar()O
-Registrar(RegistrarPedidoDto).PedidoController.Registrar(RegistrarPedidoDto)?
-BuscarCliente(string)&PedidoController.BuscarCliente(string)'
-	Activos()PedidoController.Activos()+
-Historial()PedidoController.Historial()U
- ActualizarEstado(int, int, int?)1PedidoController.ActualizarEstado(int, int, int?)+
-Consultar()PedidoController.Consultar()7
-Consultar(string)"PedidoController.Consultar(string)G
-Cancelar(string, string?)*PedidoController.Cancelar(string, string?)K
-MostrarPedidoAsync(string?),PedidoController.MostrarPedidoAsync(string?)7
-Ubicacion(string)"PedidoController.Ubicacion(string)/
-UsuarioId.getPedidoController.UsuarioId.get/
-UsuarioId.setPedidoController.UsuarioId.set˝
-ExportadorReportesobjectIExportadorReportesc
-&ReporteNegocioExcel(ReporteNegocioDto)9ExportadorReportes.ReporteNegocioExcel(ReporteNegocioDto)[
-"HistorialExcel(HistorialExportDto)5ExportadorReportes.HistorialExcel(HistorialExportDto)[
-"ReporteAdminExcel(ReporteAdminDto)5ExportadorReportes.ReporteAdminExcel(ReporteAdminDto)W
- HistorialCsv(HistorialExportDto)3ExportadorReportes.HistorialCsv(HistorialExportDto)_
-$ReporteNegocioPdf(ReporteNegocioDto)7ExportadorReportes.ReporteNegocioPdf(ReporteNegocioDto)W
- HistorialPdf(HistorialExportDto)3ExportadorReportes.HistorialPdf(HistorialExportDto)W
- ReporteAdminPdf(ReporteAdminDto)3ExportadorReportes.ReporteAdminPdf(ReporteAdminDto)?
-ExportadorReportes()'ExportadorReportes.ExportadorReportes()Ì
+NovedadesPedido.set AppDbContext.NovedadesPedido.setÌ
 7AspNetCoreGeneratedDocument.Views_Admin_Administradores0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectX
 ExecuteAsync()FAspNetCoreGeneratedDocument.Views_Admin_Administradores.ExecuteAsync()v
 Views_Admin_Administradores()UAspNetCoreGeneratedDocument.Views_Admin_Administradores.Views_Admin_Administradores()r
@@ -1088,7 +1055,35 @@ $ReporteNegocioPdf(ReporteNegocioDto)7ExportadorReportes.ReporteNegocioPdf(Repo
 Json.get@AspNetCoreGeneratedDocument.Views_Admin_Administradores.Json.getL
 Json.set@AspNetCoreGeneratedDocument.Views_Admin_Administradores.Json.setL
 Html.get@AspNetCoreGeneratedDocument.Views_Admin_Administradores.Html.getL
-Html.set@AspNetCoreGeneratedDocument.Views_Admin_Administradores.Html.setè
+Html.set@AspNetCoreGeneratedDocument.Views_Admin_Administradores.Html.setÎ
+ActivarCuentaDtoobject9
+ActivarCuentaDto()#ActivarCuentaDto.ActivarCuentaDto()'
+	Token.getActivarCuentaDto.Token.get'
+	Token.setActivarCuentaDto.Token.set7
+NuevaPassword.get"ActivarCuentaDto.NuevaPassword.get7
+NuevaPassword.set"ActivarCuentaDto.NuevaPassword.set?
+ConfirmarPassword.get&ActivarCuentaDto.ConfirmarPassword.get?
+ConfirmarPassword.set&ActivarCuentaDto.ConfirmarPassword.set#
+Rol.getActivarCuentaDto.Rol.get#
+Rol.setActivarCuentaDto.Rol.set)
+
+Nombre.getActivarCuentaDto.Nombre.get)
+
+Nombre.setActivarCuentaDto.Nombre.set)
+
+Correo.getActivarCuentaDto.Correo.get)
+
+Correo.setActivarCuentaDto.Correo.set+
+Negocio.getActivarCuentaDto.Negocio.get+
+Negocio.setActivarCuentaDto.Negocio.set≈
+ClienteAutocompletarDtoobjectN
+ClienteAutocompletarDto()1ClienteAutocompletarDto.ClienteAutocompletarDto()0
+
+Nombre.get"ClienteAutocompletarDto.Nombre.get0
+
+Nombre.set"ClienteAutocompletarDto.Nombre.set6
+Direccion.get%ClienteAutocompletarDto.Direccion.get6
+Direccion.set%ClienteAutocompletarDto.Direccion.setè
 9AspNetCoreGeneratedDocument.Views_Negocio_VerificarCodigo0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectZ
 ExecuteAsync()HAspNetCoreGeneratedDocument.Views_Negocio_VerificarCodigo.ExecuteAsync()|
 Views_Negocio_VerificarCodigo()YAspNetCoreGeneratedDocument.Views_Negocio_VerificarCodigo.Views_Negocio_VerificarCodigo()t
@@ -1103,22 +1098,37 @@ $ReporteNegocioPdf(ReporteNegocioDto)7ExportadorReportes.ReporteNegocioPdf(Repo
 Json.getBAspNetCoreGeneratedDocument.Views_Negocio_VerificarCodigo.Json.getN
 Json.setBAspNetCoreGeneratedDocument.Views_Negocio_VerificarCodigo.Json.setN
 Html.getBAspNetCoreGeneratedDocument.Views_Negocio_VerificarCodigo.Html.getN
-Html.setBAspNetCoreGeneratedDocument.Views_Negocio_VerificarCodigo.Html.setò
-2AspNetCoreGeneratedDocument.Views_Repartidor_Index0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectS
-ExecuteAsync()AAspNetCoreGeneratedDocument.Views_Repartidor_Index.ExecuteAsync()g
-Views_Repartidor_Index()KAspNetCoreGeneratedDocument.Views_Repartidor_Index.Views_Repartidor_Index()m
-__tagHelperScopeManager.getNAspNetCoreGeneratedDocument.Views_Repartidor_Index.__tagHelperScopeManager.getm
-__tagHelperScopeManager.setNAspNetCoreGeneratedDocument.Views_Repartidor_Index.__tagHelperScopeManager.setm
-ModelExpressionProvider.getNAspNetCoreGeneratedDocument.Views_Repartidor_Index.ModelExpressionProvider.getm
-ModelExpressionProvider.setNAspNetCoreGeneratedDocument.Views_Repartidor_Index.ModelExpressionProvider.setE
-Url.get:AspNetCoreGeneratedDocument.Views_Repartidor_Index.Url.getE
-Url.set:AspNetCoreGeneratedDocument.Views_Repartidor_Index.Url.setQ
-Component.get@AspNetCoreGeneratedDocument.Views_Repartidor_Index.Component.getQ
-Component.set@AspNetCoreGeneratedDocument.Views_Repartidor_Index.Component.setG
-Json.get;AspNetCoreGeneratedDocument.Views_Repartidor_Index.Json.getG
-Json.set;AspNetCoreGeneratedDocument.Views_Repartidor_Index.Json.setG
-Html.get;AspNetCoreGeneratedDocument.Views_Repartidor_Index.Html.getG
-Html.set;AspNetCoreGeneratedDocument.Views_Repartidor_Index.Html.setˆ
+Html.setBAspNetCoreGeneratedDocument.Views_Negocio_VerificarCodigo.Html.setÂ
+>AspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobject_
+ExecuteAsync()MAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.ExecuteAsync()ã
+$Views_Admin_RegistrarAdministrador()cAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Views_Admin_RegistrarAdministrador()y
+__tagHelperScopeManager.getZAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.__tagHelperScopeManager.gety
+__tagHelperScopeManager.setZAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.__tagHelperScopeManager.sety
+ModelExpressionProvider.getZAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.ModelExpressionProvider.gety
+ModelExpressionProvider.setZAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.ModelExpressionProvider.setQ
+Url.getFAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Url.getQ
+Url.setFAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Url.set]
+Component.getLAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Component.get]
+Component.setLAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Component.setS
+Json.getGAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Json.getS
+Json.setGAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Json.setS
+Html.getGAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Html.getS
+Html.setGAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Html.set≠
+PedidoController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobjectø
+UPedidoController(IPedidoService, INegocioRepository, AppDbContext, IUbicacionService)fPedidoController.PedidoController(IPedidoService, INegocioRepository, AppDbContext, IUbicacionService)+
+Registrar()PedidoController.Registrar()O
+Registrar(RegistrarPedidoDto).PedidoController.Registrar(RegistrarPedidoDto)?
+BuscarCliente(string)&PedidoController.BuscarCliente(string)'
+	Activos()PedidoController.Activos()+
+Historial()PedidoController.Historial()U
+ ActualizarEstado(int, int, int?)1PedidoController.ActualizarEstado(int, int, int?)+
+Consultar()PedidoController.Consultar()7
+Consultar(string)"PedidoController.Consultar(string)G
+Cancelar(string, string?)*PedidoController.Cancelar(string, string?)K
+MostrarPedidoAsync(string?),PedidoController.MostrarPedidoAsync(string?)7
+Ubicacion(string)"PedidoController.Ubicacion(string)/
+UsuarioId.getPedidoController.UsuarioId.get/
+UsuarioId.setPedidoController.UsuarioId.setˆ
 
 0AspNetCoreGeneratedDocument.Views_Negocio_Editar0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectQ
 ExecuteAsync()?AspNetCoreGeneratedDocument.Views_Negocio_Editar.ExecuteAsync()a
@@ -1134,58 +1144,7 @@ $ReporteNegocioPdf(ReporteNegocioDto)7ExportadorReportes.ReporteNegocioPdf(Repo
 Json.get9AspNetCoreGeneratedDocument.Views_Negocio_Editar.Json.getE
 Json.set9AspNetCoreGeneratedDocument.Views_Negocio_Editar.Json.setE
 Html.get9AspNetCoreGeneratedDocument.Views_Negocio_Editar.Html.getE
-Html.set9AspNetCoreGeneratedDocument.Views_Negocio_Editar.Html.setò
-2AspNetCoreGeneratedDocument.Views_Pedido_Registrar0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectS
-ExecuteAsync()AAspNetCoreGeneratedDocument.Views_Pedido_Registrar.ExecuteAsync()g
-Views_Pedido_Registrar()KAspNetCoreGeneratedDocument.Views_Pedido_Registrar.Views_Pedido_Registrar()m
-__tagHelperScopeManager.getNAspNetCoreGeneratedDocument.Views_Pedido_Registrar.__tagHelperScopeManager.getm
-__tagHelperScopeManager.setNAspNetCoreGeneratedDocument.Views_Pedido_Registrar.__tagHelperScopeManager.setm
-ModelExpressionProvider.getNAspNetCoreGeneratedDocument.Views_Pedido_Registrar.ModelExpressionProvider.getm
-ModelExpressionProvider.setNAspNetCoreGeneratedDocument.Views_Pedido_Registrar.ModelExpressionProvider.setE
-Url.get:AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Url.getE
-Url.set:AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Url.setQ
-Component.get@AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Component.getQ
-Component.set@AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Component.setG
-Json.get;AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Json.getG
-Json.set;AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Json.setG
-Html.get;AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Html.getG
-Html.set;AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Html.set©
-3AspNetCoreGeneratedDocument.Views_Repartidor_Perfil0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectT
-ExecuteAsync()BAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.ExecuteAsync()j
-Views_Repartidor_Perfil()MAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Views_Repartidor_Perfil()n
-__tagHelperScopeManager.getOAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.__tagHelperScopeManager.getn
-__tagHelperScopeManager.setOAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.__tagHelperScopeManager.setn
-ModelExpressionProvider.getOAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.ModelExpressionProvider.getn
-ModelExpressionProvider.setOAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.ModelExpressionProvider.setF
-Url.get;AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Url.getF
-Url.set;AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Url.setR
-Component.getAAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Component.getR
-Component.setAAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Component.setH
-Json.get<AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Json.getH
-Json.set<AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Json.setH
-Html.get<AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Html.getH
-Html.set<AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Html.setÕ
-HistorialEstadoItemobjectB
-HistorialEstadoItem())HistorialEstadoItem.HistorialEstadoItem()<
-EstadoPedidoId.get&HistorialEstadoItem.EstadoPedidoId.get<
-EstadoPedidoId.set&HistorialEstadoItem.EstadoPedidoId.set6
-FechaCambio.get#HistorialEstadoItem.FechaCambio.get6
-FechaCambio.set#HistorialEstadoItem.FechaCambio.setò
-2AspNetCoreGeneratedDocument.Views_Pedido_Consultar0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectS
-ExecuteAsync()AAspNetCoreGeneratedDocument.Views_Pedido_Consultar.ExecuteAsync()g
-Views_Pedido_Consultar()KAspNetCoreGeneratedDocument.Views_Pedido_Consultar.Views_Pedido_Consultar()m
-__tagHelperScopeManager.getNAspNetCoreGeneratedDocument.Views_Pedido_Consultar.__tagHelperScopeManager.getm
-__tagHelperScopeManager.setNAspNetCoreGeneratedDocument.Views_Pedido_Consultar.__tagHelperScopeManager.setm
-ModelExpressionProvider.getNAspNetCoreGeneratedDocument.Views_Pedido_Consultar.ModelExpressionProvider.getm
-ModelExpressionProvider.setNAspNetCoreGeneratedDocument.Views_Pedido_Consultar.ModelExpressionProvider.setE
-Url.get:AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Url.getE
-Url.set:AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Url.setQ
-Component.get@AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Component.getQ
-Component.set@AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Component.setG
-Json.get;AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Json.getG
-Json.set;AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Json.setG
-Html.get;AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Html.getG
-Html.set;AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Html.set≤
+Html.set9AspNetCoreGeneratedDocument.Views_Negocio_Editar.Html.set≤
 
 ,AspNetCoreGeneratedDocument.Views_Home_Index0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectM
 ExecuteAsync();AspNetCoreGeneratedDocument.Views_Home_Index.ExecuteAsync()U
@@ -1201,22 +1160,37 @@ $ReporteNegocioPdf(ReporteNegocioDto)7ExportadorReportes.ReporteNegocioPdf(Repo
 Json.get5AspNetCoreGeneratedDocument.Views_Home_Index.Json.getA
 Json.set5AspNetCoreGeneratedDocument.Views_Home_Index.Json.setA
 Html.get5AspNetCoreGeneratedDocument.Views_Home_Index.Html.getA
-Html.set5AspNetCoreGeneratedDocument.Views_Home_Index.Html.setÂ
->AspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobject_
-ExecuteAsync()MAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.ExecuteAsync()ã
-$Views_Admin_RegistrarAdministrador()cAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Views_Admin_RegistrarAdministrador()y
-__tagHelperScopeManager.getZAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.__tagHelperScopeManager.gety
-__tagHelperScopeManager.setZAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.__tagHelperScopeManager.sety
-ModelExpressionProvider.getZAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.ModelExpressionProvider.gety
-ModelExpressionProvider.setZAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.ModelExpressionProvider.setQ
-Url.getFAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Url.getQ
-Url.setFAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Url.set]
-Component.getLAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Component.get]
-Component.setLAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Component.setS
-Json.getGAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Json.getS
-Json.setGAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Json.setS
-Html.getGAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Html.getS
-Html.setGAspNetCoreGeneratedDocument.Views_Admin_RegistrarAdministrador.Html.setˆ
+Html.set5AspNetCoreGeneratedDocument.Views_Home_Index.Html.setò
+2AspNetCoreGeneratedDocument.Views_Pedido_Consultar0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectS
+ExecuteAsync()AAspNetCoreGeneratedDocument.Views_Pedido_Consultar.ExecuteAsync()g
+Views_Pedido_Consultar()KAspNetCoreGeneratedDocument.Views_Pedido_Consultar.Views_Pedido_Consultar()m
+__tagHelperScopeManager.getNAspNetCoreGeneratedDocument.Views_Pedido_Consultar.__tagHelperScopeManager.getm
+__tagHelperScopeManager.setNAspNetCoreGeneratedDocument.Views_Pedido_Consultar.__tagHelperScopeManager.setm
+ModelExpressionProvider.getNAspNetCoreGeneratedDocument.Views_Pedido_Consultar.ModelExpressionProvider.getm
+ModelExpressionProvider.setNAspNetCoreGeneratedDocument.Views_Pedido_Consultar.ModelExpressionProvider.setE
+Url.get:AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Url.getE
+Url.set:AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Url.setQ
+Component.get@AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Component.getQ
+Component.set@AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Component.setG
+Json.get;AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Json.getG
+Json.set;AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Json.setG
+Html.get;AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Html.getG
+Html.set;AspNetCoreGeneratedDocument.Views_Pedido_Consultar.Html.setò
+2AspNetCoreGeneratedDocument.Views_Pedido_Registrar0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectS
+ExecuteAsync()AAspNetCoreGeneratedDocument.Views_Pedido_Registrar.ExecuteAsync()g
+Views_Pedido_Registrar()KAspNetCoreGeneratedDocument.Views_Pedido_Registrar.Views_Pedido_Registrar()m
+__tagHelperScopeManager.getNAspNetCoreGeneratedDocument.Views_Pedido_Registrar.__tagHelperScopeManager.getm
+__tagHelperScopeManager.setNAspNetCoreGeneratedDocument.Views_Pedido_Registrar.__tagHelperScopeManager.setm
+ModelExpressionProvider.getNAspNetCoreGeneratedDocument.Views_Pedido_Registrar.ModelExpressionProvider.getm
+ModelExpressionProvider.setNAspNetCoreGeneratedDocument.Views_Pedido_Registrar.ModelExpressionProvider.setE
+Url.get:AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Url.getE
+Url.set:AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Url.setQ
+Component.get@AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Component.getQ
+Component.set@AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Component.setG
+Json.get;AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Json.getG
+Json.set;AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Json.setG
+Html.get;AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Html.getG
+Html.set;AspNetCoreGeneratedDocument.Views_Pedido_Registrar.Html.setˆ
 
 0AspNetCoreGeneratedDocument.Views_Admin_Negocios0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectQ
 ExecuteAsync()?AspNetCoreGeneratedDocument.Views_Admin_Negocios.ExecuteAsync()a
@@ -1232,49 +1206,43 @@ $Views_Admin_RegistrarAdministrador()cAspNetCoreGeneratedDocument.Views_Admin_R
 Json.get9AspNetCoreGeneratedDocument.Views_Admin_Negocios.Json.getE
 Json.set9AspNetCoreGeneratedDocument.Views_Admin_Negocios.Json.setE
 Html.get9AspNetCoreGeneratedDocument.Views_Admin_Negocios.Html.getE
-Html.set9AspNetCoreGeneratedDocument.Views_Admin_Negocios.Html.setÛ	
-PedidoServiceobjectIPedidoService†
-ÜPedidoService(IPedidoRepository, INegocioRepository, AppDbContext, IEmailService, Microsoft.Extensions.Logging.ILogger<PedidoService>)îPedidoService.PedidoService(IPedidoRepository, INegocioRepository, AppDbContext, IEmailService, Microsoft.Extensions.Logging.ILogger<PedidoService>)b
-(BuscarClienteFrecuenteAsync(int, string)6PedidoService.BuscarClienteFrecuenteAsync(int, string)`
-'RegistrarAsync(int, RegistrarPedidoDto)5PedidoService.RegistrarAsync(int, RegistrarPedidoDto)f
-*ActualizarEstadoAsync(int, int, int, int?)8PedidoService.ActualizarEstadoAsync(int, int, int, int?)r
-0RegistrarHistorialAsync(int, int, int?, string?)>PedidoService.RegistrarHistorialAsync(int, int, int?, string?)P
-ObtenerPedidosActivosAsync(int)-PedidoService.ObtenerPedidosActivosAsync(int)T
-!ObtenerHistorialPedidosAsync(int)/PedidoService.ObtenerHistorialPedidosAsync(int)d
-)CancelarPorClienteAsync(string?, string?)7PedidoService.CancelarPorClienteAsync(string?, string?)Ü
-:NotificarCancelacionAsync(Pedido, string, System.DateTime)HPedidoService.NotificarCancelacionAsync(Pedido, string, System.DateTime)n
-.RegistrarNovedadAsync(int, int, int?, string?)<PedidoService.RegistrarNovedadAsync(int, int, int?, string?)ˆ
-
-0AspNetCoreGeneratedDocument.Views_Negocio_Perfil0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectQ
-ExecuteAsync()?AspNetCoreGeneratedDocument.Views_Negocio_Perfil.ExecuteAsync()a
-Views_Negocio_Perfil()GAspNetCoreGeneratedDocument.Views_Negocio_Perfil.Views_Negocio_Perfil()k
-__tagHelperScopeManager.getLAspNetCoreGeneratedDocument.Views_Negocio_Perfil.__tagHelperScopeManager.getk
-__tagHelperScopeManager.setLAspNetCoreGeneratedDocument.Views_Negocio_Perfil.__tagHelperScopeManager.setk
-ModelExpressionProvider.getLAspNetCoreGeneratedDocument.Views_Negocio_Perfil.ModelExpressionProvider.getk
-ModelExpressionProvider.setLAspNetCoreGeneratedDocument.Views_Negocio_Perfil.ModelExpressionProvider.setC
-Url.get8AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Url.getC
-Url.set8AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Url.setO
-Component.get>AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Component.getO
-Component.set>AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Component.setE
-Json.get9AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Json.getE
-Json.set9AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Json.setE
-Html.get9AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Html.getE
-Html.set9AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Html.setÌ
-7AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectX
-ExecuteAsync()FAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.ExecuteAsync()v
-Views_Repartidor_MisPedidos()UAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Views_Repartidor_MisPedidos()r
-__tagHelperScopeManager.getSAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.__tagHelperScopeManager.getr
-__tagHelperScopeManager.setSAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.__tagHelperScopeManager.setr
-ModelExpressionProvider.getSAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.ModelExpressionProvider.getr
-ModelExpressionProvider.setSAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.ModelExpressionProvider.setJ
-Url.get?AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Url.getJ
-Url.set?AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Url.setV
-Component.getEAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Component.getV
-Component.setEAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Component.setL
-Json.get@AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Json.getL
-Json.set@AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Json.setL
-Html.get@AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Html.getL
-Html.set@AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Html.set˛
+Html.set9AspNetCoreGeneratedDocument.Views_Admin_Negocios.Html.setÕ
+HistorialEstadoItemobjectB
+HistorialEstadoItem())HistorialEstadoItem.HistorialEstadoItem()<
+EstadoPedidoId.get&HistorialEstadoItem.EstadoPedidoId.get<
+EstadoPedidoId.set&HistorialEstadoItem.EstadoPedidoId.set6
+FechaCambio.get#HistorialEstadoItem.FechaCambio.get6
+FechaCambio.set#HistorialEstadoItem.FechaCambio.setò
+2AspNetCoreGeneratedDocument.Views_Repartidor_Index0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectS
+ExecuteAsync()AAspNetCoreGeneratedDocument.Views_Repartidor_Index.ExecuteAsync()g
+Views_Repartidor_Index()KAspNetCoreGeneratedDocument.Views_Repartidor_Index.Views_Repartidor_Index()m
+__tagHelperScopeManager.getNAspNetCoreGeneratedDocument.Views_Repartidor_Index.__tagHelperScopeManager.getm
+__tagHelperScopeManager.setNAspNetCoreGeneratedDocument.Views_Repartidor_Index.__tagHelperScopeManager.setm
+ModelExpressionProvider.getNAspNetCoreGeneratedDocument.Views_Repartidor_Index.ModelExpressionProvider.getm
+ModelExpressionProvider.setNAspNetCoreGeneratedDocument.Views_Repartidor_Index.ModelExpressionProvider.setE
+Url.get:AspNetCoreGeneratedDocument.Views_Repartidor_Index.Url.getE
+Url.set:AspNetCoreGeneratedDocument.Views_Repartidor_Index.Url.setQ
+Component.get@AspNetCoreGeneratedDocument.Views_Repartidor_Index.Component.getQ
+Component.set@AspNetCoreGeneratedDocument.Views_Repartidor_Index.Component.setG
+Json.get;AspNetCoreGeneratedDocument.Views_Repartidor_Index.Json.getG
+Json.set;AspNetCoreGeneratedDocument.Views_Repartidor_Index.Json.setG
+Html.get;AspNetCoreGeneratedDocument.Views_Repartidor_Index.Html.getG
+Html.set;AspNetCoreGeneratedDocument.Views_Repartidor_Index.Html.set©
+3AspNetCoreGeneratedDocument.Views_Negocio_Registrar0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectT
+ExecuteAsync()BAspNetCoreGeneratedDocument.Views_Negocio_Registrar.ExecuteAsync()j
+Views_Negocio_Registrar()MAspNetCoreGeneratedDocument.Views_Negocio_Registrar.Views_Negocio_Registrar()n
+__tagHelperScopeManager.getOAspNetCoreGeneratedDocument.Views_Negocio_Registrar.__tagHelperScopeManager.getn
+__tagHelperScopeManager.setOAspNetCoreGeneratedDocument.Views_Negocio_Registrar.__tagHelperScopeManager.setn
+ModelExpressionProvider.getOAspNetCoreGeneratedDocument.Views_Negocio_Registrar.ModelExpressionProvider.getn
+ModelExpressionProvider.setOAspNetCoreGeneratedDocument.Views_Negocio_Registrar.ModelExpressionProvider.setF
+Url.get;AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Url.getF
+Url.set;AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Url.setR
+Component.getAAspNetCoreGeneratedDocument.Views_Negocio_Registrar.Component.getR
+Component.setAAspNetCoreGeneratedDocument.Views_Negocio_Registrar.Component.setH
+Json.get<AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Json.getH
+Json.set<AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Json.setH
+Html.get<AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Html.getH
+Html.set<AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Html.set˛
 .AspNetCoreGeneratedDocument.Views_Home_Privacy0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectO
 ExecuteAsync()=AspNetCoreGeneratedDocument.Views_Home_Privacy.ExecuteAsync()[
 Views_Home_Privacy()CAspNetCoreGeneratedDocument.Views_Home_Privacy.Views_Home_Privacy()i
@@ -1287,7 +1255,22 @@ $Views_Admin_RegistrarAdministrador()cAspNetCoreGeneratedDocument.Views_Admin_R
 Json.get7AspNetCoreGeneratedDocument.Views_Home_Privacy.Json.getC
 Json.set7AspNetCoreGeneratedDocument.Views_Home_Privacy.Json.setC
 Html.get7AspNetCoreGeneratedDocument.Views_Home_Privacy.Html.getC
-Html.set7AspNetCoreGeneratedDocument.Views_Home_Privacy.Html.setˆ
+Html.set7AspNetCoreGeneratedDocument.Views_Home_Privacy.Html.set©
+3AspNetCoreGeneratedDocument.Views_Repartidor_Perfil0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectT
+ExecuteAsync()BAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.ExecuteAsync()j
+Views_Repartidor_Perfil()MAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Views_Repartidor_Perfil()n
+__tagHelperScopeManager.getOAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.__tagHelperScopeManager.getn
+__tagHelperScopeManager.setOAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.__tagHelperScopeManager.setn
+ModelExpressionProvider.getOAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.ModelExpressionProvider.getn
+ModelExpressionProvider.setOAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.ModelExpressionProvider.setF
+Url.get;AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Url.getF
+Url.set;AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Url.setR
+Component.getAAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Component.getR
+Component.setAAspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Component.setH
+Json.get<AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Json.getH
+Json.set<AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Json.setH
+Html.get<AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Html.getH
+Html.set<AspNetCoreGeneratedDocument.Views_Repartidor_Perfil.Html.setˆ
 
 0AspNetCoreGeneratedDocument.Views_Pedido_Activos0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectQ
 ExecuteAsync()?AspNetCoreGeneratedDocument.Views_Pedido_Activos.ExecuteAsync()a
@@ -1303,54 +1286,32 @@ $Views_Admin_RegistrarAdministrador()cAspNetCoreGeneratedDocument.Views_Admin_R
 Json.get9AspNetCoreGeneratedDocument.Views_Pedido_Activos.Json.getE
 Json.set9AspNetCoreGeneratedDocument.Views_Pedido_Activos.Json.setE
 Html.get9AspNetCoreGeneratedDocument.Views_Pedido_Activos.Html.getE
-Html.set9AspNetCoreGeneratedDocument.Views_Pedido_Activos.Html.set©
-3AspNetCoreGeneratedDocument.Views_Negocio_Registrar0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectT
-ExecuteAsync()BAspNetCoreGeneratedDocument.Views_Negocio_Registrar.ExecuteAsync()j
-Views_Negocio_Registrar()MAspNetCoreGeneratedDocument.Views_Negocio_Registrar.Views_Negocio_Registrar()n
-__tagHelperScopeManager.getOAspNetCoreGeneratedDocument.Views_Negocio_Registrar.__tagHelperScopeManager.getn
-__tagHelperScopeManager.setOAspNetCoreGeneratedDocument.Views_Negocio_Registrar.__tagHelperScopeManager.setn
-ModelExpressionProvider.getOAspNetCoreGeneratedDocument.Views_Negocio_Registrar.ModelExpressionProvider.getn
-ModelExpressionProvider.setOAspNetCoreGeneratedDocument.Views_Negocio_Registrar.ModelExpressionProvider.setF
-Url.get;AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Url.getF
-Url.set;AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Url.setR
-Component.getAAspNetCoreGeneratedDocument.Views_Negocio_Registrar.Component.getR
-Component.setAAspNetCoreGeneratedDocument.Views_Negocio_Registrar.Component.setH
-Json.get<AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Json.getH
-Json.set<AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Json.setH
-Html.get<AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Html.getH
-Html.set<AspNetCoreGeneratedDocument.Views_Negocio_Registrar.Html.set
-IPerfilRepartidorServiceò
-2AspNetCoreGeneratedDocument.Views_Pedido_Historial0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectS
-ExecuteAsync()AAspNetCoreGeneratedDocument.Views_Pedido_Historial.ExecuteAsync()g
-Views_Pedido_Historial()KAspNetCoreGeneratedDocument.Views_Pedido_Historial.Views_Pedido_Historial()m
-__tagHelperScopeManager.getNAspNetCoreGeneratedDocument.Views_Pedido_Historial.__tagHelperScopeManager.getm
-__tagHelperScopeManager.setNAspNetCoreGeneratedDocument.Views_Pedido_Historial.__tagHelperScopeManager.setm
-ModelExpressionProvider.getNAspNetCoreGeneratedDocument.Views_Pedido_Historial.ModelExpressionProvider.getm
-ModelExpressionProvider.setNAspNetCoreGeneratedDocument.Views_Pedido_Historial.ModelExpressionProvider.setE
-Url.get:AspNetCoreGeneratedDocument.Views_Pedido_Historial.Url.getE
-Url.set:AspNetCoreGeneratedDocument.Views_Pedido_Historial.Url.setQ
-Component.get@AspNetCoreGeneratedDocument.Views_Pedido_Historial.Component.getQ
-Component.set@AspNetCoreGeneratedDocument.Views_Pedido_Historial.Component.setG
-Json.get;AspNetCoreGeneratedDocument.Views_Pedido_Historial.Json.getG
-Json.set;AspNetCoreGeneratedDocument.Views_Pedido_Historial.Json.setG
-Html.get;AspNetCoreGeneratedDocument.Views_Pedido_Historial.Html.getG
-Html.set;AspNetCoreGeneratedDocument.Views_Pedido_Historial.Html.set‘
+Html.set9AspNetCoreGeneratedDocument.Views_Pedido_Activos.Html.set˝
+ExportadorReportesobjectIExportadorReportesc
+&ReporteNegocioExcel(ReporteNegocioDto)9ExportadorReportes.ReporteNegocioExcel(ReporteNegocioDto)[
+"HistorialExcel(HistorialExportDto)5ExportadorReportes.HistorialExcel(HistorialExportDto)[
+"ReporteAdminExcel(ReporteAdminDto)5ExportadorReportes.ReporteAdminExcel(ReporteAdminDto)W
+ HistorialCsv(HistorialExportDto)3ExportadorReportes.HistorialCsv(HistorialExportDto)_
+$ReporteNegocioPdf(ReporteNegocioDto)7ExportadorReportes.ReporteNegocioPdf(ReporteNegocioDto)W
+ HistorialPdf(HistorialExportDto)3ExportadorReportes.HistorialPdf(HistorialExportDto)W
+ ReporteAdminPdf(ReporteAdminDto)3ExportadorReportes.ReporteAdminPdf(ReporteAdminDto)?
+ExportadorReportes()'ExportadorReportes.ExportadorReportes()ˆ
 
-.AspNetCoreGeneratedDocument.Views_Shared_Error0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectO
-ExecuteAsync()=AspNetCoreGeneratedDocument.Views_Shared_Error.ExecuteAsync()[
-Views_Shared_Error()CAspNetCoreGeneratedDocument.Views_Shared_Error.Views_Shared_Error()i
-__tagHelperScopeManager.getJAspNetCoreGeneratedDocument.Views_Shared_Error.__tagHelperScopeManager.geti
-__tagHelperScopeManager.setJAspNetCoreGeneratedDocument.Views_Shared_Error.__tagHelperScopeManager.seti
-ModelExpressionProvider.getJAspNetCoreGeneratedDocument.Views_Shared_Error.ModelExpressionProvider.geti
-ModelExpressionProvider.setJAspNetCoreGeneratedDocument.Views_Shared_Error.ModelExpressionProvider.setA
-Url.get6AspNetCoreGeneratedDocument.Views_Shared_Error.Url.getA
-Url.set6AspNetCoreGeneratedDocument.Views_Shared_Error.Url.setM
-Component.get<AspNetCoreGeneratedDocument.Views_Shared_Error.Component.getM
-Component.set<AspNetCoreGeneratedDocument.Views_Shared_Error.Component.setC
-Json.get7AspNetCoreGeneratedDocument.Views_Shared_Error.Json.getC
-Json.set7AspNetCoreGeneratedDocument.Views_Shared_Error.Json.setC
-Html.get7AspNetCoreGeneratedDocument.Views_Shared_Error.Html.getC
-Html.set7AspNetCoreGeneratedDocument.Views_Shared_Error.Html.setˆ
+0AspNetCoreGeneratedDocument.Views_Negocio_Perfil0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectQ
+ExecuteAsync()?AspNetCoreGeneratedDocument.Views_Negocio_Perfil.ExecuteAsync()a
+Views_Negocio_Perfil()GAspNetCoreGeneratedDocument.Views_Negocio_Perfil.Views_Negocio_Perfil()k
+__tagHelperScopeManager.getLAspNetCoreGeneratedDocument.Views_Negocio_Perfil.__tagHelperScopeManager.getk
+__tagHelperScopeManager.setLAspNetCoreGeneratedDocument.Views_Negocio_Perfil.__tagHelperScopeManager.setk
+ModelExpressionProvider.getLAspNetCoreGeneratedDocument.Views_Negocio_Perfil.ModelExpressionProvider.getk
+ModelExpressionProvider.setLAspNetCoreGeneratedDocument.Views_Negocio_Perfil.ModelExpressionProvider.setC
+Url.get8AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Url.getC
+Url.set8AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Url.setO
+Component.get>AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Component.getO
+Component.set>AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Component.setE
+Json.get9AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Json.getE
+Json.set9AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Json.setE
+Html.get9AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Html.getE
+Html.set9AspNetCoreGeneratedDocument.Views_Negocio_Perfil.Html.setˆ
 
 0AspNetCoreGeneratedDocument.Views_Admin_Reportes0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectQ
 ExecuteAsync()?AspNetCoreGeneratedDocument.Views_Admin_Reportes.ExecuteAsync()a
@@ -1366,196 +1327,24 @@ $Views_Admin_RegistrarAdministrador()cAspNetCoreGeneratedDocument.Views_Admin_R
 Json.get9AspNetCoreGeneratedDocument.Views_Admin_Reportes.Json.getE
 Json.set9AspNetCoreGeneratedDocument.Views_Admin_Reportes.Json.setE
 Html.get9AspNetCoreGeneratedDocument.Views_Admin_Reportes.Html.getE
-Html.set9AspNetCoreGeneratedDocument.Views_Admin_Reportes.Html.set‹
-6AspNetCoreGeneratedDocument.Views_Repartidor_Registrar0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectW
-ExecuteAsync()EAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.ExecuteAsync()s
-Views_Repartidor_Registrar()SAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Views_Repartidor_Registrar()q
-__tagHelperScopeManager.getRAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.__tagHelperScopeManager.getq
-__tagHelperScopeManager.setRAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.__tagHelperScopeManager.setq
-ModelExpressionProvider.getRAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.ModelExpressionProvider.getq
-ModelExpressionProvider.setRAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.ModelExpressionProvider.setI
-Url.get>AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Url.getI
-Url.set>AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Url.setU
-Component.getDAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Component.getU
-Component.setDAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Component.setK
-Json.get?AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Json.getK
-Json.set?AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Json.setK
-Html.get?AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Html.getK
-Html.set?AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Html.set©
-BAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectc
-ExecuteAsync()QAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.ExecuteAsync()ó
-(Views_Shared__ValidationScriptsPartial()kAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Views_Shared__ValidationScriptsPartial()}
-__tagHelperScopeManager.get^AspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.__tagHelperScopeManager.get}
-__tagHelperScopeManager.set^AspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.__tagHelperScopeManager.set}
-ModelExpressionProvider.get^AspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.ModelExpressionProvider.get}
-ModelExpressionProvider.set^AspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.ModelExpressionProvider.setU
-Url.getJAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Url.getU
-Url.setJAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Url.seta
-Component.getPAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Component.geta
-Component.setPAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Component.setW
-Json.getKAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Json.getW
-Json.setKAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Json.setW
-Html.getKAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Html.getW
-Html.setKAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Html.set©
-BAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectc
-ExecuteAsync()QAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.ExecuteAsync()ó
-(Views_Usuario_EnlaceActivacionInvalido()kAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Views_Usuario_EnlaceActivacionInvalido()}
-__tagHelperScopeManager.get^AspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.__tagHelperScopeManager.get}
-__tagHelperScopeManager.set^AspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.__tagHelperScopeManager.set}
-ModelExpressionProvider.get^AspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.ModelExpressionProvider.get}
-ModelExpressionProvider.set^AspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.ModelExpressionProvider.setU
-Url.getJAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Url.getU
-Url.setJAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Url.seta
-Component.getPAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Component.geta
-Component.setPAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Component.setW
-Json.getKAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Json.getW
-Json.setKAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Json.setW
-Html.getKAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Html.getW
-Html.setKAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Html.setÖ
-
-7AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectX
-ExecuteAsync()FAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.ExecuteAsync()v
-Views_Shared__GraficaBarras()UAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Views_Shared__GraficaBarras()r
-ModelExpressionProvider.getSAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.ModelExpressionProvider.getr
-ModelExpressionProvider.setSAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.ModelExpressionProvider.setJ
-Url.get?AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Url.getJ
-Url.set?AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Url.setV
-Component.getEAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Component.getV
-Component.setEAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Component.setL
-Json.get@AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Json.getL
-Json.set@AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Json.setL
-Html.get@AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Html.getL
-Html.set@AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Html.set‘
-=AspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobject^
-ExecuteAsync()LAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.ExecuteAsync()à
-#Views_Usuario_RecuperarContrasena()aAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Views_Usuario_RecuperarContrasena()x
-__tagHelperScopeManager.getYAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.__tagHelperScopeManager.getx
-__tagHelperScopeManager.setYAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.__tagHelperScopeManager.setx
-ModelExpressionProvider.getYAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.ModelExpressionProvider.getx
-ModelExpressionProvider.setYAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.ModelExpressionProvider.setP
-Url.getEAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Url.getP
-Url.setEAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Url.set\
-Component.getKAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Component.get\
-Component.setKAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Component.setR
-Json.getFAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Json.getR
-Json.setFAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Json.setR
-Html.getFAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Html.getR
-Html.setFAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Html.setÂ
-
-/AspNetCoreGeneratedDocument.Views_Reporte_Index0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectP
-ExecuteAsync()>AspNetCoreGeneratedDocument.Views_Reporte_Index.ExecuteAsync()^
-Views_Reporte_Index()EAspNetCoreGeneratedDocument.Views_Reporte_Index.Views_Reporte_Index()j
-__tagHelperScopeManager.getKAspNetCoreGeneratedDocument.Views_Reporte_Index.__tagHelperScopeManager.getj
-__tagHelperScopeManager.setKAspNetCoreGeneratedDocument.Views_Reporte_Index.__tagHelperScopeManager.setj
-ModelExpressionProvider.getKAspNetCoreGeneratedDocument.Views_Reporte_Index.ModelExpressionProvider.getj
-ModelExpressionProvider.setKAspNetCoreGeneratedDocument.Views_Reporte_Index.ModelExpressionProvider.setB
-Url.get7AspNetCoreGeneratedDocument.Views_Reporte_Index.Url.getB
-Url.set7AspNetCoreGeneratedDocument.Views_Reporte_Index.Url.setN
-Component.get=AspNetCoreGeneratedDocument.Views_Reporte_Index.Component.getN
-Component.set=AspNetCoreGeneratedDocument.Views_Reporte_Index.Component.setD
-Json.get8AspNetCoreGeneratedDocument.Views_Reporte_Index.Json.getD
-Json.set8AspNetCoreGeneratedDocument.Views_Reporte_Index.Json.setD
-Html.get8AspNetCoreGeneratedDocument.Views_Reporte_Index.Html.getD
-Html.set8AspNetCoreGeneratedDocument.Views_Reporte_Index.Html.set©
-3AspNetCoreGeneratedDocument.Views_Repartidor_Editar0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectT
-ExecuteAsync()BAspNetCoreGeneratedDocument.Views_Repartidor_Editar.ExecuteAsync()j
-Views_Repartidor_Editar()MAspNetCoreGeneratedDocument.Views_Repartidor_Editar.Views_Repartidor_Editar()n
-__tagHelperScopeManager.getOAspNetCoreGeneratedDocument.Views_Repartidor_Editar.__tagHelperScopeManager.getn
-__tagHelperScopeManager.setOAspNetCoreGeneratedDocument.Views_Repartidor_Editar.__tagHelperScopeManager.setn
-ModelExpressionProvider.getOAspNetCoreGeneratedDocument.Views_Repartidor_Editar.ModelExpressionProvider.getn
-ModelExpressionProvider.setOAspNetCoreGeneratedDocument.Views_Repartidor_Editar.ModelExpressionProvider.setF
-Url.get;AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Url.getF
-Url.set;AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Url.setR
-Component.getAAspNetCoreGeneratedDocument.Views_Repartidor_Editar.Component.getR
-Component.setAAspNetCoreGeneratedDocument.Views_Repartidor_Editar.Component.setH
-Json.get<AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Json.getH
-Json.set<AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Json.setH
-Html.get<AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Html.getH
-Html.set<AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Html.set‡
-,AspNetCoreGeneratedDocument.Views__ViewStart0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectM
-ExecuteAsync();AspNetCoreGeneratedDocument.Views__ViewStart.ExecuteAsync()U
-Views__ViewStart()?AspNetCoreGeneratedDocument.Views__ViewStart.Views__ViewStart()g
-ModelExpressionProvider.getHAspNetCoreGeneratedDocument.Views__ViewStart.ModelExpressionProvider.getg
-ModelExpressionProvider.setHAspNetCoreGeneratedDocument.Views__ViewStart.ModelExpressionProvider.set?
-Url.get4AspNetCoreGeneratedDocument.Views__ViewStart.Url.get?
-Url.set4AspNetCoreGeneratedDocument.Views__ViewStart.Url.setK
-Component.get:AspNetCoreGeneratedDocument.Views__ViewStart.Component.getK
-Component.set:AspNetCoreGeneratedDocument.Views__ViewStart.Component.setA
-Json.get5AspNetCoreGeneratedDocument.Views__ViewStart.Json.getA
-Json.set5AspNetCoreGeneratedDocument.Views__ViewStart.Json.setA
-Html.get5AspNetCoreGeneratedDocument.Views__ViewStart.Html.getA
-Html.set5AspNetCoreGeneratedDocument.Views__ViewStart.Html.setÌ
-7AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectX
-ExecuteAsync()FAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.ExecuteAsync()v
-Views_Usuario_TokenInvalido()UAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Views_Usuario_TokenInvalido()r
-__tagHelperScopeManager.getSAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.__tagHelperScopeManager.getr
-__tagHelperScopeManager.setSAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.__tagHelperScopeManager.setr
-ModelExpressionProvider.getSAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.ModelExpressionProvider.getr
-ModelExpressionProvider.setSAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.ModelExpressionProvider.setJ
-Url.get?AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Url.getJ
-Url.set?AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Url.setV
-Component.getEAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Component.getV
-Component.setEAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Component.setL
-Json.get@AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Json.getL
-Json.set@AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Json.setL
-Html.get@AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Html.getL
-Html.set@AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Html.set˛
-.AspNetCoreGeneratedDocument.Views__ViewImports0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectO
-ExecuteAsync()=AspNetCoreGeneratedDocument.Views__ViewImports.ExecuteAsync()[
-Views__ViewImports()CAspNetCoreGeneratedDocument.Views__ViewImports.Views__ViewImports()i
-ModelExpressionProvider.getJAspNetCoreGeneratedDocument.Views__ViewImports.ModelExpressionProvider.geti
-ModelExpressionProvider.setJAspNetCoreGeneratedDocument.Views__ViewImports.ModelExpressionProvider.setA
-Url.get6AspNetCoreGeneratedDocument.Views__ViewImports.Url.getA
-Url.set6AspNetCoreGeneratedDocument.Views__ViewImports.Url.setM
-Component.get<AspNetCoreGeneratedDocument.Views__ViewImports.Component.getM
-Component.set<AspNetCoreGeneratedDocument.Views__ViewImports.Component.setC
-Json.get7AspNetCoreGeneratedDocument.Views__ViewImports.Json.getC
-Json.set7AspNetCoreGeneratedDocument.Views__ViewImports.Json.setC
-Html.get7AspNetCoreGeneratedDocument.Views__ViewImports.Html.getC
-Html.set7AspNetCoreGeneratedDocument.Views__ViewImports.Html.set‚
-RepartidorController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobject≥
-åRepartidorController(IRepartidorRepository, INegocioRepository, IRepartidorService, Microsoft.AspNetCore.Hosting.IWebHostEnvironment, AppDbContext, IPedidoService, IUbicacionService, IPerfilRepartidorService, Microsoft.Extensions.Logging.ILogger<RepartidorController>)°RepartidorController.RepartidorController(IRepartidorRepository, INegocioRepository, IRepartidorService, Microsoft.AspNetCore.Hosting.IWebHostEnvironment, AppDbContext, IPedidoService, IUbicacionService, IPerfilRepartidorService, Microsoft.Extensions.Logging.ILogger<RepartidorController>)I
-EnlaceActivacion(string)-RepartidorController.EnlaceActivacion(string)'
-Index()RepartidorController.Index()/
-Registrar() RepartidorController.Registrar()Y
- Registrar(RegistroRepartidorDto)5RepartidorController.Registrar(RegistroRepartidorDto)G
-ReenviarActivacion(int),RepartidorController.ReenviarActivacion(int)=
-CambiarEstado(int)'RepartidorController.CambiarEstado(int)1
-MisPedidos()!RepartidorController.MisPedidos()M
-ActualizarEstado(int, int)/RepartidorController.ActualizarEstado(int, int)?
-IniciarEntrega(int)(RepartidorController.IniciarEntrega(int)A
-MarcarEntregado(int))RepartidorController.MarcarEntregado(int)_
-#ReportarNovedad(int, int?, string?)8RepartidorController.ReportarNovedad(int, int?, string?)Ö
-6NovedadesDeAsync(System.Collections.Generic.List<int>)KRepartidorController.NovedadesDeAsync(System.Collections.Generic.List<int>)m
-*ActualizarUbicacion(int, decimal, decimal)?RepartidorController.ActualizarUbicacion(int, decimal, decimal))
-Perfil()RepartidorController.Perfil()5
-EnviarCodigo()#RepartidorController.EnviarCodigo();
-VerificarCodigo()&RepartidorController.VerificarCodigo()_
-#VerificarCodigo(VerificarCodigoDto)8RepartidorController.VerificarCodigo(VerificarCodigoDto))
-Editar()RepartidorController.Editar()O
-Editar(EditarRepartidorDto)0RepartidorController.Editar(EditarRepartidorDto)E
-VerificarEliminacion()+RepartidorController.VerificarEliminacion()[
-!EliminarCuenta(EliminarCuentaDto)6RepartidorController.EliminarCuenta(EliminarCuentaDto)_
-#VerificarEliminacionRepartidor(int)8RepartidorController.VerificarEliminacionRepartidor(int)m
-*EliminarRepartidor(int, EliminarCuentaDto)?RepartidorController.EliminarRepartidor(int, EliminarCuentaDto)3
-UsuarioId.get"RepartidorController.UsuarioId.get3
-UsuarioId.set"RepartidorController.UsuarioId.setÂ
-
-/AspNetCoreGeneratedDocument.Views_Usuario_Login0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectP
-ExecuteAsync()>AspNetCoreGeneratedDocument.Views_Usuario_Login.ExecuteAsync()^
-Views_Usuario_Login()EAspNetCoreGeneratedDocument.Views_Usuario_Login.Views_Usuario_Login()j
-__tagHelperScopeManager.getKAspNetCoreGeneratedDocument.Views_Usuario_Login.__tagHelperScopeManager.getj
-__tagHelperScopeManager.setKAspNetCoreGeneratedDocument.Views_Usuario_Login.__tagHelperScopeManager.setj
-ModelExpressionProvider.getKAspNetCoreGeneratedDocument.Views_Usuario_Login.ModelExpressionProvider.getj
-ModelExpressionProvider.setKAspNetCoreGeneratedDocument.Views_Usuario_Login.ModelExpressionProvider.setB
-Url.get7AspNetCoreGeneratedDocument.Views_Usuario_Login.Url.getB
-Url.set7AspNetCoreGeneratedDocument.Views_Usuario_Login.Url.setN
-Component.get=AspNetCoreGeneratedDocument.Views_Usuario_Login.Component.getN
-Component.set=AspNetCoreGeneratedDocument.Views_Usuario_Login.Component.setD
-Json.get8AspNetCoreGeneratedDocument.Views_Usuario_Login.Json.getD
-Json.set8AspNetCoreGeneratedDocument.Views_Usuario_Login.Json.setD
-Html.get8AspNetCoreGeneratedDocument.Views_Usuario_Login.Html.getD
-Html.set8AspNetCoreGeneratedDocument.Views_Usuario_Login.Html.set√
+Html.set9AspNetCoreGeneratedDocument.Views_Admin_Reportes.Html.set
+IAuthService
+IEmailServiceò
+2AspNetCoreGeneratedDocument.Views_Pedido_Historial0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectS
+ExecuteAsync()AAspNetCoreGeneratedDocument.Views_Pedido_Historial.ExecuteAsync()g
+Views_Pedido_Historial()KAspNetCoreGeneratedDocument.Views_Pedido_Historial.Views_Pedido_Historial()m
+__tagHelperScopeManager.getNAspNetCoreGeneratedDocument.Views_Pedido_Historial.__tagHelperScopeManager.getm
+__tagHelperScopeManager.setNAspNetCoreGeneratedDocument.Views_Pedido_Historial.__tagHelperScopeManager.setm
+ModelExpressionProvider.getNAspNetCoreGeneratedDocument.Views_Pedido_Historial.ModelExpressionProvider.getm
+ModelExpressionProvider.setNAspNetCoreGeneratedDocument.Views_Pedido_Historial.ModelExpressionProvider.setE
+Url.get:AspNetCoreGeneratedDocument.Views_Pedido_Historial.Url.getE
+Url.set:AspNetCoreGeneratedDocument.Views_Pedido_Historial.Url.setQ
+Component.get@AspNetCoreGeneratedDocument.Views_Pedido_Historial.Component.getQ
+Component.set@AspNetCoreGeneratedDocument.Views_Pedido_Historial.Component.setG
+Json.get;AspNetCoreGeneratedDocument.Views_Pedido_Historial.Json.getG
+Json.set;AspNetCoreGeneratedDocument.Views_Pedido_Historial.Json.setG
+Html.get;AspNetCoreGeneratedDocument.Views_Pedido_Historial.Html.getG
+Html.set;AspNetCoreGeneratedDocument.Views_Pedido_Historial.Html.set√
 <AspNetCoreGeneratedDocument.Views_Repartidor_VerificarCodigo0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobject]
 ExecuteAsync()KAspNetCoreGeneratedDocument.Views_Repartidor_VerificarCodigo.ExecuteAsync()Ö
 "Views_Repartidor_VerificarCodigo()_AspNetCoreGeneratedDocument.Views_Repartidor_VerificarCodigo.Views_Repartidor_VerificarCodigo()w
@@ -1571,6 +1360,230 @@ BAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido0Microsoft.A
 Json.setEAspNetCoreGeneratedDocument.Views_Repartidor_VerificarCodigo.Json.setQ
 Html.getEAspNetCoreGeneratedDocument.Views_Repartidor_VerificarCodigo.Html.getQ
 Html.setEAspNetCoreGeneratedDocument.Views_Repartidor_VerificarCodigo.Html.setÌ
+7AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectX
+ExecuteAsync()FAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.ExecuteAsync()v
+Views_Repartidor_MisPedidos()UAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Views_Repartidor_MisPedidos()r
+__tagHelperScopeManager.getSAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.__tagHelperScopeManager.getr
+__tagHelperScopeManager.setSAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.__tagHelperScopeManager.setr
+ModelExpressionProvider.getSAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.ModelExpressionProvider.getr
+ModelExpressionProvider.setSAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.ModelExpressionProvider.setJ
+Url.get?AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Url.getJ
+Url.set?AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Url.setV
+Component.getEAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Component.getV
+Component.setEAspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Component.setL
+Json.get@AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Json.getL
+Json.set@AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Json.setL
+Html.get@AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Html.getL
+Html.set@AspNetCoreGeneratedDocument.Views_Repartidor_MisPedidos.Html.set©
+3AspNetCoreGeneratedDocument.Views_Repartidor_Editar0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectT
+ExecuteAsync()BAspNetCoreGeneratedDocument.Views_Repartidor_Editar.ExecuteAsync()j
+Views_Repartidor_Editar()MAspNetCoreGeneratedDocument.Views_Repartidor_Editar.Views_Repartidor_Editar()n
+__tagHelperScopeManager.getOAspNetCoreGeneratedDocument.Views_Repartidor_Editar.__tagHelperScopeManager.getn
+__tagHelperScopeManager.setOAspNetCoreGeneratedDocument.Views_Repartidor_Editar.__tagHelperScopeManager.setn
+ModelExpressionProvider.getOAspNetCoreGeneratedDocument.Views_Repartidor_Editar.ModelExpressionProvider.getn
+ModelExpressionProvider.setOAspNetCoreGeneratedDocument.Views_Repartidor_Editar.ModelExpressionProvider.setF
+Url.get;AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Url.getF
+Url.set;AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Url.setR
+Component.getAAspNetCoreGeneratedDocument.Views_Repartidor_Editar.Component.getR
+Component.setAAspNetCoreGeneratedDocument.Views_Repartidor_Editar.Component.setH
+Json.get<AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Json.getH
+Json.set<AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Json.setH
+Html.get<AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Html.getH
+Html.set<AspNetCoreGeneratedDocument.Views_Repartidor_Editar.Html.set©
+BAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectc
+ExecuteAsync()QAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.ExecuteAsync()ó
+(Views_Shared__ValidationScriptsPartial()kAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Views_Shared__ValidationScriptsPartial()}
+__tagHelperScopeManager.get^AspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.__tagHelperScopeManager.get}
+__tagHelperScopeManager.set^AspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.__tagHelperScopeManager.set}
+ModelExpressionProvider.get^AspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.ModelExpressionProvider.get}
+ModelExpressionProvider.set^AspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.ModelExpressionProvider.setU
+Url.getJAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Url.getU
+Url.setJAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Url.seta
+Component.getPAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Component.geta
+Component.setPAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Component.setW
+Json.getKAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Json.getW
+Json.setKAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Json.setW
+Html.getKAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Html.getW
+Html.setKAspNetCoreGeneratedDocument.Views_Shared__ValidationScriptsPartial.Html.set‘
+
+.AspNetCoreGeneratedDocument.Views_Shared_Error0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectO
+ExecuteAsync()=AspNetCoreGeneratedDocument.Views_Shared_Error.ExecuteAsync()[
+Views_Shared_Error()CAspNetCoreGeneratedDocument.Views_Shared_Error.Views_Shared_Error()i
+__tagHelperScopeManager.getJAspNetCoreGeneratedDocument.Views_Shared_Error.__tagHelperScopeManager.geti
+__tagHelperScopeManager.setJAspNetCoreGeneratedDocument.Views_Shared_Error.__tagHelperScopeManager.seti
+ModelExpressionProvider.getJAspNetCoreGeneratedDocument.Views_Shared_Error.ModelExpressionProvider.geti
+ModelExpressionProvider.setJAspNetCoreGeneratedDocument.Views_Shared_Error.ModelExpressionProvider.setA
+Url.get6AspNetCoreGeneratedDocument.Views_Shared_Error.Url.getA
+Url.set6AspNetCoreGeneratedDocument.Views_Shared_Error.Url.setM
+Component.get<AspNetCoreGeneratedDocument.Views_Shared_Error.Component.getM
+Component.set<AspNetCoreGeneratedDocument.Views_Shared_Error.Component.setC
+Json.get7AspNetCoreGeneratedDocument.Views_Shared_Error.Json.getC
+Json.set7AspNetCoreGeneratedDocument.Views_Shared_Error.Json.setC
+Html.get7AspNetCoreGeneratedDocument.Views_Shared_Error.Html.getC
+Html.set7AspNetCoreGeneratedDocument.Views_Shared_Error.Html.set©
+BAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectc
+ExecuteAsync()QAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.ExecuteAsync()ó
+(Views_Usuario_EnlaceActivacionInvalido()kAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Views_Usuario_EnlaceActivacionInvalido()}
+__tagHelperScopeManager.get^AspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.__tagHelperScopeManager.get}
+__tagHelperScopeManager.set^AspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.__tagHelperScopeManager.set}
+ModelExpressionProvider.get^AspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.ModelExpressionProvider.get}
+ModelExpressionProvider.set^AspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.ModelExpressionProvider.setU
+Url.getJAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Url.getU
+Url.setJAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Url.seta
+Component.getPAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Component.geta
+Component.setPAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Component.setW
+Json.getKAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Json.getW
+Json.setKAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Json.setW
+Html.getKAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Html.getW
+Html.setKAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido.Html.setÌ
+7AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectX
+ExecuteAsync()FAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.ExecuteAsync()v
+Views_Usuario_TokenInvalido()UAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Views_Usuario_TokenInvalido()r
+__tagHelperScopeManager.getSAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.__tagHelperScopeManager.getr
+__tagHelperScopeManager.setSAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.__tagHelperScopeManager.setr
+ModelExpressionProvider.getSAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.ModelExpressionProvider.getr
+ModelExpressionProvider.setSAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.ModelExpressionProvider.setJ
+Url.get?AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Url.getJ
+Url.set?AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Url.setV
+Component.getEAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Component.getV
+Component.setEAspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Component.setL
+Json.get@AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Json.getL
+Json.set@AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Json.setL
+Html.get@AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Html.getL
+Html.set@AspNetCoreGeneratedDocument.Views_Usuario_TokenInvalido.Html.setÛ	
+PedidoServiceobjectIPedidoService†
+ÜPedidoService(IPedidoRepository, INegocioRepository, AppDbContext, IEmailService, Microsoft.Extensions.Logging.ILogger<PedidoService>)îPedidoService.PedidoService(IPedidoRepository, INegocioRepository, AppDbContext, IEmailService, Microsoft.Extensions.Logging.ILogger<PedidoService>)b
+(BuscarClienteFrecuenteAsync(int, string)6PedidoService.BuscarClienteFrecuenteAsync(int, string)`
+'RegistrarAsync(int, RegistrarPedidoDto)5PedidoService.RegistrarAsync(int, RegistrarPedidoDto)f
+*ActualizarEstadoAsync(int, int, int, int?)8PedidoService.ActualizarEstadoAsync(int, int, int, int?)r
+0RegistrarHistorialAsync(int, int, int?, string?)>PedidoService.RegistrarHistorialAsync(int, int, int?, string?)P
+ObtenerPedidosActivosAsync(int)-PedidoService.ObtenerPedidosActivosAsync(int)T
+!ObtenerHistorialPedidosAsync(int)/PedidoService.ObtenerHistorialPedidosAsync(int)d
+)CancelarPorClienteAsync(string?, string?)7PedidoService.CancelarPorClienteAsync(string?, string?)Ü
+:NotificarCancelacionAsync(Pedido, string, System.DateTime)HPedidoService.NotificarCancelacionAsync(Pedido, string, System.DateTime)n
+.RegistrarNovedadAsync(int, int, int?, string?)<PedidoService.RegistrarNovedadAsync(int, int, int?, string?)Â
+
+/AspNetCoreGeneratedDocument.Views_Reporte_Index0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectP
+ExecuteAsync()>AspNetCoreGeneratedDocument.Views_Reporte_Index.ExecuteAsync()^
+Views_Reporte_Index()EAspNetCoreGeneratedDocument.Views_Reporte_Index.Views_Reporte_Index()j
+__tagHelperScopeManager.getKAspNetCoreGeneratedDocument.Views_Reporte_Index.__tagHelperScopeManager.getj
+__tagHelperScopeManager.setKAspNetCoreGeneratedDocument.Views_Reporte_Index.__tagHelperScopeManager.setj
+ModelExpressionProvider.getKAspNetCoreGeneratedDocument.Views_Reporte_Index.ModelExpressionProvider.getj
+ModelExpressionProvider.setKAspNetCoreGeneratedDocument.Views_Reporte_Index.ModelExpressionProvider.setB
+Url.get7AspNetCoreGeneratedDocument.Views_Reporte_Index.Url.getB
+Url.set7AspNetCoreGeneratedDocument.Views_Reporte_Index.Url.setN
+Component.get=AspNetCoreGeneratedDocument.Views_Reporte_Index.Component.getN
+Component.set=AspNetCoreGeneratedDocument.Views_Reporte_Index.Component.setD
+Json.get8AspNetCoreGeneratedDocument.Views_Reporte_Index.Json.getD
+Json.set8AspNetCoreGeneratedDocument.Views_Reporte_Index.Json.setD
+Html.get8AspNetCoreGeneratedDocument.Views_Reporte_Index.Html.getD
+Html.set8AspNetCoreGeneratedDocument.Views_Reporte_Index.Html.set‡
+,AspNetCoreGeneratedDocument.Views__ViewStart0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectM
+ExecuteAsync();AspNetCoreGeneratedDocument.Views__ViewStart.ExecuteAsync()U
+Views__ViewStart()?AspNetCoreGeneratedDocument.Views__ViewStart.Views__ViewStart()g
+ModelExpressionProvider.getHAspNetCoreGeneratedDocument.Views__ViewStart.ModelExpressionProvider.getg
+ModelExpressionProvider.setHAspNetCoreGeneratedDocument.Views__ViewStart.ModelExpressionProvider.set?
+Url.get4AspNetCoreGeneratedDocument.Views__ViewStart.Url.get?
+Url.set4AspNetCoreGeneratedDocument.Views__ViewStart.Url.setK
+Component.get:AspNetCoreGeneratedDocument.Views__ViewStart.Component.getK
+Component.set:AspNetCoreGeneratedDocument.Views__ViewStart.Component.setA
+Json.get5AspNetCoreGeneratedDocument.Views__ViewStart.Json.getA
+Json.set5AspNetCoreGeneratedDocument.Views__ViewStart.Json.setA
+Html.get5AspNetCoreGeneratedDocument.Views__ViewStart.Html.getA
+Html.set5AspNetCoreGeneratedDocument.Views__ViewStart.Html.set≥
+EditarNegocioDtoobject9
+EditarNegocioDto()#EditarNegocioDto.EditarNegocioDto())
+
+Nombre.getEditarNegocioDto.Nombre.get)
+
+Nombre.setEditarNegocioDto.Nombre.set7
+TipoActividad.get"EditarNegocioDto.TipoActividad.get7
+TipoActividad.set"EditarNegocioDto.TipoActividad.set)
+
+Correo.getEditarNegocioDto.Correo.get)
+
+Correo.setEditarNegocioDto.Correo.set-
+Telefono.getEditarNegocioDto.Telefono.get-
+Telefono.setEditarNegocioDto.Telefono.set/
+Direccion.getEditarNegocioDto.Direccion.get/
+Direccion.setEditarNegocioDto.Direccion.setÂ
+
+/AspNetCoreGeneratedDocument.Views_Usuario_Login0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectP
+ExecuteAsync()>AspNetCoreGeneratedDocument.Views_Usuario_Login.ExecuteAsync()^
+Views_Usuario_Login()EAspNetCoreGeneratedDocument.Views_Usuario_Login.Views_Usuario_Login()j
+__tagHelperScopeManager.getKAspNetCoreGeneratedDocument.Views_Usuario_Login.__tagHelperScopeManager.getj
+__tagHelperScopeManager.setKAspNetCoreGeneratedDocument.Views_Usuario_Login.__tagHelperScopeManager.setj
+ModelExpressionProvider.getKAspNetCoreGeneratedDocument.Views_Usuario_Login.ModelExpressionProvider.getj
+ModelExpressionProvider.setKAspNetCoreGeneratedDocument.Views_Usuario_Login.ModelExpressionProvider.setB
+Url.get7AspNetCoreGeneratedDocument.Views_Usuario_Login.Url.getB
+Url.set7AspNetCoreGeneratedDocument.Views_Usuario_Login.Url.setN
+Component.get=AspNetCoreGeneratedDocument.Views_Usuario_Login.Component.getN
+Component.set=AspNetCoreGeneratedDocument.Views_Usuario_Login.Component.setD
+Json.get8AspNetCoreGeneratedDocument.Views_Usuario_Login.Json.getD
+Json.set8AspNetCoreGeneratedDocument.Views_Usuario_Login.Json.setD
+Html.get8AspNetCoreGeneratedDocument.Views_Usuario_Login.Html.getD
+Html.set8AspNetCoreGeneratedDocument.Views_Usuario_Login.Html.set‘
+=AspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobject^
+ExecuteAsync()LAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.ExecuteAsync()à
+#Views_Usuario_RecuperarContrasena()aAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Views_Usuario_RecuperarContrasena()x
+__tagHelperScopeManager.getYAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.__tagHelperScopeManager.getx
+__tagHelperScopeManager.setYAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.__tagHelperScopeManager.setx
+ModelExpressionProvider.getYAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.ModelExpressionProvider.getx
+ModelExpressionProvider.setYAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.ModelExpressionProvider.setP
+Url.getEAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Url.getP
+Url.setEAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Url.set\
+Component.getKAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Component.get\
+Component.setKAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Component.setR
+Json.getFAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Json.getR
+Json.setFAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Json.setR
+Html.getFAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Html.getR
+Html.setFAspNetCoreGeneratedDocument.Views_Usuario_RecuperarContrasena.Html.set‹
+6AspNetCoreGeneratedDocument.Views_Repartidor_Registrar0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectW
+ExecuteAsync()EAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.ExecuteAsync()s
+Views_Repartidor_Registrar()SAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Views_Repartidor_Registrar()q
+__tagHelperScopeManager.getRAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.__tagHelperScopeManager.getq
+__tagHelperScopeManager.setRAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.__tagHelperScopeManager.setq
+ModelExpressionProvider.getRAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.ModelExpressionProvider.getq
+ModelExpressionProvider.setRAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.ModelExpressionProvider.setI
+Url.get>AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Url.getI
+Url.set>AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Url.setU
+Component.getDAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Component.getU
+Component.setDAspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Component.setK
+Json.get?AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Json.getK
+Json.set?AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Json.setK
+Html.get?AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Html.getK
+Html.set?AspNetCoreGeneratedDocument.Views_Repartidor_Registrar.Html.set˛
+.AspNetCoreGeneratedDocument.Views__ViewImports0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectO
+ExecuteAsync()=AspNetCoreGeneratedDocument.Views__ViewImports.ExecuteAsync()[
+Views__ViewImports()CAspNetCoreGeneratedDocument.Views__ViewImports.Views__ViewImports()i
+ModelExpressionProvider.getJAspNetCoreGeneratedDocument.Views__ViewImports.ModelExpressionProvider.geti
+ModelExpressionProvider.setJAspNetCoreGeneratedDocument.Views__ViewImports.ModelExpressionProvider.setA
+Url.get6AspNetCoreGeneratedDocument.Views__ViewImports.Url.getA
+Url.set6AspNetCoreGeneratedDocument.Views__ViewImports.Url.setM
+Component.get<AspNetCoreGeneratedDocument.Views__ViewImports.Component.getM
+Component.set<AspNetCoreGeneratedDocument.Views__ViewImports.Component.setC
+Json.get7AspNetCoreGeneratedDocument.Views__ViewImports.Json.getC
+Json.set7AspNetCoreGeneratedDocument.Views__ViewImports.Json.setC
+Html.get7AspNetCoreGeneratedDocument.Views__ViewImports.Html.getC
+Html.set7AspNetCoreGeneratedDocument.Views__ViewImports.Html.setÖ
+
+7AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectX
+ExecuteAsync()FAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.ExecuteAsync()v
+Views_Shared__GraficaBarras()UAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Views_Shared__GraficaBarras()r
+ModelExpressionProvider.getSAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.ModelExpressionProvider.getr
+ModelExpressionProvider.setSAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.ModelExpressionProvider.setJ
+Url.get?AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Url.getJ
+Url.set?AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Url.setV
+Component.getEAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Component.getV
+Component.setEAspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Component.setL
+Json.get@AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Json.getL
+Json.set@AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Json.setL
+Html.get@AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Html.getL
+Html.set@AspNetCoreGeneratedDocument.Views_Shared__GraficaBarras.Html.setπ
+EliminarCuentaDtoobject<
+EliminarCuentaDto()%EliminarCuentaDto.EliminarCuentaDto().
+Password.getEliminarCuentaDto.Password.get.
+Password.setEliminarCuentaDto.Password.setÌ
 7AspNetCoreGeneratedDocument.Views_Usuario_ActivarCuenta0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectX
 ExecuteAsync()FAspNetCoreGeneratedDocument.Views_Usuario_ActivarCuenta.ExecuteAsync()v
 Views_Usuario_ActivarCuenta()UAspNetCoreGeneratedDocument.Views_Usuario_ActivarCuenta.Views_Usuario_ActivarCuenta()r
@@ -1600,7 +1613,34 @@ BAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido0Microsoft.A
 Json.getHAspNetCoreGeneratedDocument.Views_Usuario_RestablecerContrasena.Json.getT
 Json.setHAspNetCoreGeneratedDocument.Views_Usuario_RestablecerContrasena.Json.setT
 Html.getHAspNetCoreGeneratedDocument.Views_Usuario_RestablecerContrasena.Html.getT
-Html.setHAspNetCoreGeneratedDocument.Views_Usuario_RestablecerContrasena.Html.setˆ
+Html.setHAspNetCoreGeneratedDocument.Views_Usuario_RestablecerContrasena.Html.set‚
+RepartidorController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobject≥
+åRepartidorController(IRepartidorRepository, INegocioRepository, IRepartidorService, Microsoft.AspNetCore.Hosting.IWebHostEnvironment, AppDbContext, IPedidoService, IUbicacionService, IPerfilRepartidorService, Microsoft.Extensions.Logging.ILogger<RepartidorController>)°RepartidorController.RepartidorController(IRepartidorRepository, INegocioRepository, IRepartidorService, Microsoft.AspNetCore.Hosting.IWebHostEnvironment, AppDbContext, IPedidoService, IUbicacionService, IPerfilRepartidorService, Microsoft.Extensions.Logging.ILogger<RepartidorController>)I
+EnlaceActivacion(string)-RepartidorController.EnlaceActivacion(string)'
+Index()RepartidorController.Index()/
+Registrar() RepartidorController.Registrar()Y
+ Registrar(RegistroRepartidorDto)5RepartidorController.Registrar(RegistroRepartidorDto)G
+ReenviarActivacion(int),RepartidorController.ReenviarActivacion(int)=
+CambiarEstado(int)'RepartidorController.CambiarEstado(int)1
+MisPedidos()!RepartidorController.MisPedidos()M
+ActualizarEstado(int, int)/RepartidorController.ActualizarEstado(int, int)?
+IniciarEntrega(int)(RepartidorController.IniciarEntrega(int)A
+MarcarEntregado(int))RepartidorController.MarcarEntregado(int)_
+#ReportarNovedad(int, int?, string?)8RepartidorController.ReportarNovedad(int, int?, string?)Ö
+6NovedadesDeAsync(System.Collections.Generic.List<int>)KRepartidorController.NovedadesDeAsync(System.Collections.Generic.List<int>)m
+*ActualizarUbicacion(int, decimal, decimal)?RepartidorController.ActualizarUbicacion(int, decimal, decimal))
+Perfil()RepartidorController.Perfil()5
+EnviarCodigo()#RepartidorController.EnviarCodigo();
+VerificarCodigo()&RepartidorController.VerificarCodigo()_
+#VerificarCodigo(VerificarCodigoDto)8RepartidorController.VerificarCodigo(VerificarCodigoDto))
+Editar()RepartidorController.Editar()O
+Editar(EditarRepartidorDto)0RepartidorController.Editar(EditarRepartidorDto)E
+VerificarEliminacion()+RepartidorController.VerificarEliminacion()[
+!EliminarCuenta(EliminarCuentaDto)6RepartidorController.EliminarCuenta(EliminarCuentaDto)_
+#VerificarEliminacionRepartidor(int)8RepartidorController.VerificarEliminacionRepartidor(int)m
+*EliminarRepartidor(int, EliminarCuentaDto)?RepartidorController.EliminarRepartidor(int, EliminarCuentaDto)3
+UsuarioId.get"RepartidorController.UsuarioId.get3
+UsuarioId.set"RepartidorController.UsuarioId.setˆ
 
 0AspNetCoreGeneratedDocument.Views_Shared__Layout0Microsoft.AspNetCore.Mvc.Razor.RazorPage<TModel>(Microsoft.AspNetCore.Mvc.Razor.RazorPage,Microsoft.AspNetCore.Mvc.Razor.RazorPageBaseobjectQ
 ExecuteAsync()?AspNetCoreGeneratedDocument.Views_Shared__Layout.ExecuteAsync()a
@@ -1616,47 +1656,7 @@ BAspNetCoreGeneratedDocument.Views_Usuario_EnlaceActivacionInvalido0Microsoft.A
 Json.get9AspNetCoreGeneratedDocument.Views_Shared__Layout.Json.getE
 Json.set9AspNetCoreGeneratedDocument.Views_Shared__Layout.Json.setE
 Html.get9AspNetCoreGeneratedDocument.Views_Shared__Layout.Html.getE
-Html.set9AspNetCoreGeneratedDocument.Views_Shared__Layout.Html.setÏ
-PerfilRepartidorServiceobjectIPerfilRepartidorService∞
-âPerfilRepartidorService(AppDbContext, IRepartidorRepository, INegocioRepository, IUsuarioRepository, ICodigoVerificacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<PerfilRepartidorService>)°PerfilRepartidorService.PerfilRepartidorService(AppDbContext, IRepartidorRepository, INegocioRepository, IUsuarioRepository, ICodigoVerificacionRepository, Microsoft.AspNetCore.Identity.IPasswordHasher<Usuario>, IEmailService, Microsoft.Extensions.Logging.ILogger<PerfilRepartidorService>)J
-ObtenerPerfilAsync(int)/PerfilRepartidorService.ObtenerPerfilAsync(int)^
-!ContarPedidosPendientesAsync(int)9PerfilRepartidorService.ContarPedidosPendientesAsync(int)P
-MotivoNoEditableAsync(int)2PerfilRepartidorService.MotivoNoEditableAsync(int)N
-SolicitarCodigoAsync(int)1PerfilRepartidorService.SolicitarCodigoAsync(int)^
-!VerificarCodigoAsync(int, string)9PerfilRepartidorService.VerificarCodigoAsync(int, string)R
-EdicionAutorizadaAsync(int)3PerfilRepartidorService.EdicionAutorizadaAsync(int)R
-ObtenerParaEditarAsync(int)3PerfilRepartidorService.ObtenerParaEditarAsync(int)f
-%EditarAsync(int, EditarRepartidorDto)=PerfilRepartidorService.EditarAsync(int, EditarRepartidorDto)`
-"ValidarEliminacionPropiaAsync(int):PerfilRepartidorService.ValidarEliminacionPropiaAsync(int)h
-&EliminarCuentaPropiaAsync(int, string)>PerfilRepartidorService.EliminarCuentaPropiaAsync(int, string)r
-+ValidarEliminacionPorNegocioAsync(int, int)CPerfilRepartidorService.ValidarEliminacionPorNegocioAsync(int, int)n
-)EliminarPorNegocioAsync(int, int, string)APerfilRepartidorService.EliminarPorNegocioAsync(int, int, string)b
-#RepartidorDelNegocioAsync(int, int);PerfilRepartidorService.RepartidorDelNegocioAsync(int, int)J
-DarDeBajaAsync(Usuario)/PerfilRepartidorService.DarDeBajaAsync(Usuario)^
-!PasswordCorrecta(Usuario, string)9PerfilRepartidorService.PasswordCorrecta(Usuario, string)T
-TipoNotaSystem.EnumSystem.ValueTypeobject!
-
-TipoNota()TipoNota.TipoNota()ª
-
-CorreoHtmlobjectSystem.IEquatable<T>C
-CorreoHtml(string, string)%CorreoHtml.CorreoHtml(string, string)#
-
-ToString()CorreoHtml.ToString()]
-'PrintMembers(System.Text.StringBuilder)2CorreoHtml.PrintMembers(System.Text.StringBuilder))
-GetHashCode()CorreoHtml.GetHashCode()-
-Equals(object?)CorreoHtml.Equals(object?)5
-Equals(CorreoHtml?)CorreoHtml.Equals(CorreoHtml?)#
-
-<Clone>$()CorreoHtml.<Clone>$();
-CorreoHtml(CorreoHtml)!CorreoHtml.CorreoHtml(CorreoHtml)U
-#Deconstruct(out string, out string).CorreoHtml.Deconstruct(out string, out string)7
-EqualityContract.getCorreoHtml.EqualityContract.get7
-EqualityContract.setCorreoHtml.EqualityContract.set
-Html.getCorreoHtml.Html.get!
-	Html.initCorreoHtml.Html.init!
-	Texto.getCorreoHtml.Texto.get#
-
-Texto.initCorreoHtml.Texto.init«
+Html.set9AspNetCoreGeneratedDocument.Views_Shared__Layout.Html.set«
 ReporteController#Microsoft.AspNetCore.Mvc.Controller'Microsoft.AspNetCore.Mvc.ControllerBaseobject˜
 pReporteController(IReporteService, IExportadorReportes, Microsoft.Extensions.Logging.ILogger<ReporteController>)ÇReporteController.ReporteController(IReporteService, IExportadorReportes, Microsoft.Extensions.Logging.ILogger<ReporteController>)h
 )Index(System.DateTime?, System.DateTime?);ReporteController.Index(System.DateTime?, System.DateTime?)Ä

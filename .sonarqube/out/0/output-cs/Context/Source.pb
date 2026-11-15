@@ -193,11 +193,11 @@ namespace Gtrack.Controllers
     }
 }
 ParseOptions.0.json˛/
-\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\NegocioController.csà/using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
+\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\NegocioController.csà/using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 [Authorize(Roles = "Negocio")]
 public class NegocioController(INegocioService negocios) : Controller
@@ -579,12 +579,12 @@ public class HistorialEstadoItem
     public int EstadoPedidoId { get; set; }
     public DateTime FechaCambio { get; set; }
 }ParseOptions.0.jsonπÉ
-_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\RepartidorController.csøÇusing System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
+_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\RepartidorController.csøÇusing Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 [Authorize]
 public class RepartidorController(
@@ -987,9 +987,9 @@ public class RepartidorController(
     }
 }
 ParseOptions.0.json…,
-\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\ReporteController.cs”+using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\ReporteController.cs”+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 // CU-24 Generar reporte de pedidos y CU-22 Exportar historial (rol Negocio)
 [Authorize(Roles = "Negocio")]
@@ -1118,10 +1118,10 @@ public class ReporteController(
     }
 }
 ParseOptions.0.jsonÿ>
-\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\UsuarioController.cs‚=using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
+\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\UsuarioController.cs‚=using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 public class UsuarioController(
     IAuthService auth,
@@ -1566,9 +1566,8 @@ public class PerfilPublicoNegocioDto
     public string Direccion { get; set; } = "";
     public string Telefono { get; set; } = "";
     public DateTime FechaRegistro { get; set; }
-}ParseOptions.0.json—
-XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilRepartidorDtos.csﬂusing System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
+}ParseOptions.0.json™
+XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilRepartidorDtos.cs∏using System.ComponentModel.DataAnnotations;
 
 // CU-12 / CU-14: datos que el repartidor ve en "Mi perfil"
 public class PerfilRepartidorDto
@@ -1914,9 +1913,8 @@ public class ReporteAdminVista
 
 // Una barra de las gr√°ficas que se dibujan en pantalla
 public record BarraGrafica(string Etiqueta, int Cantidad, string Color);
-ParseOptions.0.json˝ 
-YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RergistroPersonalDtos.csä using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
+ParseOptions.0.json÷ 
+YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RergistroPersonalDtos.cs„using System.ComponentModel.DataAnnotations;
 
 // Campo: propiedad del formulario donde se muestra el error (null = mensaje general)
 public record ResultadoRegistro(bool Ok, string? Error, bool CorreoEnviado, string? PasswordTemporal, string? Campo = null);
@@ -3295,12 +3293,12 @@ public class EmailSmtpService(
     }
 }
 ParseOptions.0.jsonÇ¨
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ExportadorReportes.csç´using System.Globalization;
-using System.Text;
-using ClosedXML.Excel;
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ExportadorReportes.csç´using ClosedXML.Excel;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System.Globalization;
+using System.Text;
 
 // Genera los archivos Excel (ClosedXML), PDF (QuestPDF) y CSV de los reportes de GTrack
 public class ExportadorReportes : IExportadorReportes
@@ -3888,8 +3886,8 @@ YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IUbicacion
 }
 
 ParseOptions.0.json≤|
-VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\NegocioService.cs¬{using System.Security.Cryptography;
-using Microsoft.AspNetCore.Identity;
+VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\NegocioService.cs¬{using Microsoft.AspNetCore.Identity;
+using System.Security.Cryptography;
 
 public class NegocioService(
     INegocioRepository negocios,
@@ -4242,10 +4240,9 @@ public class NegocioService(
         var minutos = Math.Max(1, (int)Math.Ceiling((hasta - DateTime.UtcNow).TotalMinutes));
         return $"La edici√≥n de tu perfil est√° bloqueada por intentos fallidos. Intenta de nuevo en {minutos} minuto(s).";
     }
-}ParseOptions.0.json˚∆
-UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PedidoService.csã∆using System.Security.Cryptography;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+}ParseOptions.0.json÷∆
+UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PedidoService.csÊ≈using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 public class PedidoService(
     IPedidoRepository pedidos,
@@ -4774,9 +4771,9 @@ public class PedidoService(
     }
 }
 ParseOptions.0.json∂Å
-_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PerfilRepartidorService.csºÄusing System.Security.Cryptography;
-using Microsoft.AspNetCore.Identity;
+_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PerfilRepartidorService.csºÄusing Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 // CU-12 Eliminar Repartidor y CU-14 Editar Repartidor
 public interface IPerfilRepartidorService
@@ -5714,8 +5711,8 @@ public class RepartidorService(
     }
 }
 ParseOptions.0.json∑g
-VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ReporteService.cs«fusing System.Globalization;
-using Microsoft.EntityFrameworkCore;
+VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ReporteService.cs«fusing Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 public class ReporteService(AppDbContext db, INegocioRepository negocios) : IReporteService
 {
@@ -6032,9 +6029,8 @@ public class ReporteService(AppDbContext db, INegocioRepository negocios) : IRep
         return reporte;
     }
 }
-ParseOptions.0.json°
-XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\UbicacionService.csØusing Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+ParseOptions.0.json¸
+XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\UbicacionService.csäusing Microsoft.EntityFrameworkCore;
 
 public class UbicacionService(
     IUbicacionRepository ubicaciones,
@@ -6281,8 +6277,8 @@ public static class GeneradorPassword
         return new string(chars.OrderBy(_ => RandomNumberGenerator.GetInt32(int.MaxValue)).ToArray());
     }
 }ParseOptions.0.jsonÒ
-dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\InvariantDecimalModelBinder.csÛusing System.Globalization;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\InvariantDecimalModelBinder.csÛusing Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Globalization;
 
 // Los decimales que llegan de formularios y de JavaScript siempre usan punto ("4.5981", "12.50").
 // Sin este binder, ASP.NET los interpreta con la cultura del servidor: en es-CO el punto es separador de miles,
@@ -6322,9 +6318,9 @@ public class InvariantDecimalModelBinderProvider : IModelBinderProvider
             : null;
 }
 ParseOptions.0.jsonÂ
-RC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\TokenUtil.cs˘using System.Security.Cryptography;
+RC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\TokenUtil.cs˘using Microsoft.AspNetCore.WebUtilities;
+using System.Security.Cryptography;
 using System.Text;
-using Microsoft.AspNetCore.WebUtilities;
 
 public static class TokenUtil
 {
@@ -6342,9 +6338,8 @@ ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\Validador
         && password.Length >= 6
         && password.Any(char.IsDigit)
         && password.Any(char.IsLetter);
-}ParseOptions.0.json‚
-aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Administradores.cshtml.csÁusing Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+}ParseOptions.0.json¡
+aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Administradores.cshtml.cs∆using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Gtrack.Views.Admin
 {
@@ -6355,9 +6350,8 @@ namespace Gtrack.Views.Admin
         }
     }
 }
-ParseOptions.0.json‘
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Negocios.cshtml.cs‡using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+ParseOptions.0.json≥
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Negocios.cshtml.csøusing Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Gtrack.Views.Admin
 {
@@ -6368,9 +6362,8 @@ namespace Gtrack.Views.Admin
         }
     }
 }
-ParseOptions.0.json
-hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\RegistrarAdministrador.cshtml.csÓusing Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+ParseOptions.0.jsonœ
+hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\RegistrarAdministrador.cshtml.csÕusing Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Gtrack.Views.Admin
 {
@@ -6381,9 +6374,8 @@ namespace Gtrack.Views.Admin
         }
     }
 }
-ParseOptions.0.json‡
-`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Repartidor\Registrar.cshtml.csÊusing Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+ParseOptions.0.jsonø
+`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Repartidor\Registrar.cshtml.cs≈using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Gtrack.Views.Repartidor
 {
@@ -6434,7 +6426,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gtrack")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ea4da88576f62e8c76cf32000c7e31cb77c5ad2b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2cb2f3c71f2a69ced5e43371923158cd78ca5ce9")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gtrack")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gtrack")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
