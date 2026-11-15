@@ -4564,7 +4564,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gtrack.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0309fc116d3f1565124c89cd896100a7623cb3f5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a1fb5ea89b2629ad5118a1ddd91639472d5ac6ea")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gtrack.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gtrack.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

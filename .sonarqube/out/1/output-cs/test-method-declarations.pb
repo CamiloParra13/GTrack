@@ -4,26 +4,7 @@
 Gtrack.Tests.UtilidadesTests4GeneradorPassword_GeneraPasswordValidaDelLargoPedidoQ
 Gtrack.Tests.UtilidadesTests1TokenUtil_Generar_RetornaTokensNoVaciosYDistintosL
 Gtrack.Tests.UtilidadesTests,TokenUtil_Hash_EsDeterministaYDe64CaracteresG
-Gtrack.Tests.UtilidadesTests'EmailDesarrollo_Enviar_NoLanzaExcepcionº
-bC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UsuarioControllerTests.csGtrack.TestsG
-#Gtrack.Tests.UsuarioControllerTests Login_Get_SinSesion_RetornaVistaI
-#Gtrack.Tests.UsuarioControllerTests"Login_Get_ConSesion_RedirigeAlHomeJ
-#Gtrack.Tests.UsuarioControllerTests#Login_Post_ConSesion_RedirigeAlHomeM
-#Gtrack.Tests.UsuarioControllerTests&Login_Post_ModeloInvalido_RetornaVistaV
-#Gtrack.Tests.UsuarioControllerTests/Login_Post_CredencialesIncorrectas_MuestraError[
-#Gtrack.Tests.UsuarioControllerTests4Login_Post_Exitoso_InicaSesionConLosClaimsDelUsuarioL
-#Gtrack.Tests.UsuarioControllerTests%Logout_Exitoso_GuardaMensajeYRedirigeH
-#Gtrack.Tests.UsuarioControllerTests!Logout_Falla_GuardaMensajeDeErrorU
-#Gtrack.Tests.UsuarioControllerTests.RecuperarContrasena_Get_SinSesion_RetornaVistaW
-#Gtrack.Tests.UsuarioControllerTests0RecuperarContrasena_Get_ConSesion_RedirigeAlHome[
-#Gtrack.Tests.UsuarioControllerTests4RecuperarContrasena_Post_ModeloInvalido_RetornaVista[
-#Gtrack.Tests.UsuarioControllerTests4RecuperarContrasena_Post_LimiteSuperado_MuestraErrork
-#Gtrack.Tests.UsuarioControllerTestsDRecuperarContrasena_Post_Procesada_RedirigeAlLoginYConstruyeElEnlaceb
-#Gtrack.Tests.UsuarioControllerTests;RestablecerContrasena_Get_TokenVigente_RetornaVistaConTokend
-#Gtrack.Tests.UsuarioControllerTests=RestablecerContrasena_Get_TokenNoVigente_MuestraTokenInvalidoY
-#Gtrack.Tests.UsuarioControllerTests2RestablecerContrasena_Post_Exitoso_RedirigeAlLogini
-#Gtrack.Tests.UsuarioControllerTestsBRestablecerContrasena_Post_TokenInvalido_MuestraVistaTokenInvalidoc
-#Gtrack.Tests.UsuarioControllerTests<RestablecerContrasena_Post_OtroError_MuestraElErrorEnLaVista¥
+Gtrack.Tests.UtilidadesTests'EmailDesarrollo_Enviar_NoLanzaExcepcion¥
 aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UbicacionServiceTests.csGtrack.TestsU
 "Gtrack.Tests.UbicacionServiceTests/Actualizar_CoordenadasFueraDeRango_RetornaErrorL
 "Gtrack.Tests.UbicacionServiceTests&Actualizar_PedidoNoExiste_RetornaErrorR
@@ -32,18 +13,14 @@ aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Ubicac
 "Gtrack.Tests.UbicacionServiceTests,ObtenerPorCodigo_PedidoNoExiste_RetornaErrorZ
 "Gtrack.Tests.UbicacionServiceTests4ObtenerPorCodigo_PedidoNoEstaEnCamino_NoHayUbicacionX
 "Gtrack.Tests.UbicacionServiceTests2ObtenerPorCodigo_EnCaminoSinUbicacion_RetornaError^
-"Gtrack.Tests.UbicacionServiceTests8ObtenerPorCodigo_EnCaminoConUbicacion_RetornaCoordenadas²
-bC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\RepartidorServiceTests.csGtrack.TestsO
-#Gtrack.Tests.RepartidorServiceTests(Listar_NegocioNoExiste_RetornaListaVaciaV
-#Gtrack.Tests.RepartidorServiceTests/Listar_NegocioExiste_RetornaSoloSusRepartidoresS
-#Gtrack.Tests.RepartidorServiceTests,Registrar_NegocioNoIdentificado_RetornaErrorS
-#Gtrack.Tests.RepartidorServiceTests,Registrar_DocumentoYaRegistrado_RetornaErrorP
-#Gtrack.Tests.RepartidorServiceTests)Registrar_CorreoYaRegistrado_RetornaErrorK
-#Gtrack.Tests.RepartidorServiceTests$Registrar_TelefonoEnUso_RetornaErrorF
-#Gtrack.Tests.RepartidorServiceTestsRegistrar_Moto_NormalizaLaPlacaH
-#Gtrack.Tests.RepartidorServiceTests!Registrar_Bicicleta_NoGuardaPlaca]
-#Gtrack.Tests.RepartidorServiceTests6Registrar_DatosValidos_CreaCuentaPendienteYEnviaEnlace[
-#Gtrack.Tests.RepartidorServiceTests4Registrar_FallaEnvioCorreo_IgualRegistraAlRepartidor½
+"Gtrack.Tests.UbicacionServiceTests8ObtenerPorCodigo_EnCaminoConUbicacion_RetornaCoordenadas×
+lC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UbicacionServiceConContextoTests.csGtrack.Tests[
+-Gtrack.Tests.UbicacionServiceConContextoTests*Actualizar_RepartidorNoExiste_RetornaError_
+-Gtrack.Tests.UbicacionServiceConContextoTests.Actualizar_PedidoDeOtroRepartidor_RetornaErrorZ
+-Gtrack.Tests.UbicacionServiceConContextoTests)Actualizar_DatosValidos_GuardaLaUbicacionp
+-Gtrack.Tests.UbicacionServiceConContextoTests?Actualizar_UltimoGuardadoHaceMenosDeTresSegundos_IgnoraSinErrort
+-Gtrack.Tests.UbicacionServiceConContextoTestsCActualizar_UltimoGuardadoHaceMasDeTresSegundos_ActualizaLaUbicacionW
+-Gtrack.Tests.UbicacionServiceConContextoTests&Actualizar_FallaAlGuardar_RetornaError½
 eC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\RepartidorControllerTests.csGtrack.TestsL
 &Gtrack.Tests.RepartidorControllerTests"Index_SinNegocio_RetornaListaVaciaQ
 &Gtrack.Tests.RepartidorControllerTests'Index_ConNegocio_RetornaSusRepartidoresD
@@ -227,18 +204,53 @@ _C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\HomeCo
  Gtrack.Tests.HomeControllerTestsIndex_RetornaVista8
  Gtrack.Tests.HomeControllerTestsPrivacy_RetornaVistaB
  Gtrack.Tests.HomeControllerTestsError_RetornaVistaConCodigo500S
- Gtrack.Tests.HomeControllerTests/StatusCode_RetornaVistaErrorConElCodigoRecibido×
-lC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UbicacionServiceConContextoTests.csGtrack.Tests[
--Gtrack.Tests.UbicacionServiceConContextoTests*Actualizar_RepartidorNoExiste_RetornaError_
--Gtrack.Tests.UbicacionServiceConContextoTests.Actualizar_PedidoDeOtroRepartidor_RetornaErrorZ
--Gtrack.Tests.UbicacionServiceConContextoTests)Actualizar_DatosValidos_GuardaLaUbicacionp
--Gtrack.Tests.UbicacionServiceConContextoTests?Actualizar_UltimoGuardadoHaceMenosDeTresSegundos_IgnoraSinErrort
--Gtrack.Tests.UbicacionServiceConContextoTestsCActualizar_UltimoGuardadoHaceMasDeTresSegundos_ActualizaLaUbicacionW
--Gtrack.Tests.UbicacionServiceConContextoTests&Actualizar_FallaAlGuardar_RetornaErrorÖ
+ Gtrack.Tests.HomeControllerTests/StatusCode_RetornaVistaErrorConElCodigoRecibidoº
+bC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UsuarioControllerTests.csGtrack.TestsG
+#Gtrack.Tests.UsuarioControllerTests Login_Get_SinSesion_RetornaVistaI
+#Gtrack.Tests.UsuarioControllerTests"Login_Get_ConSesion_RedirigeAlHomeJ
+#Gtrack.Tests.UsuarioControllerTests#Login_Post_ConSesion_RedirigeAlHomeM
+#Gtrack.Tests.UsuarioControllerTests&Login_Post_ModeloInvalido_RetornaVistaV
+#Gtrack.Tests.UsuarioControllerTests/Login_Post_CredencialesIncorrectas_MuestraError[
+#Gtrack.Tests.UsuarioControllerTests4Login_Post_Exitoso_InicaSesionConLosClaimsDelUsuarioL
+#Gtrack.Tests.UsuarioControllerTests%Logout_Exitoso_GuardaMensajeYRedirigeH
+#Gtrack.Tests.UsuarioControllerTests!Logout_Falla_GuardaMensajeDeErrorU
+#Gtrack.Tests.UsuarioControllerTests.RecuperarContrasena_Get_SinSesion_RetornaVistaW
+#Gtrack.Tests.UsuarioControllerTests0RecuperarContrasena_Get_ConSesion_RedirigeAlHome[
+#Gtrack.Tests.UsuarioControllerTests4RecuperarContrasena_Post_ModeloInvalido_RetornaVista[
+#Gtrack.Tests.UsuarioControllerTests4RecuperarContrasena_Post_LimiteSuperado_MuestraErrork
+#Gtrack.Tests.UsuarioControllerTestsDRecuperarContrasena_Post_Procesada_RedirigeAlLoginYConstruyeElEnlaceb
+#Gtrack.Tests.UsuarioControllerTests;RestablecerContrasena_Get_TokenVigente_RetornaVistaConTokend
+#Gtrack.Tests.UsuarioControllerTests=RestablecerContrasena_Get_TokenNoVigente_MuestraTokenInvalidoY
+#Gtrack.Tests.UsuarioControllerTests2RestablecerContrasena_Post_Exitoso_RedirigeAlLogini
+#Gtrack.Tests.UsuarioControllerTestsBRestablecerContrasena_Post_TokenInvalido_MuestraVistaTokenInvalidoc
+#Gtrack.Tests.UsuarioControllerTests<RestablecerContrasena_Post_OtroError_MuestraElErrorEnLaVista²
+bC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\RepartidorServiceTests.csGtrack.TestsO
+#Gtrack.Tests.RepartidorServiceTests(Listar_NegocioNoExiste_RetornaListaVaciaV
+#Gtrack.Tests.RepartidorServiceTests/Listar_NegocioExiste_RetornaSoloSusRepartidoresS
+#Gtrack.Tests.RepartidorServiceTests,Registrar_NegocioNoIdentificado_RetornaErrorS
+#Gtrack.Tests.RepartidorServiceTests,Registrar_DocumentoYaRegistrado_RetornaErrorP
+#Gtrack.Tests.RepartidorServiceTests)Registrar_CorreoYaRegistrado_RetornaErrorK
+#Gtrack.Tests.RepartidorServiceTests$Registrar_TelefonoEnUso_RetornaErrorF
+#Gtrack.Tests.RepartidorServiceTestsRegistrar_Moto_NormalizaLaPlacaH
+#Gtrack.Tests.RepartidorServiceTests!Registrar_Bicicleta_NoGuardaPlaca]
+#Gtrack.Tests.RepartidorServiceTests6Registrar_DatosValidos_CreaCuentaPendienteYEnviaEnlace[
+#Gtrack.Tests.RepartidorServiceTests4Registrar_FallaEnvioCorreo_IgualRegistraAlRepartidorÖ
 aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\EstadoPedidoInfoTests.csGtrack.TestsF
 "Gtrack.Tests.EstadoPedidoInfoTests Pedido_NombreYColorSegunElEstadoS
 "Gtrack.Tests.EstadoPedidoInfoTests-Pedido_EstadoDesconocido_UsaValoresPorDefectoF
-"Gtrack.Tests.EstadoPedidoInfoTests Cuenta_NombreYColorSegunElEstadoÆ
+"Gtrack.Tests.EstadoPedidoInfoTests Cuenta_NombreYColorSegunElEstadoŒ
+gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthServiceComplementoTests.csGtrack.Testsd
+(Gtrack.Tests.AuthServiceComplementoTests8IniciarSesion_BloqueoVencido_LimpiaBloqueoYPermiteEntrarr
+(Gtrack.Tests.AuthServiceComplementoTestsFIniciarSesion_CredencialesCorrectasConIntentosPrevios_ReiniciaContadorY
+(Gtrack.Tests.AuthServiceComplementoTests-IniciarSesion_CuentaRechazada_IncluyeElMotivo^
+(Gtrack.Tests.AuthServiceComplementoTests2IniciarSesion_CuentaEliminada_RetornaErrorGenerico„
+\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthServiceTests.csGtrack.TestsS
+Gtrack.Tests.AuthServiceTests2IniciarSesion_UsuarioNoExiste_RetornaErrorGenerico]
+Gtrack.Tests.AuthServiceTests<IniciarSesion_CuentaBloqueadaVigente_RetornaMinutosRestantesT
+Gtrack.Tests.AuthServiceTests3IniciarSesion_PasswordIncorrecta_IncrementaIntentosQ
+Gtrack.Tests.AuthServiceTests0IniciarSesion_QuintoIntentoFallido_BloqueaCuenta`
+Gtrack.Tests.AuthServiceTests?IniciarSesion_CredencialesCorrectas_CuentaActiva_RetornaUsuarioW
+Gtrack.Tests.AuthServiceTests6IniciarSesion_CuentaNoActiva_RetornaMensajeSegunEstadoÆ
 fC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AdministracionServiceTests.csGtrack.Tests[
 'Gtrack.Tests.AdministracionServiceTests0ListarNegocios_RetornaLoQueDevuelveElRepositoriob
 'Gtrack.Tests.AdministracionServiceTests7ListarAdministradores_RetornaLoQueDevuelveElRepositorio^
@@ -253,19 +265,7 @@ fC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Admini
 'Gtrack.Tests.AdministracionServiceTests8ReenviarActivacion_UsuarioNoEsAdministrador_RetornaErrorS
 'Gtrack.Tests.AdministracionServiceTests(ReenviarActivacion_YaActivo_RetornaError`
 'Gtrack.Tests.AdministracionServiceTests5ReenviarActivacion_LimiteDeEnviosPorHora_RetornaError[
-'Gtrack.Tests.AdministracionServiceTests0ReenviarActivacion_Pendiente_RetornaSegunElEnvio„
-\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthServiceTests.csGtrack.TestsS
-Gtrack.Tests.AuthServiceTests2IniciarSesion_UsuarioNoExiste_RetornaErrorGenerico]
-Gtrack.Tests.AuthServiceTests<IniciarSesion_CuentaBloqueadaVigente_RetornaMinutosRestantesT
-Gtrack.Tests.AuthServiceTests3IniciarSesion_PasswordIncorrecta_IncrementaIntentosQ
-Gtrack.Tests.AuthServiceTests0IniciarSesion_QuintoIntentoFallido_BloqueaCuenta`
-Gtrack.Tests.AuthServiceTests?IniciarSesion_CredencialesCorrectas_CuentaActiva_RetornaUsuarioW
-Gtrack.Tests.AuthServiceTests6IniciarSesion_CuentaNoActiva_RetornaMensajeSegunEstadoŒ
-gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthServiceComplementoTests.csGtrack.Testsd
-(Gtrack.Tests.AuthServiceComplementoTests8IniciarSesion_BloqueoVencido_LimpiaBloqueoYPermiteEntrarr
-(Gtrack.Tests.AuthServiceComplementoTestsFIniciarSesion_CredencialesCorrectasConIntentosPrevios_ReiniciaContadorY
-(Gtrack.Tests.AuthServiceComplementoTests-IniciarSesion_CuentaRechazada_IncluyeElMotivo^
-(Gtrack.Tests.AuthServiceComplementoTests2IniciarSesion_CuentaEliminada_RetornaErrorGenerico×
+'Gtrack.Tests.AdministracionServiceTests0ReenviarActivacion_Pendiente_RetornaSegunElEnvio×
 `C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AdminControllerTests.csGtrack.TestsD
 !Gtrack.Tests.AdminControllerTestsNegocios_RetornaVistaConLaListaR
 !Gtrack.Tests.AdminControllerTests-AprobarNegocio_Exitoso_GuardaMensajeYRedirigeE

@@ -2,5 +2,5 @@ organization=camiloparra13
 projectKey=CamiloParra13_GTrack
 serverUrl=https://sonarcloud.io
 dashboardUrl=https://sonarcloud.io/dashboard?id=CamiloParra13_GTrack
-ceTaskId=AaHdlAq6gdnaIrRUmqyA
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AaHdlAq6gdnaIrRUmqyA
+ceTaskId=AaHdlw9aa0xjsCmXL4RR
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AaHdlw9aa0xjsCmXL4RR

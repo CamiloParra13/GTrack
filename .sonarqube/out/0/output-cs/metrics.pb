@@ -36,14 +36,14 @@ VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ReporteSer
 YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\RepartidorService.cs< 8j
 )*-0=IZer‚ !"#%&'+.1234568:;>?@ABCDEGHIJKLMNPQRSTUVWX[\]_`abcdefghiklmnoprstuvwxyz|}~€‚ƒ…†ˆ‰ŠŒ‘’“”x‚H"#%&'+.1234568:;CDIJLMRVW[\bcdefghiklmnoptxy|}‚ƒ…†ˆ‰ŠŒ‘ô
 [C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\RecuperacionService.cs% 8j@GMNShir[	
-!"#$%&'()*+,-.01345678:;<=>ABDEHIKOQTVWXYZ[\]^_`abcefjklmnopqrstux‚$!".0567<=>ABDEHIKOQTX^benrŠ
+!"#$%&'()*+,-.01345678:;<=>ABDEHIKOQTVWXYZ[\]^_`abcefjklmnopqrstux‚$!".0567<=>ABDEHIKOQTX^benrô
+WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PlantillaCorreo.cs: 8"j
+)_gij’“rµ !"#$%&'*+-./013456789:;<>@ABCDFGHIJKLMNOQRSTUVWYZ[\]`abcdeklnoqstuvwxy{|}~€‚ƒ„†‡‰Š‹Ž•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëíîïðòóôõ÷øùúüýþÿ‚ƒ„…‡ˆ‰Š‹Œ‘’”•–—˜™š›žŸ ¡¢£¤¥¦§¨©ª«¬­®°±²³µ¶·¸¹º»¼½x‚C"%&'*+./013689;>@BCFHJKNQSTVWY[\bcdloqwx€‚ƒ„†‡‰Š‹Žç
+_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PerfilRepartidorService.cs‹ 8Jj/*+,.02<V[bciÏñÿ€‡Œ—œ ¨ÄÅÆÌrË	
+ !"#$%&'()*+,./0345689:=>?@ABCEGHIJKLMNOPQRSTWXY\]^_`bcdeghjkmnpqrtvwxyz{|}€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”–˜™›œžŸ ¡£¤¥¦§©ª«­®¯°±³´µ¶·¹º»¼½¾¿ÁÂÃÄÅÆÇÈÉËÌÍÐÑÓÔÕÖ×ØÚÛÝÞßáâãäåæçéëìíîïòóõö÷øùúûüý‚ƒ„†‡‰ŠŽ‘“”–—™šžŸ ¢£¥¦©ª«¬®¯±²´µ·¸¹»¼½¾ÀÁÂÇÈÉÊËÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãåæçèéêx4‚ø?ABCEGIJKLMNOPQRXY^_`bcdjkmnpqrtx{|†ˆŒ“”–˜™›œž £¥¦©ª­®¯°µ¶»½¾¿ÁÃÄÅÆÇÍÐÑÕÖ×ØÚÛÝÞßâãäåæçéëìíîïòóõöúûƒ„†‡‰‘“”–—™Ÿ ¢£¥«¬®¯±²´µ·¸½¾ÀÁËÍÎÏÓÔÚÝáçèŠ
 
 UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PedidoService.csº 8pjT'=>?@’“œž¤ºÀÁÂÔêë‚—¢ª»¼ãäçèéë…‰‘¨°½ÝàáâýrÏ	
-!"#$%()*,-./01234678:;ABCDEFHIJKMNOPQRSTUVWXY[\]^_`abcdeghijklmnoprstuvxyz{|}~€‚„…†‡ˆ‰Š‹Œ”•—™šŸ ¡¢¥¦¨©«¬®¯±²³´µ¶·¸»¼½¾ÃÄÅÆÇÈÊÌÍÎÏÐÒÓÕÖØÙÚÛÝÞßàáâãäåæèéìíîïðòóôõ÷øùúûüýÿ€ƒ„…‡ˆ‰ŠŒŽ‘’“”•˜™›œž ¡£¤¥¦¨©ª«­®¯°±²³µ¶¸¹½¾¿ÀÁÂÃÄÅÆÇÈÉËÌÍÎÐÒÓÔÕ×ØÙÚÜÞßàáäåçèéìíïðñòóõö÷øùûüýþÿ€ƒ†‡Š‹Ž’“”•–˜™š›œžŸ ¡¢£¤¥¦©«¬­®¯±²³´µ¶·¸¹º»¾¿ÀÁÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÞàáâäåæçéêëíîïðñóôö÷øúûþÿ‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“xn‚ü#$%()*,-.012678:;DFHJKMNWX[\]bcdhjkmnrtu{€†‡‹Œš¡¢¥¦¨©«¬®³´¶·¸»½ÃÄÅÇÌÎÐÒÕÖØÚÝßâäìíîïðòô÷ûüÿƒ…‡‰ŠŒŽ‘’”˜™›£¤¥¦¨ª­±²µ¸ÁÂÇÍÎÐÒÓÙÚÜÞßíñòóõö÷øùýÿ€ƒ†‡Š‹Ž’“”•–˜š›ž ¤¥©«¬±²³·¸¹ÀÁÅÆÉÊÍÎÏÔÕÙæçéêëïñóôöøúûþÿ‚„…†‡‰ŠŽç
-_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PerfilRepartidorService.cs‹ 8Jj/*+,.02<V[bciÏñÿ€‡Œ—œ ¨ÄÅÆÌrË	
- !"#$%&'()*+,./0345689:=>?@ABCEGHIJKLMNOPQRSTWXY\]^_`bcdeghjkmnpqrtvwxyz{|}€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”–˜™›œžŸ ¡£¤¥¦§©ª«­®¯°±³´µ¶·¹º»¼½¾¿ÁÂÃÄÅÆÇÈÉËÌÍÐÑÓÔÕÖ×ØÚÛÝÞßáâãäåæçéëìíîïòóõö÷øùúûüý‚ƒ„†‡‰ŠŽ‘“”–—™šžŸ ¢£¥¦©ª«¬®¯±²´µ·¸¹»¼½¾ÀÁÂÇÈÉÊËÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãåæçèéêx4‚ø?ABCEGIJKLMNOPQRXY^_`bcdjkmnpqrtx{|†ˆŒ“”–˜™›œž £¥¦©ª­®¯°µ¶»½¾¿ÁÃÄÅÆÇÍÐÑÕÖ×ØÚÛÝÞßâãäåæçéëìíîïòóõöúûƒ„†‡‰‘“”–—™Ÿ ¢£¥«¬®¯±²´µ·¸½¾ÀÁËÍÎÏÓÔÚÝáçèô
-WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PlantillaCorreo.cs: 8"j
-)_gij’“rµ !"#$%&'*+-./013456789:;<>@ABCDFGHIJKLMNOQRSTUVWYZ[\]`abcdeklnoqstuvwxy{|}~€‚ƒ„†‡‰Š‹Ž•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëíîïðòóôõ÷øùúüýþÿ‚ƒ„…‡ˆ‰Š‹Œ‘’”•–—˜™š›žŸ ¡¢£¤¥¦§¨©ª«¬­®°±²³µ¶·¸¹º»¼½x‚C"%&'*+./013689;>@BCFHJKNQSTVWY[\bcdloqwx€‚ƒ„†‡‰Š‹Žî
+!"#$%()*,-./01234678:;ABCDEFHIJKMNOPQRSTUVWXY[\]^_`abcdeghijklmnoprstuvxyz{|}~€‚„…†‡ˆ‰Š‹Œ”•—™šŸ ¡¢¥¦¨©«¬®¯±²³´µ¶·¸»¼½¾ÃÄÅÆÇÈÊÌÍÎÏÐÒÓÕÖØÙÚÛÝÞßàáâãäåæèéìíîïðòóôõ÷øùúûüýÿ€ƒ„…‡ˆ‰ŠŒŽ‘’“”•˜™›œž ¡£¤¥¦¨©ª«­®¯°±²³µ¶¸¹½¾¿ÀÁÂÃÄÅÆÇÈÉËÌÍÎÐÒÓÔÕ×ØÙÚÜÞßàáäåçèéìíïðñòóõö÷øùûüýþÿ€ƒ†‡Š‹Ž’“”•–˜™š›œžŸ ¡¢£¤¥¦©«¬­®¯±²³´µ¶·¸¹º»¾¿ÀÁÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÞàáâäåæçéêëíîïðñóôö÷øúûþÿ‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“xn‚ü#$%()*,-.012678:;DFHJKMNWX[\]bcdhjkmnrtu{€†‡‹Œš¡¢¥¦¨©«¬®³´¶·¸»½ÃÄÅÇÌÎÐÒÕÖØÚÝßâäìíîïðòô÷ûüÿƒ…‡‰ŠŒŽ‘’”˜™›£¤¥¦¨ª­±²µ¸ÁÂÇÍÎÐÒÓÙÚÜÞßíñòóõö÷øùýÿ€ƒ†‡Š‹Ž’“”•–˜š›ž ¤¥©«¬±²³·¸¹ÀÁÅÆÉÊÍÎÏÔÕÙæçéêëïñóôöøúûþÿ‚„…†‡‰ŠŽî
 VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\NegocioService.csƒ 82j-!#0?BZv‰ž®´Òæè«¸¼ÃÈÉÌÓÚr×	
 "#%&()+,-./012456789:;=@CDEFGHIJKLMNOPQRSTUVWX[\]^_`bcdefghijklmnopqrstwxyz{|}~€‚ƒ„…†‡Š‹ŒŽ‘’“”•–—˜™š›œŸ ¡¢¤¥¦§¨©ª«¬¯°±²µ¶·¹»¼½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÖ×ØÙÛÝÞàáãäåæèéêëìîïðòóôõöøùúûüþÿ€‚„…†‡ˆ‰Š‹ŒŽ’“”•–˜™›œŸ ¢£¤¥¦¨©¬­®¯°±³´µ¶·¸¹º½¾¿ÀÂÃÅÆÈÉËÌÎÏÑÒÔÕ×ØÛÜÝÞàáâãäåx+‚þ"#%&()/0279:=@EPQUV_`bhmnstw{…ŒŽ’“”•–—˜™š¡¢¤¦§¨©ª±²µ¶·¹½ÀÁÄËÍÑÒØÙÛÝÞàáãåèêëîïòóôõúû€‚„†‡ˆ‰Š”•–˜™›œŸ ¢£¤¥¦¨©¬­¯°³·¸¿ÀÂÃÅÆÈÉËÌÎÔÕ×ØÛÜÝâãe
 YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IUbicacionService.csrˆ
@@ -77,15 +77,15 @@ gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\TokenR
  !"#x‚	
  !Ò
 `C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\RepartidorRepository.cs 8j
-'<r:	!"#$%()*+,-./02345678:;=>@ABCEFGHIx‚ #$*+,-/3567;=>ABCFHr
-^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUsuarioRepository.csj
-r
-Ÿ
-]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\NegocioRepository.cs 8j!&r
-"#$'()*x‚#$()©
+'<r:	!"#$%()*+,-./02345678:;=>@ABCEFGHIx‚ #$*+,-/3567;=>ABCFH©
 \C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\PedidoRepository.cs 8	j	*r%	
  "#$%&()*+,-x‚	
-$%)*+l
+$%)*+Ÿ
+]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\NegocioRepository.cs 8j!&r
+"#$'()*x‚#$()r
+^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUsuarioRepository.csj
+r
+l
 `C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUbicacionRepository.csr|
 hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ITokenRecuperacionRepository.csjr		
 ‚
@@ -102,31 +102,31 @@ hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\Codigo
 dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\AdministracionRepository.cs 8jr?	
  !"#$%&'()*+,-.012345689:;<=?@ABDEFGHx‚)
 !"#%&'()*+,2345689:;<@ABEGÅ
-FC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Program.csR8j"0?Hr9	 !"#$%&'(*+,-.1234579:;<=@BCDEFIJKMx‚/	 !"#$%&'(*+-.123479;<@BCDEFIMw
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SuspensionRepartidor.cs 8r	
-‚l
+FC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Program.csR8j"0?Hr9	 !"#$%&'(*+,-.1234579:;<=@BCDEFIJKMx‚/	 !"#$%&'(*+-.123479;<@BCDEFIMo
+WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\TokenRecuperacion.cs 8r
+	
+‚l
 UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\UbicacionPedido.cs 
 8
 r		
-‚	o
-WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\TokenRecuperacion.cs 8r
-	
-‚
+‚	
 MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Usuario.cs 8jr
- x‚x
-NC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Personal.cs 8jr	
-‚u
+ x‚w
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SuspensionRepartidor.cs 8r	
+‚u
 ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SolicitudCancelacion.cs 
 8
 jr		
-‚
+‚x
+NC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Personal.cs 8jr	
+‚
 LC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Pedido.cs &8&jr$
  !"$%&'()*+,-‚w
 SC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\NovedadPedido.cs 8jr	
-‚k
+‚h
+TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\ErrorViewModel.cs 8r‚k
 MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Negocio.cs 8jr	
-‚h
-TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\ErrorViewModel.cs 8r‚v
+‚v
 XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\CodigoVerificacion.cs 8jr	
 ‚	f
 MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Cliente.cs 8r	
@@ -146,13 +146,13 @@ VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RegistroNegoci
 VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RegistrarPedidoDto.cs 8r-	
  !"#$&')*+-./01345678c
 PC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RecuperarDto.cs 8r		
-q
+—
+XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilRepartidorDtos.cs 8j/r)	
+ "#$%&()*,-01234‚2q
 [C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilPublicoNegocioDto.cs 
 8
 jr		
-—
-XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilRepartidorDtos.cs 8j/r)	
- "#$%&()*,-01234‚2n
+n
 TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilNegocioDto.cs 8jr	
 h
 LC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\LoginDto.cs 8r	
