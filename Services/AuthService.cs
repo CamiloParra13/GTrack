@@ -19,6 +19,7 @@ public class AuthService(IUsuarioRepository repo, IPasswordHasher<Usuario> hashe
             return (null, "Tu cuenta aún no está activada. Revisa tu correo y usa el enlace de activación que te enviamos para crear tu contraseña.");
 
         // Bloqueo vigente (RN-1-CU02)
+        // Bloqueo vigente (RN-1-CU02)
         var ahora = DateTime.UtcNow;
         if (usuario.BloqueadoHasta is { } hasta)
         {
@@ -29,6 +30,7 @@ public class AuthService(IUsuarioRepository repo, IPasswordHasher<Usuario> hashe
             }
             usuario.BloqueadoHasta = null;
             usuario.IntentosFallidos = 0;
+            await repo.ActualizarAsync(usuario);   // guarda el desbloqueo aunque el login termine bien
         }
 
         // 3) contraseña coincide (RN-2-CU02: mensaje genérico)
