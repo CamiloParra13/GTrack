@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 // CU-26 y validación de negocios, guardados en SQL Server
 public class AdministracionRepository(AppDbContext db) : IAdministracionRepository
 {

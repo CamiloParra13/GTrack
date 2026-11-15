@@ -1,5 +1,7 @@
 ﻿using System.Security.Cryptography;
 
+namespace Gtrack;
+
 public static class GeneradorPassword
 {
     private const string Letras = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz";

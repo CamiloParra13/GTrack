@@ -1,4 +1,6 @@
-﻿public class AdministracionRepositoryFalso : IAdministracionRepository
+﻿namespace Gtrack.Tests;
+
+public class AdministracionRepositoryFalso : IAdministracionRepository
 {
     public List<Administrador> Administradores { get; } = new();
     public Usuario? UsuarioRegistrado { get; private set; }

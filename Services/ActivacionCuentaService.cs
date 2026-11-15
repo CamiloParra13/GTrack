@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
+namespace Gtrack;
+
 // Activación de cuenta por correo para los usuarios que registra otra persona:
 //   - Repartidor (CU-09): lo registra un negocio.
 //   - Administrador (CU-26): lo registra otro administrador.

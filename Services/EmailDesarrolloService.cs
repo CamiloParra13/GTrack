@@ -1,4 +1,6 @@
-﻿// Alternativa para desarrollo: no envía nada, solo escribe el correo (versión texto) en el log
+﻿namespace Gtrack;
+
+// Alternativa para desarrollo: no envía nada, solo escribe el correo (versión texto) en el log
 public class EmailDesarrolloService(ILogger<EmailDesarrolloService> logger) : IEmailService
 {
     public Task EnviarAsync(string para, string asunto, string cuerpo) =>
@@ -6,7 +8,8 @@ public class EmailDesarrolloService(ILogger<EmailDesarrolloService> logger) : IE
 
     public Task EnviarAsync(string para, string asunto, CorreoHtml correo)
     {
-        logger.LogInformation("CORREO para {Para} | {Asunto}{Nueva}{Cuerpo}", para, asunto, Environment.NewLine, correo.Texto);
+        if (logger.IsEnabled(LogLevel.Information))
+            logger.LogInformation("CORREO para {Para} | {Asunto}{Nueva}{Cuerpo}", para, asunto, Environment.NewLine, correo.Texto);
         return Task.CompletedTask;
     }
 }

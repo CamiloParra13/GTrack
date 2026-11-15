@@ -1,4 +1,6 @@
-﻿// Datos del negocio. Correo y Documento (NIT/CC) viven en Usuario (cuenta de acceso);
+﻿namespace Gtrack;
+
+// Datos del negocio. Correo y Documento (NIT/CC) viven en Usuario (cuenta de acceso);
 // aquí va la información del perfil del negocio.
 public class Negocio
 {

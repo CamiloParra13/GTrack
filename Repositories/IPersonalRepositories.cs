@@ -1,4 +1,6 @@
-﻿public interface IRepartidorRepository
+﻿namespace Gtrack;
+
+public interface IRepartidorRepository
 {
     Task RegistrarRepartidorAsync(Usuario usuario, Repartidor repartidor);
     Task<List<Repartidor>> ListarPorNegocioAsync(int negocioId);

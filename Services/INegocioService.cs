@@ -1,4 +1,6 @@
-﻿public interface INegocioService
+﻿namespace Gtrack;
+
+public interface INegocioService
 {
     // CU-01 (urlRevision: enlace a la lista de negocios que reciben los administradores)
     Task<(bool Ok, string? Error, bool CorreoEnviado)> RegistrarAsync(RegistroNegocioDto dto, string urlRevision);

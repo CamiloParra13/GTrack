@@ -1,4 +1,6 @@
-﻿public static class ValidadorPassword
+﻿namespace Gtrack;
+
+public static class ValidadorPassword
 {
     // RN-2-CU01 / RN-3-CU20: mínimo 6 caracteres, al menos un número y una letra
     public static bool EsValida(string? password) =>

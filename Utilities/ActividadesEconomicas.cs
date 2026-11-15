@@ -1,4 +1,6 @@
-﻿public static class ActividadesEconomicas
+﻿namespace Gtrack;
+
+public static class ActividadesEconomicas
 {
     public static readonly IReadOnlyList<string> Lista =
     [

@@ -1,3 +1,5 @@
+namespace Gtrack;
+
 public interface IPedidoRepository
 {
     Task<Pedido?> ObtenerPorIdAsync(int id);

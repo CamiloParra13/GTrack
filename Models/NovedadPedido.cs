@@ -1,3 +1,5 @@
+namespace Gtrack;
+
 // CU-16: novedad que reporta el repartidor sobre un pedido activo (tabla NovedadPedido).
 // El pedido conserva su estado (PE-32-CU16); la novedad queda guardada con su fecha y hora.
 public class NovedadPedido

@@ -1,4 +1,6 @@
-﻿public enum ResultadoSolicitud { Procesada, LimiteSuperado }
+﻿namespace Gtrack;
+
+public enum ResultadoSolicitud { Procesada, LimiteSuperado }
 
 public interface IRecuperacionService
 {

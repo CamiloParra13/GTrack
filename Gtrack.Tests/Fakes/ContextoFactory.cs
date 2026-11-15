@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack.Tests;
+
 public class AppDbContextQueFallaAlGuardar(DbContextOptions<AppDbContext> options) : AppDbContext(options)
 {
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
+namespace Gtrack;
+
 // CU-12 Eliminar Repartidor y CU-14 Editar Repartidor
 public interface IPerfilRepartidorService
 {
@@ -43,7 +45,7 @@ public class PerfilRepartidorService(
 
     private const string MensajeEntregasPendientes = "No es posible eliminar la cuenta mientras tengas entregas pendientes"; // FE-27-CU12
     private const string MensajeEntregasPendientesNegocio = "No es posible eliminar a este repartidor mientras tenga entregas pendientes";
-    private const string MensajePasswordIncorrecta = "Contraseña incorrecta";                                        // FE-28-CU12
+    private const string MensajeContrasenaIncorrecta = "Contraseña incorrecta";                                        // FE-28-CU12
 
     // Mismas reglas del código de verificación de CU-13
     private const int MaxIntentosCodigo = 3;
@@ -274,7 +276,7 @@ public class PerfilRepartidorService(
         if (usuario is null) return (false, MensajeSinPermisos);
 
         if (!PasswordCorrecta(usuario, password))
-            return (false, MensajePasswordIncorrecta); // FE-28-CU12
+            return (false, MensajeContrasenaIncorrecta); // FE-28-CU12
 
         return await DarDeBajaAsync(usuario);
     }
@@ -301,7 +303,7 @@ public class PerfilRepartidorService(
         if (usuarioNegocio is null) return (false, MensajeSinPermisos, null);
 
         if (!PasswordCorrecta(usuarioNegocio, password))
-            return (false, MensajePasswordIncorrecta, null);
+            return (false, MensajeContrasenaIncorrecta, null);
 
         var rep = await RepartidorDelNegocioAsync(usuarioNegocioId, repartidorId);
         if (rep?.Usuario is null) return (false, MensajeSinPermisos, null);

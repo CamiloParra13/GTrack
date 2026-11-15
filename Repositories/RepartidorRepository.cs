@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 // CU-09: repartidores guardados en SQL Server
 public class RepartidorRepository(AppDbContext db) : IRepartidorRepository
 {

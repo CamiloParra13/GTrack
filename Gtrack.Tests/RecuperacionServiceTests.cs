@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging.Abstractions;
 
+namespace Gtrack.Tests;
+
 public class RecuperacionServiceTests
 {
     private sealed class HasherConHashInvalido : IPasswordHasher<Usuario>

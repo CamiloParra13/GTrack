@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 public class UsuarioRepository(AppDbContext db) : IUsuarioRepository
 {
     public Task<Usuario?> ObtenerPorIdentificadorYRolAsync(string identificador, RolUsuario rol) =>

@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+namespace Gtrack;
+
 // CU-13: el documento (NIT/CC) no se puede editar.
 public class EditarNegocioDto
 {

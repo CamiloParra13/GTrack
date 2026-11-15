@@ -1,3 +1,5 @@
+namespace Gtrack;
+
 public interface IUbicacionService
 {
     Task<(bool Ok, string? Error)> ActualizarAsync(int repartidorUsuarioId, int pedidoId, decimal lat, decimal lng);

@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
+namespace Gtrack;
+
 public class PedidoService(
     IPedidoRepository pedidos,
     INegocioRepository negocios,
@@ -365,7 +367,7 @@ public class PedidoService(
     public async Task<(bool Ok, string? Error)> CancelarPorClienteAsync(string? codigo, string? motivo)
     {
         var codigoLimpio = codigo?.Trim().ToUpperInvariant() ?? "";
-        if (!System.Text.RegularExpressions.Regex.IsMatch(codigoLimpio, "^[A-Z0-9]{8}$"))
+        if (!Patrones.CodigoPedido().IsMatch(codigoLimpio))
             return (false, MensajeCodigoNoEncontrado);
 
         var motivoLimpio = motivo?.Trim() ?? "";

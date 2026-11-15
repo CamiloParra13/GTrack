@@ -1,4 +1,6 @@
-﻿// Nombres y colores de los 7 estados del pedido (se usan en pantalla, Excel y PDF)
+﻿namespace Gtrack;
+
+// Nombres y colores de los 7 estados del pedido (se usan en pantalla, Excel y PDF)
 public static class EstadoPedidoInfo
 {
     public static string Nombre(int estadoId) => (EstadoPedido)estadoId switch

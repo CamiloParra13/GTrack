@@ -1,4 +1,6 @@
-﻿public class RepartidorRepositoryFalso : IRepartidorRepository
+﻿namespace Gtrack.Tests;
+
+public class RepartidorRepositoryFalso : IRepartidorRepository
 {
     public List<Repartidor> Repartidores { get; } = new();
     public HashSet<string> TelefonosEnUso { get; } = new();

@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+namespace Gtrack;
+
 // CU-09: el repartidor crea su contraseña desde el enlace que recibió por correo
 public class ActivarCuentaDto
 {

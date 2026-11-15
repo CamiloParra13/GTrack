@@ -1,4 +1,6 @@
-﻿public class Cliente
+﻿namespace Gtrack;
+
+public class Cliente
 {
     public int Id { get; set; }
     public string NombreCompleto { get; set; } = "";

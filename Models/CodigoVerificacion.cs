@@ -1,4 +1,6 @@
-﻿// CU-13: código de verificación de identidad para editar el perfil.
+﻿namespace Gtrack;
+
+// CU-13: código de verificación de identidad para editar el perfil.
 public class CodigoVerificacion
 {
     public int Id { get; set; }

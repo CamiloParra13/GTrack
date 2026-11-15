@@ -1,4 +1,6 @@
-﻿public enum RolUsuario { Negocio, Repartidor, Administrador }
+﻿namespace Gtrack;
+
+public enum RolUsuario { Negocio, Repartidor, Administrador }
 
 // Los estados nuevos van al final para no cambiar los valores numéricos de los existentes.
 // El número debe coincidir con dbo.EstadoCuenta (0 a 5).

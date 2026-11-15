@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 
+namespace Gtrack.Tests;
+
 public class RepartidorServiceTests
 {
     private static string Enlace(string token) => $"https://prueba/activar?t={token}";

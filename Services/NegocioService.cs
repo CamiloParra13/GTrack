@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Security.Cryptography;
 
+namespace Gtrack;
+
 public class NegocioService(
     INegocioRepository negocios,
     IUsuarioRepository usuarios,

@@ -1,4 +1,6 @@
-﻿public class PedidoRepositoryFalso : IPedidoRepository
+﻿namespace Gtrack.Tests;
+
+public class PedidoRepositoryFalso : IPedidoRepository
 {
     public List<Pedido> Pedidos { get; } = new();
     public bool DebeFallarAlAgregar { get; set; }

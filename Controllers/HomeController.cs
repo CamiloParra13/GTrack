@@ -27,7 +27,7 @@ namespace Gtrack.Controllers
         // Páginas de estado (404, 403, etc.): se invoca desde UseStatusCodePagesWithReExecute
         [Route("Home/StatusCode")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult StatusCode(int code)
+        public new IActionResult StatusCode(int code)
         {
             ViewData["Codigo"] = code;
             Response.StatusCode = code;

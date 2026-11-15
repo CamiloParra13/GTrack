@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
+
+namespace Gtrack;
 
 // Reglas de validación compartidas por todos los formularios.
 // Se usan con [RegularExpression] para que se validen igual en el navegador (jQuery Validation) y en el servidor.
@@ -51,7 +52,8 @@ public static class ReglasValidacion
         }
 
         var esMoto = vehiculo == TipoVehiculo.Moto;
-        if (!Regex.IsMatch(NormalizarPlaca(placa), esMoto ? PlacaMoto : PlacaCarro))
+        var patron = esMoto ? Patrones.PlacaMoto() : Patrones.PlacaCarro();
+        if (!patron.IsMatch(NormalizarPlaca(placa)))
             yield return new ValidationResult(esMoto ? PlacaMensajeMoto : PlacaMensajeCarro, ["Placa"]);
     }
 }

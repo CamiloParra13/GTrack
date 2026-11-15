@@ -1,4 +1,6 @@
-﻿public class EmailServiceFalso : IEmailService
+﻿namespace Gtrack.Tests;
+
+public class EmailServiceFalso : IEmailService
 {
     public List<(string Para, string Asunto, string Cuerpo)> Enviados { get; } = new();
     public List<(string Para, string Asunto, CorreoHtml Correo)> EnviadosHtml { get; } = new();

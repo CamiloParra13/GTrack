@@ -1,4 +1,6 @@
-﻿public class NegocioRepositoryFalso : INegocioRepository
+﻿namespace Gtrack.Tests;
+
+public class NegocioRepositoryFalso : INegocioRepository
 {
     public List<Negocio> Negocios { get; } = new();
     public HashSet<string> DocumentosExistentes { get; } = new();

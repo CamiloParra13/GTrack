@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
+namespace Gtrack;
+
 public class UsuarioController(
     IAuthService auth,
     IRecuperacionService recuperacion,

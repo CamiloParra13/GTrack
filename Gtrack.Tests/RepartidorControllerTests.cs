@@ -4,8 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 
+namespace Gtrack.Tests;
+
 public class RepartidorControllerTests
 {
+    private static readonly int[] IdsEsperadosMisPedidos = [2, 1];
+
     private sealed class Escenario
     {
         public RepartidorRepositoryFalso Repartidores { get; } = new();
@@ -30,7 +34,7 @@ public class RepartidorControllerTests
 
             Controlador = new RepartidorController(
                 Repartidores, Negocios, servicio,
-                Substitute.For<IWebHostEnvironment>(), Contexto,
+                Contexto,
                 Pedidos, Ubicaciones, Perfil,
                 NullLogger<RepartidorController>.Instance)
                 .Preparar(usuarioId: usuarioId, rol: rol);
@@ -255,7 +259,7 @@ public class RepartidorControllerTests
         var vista = Assert.IsType<ViewResult>(await e.Controlador.MisPedidos());
 
         var pedidos = Assert.IsType<List<Pedido>>(vista.Model);
-        Assert.Equal(new[] { 2, 1 }, pedidos.Select(p => p.Id));
+        Assert.Equal(IdsEsperadosMisPedidos, pedidos.Select(p => p.Id));
     }
 
     [Fact]

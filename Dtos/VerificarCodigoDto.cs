@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+namespace Gtrack;
+
 public class VerificarCodigoDto
 {
     [Display(Name = "Código de verificación")]

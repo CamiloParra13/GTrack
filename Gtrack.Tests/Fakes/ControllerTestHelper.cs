@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 
+namespace Gtrack.Tests;
+
 public static class ControllerTestHelper
 {
     // Prepara un controlador para probarlo sin servidor: usuario autenticado (opcional),
@@ -43,8 +45,10 @@ public static class ControllerTestHelper
 
     // CAMBIO 2: sin escapar caracteres como la ñ (si no, queda "contrase\u00f1a")
     public static string AJson(this JsonResult resultado) =>
-        JsonSerializer.Serialize(resultado.Value, new JsonSerializerOptions
-        {
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-        });
+        JsonSerializer.Serialize(resultado.Value, OpcionesJson);
+
+    private static readonly JsonSerializerOptions OpcionesJson = new()
+    {
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+    };
 }

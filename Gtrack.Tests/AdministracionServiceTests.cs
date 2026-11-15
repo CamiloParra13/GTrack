@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 
+namespace Gtrack.Tests;
+
 public class AdministracionServiceTests
 {
     private const string UrlLogin = "https://prueba/login";

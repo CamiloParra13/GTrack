@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
+namespace Gtrack;
+
 [Authorize(Roles = "Negocio")]
 public class NegocioController(INegocioService negocios) : Controller
 {

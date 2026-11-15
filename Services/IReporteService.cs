@@ -1,4 +1,6 @@
-﻿public interface IReporteService
+﻿namespace Gtrack;
+
+public interface IReporteService
 {
     // CU-24: reporte de pedidos del negocio (agrupado por estado y por mes)
     Task<ReporteNegocioDto?> GenerarReporteNegocioAsync(int usuarioNegocioId, DateTime desde, DateTime hasta);

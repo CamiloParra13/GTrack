@@ -1,3 +1,5 @@
+namespace Gtrack;
+
 public class Pedido
 {
     public int Id { get; set; }

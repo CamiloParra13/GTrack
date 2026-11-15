@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 public class TokenRecuperacionRepository(AppDbContext db) : ITokenRecuperacionRepository
 {
     public async Task AgregarAsync(TokenRecuperacion token)

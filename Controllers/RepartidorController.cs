@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
+namespace Gtrack;
+
 [Authorize]
 public class RepartidorController(
     IRepartidorRepository repartidorRepo,
     INegocioRepository negocioRepo,
     IRepartidorService repartidorService,
-    IWebHostEnvironment env,
     AppDbContext context,
     IPedidoService pedidos,
     IUbicacionService ubicacionService,

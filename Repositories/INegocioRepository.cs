@@ -1,4 +1,6 @@
-﻿public interface INegocioRepository
+﻿namespace Gtrack;
+
+public interface INegocioRepository
 {
     Task<Negocio?> BuscarPorIdAsync(int id);
     Task<Negocio?> ObtenerPorUsuarioIdAsync(int usuarioId);

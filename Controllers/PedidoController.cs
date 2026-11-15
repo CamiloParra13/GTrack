@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
+namespace Gtrack;
+
 [Authorize(Roles = "Negocio")]
 public class PedidoController(
     IPedidoService pedidos,
@@ -49,7 +51,7 @@ public class PedidoController(
         {
             listaRepartidores = await context.Set<Repartidor>()
                 .Include(r => r.Usuario)
-                .Where(r => r.NegocioId == negocio.Id && r.Usuario.Estado == EstadoCuenta.Activo)
+                .Where(r => r.NegocioId == negocio.Id && r.Usuario!.Estado == EstadoCuenta.Activo)
                 .ToListAsync();
         }
 
@@ -126,7 +128,7 @@ public class PedidoController(
 
         // RN-1-CU05: el código debe cumplir el formato definido (8 caracteres alfanuméricos)
         var codigoLimpio = codigo?.Trim().ToUpperInvariant() ?? "";
-        if (!System.Text.RegularExpressions.Regex.IsMatch(codigoLimpio, "^[A-Z0-9]{8}$"))
+        if (!Patrones.CodigoPedido().IsMatch(codigoLimpio))
         {
             ModelState.AddModelError("", CodigoNoEncontrado);
             return View(nameof(Consultar));
@@ -182,7 +184,7 @@ public class PedidoController(
     [HttpGet]
     public async Task<IActionResult> Ubicacion(string codigo)
     {
-        if (string.IsNullOrWhiteSpace(codigo) || !System.Text.RegularExpressions.Regex.IsMatch(codigo.Trim(), "^[A-Za-z0-9]{8}$"))
+        if (string.IsNullOrWhiteSpace(codigo) || !Patrones.CodigoPedidoSinDistinguirMayusculas().IsMatch(codigo.Trim()))
         {
             return Json(new { disponible = false });
         }

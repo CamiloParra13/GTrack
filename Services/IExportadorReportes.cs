@@ -1,4 +1,6 @@
-﻿public interface IExportadorReportes
+﻿namespace Gtrack;
+
+public interface IExportadorReportes
 {
     byte[] ReporteNegocioExcel(ReporteNegocioDto r);
     byte[] ReporteNegocioPdf(ReporteNegocioDto r);

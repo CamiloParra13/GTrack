@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
+namespace Gtrack;
+
 // RNF-01 Seguridad: las contraseñas se guardan con bcrypt (nunca en texto plano).
 //
 // bcrypt genera una sal aleatoria por cada contraseña y la incluye en el resultado, por lo que dos

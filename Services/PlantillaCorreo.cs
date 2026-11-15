@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
+
+namespace Gtrack;
 
 // Correo listo para enviar: versión HTML (con la marca de GTrack) y versión de texto plano
 // para los clientes de correo que no muestran HTML.
@@ -107,7 +108,7 @@ public static class PlantillaCorreo
         WebUtility.HtmlEncode(s ?? "").Replace("{", "&#123;").Replace("}", "&#125;");
 
     private static string ConFormato(string texto) =>
-        Regex.Replace(E(texto), @"\*\*(.+?)\*\*", "<strong style=\"color:#0f1b3d;font-weight:700;\">$1</strong>");
+        Patrones.Negrita().Replace(E(texto), "<strong style=\"color:#0f1b3d;font-weight:700;\">$1</strong>");
 
     private static string SinFormato(string texto) => texto.Replace("**", "");
 

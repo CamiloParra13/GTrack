@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging.Abstractions;
 
+namespace Gtrack.Tests;
+
 public class UbicacionServiceConContextoTests
 {
     private sealed class Escenario

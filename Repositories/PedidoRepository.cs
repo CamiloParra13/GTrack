@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 public class PedidoRepository(AppDbContext db) : IPedidoRepository
 {
     public async Task<Pedido?> ObtenerPorIdAsync(int id) =>

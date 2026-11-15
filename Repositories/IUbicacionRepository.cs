@@ -1,3 +1,5 @@
+namespace Gtrack;
+
 public interface IUbicacionRepository
 {
     Task<UbicacionPedido?> ObtenerAsync(int pedidoId);

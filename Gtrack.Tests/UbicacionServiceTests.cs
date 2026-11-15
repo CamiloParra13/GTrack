@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging.Abstractions;
 
+namespace Gtrack.Tests;
+
 public class UbicacionServiceTests
 {
     // Se pasa null en AppDbContext porque estas pruebas no llegan al paso que consulta

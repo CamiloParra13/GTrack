@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
+namespace Gtrack.Tests;
+
 public class NegocioControllerTests
 {
     private sealed class Escenario

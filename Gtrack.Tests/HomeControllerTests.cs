@@ -1,6 +1,8 @@
 ﻿using Gtrack.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
+namespace Gtrack.Tests;
+
 public class HomeControllerTests
 {
     [Fact]

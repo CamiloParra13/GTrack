@@ -1,4 +1,6 @@
-﻿public class CodigoVerificacionRepositoryFalso : ICodigoVerificacionRepository
+﻿namespace Gtrack.Tests;
+
+public class CodigoVerificacionRepositoryFalso : ICodigoVerificacionRepository
 {
     public List<CodigoVerificacion> Codigos { get; } = new();
 

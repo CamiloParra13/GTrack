@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 public class UbicacionService(
     IUbicacionRepository ubicaciones,
     IPedidoRepository pedidos,

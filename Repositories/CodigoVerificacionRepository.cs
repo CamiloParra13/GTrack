@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 public class CodigoVerificacionRepository(AppDbContext db) : ICodigoVerificacionRepository
 {
     public async Task AgregarAsync(CodigoVerificacion codigo)

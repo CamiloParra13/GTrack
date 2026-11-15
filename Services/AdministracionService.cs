@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 public interface IAdministracionService
 {
     Task<List<NegocioAdminDto>> ListarNegociosAsync();

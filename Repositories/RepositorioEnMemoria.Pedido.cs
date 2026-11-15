@@ -1,3 +1,5 @@
+namespace Gtrack;
+
 // Implementación en memoria de IPedidoRepository para CU-03
 public partial class RepositorioEnMemoria : IPedidoRepository
 {

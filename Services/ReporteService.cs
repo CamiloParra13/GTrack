@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
+namespace Gtrack;
+
 public class ReporteService(AppDbContext db, INegocioRepository negocios) : IReporteService
 {
     private static readonly CultureInfo Es = new("es-CO");
@@ -41,7 +43,7 @@ public class ReporteService(AppDbContext db, INegocioRepository negocios) : IRep
         return meses;
     }
 
-    private static List<FilaEstadoReporte> ContarPorEstado(IReadOnlyCollection<int> estados)
+    private static List<FilaEstadoReporte> ContarPorEstado(List<int> estados)
     {
         var total = estados.Count;
         return Enum.GetValues<EstadoPedido>()

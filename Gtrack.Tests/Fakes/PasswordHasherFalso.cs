@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
+namespace Gtrack.Tests;
+
 public class PasswordHasherFalso : IPasswordHasher<Usuario>
 {
     public string HashPassword(Usuario user, string password) => $"HASH:{password}";

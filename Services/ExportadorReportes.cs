@@ -5,6 +5,8 @@ using QuestPDF.Infrastructure;
 using System.Globalization;
 using System.Text;
 
+namespace Gtrack;
+
 // Genera los archivos Excel (ClosedXML), PDF (QuestPDF) y CSV de los reportes de GTrack
 public class ExportadorReportes : IExportadorReportes
 {

@@ -1,4 +1,6 @@
-﻿public interface IEmailService
+﻿namespace Gtrack;
+
+public interface IEmailService
 {
     // Texto simple: se envía igual dentro de la plantilla de GTrack
     Task EnviarAsync(string para, string asunto, string cuerpo);

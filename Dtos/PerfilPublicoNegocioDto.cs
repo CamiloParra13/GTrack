@@ -1,4 +1,6 @@
-﻿// CU-25 / RN-1-CU25: solo información pública (sin documento ni correo).
+﻿namespace Gtrack;
+
+// CU-25 / RN-1-CU25: solo información pública (sin documento ni correo).
 public class PerfilPublicoNegocioDto
 {
     public string Nombre { get; set; } = "";

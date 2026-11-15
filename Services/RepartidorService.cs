@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 public interface IRepartidorService
 {
     // CU-09: registra al repartidor sin contraseña y le envía el correo para activar su cuenta

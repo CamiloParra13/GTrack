@@ -1,4 +1,6 @@
-﻿public class AuthServiceComplementoTests
+﻿namespace Gtrack.Tests;
+
+public class AuthServiceComplementoTests
 {
     private static Usuario Usuario(EstadoCuenta estado = EstadoCuenta.Activo, int intentos = 0, DateTime? bloqueadoHasta = null) => new()
     {

@@ -1,4 +1,6 @@
-﻿// ---------- Filas reutilizables ----------
+﻿namespace Gtrack;
+
+// ---------- Filas reutilizables ----------
 public class FilaEstadoReporte
 {
     public int EstadoId { get; set; }

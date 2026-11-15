@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+namespace Gtrack;
+
 public class LoginDto
 {
     public RolUsuario Rol { get; set; } = RolUsuario.Negocio;

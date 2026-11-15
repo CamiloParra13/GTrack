@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+namespace Gtrack;
+
 public class RegistrarPedidoDto
 {
     [Display(Name = "Nombre del cliente")]

@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+namespace Gtrack;
+
 // CU-12 / CU-14: datos que el repartidor ve en "Mi perfil"
 public class PerfilRepartidorDto
 {

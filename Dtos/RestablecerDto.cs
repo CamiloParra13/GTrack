@@ -1,4 +1,6 @@
-﻿public class RestablecerDto
+﻿namespace Gtrack;
+
+public class RestablecerDto
 {
     public string Token { get; set; } = "";
     public string NuevaPassword { get; set; } = "";

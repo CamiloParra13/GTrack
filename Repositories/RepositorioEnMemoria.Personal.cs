@@ -1,4 +1,6 @@
-﻿// Segunda parte de RepositorioEnMemoria (por eso la clase es "partial")
+﻿namespace Gtrack;
+
+// Segunda parte de RepositorioEnMemoria (por eso la clase es "partial")
 public partial class RepositorioEnMemoria : IRepartidorRepository, IAdministracionRepository
 {
     private readonly List<Repartidor> _repartidores = [];

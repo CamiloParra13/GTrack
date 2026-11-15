@@ -2,6 +2,8 @@
 using System.Security.Cryptography;
 using System.Text;
 
+namespace Gtrack;
+
 public static class TokenUtil
 {
     public static string Generar() =>

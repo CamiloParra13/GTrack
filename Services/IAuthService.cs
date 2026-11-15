@@ -1,4 +1,6 @@
-﻿public interface IAuthService
+﻿namespace Gtrack;
+
+public interface IAuthService
 {
     Task<(Usuario? Usuario, string? Error)> IniciarSesionAsync(LoginDto dto);
 }

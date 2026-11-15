@@ -1,4 +1,6 @@
-﻿// Datos que muestra la pantalla "Mi Perfil" (CU-11 / CU-13).
+﻿namespace Gtrack;
+
+// Datos que muestra la pantalla "Mi Perfil" (CU-11 / CU-13).
 public class PerfilNegocioDto
 {
     public int Id { get; set; }

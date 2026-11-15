@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using NSubstitute;
 
+namespace Gtrack.Tests;
+
 public class UsuarioControllerTests
 {
     private sealed class Escenario

@@ -1,4 +1,6 @@
-﻿public class AuthServiceTests
+﻿namespace Gtrack.Tests;
+
+public class AuthServiceTests
 {
     private static Usuario UsuarioActivo(int intentos = 0, DateTime? bloqueadoHasta = null) => new()
     {

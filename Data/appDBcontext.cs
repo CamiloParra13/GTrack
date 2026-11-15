@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Usuario> Usuarios => Set<Usuario>();
@@ -10,7 +12,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Administrador> Administradores => Set<Administrador>();
     public DbSet<Pedido> Pedidos => Set<Pedido>();
     public DbSet<ItemPedido> ItemsPedido => Set<ItemPedido>();
-    public DbSet<SuspensionRepartidor> SuspensionRepartidor { get; set; }
+    public DbSet<SuspensionRepartidor> SuspensionRepartidor => Set<SuspensionRepartidor>();
     public DbSet<UbicacionPedido> UbicacionesPedido => Set<UbicacionPedido>();
     public DbSet<SolicitudCancelacion> SolicitudesCancelacion => Set<SolicitudCancelacion>();
     public DbSet<NovedadPedido> NovedadesPedido => Set<NovedadPedido>();

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+namespace Gtrack;
+
 [Authorize(Roles = "Administrador")]
 public class AdminController(
     IAdministracionService admin,

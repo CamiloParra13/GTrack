@@ -1,4 +1,6 @@
-﻿public interface IUsuarioRepository
+﻿namespace Gtrack;
+
+public interface IUsuarioRepository
 {
     Task<Usuario?> ObtenerPorIdentificadorYRolAsync(string identificador, RolUsuario rol);
     Task<Usuario?> ObtenerPorCorreoAsync(string correo);

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
+namespace Gtrack;
+
 public class AuthService(IUsuarioRepository repo, IPasswordHasher<Usuario> hasher) : IAuthService
 {
     private const int MaxIntentos = 5;

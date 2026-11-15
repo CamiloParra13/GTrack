@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+namespace Gtrack;
+
 public class RegistroNegocioDto
 {
     public const string Obligatorio = "Campo obligatorio";

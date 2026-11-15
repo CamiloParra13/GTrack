@@ -1,4 +1,6 @@
-﻿public interface ICodigoVerificacionRepository
+﻿namespace Gtrack;
+
+public interface ICodigoVerificacionRepository
 {
     Task AgregarAsync(CodigoVerificacion codigo);
     Task<CodigoVerificacion?> ObtenerUltimoAsync(int usuarioId);

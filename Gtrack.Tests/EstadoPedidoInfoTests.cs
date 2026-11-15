@@ -1,4 +1,6 @@
-﻿public class EstadoPedidoInfoTests
+﻿namespace Gtrack.Tests;
+
+public class EstadoPedidoInfoTests
 {
     [Theory]
     [InlineData(EstadoPedido.Recibido, "Recibido", "#6c757d")]

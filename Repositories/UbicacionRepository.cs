@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 public class UbicacionRepository(AppDbContext db) : IUbicacionRepository
 {
     public async Task<UbicacionPedido?> ObtenerAsync(int pedidoId) =>

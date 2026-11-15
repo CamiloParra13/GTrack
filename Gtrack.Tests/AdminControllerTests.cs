@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 
+namespace Gtrack.Tests;
+
 public class AdminControllerTests
 {
     private sealed class Escenario

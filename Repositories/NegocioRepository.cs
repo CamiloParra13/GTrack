@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace Gtrack;
+
 public class NegocioRepository(AppDbContext db) : INegocioRepository
 {
     public Task<Negocio?> BuscarPorIdAsync(int id) =>

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging.Abstractions;
 
+namespace Gtrack.Tests;
+
 public class NegocioServiceTests
 {
     private const string UrlRevision = "https://prueba/revision";

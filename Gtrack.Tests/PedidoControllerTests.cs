@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+
+namespace Gtrack.Tests;
+
 using UbicacionResultado = (bool Ok, string? Error, decimal? Latitud, decimal? Longitud, System.DateTime? FechaUtc, string? Estado);
 
 public class PedidoControllerTests

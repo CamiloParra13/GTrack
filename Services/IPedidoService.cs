@@ -1,3 +1,5 @@
+namespace Gtrack;
+
 public interface IPedidoService
 {
     Task<ClienteAutocompletarDto?> BuscarClienteFrecuenteAsync(int usuarioNegocioId, string telefono);

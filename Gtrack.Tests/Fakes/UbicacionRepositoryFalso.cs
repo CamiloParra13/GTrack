@@ -1,4 +1,6 @@
-﻿public class UbicacionRepositoryFalso : IUbicacionRepository
+﻿namespace Gtrack.Tests;
+
+public class UbicacionRepositoryFalso : IUbicacionRepository
 {
     public Dictionary<int, UbicacionPedido> Ubicaciones { get; } = new();
     public bool DebeFallarAlGuardar { get; set; }

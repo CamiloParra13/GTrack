@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
+namespace Gtrack;
+
 public class RecuperacionService(
     IUsuarioRepository usuarios,
     ITokenRecuperacionRepository tokens,

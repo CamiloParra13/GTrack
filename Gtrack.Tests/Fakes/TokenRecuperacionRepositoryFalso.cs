@@ -1,4 +1,6 @@
-﻿public class TokenRecuperacionRepositoryFalso : ITokenRecuperacionRepository
+﻿namespace Gtrack.Tests;
+
+public class TokenRecuperacionRepositoryFalso : ITokenRecuperacionRepository
 {
     public List<TokenRecuperacion> Tokens { get; } = new();
 

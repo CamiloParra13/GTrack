@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 
+namespace Gtrack.Tests;
+
 public class PedidoServiceTests
 {
     private sealed class Escenario

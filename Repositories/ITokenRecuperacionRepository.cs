@@ -1,4 +1,6 @@
-﻿// Enlaces de un solo uso enviados por correo: recuperación de contraseña (CU-20)
+﻿namespace Gtrack;
+
+// Enlaces de un solo uso enviados por correo: recuperación de contraseña (CU-20)
 // y activación de la cuenta del repartidor (CU-09).
 public interface ITokenRecuperacionRepository
 {

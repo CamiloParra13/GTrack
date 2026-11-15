@@ -3,6 +3,8 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 
+namespace Gtrack;
+
 public class EmailSmtpService(
     IConfiguration config,
     IWebHostEnvironment entorno,
@@ -54,7 +56,8 @@ public class EmailSmtpService(
         };
 
         await smtp.SendMailAsync(msg);
-        logger.LogInformation("Correo enviado a {Para}: {Asunto}", para, asunto);
+        if (logger.IsEnabled(LogLevel.Information))
+            logger.LogInformation("Correo enviado a {Para}: {Asunto}", para, asunto);
     }
 
     // Versión pequeña del logo para el correo (si no existe, se usa el logo de la página)

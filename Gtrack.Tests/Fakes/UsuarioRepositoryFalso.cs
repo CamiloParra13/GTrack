@@ -1,4 +1,6 @@
-﻿public class UsuarioRepositoryFalso : IUsuarioRepository
+﻿namespace Gtrack.Tests;
+
+public class UsuarioRepositoryFalso : IUsuarioRepository
 {
     public List<Usuario> Usuarios { get; } = new();
     public bool SeLlamoActualizar { get; private set; }
