@@ -19,7 +19,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     {
         modelBuilder.Entity<Usuario>(e =>
         {
-            e.ToTable("Usuario");
+            // La tabla tiene un trigger (script de triggers y procedimientos). Así EF no usa
+            // OUTPUT sin INTO, que SQL Server no permite en tablas con triggers.
+            e.ToTable("Usuario", t => t.HasTrigger("trg_Usuario_EliminacionLogica"));
             e.Property(u => u.PasswordHash).HasColumnName("ContrasenaHash");
             e.Property(u => u.Rol).HasColumnName("RolId");
             e.Property(u => u.Estado).HasColumnName("EstadoCuentaId");
@@ -84,7 +86,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<Pedido>(e =>
         {
-            e.ToTable("Pedido");
+            // Tabla con triggers (script de triggers y procedimientos): EF no debe usar OUTPUT sin INTO
+            e.ToTable("Pedido", t =>
+            {
+                t.HasTrigger("trg_Pedido_ValidarCambioEstado");
+                t.HasTrigger("trg_Pedido_Notificaciones");
+            });
             e.Property(p => p.Codigo).HasMaxLength(8).IsFixedLength().IsUnicode(false);
             e.Property(p => p.DireccionEntrega).HasMaxLength(200);
 

@@ -222,7 +222,8 @@ public class PerfilRepartidorService(
 
             var telefonoEnUso =
                 await db.Negocios.AnyAsync(n => n.Telefono == telefono) ||
-                await db.Repartidores.AnyAsync(r => r.Telefono == telefono && r.Id != rep.Id) ||
+                await db.Repartidores.AnyAsync(r => r.Telefono == telefono && r.Id != rep.Id
+                    && r.Usuario!.Estado != EstadoCuenta.Eliminado) ||
                 await db.Administradores.AnyAsync(a => a.Telefono == telefono);
             if (telefonoEnUso)
                 return (false, "El teléfono ya está registrado en otra cuenta");
@@ -326,6 +327,8 @@ public class PerfilRepartidorService(
         try
         {
             usuario.Estado = EstadoCuenta.Eliminado;
+            // Libera correo y documento para que se puedan registrar de nuevo
+            usuario.LiberarIdentificadores();
             await usuarios.ActualizarAsync(usuario);
             return (true, null);
         }

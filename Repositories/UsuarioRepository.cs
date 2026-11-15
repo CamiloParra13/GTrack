@@ -24,4 +24,15 @@ public class UsuarioRepository(AppDbContext db) : IUsuarioRepository
             .Where(u => u.Rol == RolUsuario.Administrador && u.Estado == EstadoCuenta.Activo)
             .Select(u => u.Correo)
             .ToListAsync();
+
+    public async Task LiberarEliminadosAsync(string correo, string documento)
+    {
+        var eliminados = await db.Usuarios
+            .Where(u => u.Estado == EstadoCuenta.Eliminado && (u.Correo == correo || u.Documento == documento))
+            .ToListAsync();
+        if (eliminados.Count == 0) return;
+
+        foreach (var u in eliminados) u.LiberarIdentificadores();
+        await db.SaveChangesAsync();
+    }
 }
