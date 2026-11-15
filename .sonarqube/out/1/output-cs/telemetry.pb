@@ -1,1 +1,0 @@
-iR\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Gtrack.Tests.csprojòCSharp14
