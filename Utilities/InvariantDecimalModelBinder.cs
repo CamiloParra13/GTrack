@@ -1,5 +1,5 @@
-using System.Globalization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Globalization;
 
 // Los decimales que llegan de formularios y de JavaScript siempre usan punto ("4.5981", "12.50").
 // Sin este binder, ASP.NET los interpreta con la cultura del servidor: en es-CO el punto es separador de miles,

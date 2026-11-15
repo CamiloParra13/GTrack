@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 
 // CU-12 / CU-14: datos que el repartidor ve en "Mi perfil"
 public class PerfilRepartidorDto

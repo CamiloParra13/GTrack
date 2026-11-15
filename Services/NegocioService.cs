@@ -1,5 +1,5 @@
-﻿using System.Security.Cryptography;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Security.Cryptography;
 
 public class NegocioService(
     INegocioRepository negocios,

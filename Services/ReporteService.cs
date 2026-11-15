@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 public class ReporteService(AppDbContext db, INegocioRepository negocios) : IReporteService
 {

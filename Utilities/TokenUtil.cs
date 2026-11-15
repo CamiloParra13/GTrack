@@ -1,6 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using System.Security.Cryptography;
 using System.Text;
-using Microsoft.AspNetCore.WebUtilities;
 
 public static class TokenUtil
 {

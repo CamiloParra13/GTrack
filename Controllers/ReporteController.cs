@@ -1,6 +1,6 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 // CU-24 Generar reporte de pedidos y CU-22 Exportar historial (rol Negocio)
 [Authorize(Roles = "Negocio")]

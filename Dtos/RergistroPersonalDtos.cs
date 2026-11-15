@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 
 // Campo: propiedad del formulario donde se muestra el error (null = mensaje general)
 public record ResultadoRegistro(bool Ok, string? Error, bool CorreoEnviado, string? PasswordTemporal, string? Campo = null);

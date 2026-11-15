@@ -1,6 +1,5 @@
-using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using System.Security.Cryptography;
 
 public class PedidoService(
     IPedidoRepository pedidos,
