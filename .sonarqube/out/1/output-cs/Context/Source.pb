@@ -1,4 +1,461 @@
-�+
+�P
+hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\ActivacionCuentaServiceTests.cs�Ousing Microsoft.Extensions.Logging.Abstractions;
+
+namespace Gtrack.Tests;
+
+// CU-09 y CU-26: activación de la cuenta de repartidores y administradores por correo
+public class ActivacionCuentaServiceTests
+{
+    private const string Token = "token-de-prueba";
+
+    private sealed class Escenario
+    {
+        public UsuarioRepositoryFalso Usuarios { get; } = new();
+        public TokenRecuperacionRepositoryFalso Tokens { get; } = new();
+        public RepartidorRepositoryFalso Repartidores { get; } = new();
+        public AdministracionRepositoryFalso Administradores { get; } = new();
+        public NegocioRepositoryFalso Negocios { get; } = new();
+        public EmailServiceFalso Email { get; } = new();
+
+        public ActivacionCuentaService Servicio => new(
+            Usuarios, Tokens, Repartidores, Administradores, Negocios,
+            new PasswordHasherFalso(), Email, NullLogger<ActivacionCuentaService>.Instance);
+
+        public Usuario AgregarRepartidor(EstadoCuenta estado = EstadoCuenta.PendienteActivacion, bool conNegocio = true)
+        {
+            var usuario = new Usuario { Id = 2, Correo = "rep@gtrack.local", Documento = "1010", Rol = RolUsuario.Repartidor, Estado = estado };
+            Usuarios.Usuarios.Add(usuario);
+            Repartidores.Repartidores.Add(new Repartidor { Id = 5, UsuarioId = 2, NegocioId = 10, NombreCompleto = "Juan Gómez" });
+            if (conNegocio) Negocios.Negocios.Add(new Negocio { Id = 10, UsuarioId = 1, Nombre = "Comidas Rápidas" });
+            return usuario;
+        }
+
+        public Usuario AgregarAdministrador(EstadoCuenta estado = EstadoCuenta.PendienteActivacion)
+        {
+            var usuario = new Usuario { Id = 3, Correo = "admin@gtrack.local", Documento = "2020", Rol = RolUsuario.Administrador, Estado = estado };
+            Usuarios.Usuarios.Add(usuario);
+            Administradores.Administradores.Add(new Administrador { Id = 7, UsuarioId = 3, NombreCompleto = "Ana Gómez" });
+            return usuario;
+        }
+
+        public TokenRecuperacion AgregarToken(int usuarioId, bool usado = false, int horas = 24)
+        {
+            var t = new TokenRecuperacion
+            {
+                UsuarioId = usuarioId,
+                TokenHash = TokenUtil.Hash(Token),
+                Expira = DateTime.UtcNow.AddHours(horas),
+                Usado = usado
+            };
+            Tokens.Tokens.Add(t);
+            return t;
+        }
+    }
+
+    private static string UrlLogin(RolUsuario rol) => $"https://gtrack.local/login?rol={rol}";
+
+    // ===== Envío del enlace =====
+
+    [Fact]
+    public async Task EnviarEnlace_Repartidor_GuardaElTokenYEnviaElCorreo()
+    {
+        var e = new Escenario();
+        var usuario = e.AgregarRepartidor();
+        string? tokenEnviado = null;
+
+        var ok = await e.Servicio.EnviarEnlaceAsync(usuario, "Juan Gómez", "Comidas Rápidas", t => { tokenEnviado = t; return $"https://x/{t}"; });
+
+        Assert.True(ok);
+        var guardado = Assert.Single(e.Tokens.Tokens);
+        Assert.Equal(TokenUtil.Hash(tokenEnviado!), guardado.TokenHash);
+        Assert.True(guardado.Expira > DateTime.UtcNow.AddHours(ActivacionCuentaService.HorasVigencia - 1));
+        var correo = Assert.Single(e.Email.EnviadosHtml);
+        Assert.Equal("rep@gtrack.local", correo.Para);
+        Assert.Contains("repartidor", correo.Asunto);
+        Assert.Contains("Comidas Rápidas", correo.Correo.Texto);
+    }
+
+    [Fact]
+    public async Task EnviarEnlace_Administrador_UsaElCorreoDeAdministrador()
+    {
+        var e = new Escenario();
+        var usuario = e.AgregarAdministrador();
+
+        var ok = await e.Servicio.EnviarEnlaceAsync(usuario, "Ana Gómez", null, t => $"https://x/{t}");
+
+        Assert.True(ok);
+        Assert.Contains("administrador", Assert.Single(e.Email.EnviadosHtml).Asunto);
+    }
+
+    [Fact]
+    public async Task EnviarEnlace_FallaElCorreo_RetornaFalse()
+    {
+        var e = new Escenario();
+        var usuario = e.AgregarRepartidor();
+        e.Email.DebeFallar = true;
+
+        Assert.False(await e.Servicio.EnviarEnlaceAsync(usuario, "Juan Gómez", "Comidas Rápidas", t => t));
+    }
+
+    [Fact]
+    public async Task EnviosUltimaHora_CuentaLosEnlacesRecientes()
+    {
+        var e = new Escenario();
+        e.AgregarToken(2);
+        e.AgregarToken(2);
+        e.Tokens.Tokens.Add(new TokenRecuperacion { UsuarioId = 2, FechaCreacion = DateTime.UtcNow.AddHours(-3) });
+
+        Assert.Equal(2, await e.Servicio.EnviosUltimaHoraAsync(2));
+    }
+
+    // ===== Consulta del enlace =====
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("   ")]
+    public async Task Consultar_TokenVacio_EsInvalido(string? token)
+    {
+        var e = new Escenario();
+
+        Assert.Equal(EstadoEnlaceActivacion.Invalido, (await e.Servicio.ConsultarAsync(token)).Estado);
+    }
+
+    [Fact]
+    public async Task Consultar_TokenQueNoExiste_EsInvalido()
+    {
+        var e = new Escenario();
+
+        Assert.Equal(EstadoEnlaceActivacion.Invalido, (await e.Servicio.ConsultarAsync("otro-token")).Estado);
+    }
+
+    [Fact]
+    public async Task Consultar_UsuarioNoExiste_EsInvalido()
+    {
+        var e = new Escenario();
+        e.AgregarToken(99);
+
+        Assert.Equal(EstadoEnlaceActivacion.Invalido, (await e.Servicio.ConsultarAsync(Token)).Estado);
+    }
+
+    [Fact]
+    public async Task Consultar_CuentaDeNegocio_EsInvalido()
+    {
+        var e = new Escenario();
+        e.Usuarios.Usuarios.Add(new Usuario { Id = 1, Rol = RolUsuario.Negocio, Estado = EstadoCuenta.PendienteActivacion });
+        e.AgregarToken(1);
+
+        Assert.Equal(EstadoEnlaceActivacion.Invalido, (await e.Servicio.ConsultarAsync(Token)).Estado);
+    }
+
+    [Fact]
+    public async Task Consultar_CuentaYaActiva_LoIndica()
+    {
+        var e = new Escenario();
+        e.AgregarRepartidor(EstadoCuenta.Activo);
+        e.AgregarToken(2);
+
+        Assert.Equal(EstadoEnlaceActivacion.CuentaYaActiva, (await e.Servicio.ConsultarAsync(Token)).Estado);
+    }
+
+    [Fact]
+    public async Task Consultar_EnlaceUsado_EsInvalido()
+    {
+        var e = new Escenario();
+        e.AgregarRepartidor();
+        e.AgregarToken(2, usado: true);
+
+        Assert.Equal(EstadoEnlaceActivacion.Invalido, (await e.Servicio.ConsultarAsync(Token)).Estado);
+    }
+
+    [Fact]
+    public async Task Consultar_EnlaceVencido_LoIndica()
+    {
+        var e = new Escenario();
+        e.AgregarRepartidor();
+        e.AgregarToken(2, horas: -1);
+
+        Assert.Equal(EstadoEnlaceActivacion.Vencido, (await e.Servicio.ConsultarAsync(Token)).Estado);
+    }
+
+    [Fact]
+    public async Task Consultar_EnlaceValidoDeRepartidor_IncluyeNombreYNegocio()
+    {
+        var e = new Escenario();
+        e.AgregarRepartidor();
+        e.AgregarToken(2);
+
+        var info = await e.Servicio.ConsultarAsync(Token);
+
+        Assert.Equal(EstadoEnlaceActivacion.Valido, info.Estado);
+        Assert.Equal(RolUsuario.Repartidor, info.Rol);
+        Assert.Equal("Juan Gómez", info.Nombre);
+        Assert.Equal("Comidas Rápidas", info.Negocio);
+    }
+
+    [Fact]
+    public async Task Consultar_EnlaceValidoDeAdministrador_IncluyeElNombre()
+    {
+        var e = new Escenario();
+        e.AgregarAdministrador();
+        e.AgregarToken(3);
+
+        var info = await e.Servicio.ConsultarAsync(Token);
+
+        Assert.Equal(EstadoEnlaceActivacion.Valido, info.Estado);
+        Assert.Equal(RolUsuario.Administrador, info.Rol);
+        Assert.Equal("Ana Gómez", info.Nombre);
+    }
+
+    // ===== Activación =====
+
+    [Fact]
+    public async Task Activar_EnlaceInvalido_NoActiva()
+    {
+        var e = new Escenario();
+
+        var (ok, error, info) = await e.Servicio.ActivarAsync("otro-token", "Clave123", "Clave123", UrlLogin);
+
+        Assert.False(ok);
+        Assert.Null(error);
+        Assert.Equal(EstadoEnlaceActivacion.Invalido, info.Estado);
+    }
+
+    [Theory]
+    [InlineData("", "", "Escribe y confirma la contraseña que quieres usar")]
+    [InlineData("Clave123", "Clave999", "Las contraseñas no coinciden")]
+    [InlineData("abc", "abc", "La contraseña debe tener mínimo 6 caracteres, con al menos un número y una letra")]
+    public async Task Activar_ContrasenaInvalida_RetornaElError(string password, string confirmacion, string esperado)
+    {
+        var e = new Escenario();
+        var usuario = e.AgregarRepartidor();
+        e.AgregarToken(2);
+
+        var (ok, error, _) = await e.Servicio.ActivarAsync(Token, password, confirmacion, UrlLogin);
+
+        Assert.False(ok);
+        Assert.Equal(esperado, error);
+        Assert.Equal(EstadoCuenta.PendienteActivacion, usuario.Estado);
+    }
+
+    [Fact]
+    public async Task Activar_DatosValidos_ActivaLaCuentaYAnulaElEnlace()
+    {
+        var e = new Escenario();
+        var usuario = e.AgregarRepartidor();
+        var token = e.AgregarToken(2);
+
+        var (ok, error, _) = await e.Servicio.ActivarAsync(Token, "Clave123", "Clave123", UrlLogin);
+
+        Assert.True(ok);
+        Assert.Null(error);
+        Assert.Equal(EstadoCuenta.Activo, usuario.Estado);
+        Assert.Equal("HASH:Clave123", usuario.PasswordHash);
+        Assert.True(e.Usuarios.SeLlamoActualizar);
+        Assert.True(token.Usado);
+        Assert.Equal("Tu cuenta de GTrack está activa", Assert.Single(e.Email.EnviadosHtml).Asunto);
+    }
+
+    [Fact]
+    public async Task Activar_AdministradorSinCorreo_IgualQuedaActivo()
+    {
+        var e = new Escenario();
+        var usuario = e.AgregarAdministrador();
+        e.AgregarToken(3);
+        e.Email.DebeFallar = true;
+
+        var (ok, _, _) = await e.Servicio.ActivarAsync(Token, "Clave123", "Clave123", UrlLogin);
+
+        Assert.True(ok);
+        Assert.Equal(EstadoCuenta.Activo, usuario.Estado);
+    }
+
+    [Fact]
+    public async Task Activar_RepartidorSinNegocio_EnviaLaConfirmacion()
+    {
+        var e = new Escenario();
+        e.AgregarRepartidor(conNegocio: false);
+        e.AgregarToken(2);
+
+        var (ok, _, info) = await e.Servicio.ActivarAsync(Token, "Clave123", "Clave123", UrlLogin);
+
+        Assert.True(ok);
+        Assert.Equal("", info.Negocio);
+        Assert.Single(e.Email.EnviadosHtml);
+    }
+}
+ParseOptions.0.json�0
+hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AdminControllerReportesTests.cs�/using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
+
+namespace Gtrack.Tests;
+
+// Reporte general de la plataforma (administrador) y reenvío de activación
+public class AdminControllerReportesTests
+{
+    private static readonly DateTime Desde = new(2026, 11, 1);
+    private static readonly DateTime Hasta = new(2026, 11, 30);
+    private static readonly byte[] Archivo = [1, 2, 3];
+
+    private sealed class Escenario
+    {
+        public IAdministracionService Admin { get; } = Substitute.For<IAdministracionService>();
+        public IReporteService Reportes { get; } = Substitute.For<IReporteService>();
+        public IExportadorReportes Exportador { get; } = Substitute.For<IExportadorReportes>();
+        public AdminController Controlador { get; }
+
+        public Escenario()
+        {
+            Controlador = new AdminController(Admin, Reportes, Exportador, NullLogger<AdminController>.Instance)
+                .Preparar(usuarioId: 1, rol: "Administrador");
+            Exportador.ReporteAdminExcel(Arg.Any<ReporteAdminDto>()).Returns(Archivo);
+            Exportador.ReporteAdminPdf(Arg.Any<ReporteAdminDto>()).Returns(Archivo);
+        }
+
+        public void ConReporte(int negocios = 0, int repartidores = 0, int pedidos = 0) =>
+            Reportes.GenerarReporteAdminAsync(Desde, Hasta).Returns(new ReporteAdminDto
+            {
+                NegociosRegistrados = negocios,
+                RepartidoresRegistrados = repartidores,
+                TotalPedidos = pedidos
+            });
+    }
+
+    // ===== Reportes =====
+
+    [Fact]
+    public async Task Reportes_Get_SinFechas_MuestraSoloElFormulario()
+    {
+        var e = new Escenario();
+
+        var modelo = Assert.IsType<ReporteAdminVista>(Assert.IsType<ViewResult>(await e.Controlador.Reportes(null, null)).Model);
+
+        Assert.Null(modelo.Reporte);
+        Assert.Equal(DateTime.Today, modelo.Hasta);
+    }
+
+    [Fact]
+    public async Task Reportes_Get_RangoInvalido_MuestraError()
+    {
+        var e = new Escenario();
+
+        var modelo = Assert.IsType<ReporteAdminVista>(Assert.IsType<ViewResult>(await e.Controlador.Reportes(Hasta, Desde)).Model);
+
+        Assert.Equal(RangoReporte.MensajeInvalido, modelo.Error);
+    }
+
+    [Fact]
+    public async Task Reportes_Get_SinInformacion_MuestraAviso()
+    {
+        var e = new Escenario();
+        e.ConReporte();
+
+        var modelo = Assert.IsType<ReporteAdminVista>(Assert.IsType<ViewResult>(await e.Controlador.Reportes(Desde, Hasta)).Model);
+
+        Assert.NotNull(modelo.Aviso);
+        Assert.Null(modelo.Reporte);
+    }
+
+    [Fact]
+    public async Task Reportes_Get_ConInformacion_MuestraElReporte()
+    {
+        var e = new Escenario();
+        e.ConReporte(negocios: 2, pedidos: 5);
+
+        var modelo = Assert.IsType<ReporteAdminVista>(Assert.IsType<ViewResult>(await e.Controlador.Reportes(Desde, Hasta)).Model);
+
+        Assert.NotNull(modelo.Reporte);
+        Assert.Equal(2, modelo.Reporte.NegociosRegistrados);
+    }
+
+    [Fact]
+    public async Task Reportes_Get_FallaElServicio_MuestraError()
+    {
+        var e = new Escenario();
+        e.Reportes.GenerarReporteAdminAsync(Desde, Hasta).ThrowsAsync(new InvalidOperationException("Falla"));
+
+        var modelo = Assert.IsType<ReporteAdminVista>(Assert.IsType<ViewResult>(await e.Controlador.Reportes(Desde, Hasta)).Model);
+
+        Assert.Equal("No fue posible generar el reporte. Intenta nuevamente", modelo.Error);
+    }
+
+    // ===== DescargarReporte =====
+
+    [Fact]
+    public async Task DescargarReporte_RangoInvalido_RedirigeConError()
+    {
+        var e = new Escenario();
+
+        var r = Assert.IsType<RedirectToActionResult>(await e.Controlador.DescargarReporte(Desde, null));
+
+        Assert.Equal("Reportes", r.ActionName);
+        Assert.Equal(RangoReporte.MensajeInvalido, e.Controlador.TempData["Error"]);
+    }
+
+    [Fact]
+    public async Task DescargarReporte_SinInformacion_RedirigeConError()
+    {
+        var e = new Escenario();
+        e.ConReporte();
+
+        var r = Assert.IsType<RedirectToActionResult>(await e.Controlador.DescargarReporte(Desde, Hasta));
+
+        Assert.Equal("Reportes", r.ActionName);
+        Assert.Equal("2026-11-30", r.RouteValues!["hasta"]);
+    }
+
+    [Fact]
+    public async Task DescargarReporte_Excel_RetornaArchivoExcel()
+    {
+        var e = new Escenario();
+        e.ConReporte(repartidores: 1);
+
+        var archivo = Assert.IsType<FileContentResult>(await e.Controlador.DescargarReporte(Desde, Hasta));
+
+        Assert.Equal("Reporte_Plataforma_20261101_20261130.xlsx", archivo.FileDownloadName);
+    }
+
+    [Fact]
+    public async Task DescargarReporte_Pdf_RetornaArchivoPdf()
+    {
+        var e = new Escenario();
+        e.ConReporte(pedidos: 1);
+
+        var archivo = Assert.IsType<FileContentResult>(await e.Controlador.DescargarReporte(Desde, Hasta, "pdf"));
+
+        Assert.Equal("application/pdf", archivo.ContentType);
+    }
+
+    [Fact]
+    public async Task DescargarReporte_FallaElServicio_RedirigeConError()
+    {
+        var e = new Escenario();
+        e.Reportes.GenerarReporteAdminAsync(Desde, Hasta).ThrowsAsync(new InvalidOperationException("Falla"));
+
+        Assert.IsType<RedirectToActionResult>(await e.Controlador.DescargarReporte(Desde, Hasta));
+
+        Assert.Equal("No fue posible generar el archivo. Intenta nuevamente", e.Controlador.TempData["Error"]);
+    }
+
+    // ===== ReenviarActivacion =====
+
+    [Theory]
+    [InlineData(true, "Mensaje")]
+    [InlineData(false, "Error")]
+    public async Task ReenviarActivacion_GuardaElMensajeSegunElResultado(bool exito, string clave)
+    {
+        var e = new Escenario();
+        e.Admin.ReenviarActivacionAsync(3, Arg.Any<Func<string, string>>()).Returns((exito, "Resultado del reenvío"));
+
+        var r = Assert.IsType<RedirectToActionResult>(await e.Controlador.ReenviarActivacion(3));
+
+        Assert.Equal("Administradores", r.ActionName);
+        Assert.Equal("Resultado del reenvío", e.Controlador.TempData[clave]);
+    }
+}
+ParseOptions.0.json�+
 `C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AdminControllerTests.cs�*using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
@@ -614,7 +1071,213 @@ public class EstadoPedidoInfoTests
         Assert.Equal(nombre, EstadoPedidoInfo.NombreCuenta(estado));
         Assert.Equal(color, EstadoPedidoInfo.ColorCuenta(estado));
     }
-}ParseOptions.0.json�
+}ParseOptions.0.json�;
+cC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\ExportadorReportesTests.cs�:using System.Text;
+using QuestPDF.Infrastructure;
+
+namespace Gtrack.Tests;
+
+// CU-22 y CU-24: archivos Excel, PDF y CSV de los reportes
+public class ExportadorReportesTests
+{
+    private readonly ExportadorReportes exportador = new();
+
+    public ExportadorReportesTests()
+    {
+        // En la aplicación se configura en Program.cs
+        QuestPDF.Settings.License = LicenseType.Community;
+    }
+
+    // Un .xlsx es un archivo ZIP: empieza con "PK"
+    private static bool EsExcel(byte[] archivo) =>
+        archivo.Length > 4 && archivo[0] == (byte)'P' && archivo[1] == (byte)'K';
+
+    private static bool EsPdf(byte[] archivo) =>
+        archivo.Length > 4 && Encoding.ASCII.GetString(archivo, 0, 4) == "%PDF";
+
+    private static List<FilaPedidoReporte> Filas() =>
+    [
+        new() { Codigo = "ABC12345", Cliente = "Ana Pérez", Fecha = new DateTime(2026, 11, 10, 9, 30, 0),
+                Estado = "Entregado", Repartidor = "Juan Gómez", ValorTotal = 25000m },
+        new() { Codigo = "XYZ98765", Cliente = "=SUMA(A1)", Fecha = new DateTime(2026, 11, 11, 15, 0, 0),
+                Estado = "Cancelado", Repartidor = "Sin asignar", ValorTotal = 12500.5m }
+    ];
+
+    private static ReporteNegocioDto ReporteNegocio(bool conDatos = true) => new()
+    {
+        NombreNegocio = "Comidas Rápidas",
+        Desde = new DateTime(2026, 10, 1),
+        Hasta = new DateTime(2026, 11, 30),
+        GeneradoEn = new DateTime(2026, 11, 14, 20, 0, 0),
+        TotalPedidos = conDatos ? 2 : 0,
+        Entregados = conDatos ? 1 : 0,
+        Cancelados = conDatos ? 1 : 0,
+        TasaEntrega = conDatos ? 50m : 0m,
+        ValorEntregado = conDatos ? 25000m : 0m,
+        PorEstado = conDatos
+            ? [new() { EstadoId = 5, Estado = "Entregado", Color = "#198754", Cantidad = 1, Porcentaje = 50m },
+               new() { EstadoId = 6, Estado = "Cancelado", Color = "#dc3545", Cantidad = 1, Porcentaje = 50m },
+               new() { EstadoId = 0, Estado = "Recibido", Color = "#6c757d", Cantidad = 0, Porcentaje = 0m }]
+            : [],
+        PorMes = conDatos
+            ? [new() { Mes = "Octubre 2026", Total = 0 },
+               new() { Mes = "Noviembre 2026", Total = 2, Entregados = 1, Cancelados = 1, ValorEntregado = 25000m }]
+            : [],
+        Pedidos = conDatos ? Filas() : []
+    };
+
+    private static HistorialExportDto Historial(bool conDatos = true) => new()
+    {
+        NombreNegocio = "Comidas Rápidas",
+        Desde = new DateTime(2026, 11, 1),
+        Hasta = new DateTime(2026, 11, 30),
+        GeneradoEn = new DateTime(2026, 11, 14, 20, 0, 0),
+        Filas = conDatos ? Filas() : []
+    };
+
+    private static ReporteAdminDto ReporteAdmin(bool conDatos = true) => new()
+    {
+        Desde = new DateTime(2026, 10, 1),
+        Hasta = new DateTime(2026, 11, 30),
+        GeneradoEn = new DateTime(2026, 11, 14, 20, 0, 0),
+        NegociosRegistrados = conDatos ? 2 : 0,
+        NegociosActivosTotal = conDatos ? 5 : 0,
+        RepartidoresRegistrados = conDatos ? 3 : 0,
+        TotalPedidos = conDatos ? 4 : 0,
+        PedidosEntregados = conDatos ? 2 : 0,
+        ValorEntregado = conDatos ? 80000m : 0m,
+        NegociosPorMes = conDatos
+            ? [new() { Mes = "Octubre 2026", Total = 0 }, new() { Mes = "Noviembre 2026", Total = 2 }]
+            : [],
+        NegociosPorEstado = conDatos
+            ? [new() { Etiqueta = "Activo", Color = "#198754", Cantidad = 2, Porcentaje = 100m }]
+            : [],
+        NegociosPorActividad = conDatos
+            ? [new() { Etiqueta = "Restaurante", Cantidad = 2, Porcentaje = 100m }]
+            : [],
+        PedidosPorEstado = conDatos
+            ? [new() { EstadoId = 5, Estado = "Entregado", Color = "#198754", Cantidad = 2, Porcentaje = 50m }]
+            : [],
+        TopNegocios = conDatos
+            ? [new() { Nombre = "Comidas Rápidas", Pedidos = 4, Entregados = 2, ValorEntregado = 80000m }]
+            : [],
+        Negocios = conDatos
+            ? [new() { Nombre = "Comidas Rápidas", Actividad = "Restaurante", Documento = "900123456",
+                       Correo = "negocio@gtrack.local", FechaRegistro = new DateTime(2026, 11, 2), Estado = "Activo" }]
+            : []
+    };
+
+    // ===== Excel =====
+
+    [Fact]
+    public void ReporteNegocioExcel_ConDatos_GeneraUnArchivoExcel()
+    {
+        Assert.True(EsExcel(exportador.ReporteNegocioExcel(ReporteNegocio())));
+    }
+
+    [Fact]
+    public void ReporteNegocioExcel_SinPedidos_GeneraUnArchivoExcel()
+    {
+        Assert.True(EsExcel(exportador.ReporteNegocioExcel(ReporteNegocio(conDatos: false))));
+    }
+
+    [Fact]
+    public void HistorialExcel_ConDatos_GeneraUnArchivoExcel()
+    {
+        Assert.True(EsExcel(exportador.HistorialExcel(Historial())));
+    }
+
+    [Fact]
+    public void ReporteAdminExcel_ConDatos_GeneraUnArchivoExcel()
+    {
+        Assert.True(EsExcel(exportador.ReporteAdminExcel(ReporteAdmin())));
+    }
+
+    [Fact]
+    public void ReporteAdminExcel_SinDatos_GeneraUnArchivoExcel()
+    {
+        Assert.True(EsExcel(exportador.ReporteAdminExcel(ReporteAdmin(conDatos: false))));
+    }
+
+    // ===== CSV =====
+
+    [Fact]
+    public void HistorialCsv_IncluyeEncabezadoYUnaFilaPorPedido()
+    {
+        var archivo = exportador.HistorialCsv(Historial());
+        var texto = Encoding.UTF8.GetString(archivo).TrimStart('﻿');
+        var lineas = texto.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
+        Assert.Equal("Código;Cliente;Fecha;Estado final;Repartidor;Valor total", lineas[0]);
+        Assert.Equal(3, lineas.Length);
+        Assert.Contains("\"ABC12345\"", lineas[1]);
+        Assert.EndsWith(";25000", lineas[1]);
+    }
+
+    [Fact]
+    public void HistorialCsv_IniciaConBomParaQueSeVeanLasTildes()
+    {
+        var archivo = exportador.HistorialCsv(Historial());
+
+        Assert.Equal(new byte[] { 0xEF, 0xBB, 0xBF }, archivo.Take(3).ToArray());
+    }
+
+    [Fact]
+    public void HistorialCsv_TextoQueEmpiezaConIgual_SeEscapaParaQueExcelNoLoTomeComoFormula()
+    {
+        var texto = Encoding.UTF8.GetString(exportador.HistorialCsv(Historial()));
+
+        Assert.Contains("\"'=SUMA(A1)\"", texto);
+    }
+
+    [Fact]
+    public void HistorialCsv_SinPedidos_SoloTieneElEncabezado()
+    {
+        var texto = Encoding.UTF8.GetString(exportador.HistorialCsv(Historial(conDatos: false))).TrimStart('﻿');
+        var lineas = texto.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
+        Assert.Single(lineas);
+    }
+
+    // ===== PDF =====
+
+    [Fact]
+    public void ReporteNegocioPdf_ConDatos_GeneraUnPdf()
+    {
+        Assert.True(EsPdf(exportador.ReporteNegocioPdf(ReporteNegocio())));
+    }
+
+    [Fact]
+    public void ReporteNegocioPdf_SinPedidos_GeneraUnPdf()
+    {
+        Assert.True(EsPdf(exportador.ReporteNegocioPdf(ReporteNegocio(conDatos: false))));
+    }
+
+    [Fact]
+    public void HistorialPdf_ConDatos_GeneraUnPdf()
+    {
+        Assert.True(EsPdf(exportador.HistorialPdf(Historial())));
+    }
+
+    [Fact]
+    public void HistorialPdf_SinPedidos_GeneraUnPdf()
+    {
+        Assert.True(EsPdf(exportador.HistorialPdf(Historial(conDatos: false))));
+    }
+
+    [Fact]
+    public void ReporteAdminPdf_ConDatos_GeneraUnPdf()
+    {
+        Assert.True(EsPdf(exportador.ReporteAdminPdf(ReporteAdmin())));
+    }
+
+    [Fact]
+    public void ReporteAdminPdf_SinDatos_GeneraUnPdf()
+    {
+        Assert.True(EsPdf(exportador.ReporteAdminPdf(ReporteAdmin(conDatos: false))));
+    }
+}
+ParseOptions.0.json�
 oC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\AdministracionRepositoryFalso.cs�namespace Gtrack.Tests;
 
 public class AdministracionRepositoryFalso : IAdministracionRepository
@@ -3108,7 +3771,604 @@ public class PedidoServiceTests
         var pedido = await e.Contexto.Pedidos.AsNoTracking().SingleAsync();
         Assert.Equal((int)EstadoPedido.EnCamino, pedido.EstadoPedidoId);
     }
-}ParseOptions.0.json�@
+}ParseOptions.0.json��
+hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\PerfilRepartidorServiceTests.cs��using Microsoft.Extensions.Logging.Abstractions;
+
+namespace Gtrack.Tests;
+
+// CU-12 Eliminar repartidor y CU-14 Editar repartidor
+public class PerfilRepartidorServiceTests
+{
+    private const string MensajeCodigoExpirado = "El código expiró o ya no es válido. Solicita uno nuevo";
+    private const string MensajeContrasenaIncorrecta = "Contraseña incorrecta";
+
+    private sealed class Escenario
+    {
+        public AppDbContext Contexto { get; }
+        public RepartidorRepositoryFalso Repartidores { get; } = new();
+        public NegocioRepositoryFalso Negocios { get; } = new();
+        public UsuarioRepositoryFalso Usuarios { get; } = new();
+        public CodigoVerificacionRepositoryFalso Codigos { get; } = new();
+        public EmailServiceFalso Email { get; } = new();
+
+        public Usuario UsuarioNegocio { get; } = new()
+        {
+            Id = 1, Correo = "negocio@gtrack.local", Documento = "900123", Rol = RolUsuario.Negocio,
+            Estado = EstadoCuenta.Activo, PasswordHash = "HASH:Negocio123"
+        };
+
+        public Usuario UsuarioRepartidor { get; } = new()
+        {
+            Id = 2, Correo = "rep@gtrack.local", Documento = "1010", Rol = RolUsuario.Repartidor,
+            Estado = EstadoCuenta.Activo, PasswordHash = "HASH:Clave123"
+        };
+
+        public Repartidor Repartidor { get; }
+
+        public PerfilRepartidorService Servicio => new(
+            Contexto, Repartidores, Negocios, Usuarios, Codigos,
+            new PasswordHasherFalso(), Email, NullLogger<PerfilRepartidorService>.Instance);
+
+        public Escenario(bool conRepartidor = true, bool fallaAlGuardar = false)
+        {
+            Contexto = fallaAlGuardar ? ContextoFactory.CrearQueFallaAlGuardar() : ContextoFactory.Crear();
+            Negocios.Negocios.Add(new Negocio { Id = 10, UsuarioId = 1, Nombre = "Comidas Rápidas" });
+            Usuarios.Usuarios.Add(UsuarioNegocio);
+
+            Repartidor = new Repartidor
+            {
+                Id = 5, UsuarioId = 2, NegocioId = 10, NombreCompleto = "Juan Gómez", Telefono = "3001234567",
+                Vehiculo = TipoVehiculo.Moto, Placa = "ABC12D", Usuario = UsuarioRepartidor
+            };
+
+            if (!conRepartidor) return;
+            Usuarios.Usuarios.Add(UsuarioRepartidor);
+            Repartidores.Repartidores.Add(Repartidor);
+            Contexto.Repartidores.Add(Repartidor);
+            Contexto.SaveChanges();   // síncrono: el contexto que falla solo falla en SaveChangesAsync
+        }
+
+        public void AgregarPedido(EstadoPedido estado)
+        {
+            Contexto.Pedidos.Add(new Pedido { Codigo = "PED" + Guid.NewGuid().ToString("N")[..5], RepartidorId = 5, EstadoPedidoId = (int)estado });
+            Contexto.SaveChanges();
+        }
+
+        public CodigoVerificacion AgregarCodigo(string codigo = "123456", bool verificado = false, bool usado = false,
+            int minutosVigencia = 10, DateTime? bloqueadoHasta = null, int intentos = 0)
+        {
+            var c = new CodigoVerificacion
+            {
+                Id = Codigos.Codigos.Count + 1,
+                UsuarioId = 2,
+                CodigoHash = TokenUtil.Hash(codigo),
+                Expira = DateTime.UtcNow.AddMinutes(minutosVigencia),
+                Verificado = verificado,
+                Usado = usado,
+                BloqueadoHasta = bloqueadoHasta,
+                Intentos = intentos
+            };
+            Codigos.Codigos.Add(c);
+            return c;
+        }
+    }
+
+    private static EditarRepartidorDto DtoEdicion(TipoVehiculo vehiculo = TipoVehiculo.Carro, string? placa = "abc-123") => new()
+    {
+        NombreCompleto = " Juan Pérez ",
+        Telefono = "3001112233",
+        Correo = " nuevo@gtrack.local ",
+        Vehiculo = vehiculo,
+        Placa = placa
+    };
+
+    // ===== Perfil =====
+
+    [Fact]
+    public async Task ObtenerPerfil_NoExiste_RetornaNull()
+    {
+        var e = new Escenario(conRepartidor: false);
+
+        Assert.Null(await e.Servicio.ObtenerPerfilAsync(2));
+    }
+
+    [Fact]
+    public async Task ObtenerPerfil_Existe_RetornaDatosYPedidosPendientes()
+    {
+        var e = new Escenario();
+        e.AgregarPedido(EstadoPedido.Asignado);
+        e.AgregarPedido(EstadoPedido.EnCamino);
+        e.AgregarPedido(EstadoPedido.Entregado);
+
+        var perfil = await e.Servicio.ObtenerPerfilAsync(2);
+
+        Assert.NotNull(perfil);
+        Assert.Equal("Juan Gómez", perfil.NombreCompleto);
+        Assert.Equal("rep@gtrack.local", perfil.Correo);
+        Assert.Equal("Comidas Rápidas", perfil.Negocio);
+        Assert.Equal(2, perfil.PedidosPendientes);
+    }
+
+    // ===== CU-14: motivo para no editar =====
+
+    [Fact]
+    public async Task MotivoNoEditable_SinRepartidor_SinPermisos()
+    {
+        var e = new Escenario(conRepartidor: false);
+
+        Assert.Equal(PerfilRepartidorService.MensajeSinPermisos, await e.Servicio.MotivoNoEditableAsync(2));
+    }
+
+    [Fact]
+    public async Task MotivoNoEditable_CuentaSuspendida_NoPuedeEditar()
+    {
+        var e = new Escenario();
+        e.UsuarioRepartidor.Estado = EstadoCuenta.Suspendido;
+
+        Assert.Equal(PerfilRepartidorService.MensajeSuspendido, await e.Servicio.MotivoNoEditableAsync(2));
+    }
+
+    [Fact]
+    public async Task MotivoNoEditable_ConPedidosAsignados_NoPuedeEditar()
+    {
+        var e = new Escenario();
+        e.AgregarPedido(EstadoPedido.Asignado);
+
+        Assert.Equal(PerfilRepartidorService.MensajeConPedidos, await e.Servicio.MotivoNoEditableAsync(2));
+    }
+
+    [Fact]
+    public async Task MotivoNoEditable_SinRestricciones_RetornaNull()
+    {
+        var e = new Escenario();
+
+        Assert.Null(await e.Servicio.MotivoNoEditableAsync(2));
+    }
+
+    // ===== CU-14: código de verificación =====
+
+    [Fact]
+    public async Task SolicitarCodigo_NoPuedeEditar_RetornaElMotivo()
+    {
+        var e = new Escenario();
+        e.AgregarPedido(EstadoPedido.EnCamino);
+
+        var (ok, error) = await e.Servicio.SolicitarCodigoAsync(2);
+
+        Assert.False(ok);
+        Assert.Equal(PerfilRepartidorService.MensajeConPedidos, error);
+        Assert.Empty(e.Email.EnviadosHtml);
+    }
+
+    [Fact]
+    public async Task SolicitarCodigo_Bloqueado_RetornaMensajeDeBloqueo()
+    {
+        var e = new Escenario();
+        e.AgregarCodigo(bloqueadoHasta: DateTime.UtcNow.AddMinutes(10));
+
+        var (ok, error) = await e.Servicio.SolicitarCodigoAsync(2);
+
+        Assert.False(ok);
+        Assert.StartsWith("La edición de tu perfil está bloqueada", error);
+    }
+
+    [Fact]
+    public async Task SolicitarCodigo_Exitoso_GuardaElCodigoYEnviaElCorreo()
+    {
+        var e = new Escenario();
+
+        var (ok, error) = await e.Servicio.SolicitarCodigoAsync(2);
+
+        Assert.True(ok);
+        Assert.Null(error);
+        Assert.Single(e.Codigos.Codigos);
+        var correo = Assert.Single(e.Email.EnviadosHtml);
+        Assert.Equal("rep@gtrack.local", correo.Para);
+        Assert.Equal("Tu código de verificación de GTrack", correo.Asunto);
+    }
+
+    [Fact]
+    public async Task SolicitarCodigo_FallaElCorreo_RetornaError()
+    {
+        var e = new Escenario();
+        e.Email.DebeFallar = true;
+
+        var (ok, error) = await e.Servicio.SolicitarCodigoAsync(2);
+
+        Assert.False(ok);
+        Assert.Equal("No fue posible enviar el código. Intenta nuevamente", error);
+    }
+
+    [Fact]
+    public async Task VerificarCodigo_SinCodigo_RetornaExpirado()
+    {
+        var e = new Escenario();
+
+        var (ok, error) = await e.Servicio.VerificarCodigoAsync(2, "123456");
+
+        Assert.False(ok);
+        Assert.Equal(MensajeCodigoExpirado, error);
+    }
+
+    [Fact]
+    public async Task VerificarCodigo_Bloqueado_RetornaMensajeDeBloqueo()
+    {
+        var e = new Escenario();
+        e.AgregarCodigo(bloqueadoHasta: DateTime.UtcNow.AddMinutes(5));
+
+        var (ok, error) = await e.Servicio.VerificarCodigoAsync(2, "123456");
+
+        Assert.False(ok);
+        Assert.StartsWith("La edición de tu perfil está bloqueada", error);
+    }
+
+    [Fact]
+    public async Task VerificarCodigo_Vencido_RetornaExpirado()
+    {
+        var e = new Escenario();
+        e.AgregarCodigo(minutosVigencia: -1);
+
+        var (_, error) = await e.Servicio.VerificarCodigoAsync(2, "123456");
+
+        Assert.Equal(MensajeCodigoExpirado, error);
+    }
+
+    [Fact]
+    public async Task VerificarCodigo_Incorrecto_SumaUnIntento()
+    {
+        var e = new Escenario();
+        var codigo = e.AgregarCodigo();
+
+        var (ok, error) = await e.Servicio.VerificarCodigoAsync(2, "000000");
+
+        Assert.False(ok);
+        Assert.Equal("Código incorrecto, intenta nuevamente", error);
+        Assert.Equal(1, codigo.Intentos);
+        Assert.Null(codigo.BloqueadoHasta);
+    }
+
+    [Fact]
+    public async Task VerificarCodigo_TercerIntentoFallido_BloqueaLaEdicion()
+    {
+        var e = new Escenario();
+        var codigo = e.AgregarCodigo(intentos: 2);
+
+        var (ok, error) = await e.Servicio.VerificarCodigoAsync(2, "000000");
+
+        Assert.False(ok);
+        Assert.StartsWith("Superaste 3 intentos fallidos", error);
+        Assert.NotNull(codigo.BloqueadoHasta);
+    }
+
+    [Fact]
+    public async Task VerificarCodigo_Correcto_AutorizaLaEdicion()
+    {
+        var e = new Escenario();
+        var codigo = e.AgregarCodigo();
+
+        var (ok, error) = await e.Servicio.VerificarCodigoAsync(2, " 123456 ");
+
+        Assert.True(ok);
+        Assert.Null(error);
+        Assert.True(codigo.Verificado);
+        Assert.True(await e.Servicio.EdicionAutorizadaAsync(2));
+    }
+
+    [Fact]
+    public async Task EdicionAutorizada_CodigoYaUsado_RetornaFalse()
+    {
+        var e = new Escenario();
+        e.AgregarCodigo(verificado: true, usado: true);
+
+        Assert.False(await e.Servicio.EdicionAutorizadaAsync(2));
+    }
+
+    // ===== CU-14: edición =====
+
+    [Fact]
+    public async Task ObtenerParaEditar_NoExiste_RetornaNull()
+    {
+        var e = new Escenario(conRepartidor: false);
+
+        Assert.Null(await e.Servicio.ObtenerParaEditarAsync(2));
+    }
+
+    [Fact]
+    public async Task ObtenerParaEditar_Existe_RetornaLosDatosActuales()
+    {
+        var e = new Escenario();
+
+        var dto = await e.Servicio.ObtenerParaEditarAsync(2);
+
+        Assert.NotNull(dto);
+        Assert.Equal("Juan Gómez", dto.NombreCompleto);
+        Assert.Equal("rep@gtrack.local", dto.Correo);
+        Assert.Equal(TipoVehiculo.Moto, dto.Vehiculo);
+        Assert.Equal("ABC12D", dto.Placa);
+    }
+
+    [Fact]
+    public async Task Editar_SinVerificacion_NoPermiteEditar()
+    {
+        var e = new Escenario();
+
+        var (ok, error) = await e.Servicio.EditarAsync(2, DtoEdicion());
+
+        Assert.False(ok);
+        Assert.Equal(PerfilRepartidorService.MensajeSinVerificacion, error);
+    }
+
+    [Fact]
+    public async Task Editar_LeAsignaronUnPedido_NoPermiteEditar()
+    {
+        var e = new Escenario();
+        e.AgregarCodigo(verificado: true);
+        e.AgregarPedido(EstadoPedido.Asignado);
+
+        var (ok, error) = await e.Servicio.EditarAsync(2, DtoEdicion());
+
+        Assert.False(ok);
+        Assert.Equal(PerfilRepartidorService.MensajeConPedidos, error);
+    }
+
+    [Fact]
+    public async Task Editar_CorreoDeOtraCuenta_RetornaError()
+    {
+        var e = new Escenario();
+        e.AgregarCodigo(verificado: true);
+        e.Contexto.Usuarios.Add(new Usuario { Id = 8, Correo = "nuevo@gtrack.local", Documento = "8080" });
+        e.Contexto.SaveChanges();
+
+        var (ok, error) = await e.Servicio.EditarAsync(2, DtoEdicion());
+
+        Assert.False(ok);
+        Assert.Equal("El correo ya está registrado en otra cuenta", error);
+    }
+
+    [Fact]
+    public async Task Editar_TelefonoDeUnNegocio_RetornaError()
+    {
+        var e = new Escenario();
+        e.AgregarCodigo(verificado: true);
+        e.Contexto.Negocios.Add(new Negocio { Id = 20, UsuarioId = 1, Nombre = "Otro", Telefono = "3001112233" });
+        e.Contexto.SaveChanges();
+
+        var (ok, error) = await e.Servicio.EditarAsync(2, DtoEdicion());
+
+        Assert.False(ok);
+        Assert.Equal("El teléfono ya está registrado en otra cuenta", error);
+    }
+
+    [Fact]
+    public async Task Editar_DatosValidos_GuardaLosCambiosYUsaElCodigo()
+    {
+        var e = new Escenario();
+        var codigo = e.AgregarCodigo(verificado: true);
+
+        var (ok, error) = await e.Servicio.EditarAsync(2, DtoEdicion());
+
+        Assert.True(ok);
+        Assert.Null(error);
+        Assert.Equal("Juan Pérez", e.Repartidor.NombreCompleto);
+        Assert.Equal("3001112233", e.Repartidor.Telefono);
+        Assert.Equal(TipoVehiculo.Carro, e.Repartidor.Vehiculo);
+        Assert.Equal("ABC123", e.Repartidor.Placa);
+        Assert.Equal("nuevo@gtrack.local", e.UsuarioRepartidor.Correo);
+        Assert.True(codigo.Usado);
+    }
+
+    [Fact]
+    public async Task Editar_Bicicleta_QuitaLaPlaca()
+    {
+        var e = new Escenario();
+        e.AgregarCodigo(verificado: true);
+
+        var (ok, _) = await e.Servicio.EditarAsync(2, DtoEdicion(TipoVehiculo.Bicicleta, "ABC12D"));
+
+        Assert.True(ok);
+        Assert.Null(e.Repartidor.Placa);
+    }
+
+    [Fact]
+    public async Task Editar_FallaAlGuardar_RetornaError()
+    {
+        var e = new Escenario(fallaAlGuardar: true);
+        e.AgregarCodigo(verificado: true);
+
+        var (ok, error) = await e.Servicio.EditarAsync(2, DtoEdicion());
+
+        Assert.False(ok);
+        Assert.Equal("No fue posible actualizar la información. Intenta Nuevamente", error);
+    }
+
+    // ===== CU-12: el repartidor elimina su cuenta =====
+
+    [Fact]
+    public async Task ValidarEliminacionPropia_SinRepartidor_SinPermisos()
+    {
+        var e = new Escenario(conRepartidor: false);
+
+        var (ok, error) = await e.Servicio.ValidarEliminacionPropiaAsync(2);
+
+        Assert.False(ok);
+        Assert.Equal(PerfilRepartidorService.MensajeSinPermisos, error);
+    }
+
+    [Fact]
+    public async Task ValidarEliminacionPropia_ConEntregasPendientes_NoPermite()
+    {
+        var e = new Escenario();
+        e.AgregarPedido(EstadoPedido.EnCamino);
+
+        var (ok, error) = await e.Servicio.ValidarEliminacionPropiaAsync(2);
+
+        Assert.False(ok);
+        Assert.Equal("No es posible eliminar la cuenta mientras tengas entregas pendientes", error);
+    }
+
+    [Fact]
+    public async Task EliminarCuentaPropia_ConEntregasPendientes_NoElimina()
+    {
+        var e = new Escenario();
+        e.AgregarPedido(EstadoPedido.Asignado);
+
+        var (ok, _) = await e.Servicio.EliminarCuentaPropiaAsync(2, "Clave123");
+
+        Assert.False(ok);
+        Assert.Equal(EstadoCuenta.Activo, e.UsuarioRepartidor.Estado);
+    }
+
+    [Fact]
+    public async Task EliminarCuentaPropia_UsuarioNoExiste_SinPermisos()
+    {
+        var e = new Escenario();
+        e.Usuarios.Usuarios.Remove(e.UsuarioRepartidor);
+
+        var (ok, error) = await e.Servicio.EliminarCuentaPropiaAsync(2, "Clave123");
+
+        Assert.False(ok);
+        Assert.Equal(PerfilRepartidorService.MensajeSinPermisos, error);
+    }
+
+    [Theory]
+    [InlineData("OtraClave1")]
+    [InlineData("")]
+    public async Task EliminarCuentaPropia_ContrasenaIncorrecta_NoElimina(string password)
+    {
+        var e = new Escenario();
+
+        var (ok, error) = await e.Servicio.EliminarCuentaPropiaAsync(2, password);
+
+        Assert.False(ok);
+        Assert.Equal(MensajeContrasenaIncorrecta, error);
+        Assert.Equal(EstadoCuenta.Activo, e.UsuarioRepartidor.Estado);
+    }
+
+    [Fact]
+    public async Task EliminarCuentaPropia_SinContrasenaGuardada_NoElimina()
+    {
+        var e = new Escenario();
+        e.UsuarioRepartidor.PasswordHash = "";
+
+        var (ok, error) = await e.Servicio.EliminarCuentaPropiaAsync(2, "Clave123");
+
+        Assert.False(ok);
+        Assert.Equal(MensajeContrasenaIncorrecta, error);
+    }
+
+    [Fact]
+    public async Task EliminarCuentaPropia_DatosValidos_DaDeBajaYLiberaElCorreo()
+    {
+        var e = new Escenario();
+
+        var (ok, error) = await e.Servicio.EliminarCuentaPropiaAsync(2, "Clave123");
+
+        Assert.True(ok);
+        Assert.Null(error);
+        Assert.Equal(EstadoCuenta.Eliminado, e.UsuarioRepartidor.Estado);
+        Assert.Equal("eliminado.2.rep@gtrack.local", e.UsuarioRepartidor.Correo);
+        Assert.Equal("X2-1010", e.UsuarioRepartidor.Documento);
+        Assert.True(e.Usuarios.SeLlamoActualizar);
+    }
+
+    // ===== FA-13-CU12: el negocio elimina a su repartidor =====
+
+    [Fact]
+    public async Task ValidarEliminacionPorNegocio_NegocioNoExiste_SinPermisos()
+    {
+        var e = new Escenario();
+
+        var (ok, error) = await e.Servicio.ValidarEliminacionPorNegocioAsync(99, 5);
+
+        Assert.False(ok);
+        Assert.Equal(PerfilRepartidorService.MensajeSinPermisos, error);
+    }
+
+    [Fact]
+    public async Task ValidarEliminacionPorNegocio_RepartidorYaEliminado_SinPermisos()
+    {
+        var e = new Escenario();
+        e.UsuarioRepartidor.Estado = EstadoCuenta.Eliminado;
+
+        var (ok, error) = await e.Servicio.ValidarEliminacionPorNegocioAsync(1, 5);
+
+        Assert.False(ok);
+        Assert.Equal(PerfilRepartidorService.MensajeSinPermisos, error);
+    }
+
+    [Fact]
+    public async Task ValidarEliminacionPorNegocio_ConEntregasPendientes_NoPermite()
+    {
+        var e = new Escenario();
+        e.AgregarPedido(EstadoPedido.Asignado);
+
+        var (ok, error) = await e.Servicio.ValidarEliminacionPorNegocioAsync(1, 5);
+
+        Assert.False(ok);
+        Assert.Equal("No es posible eliminar a este repartidor mientras tenga entregas pendientes", error);
+    }
+
+    [Fact]
+    public async Task ValidarEliminacionPorNegocio_SinPendientes_Permite()
+    {
+        var e = new Escenario();
+
+        var (ok, error) = await e.Servicio.ValidarEliminacionPorNegocioAsync(1, 5);
+
+        Assert.True(ok);
+        Assert.Null(error);
+    }
+
+    [Fact]
+    public async Task EliminarPorNegocio_RepartidorDeOtroNegocio_NoElimina()
+    {
+        var e = new Escenario();
+
+        var (ok, error, nombre) = await e.Servicio.EliminarPorNegocioAsync(1, 99, "Negocio123");
+
+        Assert.False(ok);
+        Assert.Equal(PerfilRepartidorService.MensajeSinPermisos, error);
+        Assert.Null(nombre);
+    }
+
+    [Fact]
+    public async Task EliminarPorNegocio_UsuarioDelNegocioNoExiste_SinPermisos()
+    {
+        var e = new Escenario();
+        e.Usuarios.Usuarios.Remove(e.UsuarioNegocio);
+
+        var (ok, error, _) = await e.Servicio.EliminarPorNegocioAsync(1, 5, "Negocio123");
+
+        Assert.False(ok);
+        Assert.Equal(PerfilRepartidorService.MensajeSinPermisos, error);
+    }
+
+    [Fact]
+    public async Task EliminarPorNegocio_ContrasenaIncorrecta_NoElimina()
+    {
+        var e = new Escenario();
+
+        var (ok, error, _) = await e.Servicio.EliminarPorNegocioAsync(1, 5, "Otra123");
+
+        Assert.False(ok);
+        Assert.Equal(MensajeContrasenaIncorrecta, error);
+        Assert.Equal(EstadoCuenta.Activo, e.UsuarioRepartidor.Estado);
+    }
+
+    [Fact]
+    public async Task EliminarPorNegocio_DatosValidos_DaDeBajaAlRepartidor()
+    {
+        var e = new Escenario();
+
+        var (ok, error, nombre) = await e.Servicio.EliminarPorNegocioAsync(1, 5, "Negocio123");
+
+        Assert.True(ok);
+        Assert.Null(error);
+        Assert.Equal("Juan Gómez", nombre);
+        Assert.Equal(EstadoCuenta.Eliminado, e.UsuarioRepartidor.Estado);
+    }
+}
+ParseOptions.0.json�@
 dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\RecuperacionServiceTests.cs�?using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -3931,7 +5191,458 @@ public class RepartidorServiceTests
         Assert.Null(r.PasswordTemporal);
         Assert.True(e.Repartidores.SeLlamoRegistrar);
     }
-}ParseOptions.0.json�
+}ParseOptions.0.json�@
+bC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\ReporteControllerTests.cs�?using Gtrack.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
+
+namespace Gtrack.Tests;
+
+// CU-24 Generar reporte de pedidos y CU-22 Exportar historial
+public class ReporteControllerTests
+{
+    private static readonly DateTime Desde = new(2026, 11, 1);
+    private static readonly DateTime Hasta = new(2026, 11, 30);
+    private static readonly byte[] Archivo = [1, 2, 3];
+
+    private sealed class Escenario
+    {
+        public IReporteService Reportes { get; } = Substitute.For<IReporteService>();
+        public IExportadorReportes Exportador { get; } = Substitute.For<IExportadorReportes>();
+        public ReporteController Controlador { get; }
+
+        public Escenario()
+        {
+            Controlador = new ReporteController(Reportes, Exportador, NullLogger<ReporteController>.Instance)
+                .Preparar(usuarioId: 1, rol: "Negocio");
+            Exportador.ReporteNegocioExcel(Arg.Any<ReporteNegocioDto>()).Returns(Archivo);
+            Exportador.ReporteNegocioPdf(Arg.Any<ReporteNegocioDto>()).Returns(Archivo);
+            Exportador.HistorialExcel(Arg.Any<HistorialExportDto>()).Returns(Archivo);
+            Exportador.HistorialPdf(Arg.Any<HistorialExportDto>()).Returns(Archivo);
+            Exportador.HistorialCsv(Arg.Any<HistorialExportDto>()).Returns(Archivo);
+        }
+
+        public void ConReporte(int totalPedidos) =>
+            Reportes.GenerarReporteNegocioAsync(1, Desde, Hasta)
+                .Returns(new ReporteNegocioDto { NombreNegocio = "Comidas Rápidas", TotalPedidos = totalPedidos });
+
+        public void ConHistorial(int filas) =>
+            Reportes.ObtenerHistorialAsync(1, Desde, Hasta)
+                .Returns(new HistorialExportDto
+                {
+                    Filas = Enumerable.Range(1, filas).Select(i => new FilaPedidoReporte { Codigo = $"PED{i}" }).ToList()
+                });
+    }
+
+    // ===== Index =====
+
+    [Fact]
+    public async Task Index_Get_SinFechas_MuestraSoloElFormulario()
+    {
+        var e = new Escenario();
+
+        var vista = Assert.IsType<ViewResult>(await e.Controlador.Index(null, null));
+
+        var modelo = Assert.IsType<ReporteNegocioVista>(vista.Model);
+        Assert.Null(modelo.Reporte);
+        Assert.Null(modelo.Error);
+        Assert.Equal(DateTime.Today, modelo.Hasta);
+        await e.Reportes.DidNotReceiveWithAnyArgs().GenerarReporteNegocioAsync(default, default, default);
+    }
+
+    [Fact]
+    public async Task Index_Get_RangoInvalido_MuestraError()
+    {
+        var e = new Escenario();
+
+        var vista = Assert.IsType<ViewResult>(await e.Controlador.Index(Hasta, Desde));
+
+        Assert.Equal(RangoReporte.MensajeInvalido, Assert.IsType<ReporteNegocioVista>(vista.Model).Error);
+    }
+
+    [Fact]
+    public async Task Index_Get_NegocioNoExiste_MuestraError()
+    {
+        var e = new Escenario();
+        e.Reportes.GenerarReporteNegocioAsync(1, Desde, Hasta).Returns((ReporteNegocioDto?)null);
+
+        var vista = Assert.IsType<ViewResult>(await e.Controlador.Index(Desde, Hasta));
+
+        Assert.Equal("No fue posible identificar tu negocio", Assert.IsType<ReporteNegocioVista>(vista.Model).Error);
+    }
+
+    [Fact]
+    public async Task Index_Get_SinPedidos_MuestraAvisoSinReporte()
+    {
+        var e = new Escenario();
+        e.ConReporte(totalPedidos: 0);
+
+        var modelo = Assert.IsType<ReporteNegocioVista>(Assert.IsType<ViewResult>(await e.Controlador.Index(Desde, Hasta)).Model);
+
+        Assert.NotNull(modelo.Aviso);
+        Assert.Null(modelo.Reporte);
+    }
+
+    [Fact]
+    public async Task Index_Get_ConPedidos_MuestraElReporte()
+    {
+        var e = new Escenario();
+        e.ConReporte(totalPedidos: 3);
+
+        var modelo = Assert.IsType<ReporteNegocioVista>(Assert.IsType<ViewResult>(await e.Controlador.Index(Desde, Hasta)).Model);
+
+        Assert.NotNull(modelo.Reporte);
+        Assert.Equal(3, modelo.Reporte.TotalPedidos);
+    }
+
+    [Fact]
+    public async Task Index_Get_FallaElServicio_MuestraError()
+    {
+        var e = new Escenario();
+        e.Reportes.GenerarReporteNegocioAsync(1, Desde, Hasta).ThrowsAsync(new InvalidOperationException("Falla"));
+
+        var modelo = Assert.IsType<ReporteNegocioVista>(Assert.IsType<ViewResult>(await e.Controlador.Index(Desde, Hasta)).Model);
+
+        Assert.Equal("No fue posible generar el reporte. Intenta nuevamente", modelo.Error);
+    }
+
+    // ===== Descargar =====
+
+    [Fact]
+    public async Task Descargar_RangoInvalido_RedirigeConError()
+    {
+        var e = new Escenario();
+
+        var r = Assert.IsType<RedirectToActionResult>(await e.Controlador.Descargar(null, Hasta));
+
+        Assert.Equal("Index", r.ActionName);
+        Assert.Equal(RangoReporte.MensajeInvalido, e.Controlador.TempData["Error"]);
+    }
+
+    [Fact]
+    public async Task Descargar_SinPedidos_RedirigeConError()
+    {
+        var e = new Escenario();
+        e.ConReporte(totalPedidos: 0);
+
+        var r = Assert.IsType<RedirectToActionResult>(await e.Controlador.Descargar(Desde, Hasta));
+
+        Assert.Equal("Index", r.ActionName);
+        Assert.Equal("2026-11-01", r.RouteValues!["desde"]);
+    }
+
+    [Fact]
+    public async Task Descargar_Excel_RetornaArchivoExcel()
+    {
+        var e = new Escenario();
+        e.ConReporte(totalPedidos: 2);
+
+        var archivo = Assert.IsType<FileContentResult>(await e.Controlador.Descargar(Desde, Hasta));
+
+        Assert.EndsWith(".xlsx", archivo.FileDownloadName);
+        Assert.Equal("Reporte_Pedidos_20261101_20261130.xlsx", archivo.FileDownloadName);
+    }
+
+    [Fact]
+    public async Task Descargar_Pdf_RetornaArchivoPdf()
+    {
+        var e = new Escenario();
+        e.ConReporte(totalPedidos: 2);
+
+        var archivo = Assert.IsType<FileContentResult>(await e.Controlador.Descargar(Desde, Hasta, "PDF"));
+
+        Assert.Equal("application/pdf", archivo.ContentType);
+    }
+
+    [Fact]
+    public async Task Descargar_FallaElServicio_RedirigeConError()
+    {
+        var e = new Escenario();
+        e.Reportes.GenerarReporteNegocioAsync(1, Desde, Hasta).ThrowsAsync(new InvalidOperationException("Falla"));
+
+        Assert.IsType<RedirectToActionResult>(await e.Controlador.Descargar(Desde, Hasta));
+
+        Assert.Equal("No fue posible generar el archivo. Intenta nuevamente", e.Controlador.TempData["Error"]);
+    }
+
+    // ===== ExportarHistorial =====
+
+    [Fact]
+    public async Task ExportarHistorial_RangoInvalido_RedirigeAlHistorial()
+    {
+        var e = new Escenario();
+
+        var r = Assert.IsType<RedirectToActionResult>(await e.Controlador.ExportarHistorial(Hasta, Desde));
+
+        Assert.Equal("Historial", r.ActionName);
+        Assert.Equal("Pedido", r.ControllerName);
+    }
+
+    [Fact]
+    public async Task ExportarHistorial_SinPedidosFinalizados_RedirigeConError()
+    {
+        var e = new Escenario();
+        e.ConHistorial(filas: 0);
+
+        Assert.IsType<RedirectToActionResult>(await e.Controlador.ExportarHistorial(Desde, Hasta));
+
+        Assert.Equal("No hay pedidos finalizados en el rango seleccionado", e.Controlador.TempData["Error"]);
+    }
+
+    [Theory]
+    [InlineData("excel", ".xlsx")]
+    [InlineData("pdf", ".pdf")]
+    [InlineData("csv", ".csv")]
+    public async Task ExportarHistorial_SegunElFormato_RetornaElArchivo(string formato, string extension)
+    {
+        var e = new Escenario();
+        e.ConHistorial(filas: 2);
+
+        var archivo = Assert.IsType<FileContentResult>(await e.Controlador.ExportarHistorial(Desde, Hasta, formato));
+
+        Assert.EndsWith(extension, archivo.FileDownloadName);
+    }
+
+    [Fact]
+    public async Task ExportarHistorial_FallaElServicio_RedirigeConError()
+    {
+        var e = new Escenario();
+        e.Reportes.ObtenerHistorialAsync(1, Desde, Hasta).ThrowsAsync(new InvalidOperationException("Falla"));
+
+        Assert.IsType<RedirectToActionResult>(await e.Controlador.ExportarHistorial(Desde, Hasta));
+
+        Assert.Equal("No fue posible generar el archivo. Intenta nuevamente", e.Controlador.TempData["Error"]);
+    }
+}
+ParseOptions.0.json�M
+_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\ReporteServiceTests.cs�Lnamespace Gtrack.Tests;
+
+// CU-24 reporte del negocio, CU-22 historial y reporte del administrador
+public class ReporteServiceTests
+{
+    private sealed class Escenario
+    {
+        public AppDbContext Contexto { get; } = ContextoFactory.Crear();
+        public NegocioRepositoryFalso Negocios { get; } = new();
+        public ReporteService Servicio => new(Contexto, Negocios);
+
+        // Rango que incluye "ahora" sin importar la zona horaria del equipo
+        public DateTime Desde { get; } = DateTime.Today.AddDays(-1);
+        public DateTime Hasta { get; } = DateTime.Today.AddDays(1);
+
+        public Escenario ConNegocio(int id = 10, int usuarioId = 1, string nombre = "Comidas Rápidas")
+        {
+            Negocios.Negocios.Add(new Negocio { Id = id, UsuarioId = usuarioId, Nombre = nombre });
+            return this;
+        }
+
+        // Todo pedido tiene cliente: ClienteId es obligatorio en el modelo (igual que la llave foránea en SQL Server)
+        public void AgregarPedido(int id, int negocioId, EstadoPedido estado, decimal precio,
+            string cliente = "Ana Pérez", string? repartidor = null, DateTime? fecha = null)
+        {
+            var pedido = new Pedido
+            {
+                Id = id,
+                Codigo = $"PED{id:00000}",
+                NegocioId = negocioId,
+                ClienteId = id,
+                EstadoPedidoId = (int)estado,
+                FechaCreacion = fecha ?? DateTime.UtcNow,
+                Items = [new ItemPedido { Descripcion = "Producto", Cantidad = 2, PrecioUnitario = precio }],
+                Cliente = new Cliente { Id = id, NombreCompleto = cliente, Telefono = "3001234567", NegocioId = negocioId }
+            };
+            if (repartidor is not null)
+                pedido.Repartidor = new Repartidor { Id = 100 + id, UsuarioId = 100 + id, NegocioId = negocioId, NombreCompleto = repartidor };
+
+            Contexto.Pedidos.Add(pedido);
+        }
+
+        public Task GuardarAsync() => Contexto.SaveChangesAsync();
+    }
+
+    // ===== RangoReporte =====
+
+    [Fact]
+    public void RangoReporte_FechasValidas_RetornaNull()
+    {
+        Assert.Null(RangoReporte.Validar(new DateTime(2026, 1, 1), new DateTime(2026, 6, 30)));
+    }
+
+    [Fact]
+    public void RangoReporte_FaltaUnaFecha_RetornaMensaje()
+    {
+        Assert.Equal(RangoReporte.MensajeInvalido, RangoReporte.Validar(null, new DateTime(2026, 6, 30)));
+        Assert.Equal(RangoReporte.MensajeInvalido, RangoReporte.Validar(new DateTime(2026, 6, 30), null));
+    }
+
+    [Fact]
+    public void RangoReporte_DesdeMayorQueHasta_RetornaMensaje()
+    {
+        Assert.Equal(RangoReporte.MensajeInvalido, RangoReporte.Validar(new DateTime(2026, 6, 30), new DateTime(2026, 1, 1)));
+    }
+
+    [Fact]
+    public void RangoReporte_MasDeDoceMeses_RetornaMensaje()
+    {
+        Assert.Equal(RangoReporte.MensajeInvalido, RangoReporte.Validar(new DateTime(2025, 1, 1), new DateTime(2026, 1, 1)));
+    }
+
+    // ===== CU-24 =====
+
+    [Fact]
+    public async Task GenerarReporteNegocio_NegocioNoExiste_RetornaNull()
+    {
+        var e = new Escenario();
+
+        Assert.Null(await e.Servicio.GenerarReporteNegocioAsync(1, e.Desde, e.Hasta));
+    }
+
+    [Fact]
+    public async Task GenerarReporteNegocio_SinPedidos_RetornaReporteVacio()
+    {
+        var e = new Escenario().ConNegocio();
+
+        var reporte = await e.Servicio.GenerarReporteNegocioAsync(1, e.Desde, e.Hasta);
+
+        Assert.NotNull(reporte);
+        Assert.Equal("Comidas Rápidas", reporte.NombreNegocio);
+        Assert.Equal(0, reporte.TotalPedidos);
+        Assert.Equal(0m, reporte.TasaEntrega);
+        Assert.Empty(reporte.Pedidos);
+        Assert.NotEmpty(reporte.PorMes);
+        Assert.All(reporte.PorEstado, f => Assert.Equal(0, f.Cantidad));
+    }
+
+    [Fact]
+    public async Task GenerarReporteNegocio_ConPedidos_CalculaIndicadores()
+    {
+        var e = new Escenario().ConNegocio();
+        e.AgregarPedido(1, 10, EstadoPedido.Entregado, 10000m, repartidor: "Juan Gómez");
+        e.AgregarPedido(2, 10, EstadoPedido.Entregado, 5000m);
+        e.AgregarPedido(3, 10, EstadoPedido.Cancelado, 7000m);
+        e.AgregarPedido(4, 10, EstadoPedido.Recibido, 3000m, cliente: "Luis Rojas");
+        e.AgregarPedido(5, 99, EstadoPedido.Entregado, 50000m);   // de otro negocio
+        await e.GuardarAsync();
+
+        var reporte = await e.Servicio.GenerarReporteNegocioAsync(1, e.Desde, e.Hasta);
+
+        Assert.NotNull(reporte);
+        Assert.Equal(4, reporte.TotalPedidos);
+        Assert.Equal(2, reporte.Entregados);
+        Assert.Equal(1, reporte.Cancelados);
+        Assert.Equal(50m, reporte.TasaEntrega);
+        Assert.Equal(30000m, reporte.ValorEntregado);   // (10000 + 5000) x 2 unidades
+        Assert.Equal(2, reporte.PorEstado.Single(f => f.EstadoId == (int)EstadoPedido.Entregado).Cantidad);
+        Assert.Equal(4, reporte.PorMes.Sum(m => m.Total));
+        Assert.Contains(reporte.Pedidos, p => p.Repartidor == "Juan Gómez");
+        Assert.Contains(reporte.Pedidos, p => p.Repartidor == "Sin asignar");
+        Assert.Contains(reporte.Pedidos, p => p.Cliente == "Luis Rojas");
+    }
+
+    [Fact]
+    public async Task GenerarReporteNegocio_PedidoFueraDelRango_NoSeCuenta()
+    {
+        var e = new Escenario().ConNegocio();
+        e.AgregarPedido(1, 10, EstadoPedido.Entregado, 10000m, fecha: DateTime.UtcNow.AddDays(-40));
+        await e.GuardarAsync();
+
+        var reporte = await e.Servicio.GenerarReporteNegocioAsync(1, e.Desde, e.Hasta);
+
+        Assert.NotNull(reporte);
+        Assert.Equal(0, reporte.TotalPedidos);
+    }
+
+    // ===== CU-22 =====
+
+    [Fact]
+    public async Task ObtenerHistorial_NegocioNoExiste_RetornaNull()
+    {
+        var e = new Escenario();
+
+        Assert.Null(await e.Servicio.ObtenerHistorialAsync(1, e.Desde, e.Hasta));
+    }
+
+    [Fact]
+    public async Task ObtenerHistorial_SoloIncluyePedidosEntregadosOCancelados()
+    {
+        var e = new Escenario().ConNegocio();
+        e.AgregarPedido(1, 10, EstadoPedido.Entregado, 10000m, repartidor: "Juan Gómez");
+        e.AgregarPedido(2, 10, EstadoPedido.Cancelado, 5000m, cliente: "Luis Rojas");
+        e.AgregarPedido(3, 10, EstadoPedido.EnCamino, 7000m);
+        await e.GuardarAsync();
+
+        var historial = await e.Servicio.ObtenerHistorialAsync(1, e.Desde, e.Hasta);
+
+        Assert.NotNull(historial);
+        Assert.Equal("Comidas Rápidas", historial.NombreNegocio);
+        Assert.Equal(2, historial.Filas.Count);
+        Assert.DoesNotContain(historial.Filas, f => f.Codigo == "PED00003");
+        Assert.Contains(historial.Filas, f => f.Cliente == "Luis Rojas" && f.Repartidor == "Sin asignar");
+        Assert.Contains(historial.Filas, f => f.Repartidor == "Juan Gómez" && f.ValorTotal == 20000m);
+    }
+
+    // ===== Reporte del administrador =====
+
+    [Fact]
+    public async Task GenerarReporteAdmin_SinDatos_RetornaReporteVacio()
+    {
+        var e = new Escenario();
+
+        var reporte = await e.Servicio.GenerarReporteAdminAsync(e.Desde, e.Hasta);
+
+        Assert.Equal(0, reporte.NegociosRegistrados);
+        Assert.Equal(0, reporte.TotalPedidos);
+        Assert.Empty(reporte.TopNegocios);
+        Assert.Empty(reporte.NegociosPorEstado);
+        Assert.Empty(reporte.NegociosPorActividad);
+        Assert.NotEmpty(reporte.NegociosPorMes);
+    }
+
+    [Fact]
+    public async Task GenerarReporteAdmin_ConDatos_AgrupaNegociosYPedidos()
+    {
+        var e = new Escenario();
+        e.Contexto.Usuarios.AddRange(
+            new Usuario { Id = 1, Correo = "a@gtrack.local", Documento = "111", Rol = RolUsuario.Negocio, Estado = EstadoCuenta.Activo },
+            new Usuario { Id = 2, Correo = "b@gtrack.local", Documento = "222", Rol = RolUsuario.Negocio, Estado = EstadoCuenta.PendienteValidacion },
+            new Usuario { Id = 3, Correo = "c@gtrack.local", Documento = "333", Rol = RolUsuario.Negocio, Estado = EstadoCuenta.Activo });
+        e.Contexto.Negocios.AddRange(
+            new Negocio { Id = 10, UsuarioId = 1, Nombre = "Comidas Rápidas", TipoActividad = "Restaurante" },
+            new Negocio { Id = 11, UsuarioId = 2, Nombre = "Floristería Sol", TipoActividad = "" },
+            new Negocio
+            {
+                Id = 12,
+                UsuarioId = 3,
+                Nombre = "Negocio Antiguo",
+                TipoActividad = "Comercio",
+                FechaRegistro = DateTime.UtcNow.AddDays(-60)
+            });
+        e.Contexto.Repartidores.Add(new Repartidor { Id = 50, UsuarioId = 50, NegocioId = 10, NombreCompleto = "Juan Gómez" });
+        e.AgregarPedido(1, 10, EstadoPedido.Entregado, 10000m);
+        e.AgregarPedido(2, 10, EstadoPedido.Cancelado, 5000m);
+        e.AgregarPedido(3, 11, EstadoPedido.Entregado, 4000m);
+        e.AgregarPedido(4, 77, EstadoPedido.Recibido, 1000m);   // negocio que no existe
+        await e.GuardarAsync();
+
+        var reporte = await e.Servicio.GenerarReporteAdminAsync(e.Desde, e.Hasta);
+
+        Assert.Equal(2, reporte.NegociosRegistrados);           // el antiguo queda fuera del rango
+        Assert.Equal(2, reporte.NegociosActivosTotal);
+        Assert.Equal(4, reporte.TotalPedidos);
+        Assert.Equal(2, reporte.PedidosEntregados);
+        Assert.Equal(28000m, reporte.ValorEntregado);
+        Assert.Contains(reporte.NegociosPorActividad, f => f.Etiqueta == "Sin actividad");
+        Assert.Contains(reporte.NegociosPorActividad, f => f.Etiqueta == "Restaurante");
+        Assert.Equal(2, reporte.NegociosPorEstado.Sum(f => f.Cantidad));
+        Assert.Equal("Comidas Rápidas", reporte.TopNegocios[0].Nombre);
+        Assert.Equal(2, reporte.TopNegocios[0].Pedidos);
+        Assert.Contains(reporte.TopNegocios, t => t.Nombre == "Negocio #77");
+        Assert.Equal(2, reporte.Negocios.Count);
+    }
+}
+ParseOptions.0.json�
 lC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UbicacionServiceConContextoTests.cs�using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Gtrack.Tests;
@@ -4564,7 +6275,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gtrack.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a1fb5ea89b2629ad5118a1ddd91639472d5ac6ea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c2b1acef04e7519ca49579dd91b2a44a63f80a11")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gtrack.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gtrack.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

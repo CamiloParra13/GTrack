@@ -4,11 +4,11 @@ t
 |
 hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\RegistrarAdministrador.cshtml.cs 8r
 	
-n
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Negocios.cshtml.cs 8r
-	
 u
 aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Administradores.cshtml.cs 8r
+	
+n
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Negocios.cshtml.cs 8r
 	
 y
 ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\ValidadorPassword.cs 8jr		
@@ -102,16 +102,16 @@ hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\Codigo
 dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\AdministracionRepository.cs 8jr?	
  !"#$%&'()*+,-.012345689:;<=?@ABDEFGHx‚)
 !"#%&'()*+,2345689:;<@ABEGÅ
-FC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Program.csR8j"0?Hr9	 !"#$%&'(*+,-.1234579:;<=@BCDEFIJKMx‚/	 !"#$%&'(*+-.123479;<@BCDEFIMo
-WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\TokenRecuperacion.cs 8r
-	
-‚l
+FC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Program.csR8j"0?Hr9	 !"#$%&'(*+,-.1234579:;<=@BCDEFIJKMx‚/	 !"#$%&'(*+-.123479;<@BCDEFIM
+MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Usuario.cs 8jr
+ x‚l
 UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\UbicacionPedido.cs 
 8
 r		
-‚	
-MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Usuario.cs 8jr
- x‚w
+‚	o
+WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\TokenRecuperacion.cs 8r
+	
+‚w
 ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SuspensionRepartidor.cs 8r	
 ‚u
 ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SolicitudCancelacion.cs 
@@ -123,10 +123,10 @@ NC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Personal.cs
 LC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Pedido.cs &8&jr$
  !"$%&'()*+,-‚w
 SC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\NovedadPedido.cs 8jr	
-‚h
-TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\ErrorViewModel.cs 8r‚k
+‚k
 MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Negocio.cs 8jr	
-‚v
+‚h
+TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\ErrorViewModel.cs 8r‚v
 XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\CodigoVerificacion.cs 8jr	
 ‚	f
 MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Cliente.cs 8r	

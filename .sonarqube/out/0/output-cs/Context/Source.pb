@@ -6616,7 +6616,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gtrack")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a1fb5ea89b2629ad5118a1ddd91639472d5ac6ea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c2b1acef04e7519ca49579dd91b2a44a63f80a11")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gtrack")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gtrack")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

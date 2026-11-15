@@ -53,33 +53,6 @@ hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Registr
 }
 
  
-} Þ
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Negocios.cshtml.cs
-	namespace 	
-Gtrack
- 
-. 
-Views 
-. 
-Admin 
-{ 
-public 
-
-class 
-NegociosModel 
-:  
-	PageModel! *
-{ 
-public 
-void 
-OnGet 
-( 
-) 
-{ 	
-}		 	
-}
-
- 
 } ì
 aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Administradores.cshtml.cs
 	namespace 	
@@ -96,6 +69,33 @@ aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Adminis
 AdministradoresModel %
 :& '
 	PageModel( 1
+{ 
+public 
+void 
+OnGet 
+( 
+) 
+{ 	
+}		 	
+}
+
+ 
+} Þ
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Negocios.cshtml.cs
+	namespace 	
+Gtrack
+ 
+. 
+Views 
+. 
+Admin 
+{ 
+public 
+
+class 
+NegociosModel 
+:  
+	PageModel! *
 { 
 public 
 void 

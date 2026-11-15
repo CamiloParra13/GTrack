@@ -8,29 +8,25 @@ hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Registr
 
  ,
 
- t
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Negocios.cshtml.cs
-
- 
-
  {
 aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Administradores.cshtml.cs
 
  %
 
- ´
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\GeneradorPassword.cs
+ t
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Negocios.cshtml.cs
 
- %(
-   2 8(
-   $ 3 :
+ 
 
- !
-& + "
-  ; @(
-    
+ ¨
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\ValidadorPassword.cs
 
-( )Ž
+ %
+
+ 2
+( 0 & 		 
+
+ Ž
 RC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\TokenUtil.cs
 
  
@@ -67,15 +63,19 @@ dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\Invariant
 $$ 0
 
 && "
-&&> E'' ((. 5¨
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\ValidadorPassword.cs
+&&> E'' ((. 5´
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\GeneradorPassword.cs
 
- %
+ %(
+   2 8(
+   $ 3 :
 
- 2
-( 0 & 		 
-
- ï
+ !
+& + "
+  ; @(
+    
+
+( )ï
 YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\EstadoPedidoInfo.cs
 
  $
@@ -3715,22 +3715,7 @@ aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IPerso
 
  -
 
-2 ;¿
-iC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ICodigoVerificacionRepository.cs
-
- .
-
-	 
-
-) /
-
- 0
-
-5 >
-
-	 
-
-, 2Ä
+2 ;Ä
 ^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\INegocioRepository.cs
 
  #
@@ -3769,7 +3754,22 @@ iC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ICodig
 
  /
 
-4 =Ü
+4 =¿
+iC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ICodigoVerificacionRepository.cs
+
+ .
+
+	 
+
+) /
+
+ 0
+
+5 >
+
+	 
+
+, 2Ü
 hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\CodigoVerificacionRepository.cs
 
  )<
@@ -3837,37 +3837,7 @@ FC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Program.csæ
   !% &
 , - F
 ++ -- 	.. 	11 	22 	33 	44 	j
-77 99 ;; << @@ BB CC DD EE FF II MM 	­
-WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\TokenRecuperacion.cs
-
- 
-
- 
-
- 
-
- 
-
- !
-
-		 
-
-
-
- Ÿ
-UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\UbicacionPedido.cs
-
- 
-
- 
-
- 
-
- 
-
- 
-
-		 &¯
+77 99 ;; << @@ BB CC DD EE FF II MM 	¯
 MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Usuario.cs
   
   / ;
@@ -3894,7 +3864,37 @@ MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Usuario.cs
  &
  "  (
 * /= BS X[ `
-5 8M Pc f¼
+5 8M Pc fŸ
+UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\UbicacionPedido.cs
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+		 &­
+WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\TokenRecuperacion.cs
+
+ 
+
+ 
+
+ 
+
+ 
+
+ !
+
+		 
+
+
+
+ ¼
 ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SuspensionRepartidor.cs
 
  !
@@ -4030,13 +4030,7 @@ SC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\NovedadPedid
 
  
 
- „
-TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\ErrorViewModel.cs
-
- 
- 7 @
-
- »
+ »
 MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Negocio.cs
 
  
@@ -4057,7 +4051,13 @@ MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Negocio.cs
 
  
 
- !Ò
+ !„
+TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\ErrorViewModel.cs
+
+ 
+ 7 @
+
+ Ò
 XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\CodigoVerificacion.cs
 
  
@@ -4080,14 +4080,7 @@ XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\CodigoVerifi
 
  
 
- p
-VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\VerificarCodigoDto.cs
-
- 
-
-
-
- ¯
+ ¯
 MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Cliente.cs
 
  
@@ -4106,7 +4099,14 @@ MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Cliente.cs
 
  
 
- „
+ p
+VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\VerificarCodigoDto.cs
+
+ 
+
+
+
+ „
 RC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RestablecerDto.cs
 
  

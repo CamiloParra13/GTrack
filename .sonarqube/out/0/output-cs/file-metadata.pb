@@ -6,9 +6,9 @@ dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\G
 }C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\.NETCoreApp,Version=v10.0.AssemblyAttributes.csutf-8q
 fC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\Gtrack.GlobalUsings.g.csutf-8i
 `C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Repartidor\Registrar.cshtml.csutf-8q
-hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\RegistrarAdministrador.cshtml.csutf-8c
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Negocios.cshtml.csutf-8j
+hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\RegistrarAdministrador.cshtml.csutf-8j
 aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Administradores.cshtml.csutf-8c
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Negocios.cshtml.csutf-8c
 ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\ValidadorPassword.csutf-8[
 RC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\TokenUtil.csutf-8Z
 QC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\Patrones.csutf-8m

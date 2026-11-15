@@ -193,6 +193,7 @@ C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\_ViewImports.c
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\_ViewStart.cshtml
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Shared\_Layout.cshtml.css
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\.gitignore
+C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\analizar_sonar.ps1
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\README.md
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Properties\launchSettings.json
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Properties\PublishProfiles\site106063-WebDeploy.pubxml
