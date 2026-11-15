@@ -183,18 +183,18 @@
         {
           "ruleId": "CS0169",
           "level": "warning",
-          "message": "El campo 'Views_Pedido_Consultar.__tagHelperStringValueBuffer' nunca se usa",
+          "message": "El campo 'Views_Usuario_RecuperarContrasena.__tagHelperStringValueBuffer' nunca se usa",
           "suppressionStates": [
             "suppressedInSource"
           ],
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/obj/Debug/net10.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Views/Pedido/Consultar_cshtml.g.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/obj/Debug/net10.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Views/Usuario/RecuperarContrasena_cshtml.g.cs",
                 "region": {
-                  "startLine": 53,
+                  "startLine": 54,
                   "startColumn": 24,
-                  "endLine": 53,
+                  "endLine": 54,
                   "endColumn": 52
                 }
               }
@@ -219,6 +219,30 @@
                   "startLine": 69,
                   "startColumn": 24,
                   "endLine": 69,
+                  "endColumn": 52
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0169",
+          "level": "warning",
+          "message": "El campo 'Views_Pedido_Consultar.__tagHelperStringValueBuffer' nunca se usa",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/obj/Debug/net10.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Views/Pedido/Consultar_cshtml.g.cs",
+                "region": {
+                  "startLine": 53,
+                  "startColumn": 24,
+                  "endLine": 53,
                   "endColumn": 52
                 }
               }
@@ -279,18 +303,18 @@
         {
           "ruleId": "CS0169",
           "level": "warning",
-          "message": "El campo 'Views_Usuario_Login.__tagHelperStringValueBuffer' nunca se usa",
+          "message": "El campo 'Views_Home_Index.__tagHelperStringValueBuffer' nunca se usa",
           "suppressionStates": [
             "suppressedInSource"
           ],
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/obj/Debug/net10.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Views/Usuario/Login_cshtml.g.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/obj/Debug/net10.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Views/Home/Index_cshtml.g.cs",
                 "region": {
-                  "startLine": 56,
+                  "startLine": 61,
                   "startColumn": 24,
-                  "endLine": 56,
+                  "endLine": 61,
                   "endColumn": 52
                 }
               }
@@ -327,42 +351,18 @@
         {
           "ruleId": "CS0169",
           "level": "warning",
-          "message": "El campo 'Views_Usuario_RecuperarContrasena.__tagHelperStringValueBuffer' nunca se usa",
+          "message": "El campo 'Views_Usuario_Login.__tagHelperStringValueBuffer' nunca se usa",
           "suppressionStates": [
             "suppressedInSource"
           ],
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/obj/Debug/net10.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Views/Usuario/RecuperarContrasena_cshtml.g.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/obj/Debug/net10.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Views/Usuario/Login_cshtml.g.cs",
                 "region": {
-                  "startLine": 54,
+                  "startLine": 56,
                   "startColumn": 24,
-                  "endLine": 54,
-                  "endColumn": 52
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 3
-          }
-        },
-        {
-          "ruleId": "CS0169",
-          "level": "warning",
-          "message": "El campo 'Views_Home_Index.__tagHelperStringValueBuffer' nunca se usa",
-          "suppressionStates": [
-            "suppressedInSource"
-          ],
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/obj/Debug/net10.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Views/Home/Index_cshtml.g.cs",
-                "region": {
-                  "startLine": 61,
-                  "startColumn": 24,
-                  "endLine": 61,
+                  "endLine": 56,
                   "endColumn": 52
                 }
               }
@@ -466,48 +466,6 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilPublicoNegocioDto.cs",
-                "region": {
-                  "startLine": 2,
-                  "startColumn": 14,
-                  "endLine": 2,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'PerfilPublicoNegocioDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilPublicoNegocioDto.cs",
-                "region": {
-                  "startLine": 2,
-                  "startColumn": 14,
-                  "endLine": 2,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/VerificarCodigoDto.cs",
                 "region": {
                   "startLine": 3,
@@ -550,12 +508,33 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/SuspensionRepartidor.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
                 "region": {
-                  "startLine": 5,
+                  "startLine": 50,
                   "startColumn": 14,
-                  "endLine": 5,
-                  "endColumn": 34
+                  "endLine": 50,
+                  "endColumn": 32
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'HistorialExportDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 50,
+                  "startColumn": 14,
+                  "endLine": 50,
+                  "endColumn": 32
                 }
               }
             }
@@ -613,69 +592,6 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IExportadorReportes.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'SuspensionRepartidor' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/SuspensionRepartidor.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 14,
-                  "endLine": 5,
-                  "endColumn": 34
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'IExportadorReportes' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IExportadorReportes.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistroNegocioDto.cs",
                 "region": {
                   "startLine": 3,
@@ -718,12 +634,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/UbicacionRepository.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilPublicoNegocioDto.cs",
                 "region": {
-                  "startLine": 3,
+                  "startLine": 2,
                   "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 33
+                  "endLine": 2,
+                  "endColumn": 37
                 }
               }
             }
@@ -735,16 +651,100 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'UbicacionRepository' into a named namespace.",
+          "message": "Move 'PerfilPublicoNegocioDto' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/UbicacionRepository.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilPublicoNegocioDto.cs",
                 "region": {
-                  "startLine": 3,
+                  "startLine": 2,
                   "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 33
+                  "endLine": 2,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Pedido.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 14,
+                  "endLine": 1,
+                  "endColumn": 20
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'Pedido' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Pedido.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 14,
+                  "endLine": 1,
+                  "endColumn": 20
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 14,
+                  "endLine": 60,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'FilaConteoReporte' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 14,
+                  "endLine": 60,
+                  "endColumn": 31
                 }
               }
             }
@@ -787,6 +787,48 @@
                   "startColumn": 18,
                   "endLine": 1,
                   "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/SuspensionRepartidor.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 14,
+                  "endLine": 5,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'SuspensionRepartidor' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/SuspensionRepartidor.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 14,
+                  "endLine": 5,
+                  "endColumn": 34
                 }
               }
             }
@@ -846,10 +888,10 @@
               "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
                 "region": {
-                  "startLine": 128,
-                  "startColumn": 15,
-                  "endLine": 128,
-                  "endColumn": 27
+                  "startLine": 68,
+                  "startColumn": 14,
+                  "endLine": 68,
+                  "endColumn": 32
                 }
               }
             }
@@ -861,16 +903,16 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'BarraGrafica' into a named namespace.",
+          "message": "Move 'FilaNegocioReporte' into a named namespace.",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
                 "region": {
-                  "startLine": 128,
-                  "startColumn": 15,
-                  "endLine": 128,
-                  "endColumn": 27
+                  "startLine": 68,
+                  "startColumn": 14,
+                  "endLine": 68,
+                  "endColumn": 32
                 }
               }
             }
@@ -943,69 +985,6 @@
           }
         },
         {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ItemPedido' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Pedido.cs",
-                "region": {
-                  "startLine": 24,
-                  "startColumn": 14,
-                  "endLine": 24,
-                  "endColumn": 24
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Pedido.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 14,
-                  "endLine": 1,
-                  "endColumn": 20
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'Pedido' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Pedido.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 14,
-                  "endLine": 1,
-                  "endColumn": 20
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "CA1050",
           "level": "note",
           "message": "Declarar tipos en espacios de nombres",
@@ -1027,39 +1006,18 @@
           }
         },
         {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Personal.cs",
-                "region": {
-                  "startLine": 2,
-                  "startColumn": 13,
-                  "endLine": 2,
-                  "endColumn": 25
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'TipoVehiculo' into a named namespace.",
+          "message": "Move 'ItemPedido' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Personal.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Pedido.cs",
                 "region": {
-                  "startLine": 2,
-                  "startColumn": 13,
-                  "endLine": 2,
-                  "endColumn": 25
+                  "startLine": 24,
+                  "startColumn": 14,
+                  "endLine": 24,
+                  "endColumn": 24
                 }
               }
             }
@@ -1180,90 +1138,6 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/UsuarioRepository.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/INegocioService.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'UsuarioRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/UsuarioRepository.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'INegocioService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/INegocioService.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Personal.cs",
                 "region": {
                   "startLine": 4,
@@ -1306,12 +1180,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Personal.cs",
                 "region": {
-                  "startLine": 4,
-                  "startColumn": 15,
-                  "endLine": 4,
-                  "endColumn": 32
+                  "startLine": 2,
+                  "startColumn": 13,
+                  "endLine": 2,
+                  "endColumn": 25
                 }
               }
             }
@@ -1323,16 +1197,100 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'ResultadoRegistro' into a named namespace.",
+          "message": "Move 'TipoVehiculo' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Personal.cs",
                 "region": {
-                  "startLine": 4,
+                  "startLine": 2,
+                  "startColumn": 13,
+                  "endLine": 2,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 128,
                   "startColumn": 15,
-                  "endLine": 4,
-                  "endColumn": 32
+                  "endLine": 128,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'BarraGrafica' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 128,
+                  "startColumn": 15,
+                  "endLine": 128,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 78,
+                  "startColumn": 14,
+                  "endLine": 78,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'FilaTopNegocioReporte' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 78,
+                  "startColumn": 14,
+                  "endLine": 78,
+                  "endColumn": 35
                 }
               }
             }
@@ -1390,95 +1348,11 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 13,
-                  "endLine": 9,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'EstadoEnlaceActivacion' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 13,
-                  "endLine": 9,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilRepartidorDtos.cs",
-                "region": {
-                  "startLine": 19,
-                  "startColumn": 14,
-                  "endLine": 19,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/CodigoVerificacionRepository.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/UbicacionRepository.cs",
                 "region": {
                   "startLine": 3,
                   "startColumn": 14,
                   "endLine": 3,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'EditarRepartidorDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilRepartidorDtos.cs",
-                "region": {
-                  "startLine": 19,
-                  "startColumn": 14,
-                  "endLine": 19,
                   "endColumn": 33
                 }
               }
@@ -1491,226 +1365,16 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'CodigoVerificacionRepository' into a named namespace.",
+          "message": "Move 'UbicacionRepository' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/CodigoVerificacionRepository.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/UbicacionRepository.cs",
                 "region": {
                   "startLine": 3,
                   "startColumn": 14,
                   "endLine": 3,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Usuario.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 13,
-                  "endLine": 1,
-                  "endColumn": 23
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'RolUsuario' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Usuario.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 13,
-                  "endLine": 1,
-                  "endColumn": 23
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/NegocioRepository.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/ICodigoVerificacionRepository.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 47
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ICodigoVerificacionRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/ICodigoVerificacionRepository.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 47
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'NegocioRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/NegocioRepository.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Usuario.cs",
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 13,
-                  "endLine": 6,
-                  "endColumn": 25
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'EstadoCuenta' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Usuario.cs",
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 13,
-                  "endLine": 6,
-                  "endColumn": 25
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/INegocioRepository.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 36
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'INegocioRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/INegocioRepository.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 36
+                  "endColumn": 33
                 }
               }
             }
@@ -1768,6 +1432,111 @@
           "locations": [
             {
               "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Usuario.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 13,
+                  "endLine": 1,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'RolUsuario' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Usuario.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 13,
+                  "endLine": 1,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/UsuarioRepository.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'UsuarioRepository' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/UsuarioRepository.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Usuario.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 13,
+                  "endLine": 6,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Cliente.cs",
                 "region": {
                   "startLine": 1,
@@ -1804,17 +1573,290 @@
           }
         },
         {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'EstadoCuenta' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Usuario.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 13,
+                  "endLine": 6,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
           "ruleId": "CA1050",
           "level": "note",
           "message": "Declarar tipos en espacios de nombres",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/CodigoVerificacionRepository.cs",
                 "region": {
-                  "startLine": 16,
-                  "startColumn": 21,
-                  "endLine": 16,
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilRepartidorDtos.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 14,
+                  "endLine": 19,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'CodigoVerificacionRepository' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/CodigoVerificacionRepository.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'EditarRepartidorDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilRepartidorDtos.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 14,
+                  "endLine": 19,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 13,
+                  "endLine": 9,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'EstadoEnlaceActivacion' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 13,
+                  "endLine": 9,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 86,
+                  "startColumn": 14,
+                  "endLine": 86,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'ReporteAdminDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 86,
+                  "startColumn": 14,
+                  "endLine": 86,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/ICodigoVerificacionRepository.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'ICodigoVerificacionRepository' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/ICodigoVerificacionRepository.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/SolicitudCancelacion.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'SolicitudCancelacion' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/SolicitudCancelacion.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/INegocioRepository.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
                   "endColumn": 36
                 }
               }
@@ -1827,15 +1869,15 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'PlantillaCorreo' into a named namespace.",
+          "message": "Move 'INegocioRepository' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/INegocioRepository.cs",
                 "region": {
-                  "startLine": 16,
-                  "startColumn": 21,
-                  "endLine": 16,
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
                   "endColumn": 36
                 }
               }
@@ -1894,180 +1936,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
-                "region": {
-                  "startLine": 11,
-                  "startColumn": 15,
-                  "endLine": 11,
-                  "endColumn": 29
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'InfoActivacion' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
-                "region": {
-                  "startLine": 11,
-                  "startColumn": 15,
-                  "endLine": 11,
-                  "endColumn": 29
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'RegistroRepartidorDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/AdministracionService.cs",
-                "region": {
-                  "startLine": 19,
-                  "startColumn": 14,
-                  "endLine": 19,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'AdministracionService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/AdministracionService.cs",
-                "region": {
-                  "startLine": 19,
-                  "startColumn": 14,
-                  "endLine": 19,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Usuario.cs",
                 "region": {
                   "startLine": 8,
                   "startColumn": 14,
                   "endLine": 8,
                   "endColumn": 21
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IUbicacionService.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'IUbicacionService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IUbicacionService.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 35
                 }
               }
             }
@@ -2104,74 +1978,11 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/SolicitudCancelacion.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
                 "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 34
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'SolicitudCancelacion' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/SolicitudCancelacion.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 34
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/ErrorViewModel.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 14,
-                  "endLine": 1,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IPedidoService.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
+                  "startLine": 4,
+                  "startColumn": 15,
+                  "endLine": 4,
                   "endColumn": 32
                 }
               }
@@ -2184,36 +1995,15 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'ErrorViewModel' into a named namespace.",
+          "message": "Move 'ResultadoRegistro' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/ErrorViewModel.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
                 "region": {
-                  "startLine": 1,
-                  "startColumn": 14,
-                  "endLine": 1,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'IPedidoService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IPedidoService.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
+                  "startLine": 4,
+                  "startColumn": 15,
+                  "endLine": 4,
                   "endColumn": 32
                 }
               }
@@ -2272,96 +2062,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IRecuperacionService.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/IPersonalRepositories.cs",
                 "region": {
-                  "startLine": 1,
-                  "startColumn": 13,
-                  "endLine": 1,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/PedidoRepository.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ResultadoSolicitud' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IRecuperacionService.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 13,
-                  "endLine": 1,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'PedidoRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/PedidoRepository.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
-                "region": {
-                  "startLine": 18,
+                  "startLine": 20,
                   "startColumn": 18,
-                  "endLine": 18,
-                  "endColumn": 42
+                  "endLine": 20,
+                  "endColumn": 43
                 }
               }
             }
@@ -2373,121 +2079,16 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'IActivacionCuentaService' into a named namespace.",
+          "message": "Move 'IAdministracionRepository' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/IPersonalRepositories.cs",
                 "region": {
-                  "startLine": 18,
+                  "startLine": 20,
                   "startColumn": 18,
-                  "endLine": 18,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Negocio.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 21
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IRecuperacionService.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 18,
-                  "endLine": 3,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'Negocio' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Negocio.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 21
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'IRecuperacionService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IRecuperacionService.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 18,
-                  "endLine": 3,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Controllers/UsuarioController.cs",
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 14,
-                  "endLine": 6,
-                  "endColumn": 31
+                  "endLine": 20,
+                  "endColumn": 43
                 }
               }
             }
@@ -2545,12 +2146,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/IPersonalRepositories.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IExportadorReportes.cs",
                 "region": {
-                  "startLine": 20,
+                  "startLine": 1,
                   "startColumn": 18,
-                  "endLine": 20,
-                  "endColumn": 43
+                  "endLine": 1,
+                  "endColumn": 37
                 }
               }
             }
@@ -2562,16 +2163,415 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'IAdministracionRepository' into a named namespace.",
+          "message": "Move 'IExportadorReportes' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/IPersonalRepositories.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IExportadorReportes.cs",
                 "region": {
-                  "startLine": 20,
+                  "startLine": 1,
                   "startColumn": 18,
-                  "endLine": 20,
-                  "endColumn": 43
+                  "endLine": 1,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 109,
+                  "startColumn": 14,
+                  "endLine": 109,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'ReporteNegocioVista' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 109,
+                  "startColumn": 14,
+                  "endLine": 109,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/NegocioRepository.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'NegocioRepository' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/NegocioRepository.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 118,
+                  "startColumn": 14,
+                  "endLine": 118,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'ReporteAdminVista' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 118,
+                  "startColumn": 14,
+                  "endLine": 118,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Controllers/AdminController.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 14,
+                  "endLine": 5,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Controllers/UsuarioController.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 14,
+                  "endLine": 6,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IUbicacionService.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'IUbicacionService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IUbicacionService.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/ErrorViewModel.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 14,
+                  "endLine": 1,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'ErrorViewModel' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/ErrorViewModel.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 14,
+                  "endLine": 1,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 14,
+                  "endLine": 7,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'RegistroRepartidorDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 14,
+                  "endLine": 7,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Negocio.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 21
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
+                "region": {
+                  "startLine": 46,
+                  "startColumn": 14,
+                  "endLine": 46,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'Negocio' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Models/Negocio.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 21
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'RegistroAdministradorDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
+                "region": {
+                  "startLine": 46,
+                  "startColumn": 14,
+                  "endLine": 46,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'AdminController' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Controllers/AdminController.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 14,
+                  "endLine": 5,
+                  "endColumn": 29
                 }
               }
             }
@@ -2593,27 +2593,6 @@
                   "startColumn": 14,
                   "endLine": 3,
                   "endColumn": 27
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IReporteService.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 33
                 }
               }
             }
@@ -2646,27 +2625,6 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'IReporteService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IReporteService.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
           "message": "Move 'UsuarioController' into a named namespace.",
           "locations": [
             {
@@ -2677,90 +2635,6 @@
                   "startColumn": 14,
                   "endLine": 6,
                   "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IReporteService.cs",
-                "region": {
-                  "startLine": 13,
-                  "startColumn": 21,
-                  "endLine": 13,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'RangoReporte' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IReporteService.cs",
-                "region": {
-                  "startLine": 13,
-                  "startColumn": 21,
-                  "endLine": 13,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Controllers/AdminController.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 14,
-                  "endLine": 5,
-                  "endColumn": 29
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'AdminController' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Controllers/AdminController.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 14,
-                  "endLine": 5,
-                  "endColumn": 29
                 }
               }
             }
@@ -2818,6 +2692,90 @@
           "locations": [
             {
               "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/AdministracionService.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 14,
+                  "endLine": 19,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'AdministracionService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/AdministracionService.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 14,
+                  "endLine": 19,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/INegocioService.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'INegocioService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/INegocioService.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RecuperarDto.cs",
                 "region": {
                   "startLine": 3,
@@ -2860,12 +2818,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/RepartidorRepository.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/PedidoRepository.cs",
                 "region": {
-                  "startLine": 4,
+                  "startLine": 3,
                   "startColumn": 14,
-                  "endLine": 4,
-                  "endColumn": 34
+                  "endLine": 3,
+                  "endColumn": 30
                 }
               }
             }
@@ -2877,7 +2835,28 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'RepartidorRepository' into a named namespace.",
+          "message": "Move 'PedidoRepository' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/PedidoRepository.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
           "locations": [
             {
               "resultFile": {
@@ -2908,6 +2887,27 @@
                   "startColumn": 14,
                   "endLine": 3,
                   "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'RepartidorRepository' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/RepartidorRepository.cs",
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 14,
+                  "endLine": 4,
+                  "endColumn": 34
                 }
               }
             }
@@ -2944,12 +2944,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/TokenRecuperacionRepository.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IRecuperacionService.cs",
                 "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 41
+                  "startLine": 1,
+                  "startColumn": 13,
+                  "endLine": 1,
+                  "endColumn": 31
                 }
               }
             }
@@ -2965,12 +2965,159 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/EmailDesarrolloService.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IPedidoService.cs",
                 "region": {
-                  "startLine": 2,
-                  "startColumn": 14,
-                  "endLine": 2,
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
+                  "endColumn": 32
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'IPedidoService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IPedidoService.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
+                  "endColumn": 32
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'ResultadoSolicitud' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IRecuperacionService.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 13,
+                  "endLine": 1,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IRecuperacionService.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 18,
+                  "endLine": 3,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'IRecuperacionService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IRecuperacionService.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 18,
+                  "endLine": 3,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 21,
+                  "endLine": 16,
                   "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'PlantillaCorreo' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 21,
+                  "endLine": 16,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Repositories/TokenRecuperacionRepository.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 41
                 }
               }
             }
@@ -3007,54 +3154,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/BCryptPasswordHasher.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/TokenUtil.cs",
                 "region": {
-                  "startLine": 15,
-                  "startColumn": 14,
-                  "endLine": 15,
-                  "endColumn": 34
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'EmailDesarrolloService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/EmailDesarrolloService.cs",
-                "region": {
-                  "startLine": 2,
-                  "startColumn": 14,
-                  "endLine": 2,
-                  "endColumn": 36
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'BCryptPasswordHasher' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/BCryptPasswordHasher.cs",
-                "region": {
-                  "startLine": 15,
-                  "startColumn": 14,
-                  "endLine": 15,
-                  "endColumn": 34
+                  "startLine": 5,
+                  "startColumn": 21,
+                  "endLine": 5,
+                  "endColumn": 30
                 }
               }
             }
@@ -3070,12 +3175,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PerfilRepartidorService.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
                 "region": {
-                  "startLine": 6,
-                  "startColumn": 18,
-                  "endLine": 6,
-                  "endColumn": 42
+                  "startLine": 84,
+                  "startColumn": 14,
+                  "endLine": 84,
+                  "endColumn": 30
                 }
               }
             }
@@ -3087,16 +3192,79 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'IPerfilRepartidorService' into a named namespace.",
+          "message": "Move 'TokenUtil' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PerfilRepartidorService.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/TokenUtil.cs",
                 "region": {
-                  "startLine": 6,
+                  "startLine": 5,
+                  "startColumn": 21,
+                  "endLine": 5,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'AdministradorDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
+                "region": {
+                  "startLine": 84,
+                  "startColumn": 14,
+                  "endLine": 84,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IReporteService.cs",
+                "region": {
+                  "startLine": 1,
                   "startColumn": 18,
-                  "endLine": 6,
-                  "endColumn": 42
+                  "endLine": 1,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'IReporteService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IReporteService.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
+                  "endColumn": 33
                 }
               }
             }
@@ -3154,12 +3322,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RecuperacionService.cs",
                 "region": {
                   "startLine": 3,
                   "startColumn": 14,
                   "endLine": 3,
-                  "endColumn": 32
+                  "endColumn": 33
                 }
               }
             }
@@ -3171,16 +3339,16 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'RegistrarPedidoDto' into a named namespace.",
+          "message": "Move 'RecuperacionService' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RecuperacionService.cs",
                 "region": {
                   "startLine": 3,
                   "startColumn": 14,
                   "endLine": 3,
-                  "endColumn": 32
+                  "endColumn": 33
                 }
               }
             }
@@ -3196,12 +3364,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/LoginDto.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/ValidadorPassword.cs",
                 "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 22
+                  "startLine": 1,
+                  "startColumn": 21,
+                  "endLine": 1,
+                  "endColumn": 38
                 }
               }
             }
@@ -3213,16 +3381,226 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'LoginDto' into a named namespace.",
+          "message": "Move 'ValidadorPassword' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/LoginDto.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/ValidadorPassword.cs",
                 "region": {
-                  "startLine": 3,
+                  "startLine": 1,
+                  "startColumn": 21,
+                  "endLine": 1,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
+                "region": {
+                  "startLine": 72,
                   "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 22
+                  "endLine": 72,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'NegocioAdminDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
+                "region": {
+                  "startLine": 72,
+                  "startColumn": 14,
+                  "endLine": 72,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IReporteService.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 21,
+                  "endLine": 13,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'RangoReporte' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IReporteService.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 21,
+                  "endLine": 13,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/BCryptPasswordHasher.cs",
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 14,
+                  "endLine": 15,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RestablecerDto.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 14,
+                  "endLine": 1,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'BCryptPasswordHasher' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/BCryptPasswordHasher.cs",
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 14,
+                  "endLine": 15,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'RestablecerDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RestablecerDto.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 14,
+                  "endLine": 1,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/EmailDesarrolloService.cs",
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 14,
+                  "endLine": 2,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'EmailDesarrolloService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/EmailDesarrolloService.cs",
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 14,
+                  "endLine": 2,
+                  "endColumn": 36
                 }
               }
             }
@@ -3295,27 +3673,6 @@
           }
         },
         {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 20,
-                  "startColumn": 14,
-                  "endLine": 20,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "S3903",
           "level": "warning",
           "message": "Move 'EstadoPedidoInfo' into a named namespace.",
@@ -3337,18 +3694,207 @@
           }
         },
         {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/EditarNegocioDto.cs",
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 14,
+                  "endLine": 4,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'FilaPedidoReporte' into a named namespace.",
+          "message": "Move 'EditarNegocioDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/EditarNegocioDto.cs",
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 14,
+                  "endLine": 4,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 32
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'RegistrarPedidoDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 32
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
                 "region": {
-                  "startLine": 20,
+                  "startLine": 11,
                   "startColumn": 14,
-                  "endLine": 20,
-                  "endColumn": 31
+                  "endLine": 11,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'FilaMesReporte' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 14,
+                  "endLine": 11,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/InvariantDecimalModelBinder.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 14,
+                  "endLine": 34,
+                  "endColumn": 49
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'InvariantDecimalModelBinderProvider' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/InvariantDecimalModelBinder.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 14,
+                  "endLine": 34,
+                  "endColumn": 49
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RepartidorService.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 18,
+                  "endLine": 3,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'IRepartidorService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RepartidorService.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 18,
+                  "endLine": 3,
+                  "endColumn": 36
                 }
               }
             }
@@ -3408,135 +3954,9 @@
               "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
                 "region": {
-                  "startLine": 11,
+                  "startLine": 20,
                   "startColumn": 14,
-                  "endLine": 11,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RecuperacionService.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'FilaMesReporte' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 11,
-                  "startColumn": 14,
-                  "endLine": 11,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'RecuperacionService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RecuperacionService.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
-                "region": {
-                  "startLine": 46,
-                  "startColumn": 14,
-                  "endLine": 46,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'RegistroAdministradorDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
-                "region": {
-                  "startLine": 46,
-                  "startColumn": 14,
-                  "endLine": 46,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 60,
-                  "startColumn": 14,
-                  "endLine": 60,
+                  "endLine": 20,
                   "endColumn": 31
                 }
               }
@@ -3549,15 +3969,15 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'FilaConteoReporte' into a named namespace.",
+          "message": "Move 'FilaPedidoReporte' into a named namespace.",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
                 "region": {
-                  "startLine": 60,
+                  "startLine": 20,
                   "startColumn": 14,
-                  "endLine": 60,
+                  "endLine": 20,
                   "endColumn": 31
                 }
               }
@@ -3574,12 +3994,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RepartidorService.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
                 "region": {
-                  "startLine": 3,
-                  "startColumn": 18,
-                  "endLine": 3,
-                  "endColumn": 36
+                  "startLine": 11,
+                  "startColumn": 15,
+                  "endLine": 11,
+                  "endColumn": 29
                 }
               }
             }
@@ -3591,16 +4011,16 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'IRepartidorService' into a named namespace.",
+          "message": "Move 'InfoActivacion' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RepartidorService.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
                 "region": {
-                  "startLine": 3,
-                  "startColumn": 18,
-                  "endLine": 3,
-                  "endColumn": 36
+                  "startLine": 11,
+                  "startColumn": 15,
+                  "endLine": 11,
+                  "endColumn": 29
                 }
               }
             }
@@ -3658,222 +4078,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilNegocioDto.cs",
-                "region": {
-                  "startLine": 2,
-                  "startColumn": 14,
-                  "endLine": 2,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'PerfilNegocioDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilNegocioDto.cs",
-                "region": {
-                  "startLine": 2,
-                  "startColumn": 14,
-                  "endLine": 2,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 68,
-                  "startColumn": 14,
-                  "endLine": 68,
-                  "endColumn": 32
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'FilaNegocioReporte' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 68,
-                  "startColumn": 14,
-                  "endLine": 68,
-                  "endColumn": 32
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
-                "region": {
-                  "startLine": 29,
-                  "startColumn": 14,
-                  "endLine": 29,
-                  "endColumn": 27
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 78,
-                  "startColumn": 14,
-                  "endLine": 78,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ItemPedidoDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
-                "region": {
-                  "startLine": 29,
-                  "startColumn": 14,
-                  "endLine": 29,
-                  "endColumn": 27
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'FilaTopNegocioReporte' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 78,
-                  "startColumn": 14,
-                  "endLine": 78,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
-                "region": {
-                  "startLine": 34,
-                  "startColumn": 14,
-                  "endLine": 34,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/InvariantDecimalModelBinder.cs",
                 "region": {
                   "startLine": 7,
                   "startColumn": 14,
                   "endLine": 7,
                   "endColumn": 41
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ActivacionCuentaService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
-                "region": {
-                  "startLine": 34,
-                  "startColumn": 14,
-                  "endLine": 34,
-                  "endColumn": 37
                 }
               }
             }
@@ -3910,12 +4120,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/AdministracionService.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
                 "region": {
-                  "startLine": 3,
+                  "startLine": 18,
                   "startColumn": 18,
-                  "endLine": 3,
-                  "endColumn": 40
+                  "endLine": 18,
+                  "endColumn": 42
                 }
               }
             }
@@ -3927,541 +4137,16 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'IAdministracionService' into a named namespace.",
+          "message": "Move 'IActivacionCuentaService' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/AdministracionService.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
                 "region": {
-                  "startLine": 3,
+                  "startLine": 18,
                   "startColumn": 18,
-                  "endLine": 3,
-                  "endColumn": 40
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 109,
-                  "startColumn": 14,
-                  "endLine": 109,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ReporteNegocioVista' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 109,
-                  "startColumn": 14,
-                  "endLine": 109,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 118,
-                  "startColumn": 14,
-                  "endLine": 118,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ReporteAdminVista' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 118,
-                  "startColumn": 14,
-                  "endLine": 118,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/InvariantDecimalModelBinder.cs",
-                "region": {
-                  "startLine": 34,
-                  "startColumn": 14,
-                  "endLine": 34,
-                  "endColumn": 49
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'InvariantDecimalModelBinderProvider' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/InvariantDecimalModelBinder.cs",
-                "region": {
-                  "startLine": 34,
-                  "startColumn": 14,
-                  "endLine": 34,
-                  "endColumn": 49
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/TokenUtil.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 21,
-                  "endLine": 5,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/ValidadorPassword.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 21,
-                  "endLine": 1,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'TokenUtil' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/TokenUtil.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 21,
-                  "endLine": 5,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ValidadorPassword' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/ValidadorPassword.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 21,
-                  "endLine": 1,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 86,
-                  "startColumn": 14,
-                  "endLine": 86,
-                  "endColumn": 29
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ReporteAdminDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 86,
-                  "startColumn": 14,
-                  "endLine": 86,
-                  "endColumn": 29
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
-                "region": {
-                  "startLine": 72,
-                  "startColumn": 14,
-                  "endLine": 72,
-                  "endColumn": 29
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'NegocioAdminDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
-                "region": {
-                  "startLine": 72,
-                  "startColumn": 14,
-                  "endLine": 72,
-                  "endColumn": 29
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 50,
-                  "startColumn": 14,
-                  "endLine": 50,
-                  "endColumn": 32
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'HistorialExportDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ReporteDtos.cs",
-                "region": {
-                  "startLine": 50,
-                  "startColumn": 14,
-                  "endLine": 50,
-                  "endColumn": 32
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
-                "region": {
-                  "startLine": 84,
-                  "startColumn": 14,
-                  "endLine": 84,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'AdministradorDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RergistroPersonalDtos.cs",
-                "region": {
-                  "startLine": 84,
-                  "startColumn": 14,
-                  "endLine": 84,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RepartidorService.cs",
-                "region": {
-                  "startLine": 14,
-                  "startColumn": 14,
-                  "endLine": 14,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RestablecerDto.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 14,
-                  "endLine": 1,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'RestablecerDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RestablecerDto.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 14,
-                  "endLine": 1,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'RepartidorService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RepartidorService.cs",
-                "region": {
-                  "startLine": 14,
-                  "startColumn": 14,
-                  "endLine": 14,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2068",
-          "level": "warning",
-          "message": "\"password\" detected here, make sure this is not a hard-coded credential.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PerfilRepartidorService.cs",
-                "region": {
-                  "startLine": 46,
-                  "startColumn": 26,
-                  "endLine": 46,
-                  "endColumn": 77
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PerfilRepartidorService.cs",
-                "region": {
-                  "startLine": 29,
-                  "startColumn": 14,
-                  "endLine": 29,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'PerfilRepartidorService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PerfilRepartidorService.cs",
-                "region": {
-                  "startLine": 29,
-                  "startColumn": 14,
-                  "endLine": 29,
-                  "endColumn": 37
+                  "endLine": 18,
+                  "endColumn": 42
                 }
               }
             }
@@ -4483,6 +4168,27 @@
                   "startColumn": 14,
                   "endLine": 4,
                   "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/EliminarCuentaDto.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 31
                 }
               }
             }
@@ -4513,17 +4219,17 @@
           }
         },
         {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'EliminarCuentaDto' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Controllers/NegocioController.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/EliminarCuentaDto.cs",
                 "region": {
-                  "startLine": 8,
+                  "startLine": 3,
                   "startColumn": 14,
-                  "endLine": 8,
+                  "endLine": 3,
                   "endColumn": 31
                 }
               }
@@ -4576,9 +4282,177 @@
           }
         },
         {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/LoginDto.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 22
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'NegocioController' into a named namespace.",
+          "message": "Move 'LoginDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/LoginDto.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 22
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RepartidorService.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 14,
+                  "endLine": 14,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 14,
+                  "endLine": 29,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'RepartidorService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/RepartidorService.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 14,
+                  "endLine": 14,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'ItemPedidoDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 14,
+                  "endLine": 29,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilNegocioDto.cs",
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 14,
+                  "endLine": 2,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'PerfilNegocioDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/PerfilNegocioDto.cs",
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 14,
+                  "endLine": 2,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
           "locations": [
             {
               "resultFile": {
@@ -4597,333 +4471,18 @@
           }
         },
         {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 15,
-                  "endLine": 7,
-                  "endColumn": 25
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'CorreoHtml' into a named namespace.",
+          "message": "Move 'NegocioController' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Controllers/NegocioController.cs",
                 "region": {
-                  "startLine": 7,
-                  "startColumn": 15,
-                  "endLine": 7,
-                  "endColumn": 25
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
-                "region": {
-                  "startLine": 10,
-                  "startColumn": 13,
-                  "endLine": 10,
-                  "endColumn": 21
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'TipoNota' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
-                "region": {
-                  "startLine": 10,
-                  "startColumn": 13,
-                  "endLine": 10,
-                  "endColumn": 21
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/ActividadesEconomicas.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 21,
-                  "endLine": 1,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/UbicacionService.cs",
-                "region": {
-                  "startLine": 3,
+                  "startLine": 8,
                   "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ActividadesEconomicas' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/ActividadesEconomicas.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 21,
-                  "endLine": 1,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'UbicacionService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/UbicacionService.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ReporteService.cs",
-                "region": {
-                  "startLine": 4,
-                  "startColumn": 14,
-                  "endLine": 4,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ReporteService' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ReporteService.cs",
-                "region": {
-                  "startLine": 4,
-                  "startColumn": 14,
-                  "endLine": 4,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Data/appDBcontext.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 26
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'AppDbContext' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Data/appDBcontext.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 26
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ActivarCuentaDto.cs",
-                "region": {
-                  "startLine": 4,
-                  "startColumn": 14,
-                  "endLine": 4,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
-                "region": {
-                  "startLine": 43,
-                  "startColumn": 14,
-                  "endLine": 43,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ClienteAutocompletarDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
-                "region": {
-                  "startLine": 43,
-                  "startColumn": 14,
-                  "endLine": 43,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ActivarCuentaDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ActivarCuentaDto.cs",
-                "region": {
-                  "startLine": 4,
-                  "startColumn": 14,
-                  "endLine": 4,
-                  "endColumn": 30
+                  "endLine": 8,
+                  "endColumn": 31
                 }
               }
             }
@@ -5023,12 +4582,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ExportadorReportes.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ReporteService.cs",
                 "region": {
-                  "startLine": 9,
+                  "startLine": 4,
                   "startColumn": 14,
-                  "endLine": 9,
-                  "endColumn": 32
+                  "endLine": 4,
+                  "endColumn": 28
                 }
               }
             }
@@ -5040,16 +4599,268 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'ExportadorReportes' into a named namespace.",
+          "message": "Move 'ReporteService' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ExportadorReportes.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ReporteService.cs",
                 "region": {
-                  "startLine": 9,
+                  "startLine": 4,
                   "startColumn": 14,
-                  "endLine": 9,
-                  "endColumn": 32
+                  "endLine": 4,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/AdministracionService.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 18,
+                  "endLine": 3,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'IAdministracionService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/AdministracionService.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 18,
+                  "endLine": 3,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/ActividadesEconomicas.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 21,
+                  "endLine": 1,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'ActividadesEconomicas' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Utilities/ActividadesEconomicas.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 21,
+                  "endLine": 1,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/UbicacionService.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'UbicacionService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/UbicacionService.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 14,
+                  "endLine": 34,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'ActivacionCuentaService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ActivacionCuentaService.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 14,
+                  "endLine": 34,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Data/appDBcontext.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'AppDbContext' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Data/appDBcontext.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ActivarCuentaDto.cs",
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 14,
+                  "endLine": 4,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'ActivarCuentaDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/ActivarCuentaDto.cs",
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 14,
+                  "endLine": 4,
+                  "endColumn": 30
                 }
               }
             }
@@ -5071,6 +4882,27 @@
                   "startColumn": 18,
                   "endLine": 1,
                   "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IEmailService.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 18,
+                  "endLine": 1,
+                  "endColumn": 31
                 }
               }
             }
@@ -5101,9 +4933,9 @@
           }
         },
         {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'IEmailService' into a named namespace.",
           "locations": [
             {
               "resultFile": {
@@ -5122,18 +4954,81 @@
           }
         },
         {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'IEmailService' into a named namespace.",
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/IEmailService.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
                 "region": {
-                  "startLine": 1,
+                  "startLine": 43,
+                  "startColumn": 14,
+                  "endLine": 43,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'ClienteAutocompletarDto' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/RegistrarPedidoDto.cs",
+                "region": {
+                  "startLine": 43,
+                  "startColumn": 14,
+                  "endLine": 43,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PerfilRepartidorService.cs",
+                "region": {
+                  "startLine": 6,
                   "startColumn": 18,
-                  "endLine": 1,
-                  "endColumn": 31
+                  "endLine": 6,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'IPerfilRepartidorService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PerfilRepartidorService.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 18,
+                  "endLine": 6,
+                  "endColumn": 42
                 }
               }
             }
@@ -5191,12 +5086,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/EditarNegocioDto.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ExportadorReportes.cs",
                 "region": {
-                  "startLine": 4,
+                  "startLine": 9,
                   "startColumn": 14,
-                  "endLine": 4,
-                  "endColumn": 30
+                  "endLine": 9,
+                  "endColumn": 32
                 }
               }
             }
@@ -5208,58 +5103,16 @@
         {
           "ruleId": "S3903",
           "level": "warning",
-          "message": "Move 'EditarNegocioDto' into a named namespace.",
+          "message": "Move 'ExportadorReportes' into a named namespace.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/EditarNegocioDto.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/ExportadorReportes.cs",
                 "region": {
-                  "startLine": 4,
+                  "startLine": 9,
                   "startColumn": 14,
-                  "endLine": 4,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/EliminarCuentaDto.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'EliminarCuentaDto' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Dtos/EliminarCuentaDto.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 31
+                  "endLine": 9,
+                  "endColumn": 32
                 }
               }
             }
@@ -5311,6 +5164,153 @@
           }
         },
         {
+          "ruleId": "S2068",
+          "level": "warning",
+          "message": "\"password\" detected here, make sure this is not a hard-coded credential.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PerfilRepartidorService.cs",
+                "region": {
+                  "startLine": 46,
+                  "startColumn": 26,
+                  "endLine": 46,
+                  "endColumn": 77
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PerfilRepartidorService.cs",
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 14,
+                  "endLine": 29,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'PerfilRepartidorService' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PerfilRepartidorService.cs",
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 14,
+                  "endLine": 29,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 13,
+                  "endLine": 10,
+                  "endColumn": 21
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'TipoNota' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 13,
+                  "endLine": 10,
+                  "endColumn": 21
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 15,
+                  "endLine": 7,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3903",
+          "level": "warning",
+          "message": "Move 'CorreoHtml' into a named namespace.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 15,
+                  "endLine": 7,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
           "ruleId": "CA1050",
           "level": "note",
           "message": "Declarar tipos en espacios de nombres",
@@ -5353,6 +5353,27 @@
           }
         },
         {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await RunAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Program.cs",
+                "region": {
+                  "startLine": 76,
+                  "startColumn": 1,
+                  "endLine": 76,
+                  "endColumn": 10
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
           "ruleId": "CA1873",
           "level": "note",
           "message": "La evaluación de este argumento puede ser costosa e innecesaria si el registro está deshabilitado (creación de matrices)",
@@ -5374,18 +5395,18 @@
           }
         },
         {
-          "ruleId": "S6966",
-          "level": "warning",
-          "message": "Await RunAsync instead.",
+          "ruleId": "SYSLIB1045",
+          "level": "note",
+          "message": "Use 'GeneratedRegexAttribute' para generar la implementación de expresiones regulares en tiempo de compilación.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Program.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Controllers/PedidoController.cs",
                 "region": {
-                  "startLine": 76,
-                  "startColumn": 1,
-                  "endLine": 76,
-                  "endColumn": 10
+                  "startLine": 185,
+                  "startColumn": 51,
+                  "endLine": 185,
+                  "endColumn": 130
                 }
               }
             }
@@ -5428,27 +5449,6 @@
                   "startColumn": 9,
                   "endLine": 57,
                   "endColumn": 81
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "SYSLIB1045",
-          "level": "note",
-          "message": "Use 'GeneratedRegexAttribute' para generar la implementación de expresiones regulares en tiempo de compilación.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Controllers/PedidoController.cs",
-                "region": {
-                  "startLine": 185,
-                  "startColumn": 51,
-                  "endLine": 185,
-                  "endColumn": 130
                 }
               }
             }
@@ -5527,6 +5527,27 @@
           "locations": [
             {
               "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PedidoService.cs",
+                "region": {
+                  "startLine": 368,
+                  "startColumn": 14,
+                  "endLine": 368,
+                  "endColumn": 89
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6444",
+          "level": "warning",
+          "message": "Pass a timeout to limit the execution time.",
+          "locations": [
+            {
+              "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PlantillaCorreo.cs",
                 "region": {
                   "startLine": 110,
@@ -5554,27 +5575,6 @@
                   "startColumn": 51,
                   "endLine": 185,
                   "endColumn": 130
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S6444",
-          "level": "warning",
-          "message": "Pass a timeout to limit the execution time.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Services/PedidoService.cs",
-                "region": {
-                  "startLine": 368,
-                  "startColumn": 14,
-                  "endLine": 368,
-                  "endColumn": 89
                 }
               }
             }

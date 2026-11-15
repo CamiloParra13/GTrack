@@ -36247,7 +36247,37 @@ RepartidorCC 
 	Eliminado''. 7
 )''7 8
 ;''8 9
-}(( ‚
+}(( û
+`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUbicacionRepository.cs
+public 
+	interface  
+IUbicacionRepository %
+{ 
+Task 
+< 	
+UbicacionPedido	 
+? 
+> 
+ObtenerAsync '
+(' (
+int( +
+pedidoId, 4
+)4 5
+;5 6
+Task 
+GuardarAsync	 
+( 
+int 
+pedidoId "
+," #
+decimal$ +
+lat, /
+,/ 0
+decimal1 8
+lng9 <
+)< =
+;= >
+} ‚
 ^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUsuarioRepository.cs
 public 
 	interface 
@@ -36318,37 +36348,7 @@ RolUsuarioJ T
 	documento6 ?
 )? @
 ;@ A
-} û
-`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUbicacionRepository.cs
-public 
-	interface  
-IUbicacionRepository %
-{ 
-Task 
-< 	
-UbicacionPedido	 
-? 
-> 
-ObtenerAsync '
-(' (
-int( +
-pedidoId, 4
-)4 5
-;5 6
-Task 
-GuardarAsync	 
-( 
-int 
-pedidoId "
-," #
-decimal$ +
-lat, /
-,/ 0
-decimal1 8
-lng9 <
-)< =
-;= >
-} »
+} »
 hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ITokenRecuperacionRepository.cs
 public 
 	interface (

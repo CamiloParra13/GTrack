@@ -18,27 +18,6 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/PasswordHasherFalso.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/ContextoFactory.cs",
                 "region": {
                   "startLine": 9,
@@ -165,27 +144,6 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/AdminControllerTests.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 14,
-                  "endLine": 5,
-                  "endColumn": 34
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/EmailServiceFalso.cs",
                 "region": {
                   "startLine": 1,
@@ -207,12 +165,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/RepartidorRepositoryFalso.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/RepartidorServiceTests.cs",
                 "region": {
-                  "startLine": 1,
+                  "startLine": 4,
                   "startColumn": 14,
-                  "endLine": 1,
-                  "endColumn": 39
+                  "endLine": 4,
+                  "endColumn": 36
                 }
               }
             }
@@ -270,12 +228,33 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/PedidoControllerTests.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/RecuperacionServiceTests.cs",
                 "region": {
-                  "startLine": 5,
+                  "startLine": 4,
                   "startColumn": 14,
-                  "endLine": 5,
-                  "endColumn": 35
+                  "endLine": 4,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/PasswordHasherFalso.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 33
                 }
               }
             }
@@ -312,12 +291,54 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/PedidoRepositoryFalso.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/PedidoControllerTests.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 14,
+                  "endLine": 5,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/RepartidorRepositoryFalso.cs",
                 "region": {
                   "startLine": 1,
                   "startColumn": 14,
                   "endLine": 1,
-                  "endColumn": 35
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/AdminControllerTests.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 14,
+                  "endLine": 5,
+                  "endColumn": 34
                 }
               }
             }
@@ -354,96 +375,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/TokenRecuperacionRepositoryFalso.cs",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 14,
-                  "endLine": 1,
-                  "endColumn": 46
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
                 "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/UsuarioRepositoryFalso.cs",
                 "region": {
                   "startLine": 1,
                   "startColumn": 14,
                   "endLine": 1,
                   "endColumn": 36
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/NegocioServiceTests.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/NegocioControllerTests.cs",
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 14,
-                  "endLine": 6,
-                  "endColumn": 36
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/UtilidadesTests.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 29
                 }
               }
             }
@@ -480,96 +417,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/UbicacionServiceTests.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/RepartidorServiceTests.cs",
-                "region": {
-                  "startLine": 4,
-                  "startColumn": 14,
-                  "endLine": 4,
-                  "endColumn": 36
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/AdministracionServiceTests.cs",
-                "region": {
-                  "startLine": 4,
-                  "startColumn": 14,
-                  "endLine": 4,
-                  "endColumn": 40
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/AdministracionRepositoryFalso.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/TokenRecuperacionRepositoryFalso.cs",
                 "region": {
                   "startLine": 1,
                   "startColumn": 14,
                   "endLine": 1,
-                  "endColumn": 43
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1050",
-          "level": "note",
-          "message": "Declarar tipos en espacios de nombres",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/RecuperacionServiceTests.cs",
-                "region": {
-                  "startLine": 4,
-                  "startColumn": 14,
-                  "endLine": 4,
-                  "endColumn": 38
+                  "endColumn": 46
                 }
               }
             }
@@ -606,12 +459,159 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/PedidoServiceTests.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/NegocioServiceTests.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/UtilidadesTests.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/UbicacionServiceTests.cs",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/NegocioControllerTests.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 14,
+                  "endLine": 6,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/PedidoRepositoryFalso.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 14,
+                  "endLine": 1,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/Fakes/AdministracionRepositoryFalso.cs",
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 14,
+                  "endLine": 1,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/AdministracionServiceTests.cs",
                 "region": {
                   "startLine": 4,
                   "startColumn": 14,
                   "endLine": 4,
-                  "endColumn": 32
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1050",
+          "level": "note",
+          "message": "Declarar tipos en espacios de nombres",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/RepartidorControllerTests.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 14,
+                  "endLine": 7,
+                  "endColumn": 39
                 }
               }
             }
@@ -648,12 +648,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/RepartidorControllerTests.cs",
+                "uri": "file:///C:/Users/camil/Documentos/5TO%20SEMESTRE/ING.%20SOFTWARE/GTrack/Gtrack.Tests/PedidoServiceTests.cs",
                 "region": {
-                  "startLine": 7,
+                  "startLine": 4,
                   "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 39
+                  "endLine": 4,
+                  "endColumn": 32
                 }
               }
             }
