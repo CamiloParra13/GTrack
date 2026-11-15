@@ -1,5 +1,6 @@
 ë
-ßC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\Microsoft.AspNetCore.App.SourceGenerators\Microsoft.AspNetCore.SourceGenerators.PublicProgramSourceGenerator\PublicTopLevelProgram.Generated.g.csutf-8t
+ßC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\Microsoft.AspNetCore.App.SourceGenerators\Microsoft.AspNetCore.SourceGenerators.PublicProgramSourceGenerator\PublicTopLevelProgram.Generated.g.csutf-8Î
+ÂC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\System.Text.RegularExpressions.Generator\System.Text.RegularExpressions.Generator.RegexGenerator\RegexGenerator.g.csutf-8t
 iC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\Gtrack.RazorAssemblyInfo.csutf-8o
 dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\Gtrack.AssemblyInfo.csutf-8ˆ
 }C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\.NETCoreApp,Version=v10.0.AssemblyAttributes.csutf-8q
@@ -9,7 +10,8 @@ hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Registr
 ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Negocios.cshtml.csutf-8j
 aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Administradores.cshtml.csutf-8c
 ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\ValidadorPassword.csutf-8[
-RC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\TokenUtil.csutf-8m
+RC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\TokenUtil.csutf-8Z
+QC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\Patrones.csutf-8m
 dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\InvariantDecimalModelBinder.csutf-8c
 ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\GeneradorPassword.csutf-8b
 YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\EstadoPedidoInfo.csutf-8f
@@ -18,10 +20,10 @@ YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\EstadoPed
 XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\UbicacionService.csutf-8_
 VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ReporteService.csutf-8b
 YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\RepartidorService.csutf-8d
-[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\RecuperacionService.csutf-8`
-WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PlantillaCorreo.csutf-8h
-_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PerfilRepartidorService.csutf-8^
-UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PedidoService.csutf-8_
+[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\RecuperacionService.csutf-8^
+UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PedidoService.csutf-8h
+_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PerfilRepartidorService.csutf-8`
+WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PlantillaCorreo.csutf-8_
 VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\NegocioService.csutf-8b
 YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IUbicacionService.csutf-8`
 WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IReporteService.csutf-8e
@@ -42,9 +44,9 @@ _C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\Ubicac
 gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\TokenRecuperacionRepository.csutf-8i
 `C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\RepartidorRepository.csutf-8e
 \C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\PedidoRepository.csutf-8f
-]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\NegocioRepository.csutf-8i
-`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUbicacionRepository.csutf-8g
-^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUsuarioRepository.csutf-8q
+]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\NegocioRepository.csutf-8g
+^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUsuarioRepository.csutf-8i
+`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUbicacionRepository.csutf-8q
 hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ITokenRecuperacionRepository.csutf-8j
 aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IPersonalRepositories.csutf-8f
 ]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IPedidoRepository.csutf-8g
@@ -56,9 +58,9 @@ FC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Program.csutf-8V
 MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Usuario.csutf-8^
 UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\UbicacionPedido.csutf-8`
 WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\TokenRecuperacion.csutf-8c
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SuspensionRepartidor.csutf-8c
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SolicitudCancelacion.csutf-8W
-NC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Personal.csutf-8U
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SuspensionRepartidor.csutf-8W
+NC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Personal.csutf-8c
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SolicitudCancelacion.csutf-8U
 LC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Pedido.csutf-8\
 SC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\NovedadPedido.csutf-8V
 MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Negocio.csutf-8]

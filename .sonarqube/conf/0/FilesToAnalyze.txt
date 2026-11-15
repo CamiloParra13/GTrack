@@ -76,6 +76,7 @@ C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\BCryptPass
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\EstadoPedidoInfo.cs
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\GeneradorPassword.cs
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\InvariantDecimalModelBinder.cs
+C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\Patrones.cs
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\TokenUtil.cs
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\ValidadorPassword.cs
 C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Admin\Administradores.cshtml.cs

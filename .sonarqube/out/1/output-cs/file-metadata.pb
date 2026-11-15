@@ -23,11 +23,11 @@ kC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\
 gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\PedidoRepositoryFalso.csutf-8n
 eC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\PasswordHasherFalso.csutf-8q
 hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\NegocioRepositoryFalso.csutf-8l
-cC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\EmailServiceFalso.csutf-8o
-fC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\ControllerTestHelper.csutf-8j
-aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\ContextoFactory.csutf-8|
-sC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\CodigoVerificacionRepositoryFalso.csutf-8x
-oC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\AdministracionRepositoryFalso.csutf-8j
+cC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\EmailServiceFalso.csutf-8j
+aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\ContextoFactory.csutf-8o
+fC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\ControllerTestHelper.csutf-8x
+oC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\AdministracionRepositoryFalso.csutf-8|
+sC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\CodigoVerificacionRepositoryFalso.csutf-8j
 aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\EstadoPedidoInfoTests.csutf-8e
 \C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthServiceTests.csutf-8p
 gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthServiceComplementoTests.csutf-8o

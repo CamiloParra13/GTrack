@@ -1,7 +1,9 @@
-œ+
-`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AdminControllerTests.cs’*using Microsoft.AspNetCore.Mvc;
+Í+
+`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AdminControllerTests.cs*using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
+
+namespace Gtrack.Tests;
 
 public class AdminControllerTests
 {
@@ -147,9 +149,11 @@ public class AdminControllerTests
 
         Assert.NotNull(e.Controlador.TempData["Aviso"]);
     }
-}ParseOptions.0.jsonûA
-fC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AdministracionServiceTests.csû@using Microsoft.Extensions.Logging.Abstractions;
+}ParseOptions.0.jsonπA
+fC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AdministracionServiceTests.csπ@using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
+
+namespace Gtrack.Tests;
 
 public class AdministracionServiceTests
 {
@@ -390,8 +394,10 @@ public class AdministracionServiceTests
         Assert.Equal(enviado, ok);
         if (enviado) Assert.Contains("ana@gtrack.local", mensaje);
     }
-}ParseOptions.0.json⁄
-gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthServiceComplementoTests.csŸpublic class AuthServiceComplementoTests
+}ParseOptions.0.jsonı
+gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthServiceComplementoTests.csÙnamespace Gtrack.Tests;
+
+public class AuthServiceComplementoTests
 {
     private static Usuario Usuario(EstadoCuenta estado = EstadoCuenta.Activo, int intentos = 0, DateTime? bloqueadoHasta = null) => new()
     {
@@ -467,8 +473,10 @@ gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthSe
         Assert.Null(usuario);
         Assert.Equal("Usuario o contrase√±a incorrectos", error);
     }
-}ParseOptions.0.json∏ 
-\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthServiceTests.cs¬public class AuthServiceTests
+}ParseOptions.0.json” 
+\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthServiceTests.cs›namespace Gtrack.Tests;
+
+public class AuthServiceTests
 {
     private static Usuario UsuarioActivo(int intentos = 0, DateTime? bloqueadoHasta = null) => new()
     {
@@ -568,8 +576,10 @@ gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\AuthSe
         Assert.Null(resultado);
         Assert.Contains(esperado, error);
     }
-}ParseOptions.0.json≤
-aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\EstadoPedidoInfoTests.cs∑public class EstadoPedidoInfoTests
+}ParseOptions.0.jsonÕ
+aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\EstadoPedidoInfoTests.cs“namespace Gtrack.Tests;
+
+public class EstadoPedidoInfoTests
 {
     [Theory]
     [InlineData(EstadoPedido.Recibido, "Recibido", "#6c757d")]
@@ -604,8 +614,10 @@ aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Estado
         Assert.Equal(nombre, EstadoPedidoInfo.NombreCuenta(estado));
         Assert.Equal(color, EstadoPedidoInfo.ColorCuenta(estado));
     }
-}ParseOptions.0.jsonô
-oC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\AdministracionRepositoryFalso.csêpublic class AdministracionRepositoryFalso : IAdministracionRepository
+}ParseOptions.0.json¥
+oC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\AdministracionRepositoryFalso.cs´namespace Gtrack.Tests;
+
+public class AdministracionRepositoryFalso : IAdministracionRepository
 {
     public List<Administrador> Administradores { get; } = new();
     public Usuario? UsuarioRegistrado { get; private set; }
@@ -639,8 +651,10 @@ oC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\
     public Task<Administrador?> ObtenerPorUsuarioIdAsync(int usuarioId) =>
         Task.FromResult(Administradores.FirstOrDefault(a =>
             a.UsuarioId == usuarioId || a.Usuario?.Id == usuarioId));
-}ParseOptions.0.jsonî
-sC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\CodigoVerificacionRepositoryFalso.csápublic class CodigoVerificacionRepositoryFalso : ICodigoVerificacionRepository
+}ParseOptions.0.jsonØ
+sC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\CodigoVerificacionRepositoryFalso.cs¢namespace Gtrack.Tests;
+
+public class CodigoVerificacionRepositoryFalso : ICodigoVerificacionRepository
 {
     public List<CodigoVerificacion> Codigos { get; } = new();
 
@@ -657,8 +671,10 @@ sC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\
             .FirstOrDefault());
 
     public Task ActualizarAsync(CodigoVerificacion codigo) => Task.CompletedTask;
-}ParseOptions.0.json‚
-aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\ContextoFactory.csÁusing Microsoft.EntityFrameworkCore;
+}ParseOptions.0.json˝
+aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\ContextoFactory.csÇusing Microsoft.EntityFrameworkCore;
+
+namespace Gtrack.Tests;
 
 public class AppDbContextQueFallaAlGuardar(DbContextOptions<AppDbContext> options) : AppDbContext(options)
 {
@@ -676,8 +692,8 @@ public static class ContextoFactory
     public static AppDbContext Crear() => new(Opciones());
 
     public static AppDbContext CrearQueFallaAlGuardar() => new AppDbContextQueFallaAlGuardar(Opciones());
-}ParseOptions.0.json®
-fC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\ControllerTestHelper.cs®using System.Security.Claims;
+}ParseOptions.0.jsonı
+fC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\ControllerTestHelper.csıusing System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
@@ -687,6 +703,8 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
+
+namespace Gtrack.Tests;
 
 public static class ControllerTestHelper
 {
@@ -722,12 +740,16 @@ public static class ControllerTestHelper
 
     // CAMBIO 2: sin escapar caracteres como la √± (si no, queda "contrase\u00f1a")
     public static string AJson(this JsonResult resultado) =>
-        JsonSerializer.Serialize(resultado.Value, new JsonSerializerOptions
-        {
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-        });
-}ParseOptions.0.jsonõ
-cC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\EmailServiceFalso.csûpublic class EmailServiceFalso : IEmailService
+        JsonSerializer.Serialize(resultado.Value, OpcionesJson);
+
+    private static readonly JsonSerializerOptions OpcionesJson = new()
+    {
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+    };
+}ParseOptions.0.json∂
+cC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\EmailServiceFalso.csπnamespace Gtrack.Tests;
+
+public class EmailServiceFalso : IEmailService
 {
     public List<(string Para, string Asunto, string Cuerpo)> Enviados { get; } = new();
     public List<(string Para, string Asunto, CorreoHtml Correo)> EnviadosHtml { get; } = new();
@@ -746,8 +768,10 @@ cC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\
         EnviadosHtml.Add((para, asunto, correo));
         return Task.CompletedTask;
     }
-}ParseOptions.0.json·
-hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\NegocioRepositoryFalso.csﬂpublic class NegocioRepositoryFalso : INegocioRepository
+}ParseOptions.0.json¸
+hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\NegocioRepositoryFalso.cs˙namespace Gtrack.Tests;
+
+public class NegocioRepositoryFalso : INegocioRepository
 {
     public List<Negocio> Negocios { get; } = new();
     public HashSet<string> DocumentosExistentes { get; } = new();
@@ -786,8 +810,10 @@ hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\
     public Task<bool> TienePedidosActivosAsync(int negocioId) => Task.FromResult(TienePedidosActivos);
 
     public Task<bool> TieneRepartidoresVinculadosAsync(int negocioId) => Task.FromResult(TieneRepartidoresVinculados);
-}ParseOptions.0.json◊
-eC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\PasswordHasherFalso.csÿusing Microsoft.AspNetCore.Identity;
+}ParseOptions.0.jsonÚ
+eC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\PasswordHasherFalso.csÛusing Microsoft.AspNetCore.Identity;
+
+namespace Gtrack.Tests;
 
 public class PasswordHasherFalso : IPasswordHasher<Usuario>
 {
@@ -797,8 +823,10 @@ public class PasswordHasherFalso : IPasswordHasher<Usuario>
         hashedPassword == $"HASH:{providedPassword}"
             ? PasswordVerificationResult.Success
             : PasswordVerificationResult.Failed;
-}ParseOptions.0.jsonÿ
-gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\PedidoRepositoryFalso.cs◊public class PedidoRepositoryFalso : IPedidoRepository
+}ParseOptions.0.jsonÛ
+gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\PedidoRepositoryFalso.csÚnamespace Gtrack.Tests;
+
+public class PedidoRepositoryFalso : IPedidoRepository
 {
     public List<Pedido> Pedidos { get; } = new();
     public bool DebeFallarAlAgregar { get; set; }
@@ -837,8 +865,10 @@ gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\
 
     public Task<List<Pedido>> ObtenerPorNegocioAsync(int negocioId) =>
         Task.FromResult(Pedidos.Where(p => p.NegocioId == negocioId).ToList());
-}ParseOptions.0.json≠
-kC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\RepartidorRepositoryFalso.cs®public class RepartidorRepositoryFalso : IRepartidorRepository
+}ParseOptions.0.json»
+kC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\RepartidorRepositoryFalso.cs√namespace Gtrack.Tests;
+
+public class RepartidorRepositoryFalso : IRepartidorRepository
 {
     public List<Repartidor> Repartidores { get; } = new();
     public HashSet<string> TelefonosEnUso { get; } = new();
@@ -880,8 +910,10 @@ kC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\
         UltimoReactivado = repartidor;
         return Task.CompletedTask;
     }
-}ParseOptions.0.jsonÓ
-rC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\TokenRecuperacionRepositoryFalso.cs‚public class TokenRecuperacionRepositoryFalso : ITokenRecuperacionRepository
+}ParseOptions.0.jsonâ	
+rC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\TokenRecuperacionRepositoryFalso.cs˝namespace Gtrack.Tests;
+
+public class TokenRecuperacionRepositoryFalso : ITokenRecuperacionRepository
 {
     public List<TokenRecuperacion> Tokens { get; } = new();
 
@@ -906,8 +938,10 @@ rC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\
             t.Usado = true;
         return Task.CompletedTask;
     }
-}ParseOptions.0.jsonÒ
-jC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\UbicacionRepositoryFalso.csÌpublic class UbicacionRepositoryFalso : IUbicacionRepository
+}ParseOptions.0.jsonå
+jC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\UbicacionRepositoryFalso.csànamespace Gtrack.Tests;
+
+public class UbicacionRepositoryFalso : IUbicacionRepository
 {
     public Dictionary<int, UbicacionPedido> Ubicaciones { get; } = new();
     public bool DebeFallarAlGuardar { get; set; }
@@ -927,8 +961,10 @@ jC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\
         };
         return Task.CompletedTask;
     }
-}ParseOptions.0.jsonÙ
-hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\UsuarioRepositoryFalso.csÚpublic class UsuarioRepositoryFalso : IUsuarioRepository
+}ParseOptions.0.jsonè
+hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\UsuarioRepositoryFalso.csçnamespace Gtrack.Tests;
+
+public class UsuarioRepositoryFalso : IUsuarioRepository
 {
     public List<Usuario> Usuarios { get; } = new();
     public bool SeLlamoActualizar { get; private set; }
@@ -964,10 +1000,11 @@ hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\Fakes\
             u.LiberarIdentificadores();
         return Task.CompletedTask;
     }
-}ParseOptions.0.jsonÍ
-_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\HomeControllerTests.csÒ
-using Gtrack.Controllers;
+}ParseOptions.0.jsonÖ
+_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\HomeControllerTests.csåusing Gtrack.Controllers;
 using Microsoft.AspNetCore.Mvc;
+
+namespace Gtrack.Tests;
 
 public class HomeControllerTests
 {
@@ -1013,11 +1050,13 @@ public class HomeControllerTests
         Assert.Equal(codigo, controlador.Response.StatusCode);
         Assert.Equal(codigo, vista.ViewData["Codigo"]);
     }
-}ParseOptions.0.jsoníj
-bC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\NegocioControllerTests.csñiusing Microsoft.AspNetCore.Authentication;
+}ParseOptions.0.json≠j
+bC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\NegocioControllerTests.cs±iusing Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+
+namespace Gtrack.Tests;
 
 public class NegocioControllerTests
 {
@@ -1369,8 +1408,10 @@ public class NegocioControllerTests
 
         Assert.Same(perfil, Assert.IsType<ViewResult>(await e.Controlador.Publico(9)).Model);
     }
-}ParseOptions.0.jsonÜb
-mC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\NegocioServicePerfilYEdicionTests.csˇ`using Microsoft.Extensions.Logging.Abstractions;
+}ParseOptions.0.json°b
+mC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\NegocioServicePerfilYEdicionTests.csöausing Microsoft.Extensions.Logging.Abstractions;
+
+namespace Gtrack.Tests;
 
 public class NegocioServicePerfilYEdicionTests
 {
@@ -1775,8 +1816,10 @@ public class NegocioServicePerfilYEdicionTests
         Assert.Equal("Contrase√±a incorrecta", error);
         Assert.Equal(EstadoCuenta.Activo, usuario.Estado);
     }
-}ParseOptions.0.jsonÊI
-_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\NegocioServiceTests.csÌHusing Microsoft.Extensions.Logging.Abstractions;
+}ParseOptions.0.jsonÅJ
+_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\NegocioServiceTests.csàIusing Microsoft.Extensions.Logging.Abstractions;
+
+namespace Gtrack.Tests;
 
 public class NegocioServiceTests
 {
@@ -2014,9 +2057,12 @@ public class NegocioServiceTests
         Assert.True(ok);
         Assert.Null(error);
     }
-}ParseOptions.0.jsonî]
-aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\PedidoControllerTests.csô\using Microsoft.AspNetCore.Mvc;
+}ParseOptions.0.json±]
+aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\PedidoControllerTests.cs∂\using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+
+namespace Gtrack.Tests;
+
 using UbicacionResultado = (bool Ok, string? Error, decimal? Latitud, decimal? Longitud, System.DateTime? FechaUtc, string? Estado);
 
 public class PedidoControllerTests
@@ -2314,9 +2360,11 @@ public class PedidoControllerTests
         Assert.Contains("\"disponible\":false", json);
         Assert.Contains("\"estado\":\"Entregado\"", json);
     }
-}ParseOptions.0.jsonæÿ
-^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\PedidoServiceTests.cs≈◊using Microsoft.EntityFrameworkCore;
+}ParseOptions.0.jsonŸÿ
+^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\PedidoServiceTests.cs‡◊using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
+
+namespace Gtrack.Tests;
 
 public class PedidoServiceTests
 {
@@ -3060,9 +3108,11 @@ public class PedidoServiceTests
         var pedido = await e.Contexto.Pedidos.AsNoTracking().SingleAsync();
         Assert.Equal((int)EstadoPedido.EnCamino, pedido.EstadoPedidoId);
     }
-}ParseOptions.0.jsonç@
-dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\RecuperacionServiceTests.csè?using Microsoft.AspNetCore.Identity;
+}ParseOptions.0.json®@
+dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\RecuperacionServiceTests.cs™?using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging.Abstractions;
+
+namespace Gtrack.Tests;
 
 public class RecuperacionServiceTests
 {
@@ -3309,15 +3359,19 @@ public class RecuperacionServiceTests
         Assert.True(ok);
         Assert.Null(error);
     }
-}ParseOptions.0.jsonƒ|
-eC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\RepartidorControllerTests.cs≈{using Microsoft.AspNetCore.Hosting;
+}ParseOptions.0.jsonÜ}
+eC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\RepartidorControllerTests.csá|using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 
+namespace Gtrack.Tests;
+
 public class RepartidorControllerTests
 {
+    private static readonly int[] IdsEsperadosMisPedidos = [2, 1];
+
     private sealed class Escenario
     {
         public RepartidorRepositoryFalso Repartidores { get; } = new();
@@ -3342,7 +3396,7 @@ public class RepartidorControllerTests
 
             Controlador = new RepartidorController(
                 Repartidores, Negocios, servicio,
-                Substitute.For<IWebHostEnvironment>(), Contexto,
+                Contexto,
                 Pedidos, Ubicaciones, Perfil,
                 NullLogger<RepartidorController>.Instance)
                 .Preparar(usuarioId: usuarioId, rol: rol);
@@ -3567,7 +3621,7 @@ public class RepartidorControllerTests
         var vista = Assert.IsType<ViewResult>(await e.Controlador.MisPedidos());
 
         var pedidos = Assert.IsType<List<Pedido>>(vista.Model);
-        Assert.Equal(new[] { 2, 1 }, pedidos.Select(p => p.Id));
+        Assert.Equal(IdsEsperadosMisPedidos, pedidos.Select(p => p.Id));
     }
 
     [Fact]
@@ -3697,9 +3751,11 @@ public class RepartidorControllerTests
         Assert.Contains("\"ok\":false", json);
         Assert.Contains("El pedido no se encuentra en camino.", json);
     }
-}ParseOptions.0.json¡.
-bC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\RepartidorServiceTests.cs≈-using Microsoft.Extensions.Logging.Abstractions;
+}ParseOptions.0.json‹.
+bC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\RepartidorServiceTests.cs‡-using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
+
+namespace Gtrack.Tests;
 
 public class RepartidorServiceTests
 {
@@ -3875,8 +3931,10 @@ public class RepartidorServiceTests
         Assert.Null(r.PasswordTemporal);
         Assert.True(e.Repartidores.SeLlamoRegistrar);
     }
-}ParseOptions.0.jsonª
-lC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UbicacionServiceConContextoTests.csµusing Microsoft.Extensions.Logging.Abstractions;
+}ParseOptions.0.json÷
+lC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UbicacionServiceConContextoTests.cs–using Microsoft.Extensions.Logging.Abstractions;
+
+namespace Gtrack.Tests;
 
 public class UbicacionServiceConContextoTests
 {
@@ -3996,8 +4054,10 @@ public class UbicacionServiceConContextoTests
         Assert.False(ok);
         Assert.Equal("No fue posible actualizar la ubicaci√≥n.", error);
     }
-}ParseOptions.0.jsonÏ&
-aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UbicacionServiceTests.csÒ%using Microsoft.Extensions.Logging.Abstractions;
+}ParseOptions.0.jsoná'
+aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UbicacionServiceTests.cså&using Microsoft.Extensions.Logging.Abstractions;
+
+namespace Gtrack.Tests;
 
 public class UbicacionServiceTests
 {
@@ -4133,14 +4193,16 @@ public class UbicacionServiceTests
         Assert.Equal(DateTimeKind.Utc, fecha!.Value.Kind);
         Assert.Equal("EnCamino", estado);
     }
-}ParseOptions.0.jsonÂN
-bC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UsuarioControllerTests.csÈMusing System.Security.Claims;
+}ParseOptions.0.jsonÄO
+bC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UsuarioControllerTests.csÑNusing System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using NSubstitute;
+
+namespace Gtrack.Tests;
 
 public class UsuarioControllerTests
 {
@@ -4393,8 +4455,10 @@ public class UsuarioControllerTests
         Assert.Contains(e.Controlador.ModelState[""]!.Errors,
             err => err.ErrorMessage == "La nueva contrase√±a no puede ser igual a la anterior");
     }
-}ParseOptions.0.json‘
-[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UtilidadesTests.csﬂusing Microsoft.Extensions.Logging.Abstractions;
+}ParseOptions.0.jsonÔ
+[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Gtrack.Tests\UtilidadesTests.cs˙using Microsoft.Extensions.Logging.Abstractions;
+
+namespace Gtrack.Tests;
 
 public class UtilidadesTests
 {
@@ -4500,7 +4564,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gtrack.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+375c0e950932e6e8acfece1f01df20ee8b8d782a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0309fc116d3f1565124c89cd896100a7623cb3f5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gtrack.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gtrack.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

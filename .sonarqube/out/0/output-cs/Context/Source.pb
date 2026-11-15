@@ -1,6 +1,8 @@
-’4
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\AdminController.cs·3using Microsoft.AspNetCore.Authorization;
+Í4
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\AdminController.csˆ3using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+namespace Gtrack;
 
 [Authorize(Roles = "Administrador")]
 public class AdminController(
@@ -153,9 +155,9 @@ public class AdminController(
             return RedirectToAction(nameof(Reportes), new { desde = Dia(desde), hasta = Dia(hasta) });
         }
     }
-}ParseOptions.0.json¬
+}ParseOptions.0.json∆
 
-YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\HomeController.csœ	using Microsoft.AspNetCore.Mvc;
+YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\HomeController.cs”	using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Gtrack.Controllers
@@ -184,7 +186,7 @@ namespace Gtrack.Controllers
         // P√°ginas de estado (404, 403, etc.): se invoca desde UseStatusCodePagesWithReExecute
         [Route("Home/StatusCode")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult StatusCode(int code)
+        public new IActionResult StatusCode(int code)
         {
             ViewData["Codigo"] = code;
             Response.StatusCode = code;
@@ -192,12 +194,14 @@ namespace Gtrack.Controllers
         }
     }
 }
-ParseOptions.0.json˛/
-\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\NegocioController.csà/using Microsoft.AspNetCore.Authentication;
+ParseOptions.0.jsonì0
+\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\NegocioController.csù/using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+
+namespace Gtrack;
 
 [Authorize(Roles = "Negocio")]
 public class NegocioController(INegocioService negocios) : Controller
@@ -361,11 +365,13 @@ public class NegocioController(INegocioService negocios) : Controller
         return View(perfil);
     }
 }
-ParseOptions.0.jsonî=
-[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\PedidoController.csü<using Microsoft.AspNetCore.Authorization;
+ParseOptions.0.jsonÇ=
+[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\PedidoController.csç<using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+
+namespace Gtrack;
 
 [Authorize(Roles = "Negocio")]
 public class PedidoController(
@@ -413,7 +419,7 @@ public class PedidoController(
         {
             listaRepartidores = await context.Set<Repartidor>()
                 .Include(r => r.Usuario)
-                .Where(r => r.NegocioId == negocio.Id && r.Usuario.Estado == EstadoCuenta.Activo)
+                .Where(r => r.NegocioId == negocio.Id && r.Usuario!.Estado == EstadoCuenta.Activo)
                 .ToListAsync();
         }
 
@@ -490,7 +496,7 @@ public class PedidoController(
 
         // RN-1-CU05: el c√≥digo debe cumplir el formato definido (8 caracteres alfanum√©ricos)
         var codigoLimpio = codigo?.Trim().ToUpperInvariant() ?? "";
-        if (!System.Text.RegularExpressions.Regex.IsMatch(codigoLimpio, "^[A-Z0-9]{8}$"))
+        if (!Patrones.CodigoPedido().IsMatch(codigoLimpio))
         {
             ModelState.AddModelError("", CodigoNoEncontrado);
             return View(nameof(Consultar));
@@ -546,7 +552,7 @@ public class PedidoController(
     [HttpGet]
     public async Task<IActionResult> Ubicacion(string codigo)
     {
-        if (string.IsNullOrWhiteSpace(codigo) || !System.Text.RegularExpressions.Regex.IsMatch(codigo.Trim(), "^[A-Za-z0-9]{8}$"))
+        if (string.IsNullOrWhiteSpace(codigo) || !Patrones.CodigoPedidoSinDistinguirMayusculas().IsMatch(codigo.Trim()))
         {
             return Json(new { disponible = false });
         }
@@ -578,20 +584,21 @@ public class HistorialEstadoItem
 {
     public int EstadoPedidoId { get; set; }
     public DateTime FechaCambio { get; set; }
-}ParseOptions.0.jsonπÉ
-_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\RepartidorController.csøÇusing Microsoft.AspNetCore.Authentication;
+}ParseOptions.0.json∞É
+_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\RepartidorController.cs∂Çusing Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
+namespace Gtrack;
+
 [Authorize]
 public class RepartidorController(
     IRepartidorRepository repartidorRepo,
     INegocioRepository negocioRepo,
     IRepartidorService repartidorService,
-    IWebHostEnvironment env,
     AppDbContext context,
     IPedidoService pedidos,
     IUbicacionService ubicacionService,
@@ -986,142 +993,147 @@ public class RepartidorController(
         return RedirectToAction(nameof(Index));
     }
 }
-ParseOptions.0.json…,
-\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\ReporteController.cs”+using Microsoft.AspNetCore.Authorization;
+ParseOptions.0.json≠0
+\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\ReporteController.cs∑/using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-// CU-24 Generar reporte de pedidos y CU-22 Exportar historial (rol Negocio)
-[Authorize(Roles = "Negocio")]
-public class ReporteController(
-    IReporteService reportes,
-    IExportadorReportes exportador,
-    ILogger<ReporteController> logger) : Controller
+namespace Gtrack.Controllers
 {
-    private const string MimeExcel = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    private const string MimePdf = "application/pdf";
-    private const string MimeCsv = "text/csv";
-    private const string SinPedidos = "No hay pedidos registrados en este rango para generar el reporte";
 
-    private int UsuarioId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-
-    private static string Dia(DateTime? d) => d!.Value.ToString("yyyy-MM-dd");
-
-    // ---------- CU-24: pantalla de reportes ----------
-    [HttpGet]
-    public async Task<IActionResult> Index(DateTime? desde, DateTime? hasta)
+    // CU-24 Generar reporte de pedidos y CU-22 Exportar historial (rol Negocio)
+    [Authorize(Roles = "Negocio")]
+    public class ReporteController(
+        IReporteService reportes,
+        IExportadorReportes exportador,
+        ILogger<ReporteController> logger) : Controller
     {
-        var hoy = DateTime.Today;
-        var vista = new ReporteNegocioVista
+        private const string MimeExcel = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        private const string MimePdf = "application/pdf";
+        private const string MimeCsv = "text/csv";
+        private const string SinPedidos = "No hay pedidos registrados en este rango para generar el reporte";
+
+        private int UsuarioId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+        private static string Dia(DateTime? d) => d!.Value.ToString("yyyy-MM-dd");
+
+        // ---------- CU-24: pantalla de reportes ----------
+        [HttpGet]
+        public async Task<IActionResult> Index(DateTime? desde, DateTime? hasta)
         {
-            Desde = desde?.Date ?? new DateTime(hoy.Year, hoy.Month, 1),
-            Hasta = hasta?.Date ?? hoy
-        };
-
-        // Paso 2: primera visita, solo se muestra el formulario
-        if (desde is null && hasta is null) return View(vista);
-
-        // FE-60-CU24: rango de fechas inv√°lido
-        vista.Error = RangoReporte.Validar(desde, hasta);
-        if (vista.Error is not null) return View(vista);
-
-        try
-        {
-            var reporte = await reportes.GenerarReporteNegocioAsync(UsuarioId, desde!.Value, hasta!.Value);
-            if (reporte is null)
-                vista.Error = "No fue posible identificar tu negocio";
-            else if (reporte.TotalPedidos == 0)
-                vista.Aviso = SinPedidos;           // FA-25-CU24: no se muestra gr√°fica ni tabla
-            else
-                vista.Reporte = reporte;
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error al generar el reporte de pedidos del usuario {UsuarioId}", UsuarioId);
-            vista.Error = "No fue posible generar el reporte. Intenta nuevamente";
-        }
-
-        return View(vista);
-    }
-
-    // Descarga del mismo reporte en Excel o PDF
-    [HttpGet]
-    public async Task<IActionResult> Descargar(DateTime? desde, DateTime? hasta, string formato = "excel")
-    {
-        var error = RangoReporte.Validar(desde, hasta);
-        if (error is not null)
-        {
-            TempData["Error"] = error;
-            return RedirectToAction(nameof(Index));
-        }
-
-        try
-        {
-            var reporte = await reportes.GenerarReporteNegocioAsync(UsuarioId, desde!.Value, hasta!.Value);
-            if (reporte is null || reporte.TotalPedidos == 0)
+            var hoy = DateTime.Today;
+            var vista = new ReporteNegocioVista
             {
-                TempData["Error"] = SinPedidos;
-                return RedirectToAction(nameof(Index), new { desde = Dia(desde), hasta = Dia(hasta) });
+                Desde = desde?.Date ?? new DateTime(hoy.Year, hoy.Month, 1),
+                Hasta = hasta?.Date ?? hoy
+            };
+
+            // Paso 2: primera visita, solo se muestra el formulario
+            if (desde is null && hasta is null) return View(vista);
+
+            // FE-60-CU24: rango de fechas inv√°lido
+            vista.Error = RangoReporte.Validar(desde, hasta);
+            if (vista.Error is not null) return View(vista);
+
+            try
+            {
+                var reporte = await reportes.GenerarReporteNegocioAsync(UsuarioId, desde!.Value, hasta!.Value);
+                if (reporte is null)
+                    vista.Error = "No fue posible identificar tu negocio";
+                else if (reporte.TotalPedidos == 0)
+                    vista.Aviso = SinPedidos;           // FA-25-CU24: no se muestra gr√°fica ni tabla
+                else
+                    vista.Reporte = reporte;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error al generar el reporte de pedidos del usuario {UsuarioId}", UsuarioId);
+                vista.Error = "No fue posible generar el reporte. Intenta nuevamente";
             }
 
-            var nombre = $"Reporte_Pedidos_{desde.Value:yyyyMMdd}_{hasta.Value:yyyyMMdd}";
-            return formato.Equals("pdf", StringComparison.OrdinalIgnoreCase)
-                ? File(exportador.ReporteNegocioPdf(reporte), MimePdf, nombre + ".pdf")
-                : File(exportador.ReporteNegocioExcel(reporte), MimeExcel, nombre + ".xlsx");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error al exportar el reporte de pedidos del usuario {UsuarioId}", UsuarioId);
-            TempData["Error"] = "No fue posible generar el archivo. Intenta nuevamente";
-            return RedirectToAction(nameof(Index), new { desde = Dia(desde), hasta = Dia(hasta) });
-        }
-    }
-
-    // ---------- CU-22: exportar historial de pedidos (desde "Historial de Pedidos") ----------
-    [HttpGet]
-    public async Task<IActionResult> ExportarHistorial(DateTime? desde, DateTime? hasta, string formato = "excel")
-    {
-        // FE-55-CU22: rango inv√°lido
-        var error = RangoReporte.Validar(desde, hasta);
-        if (error is not null)
-        {
-            TempData["Error"] = error;
-            return RedirectToAction("Historial", "Pedido");
+            return View(vista);
         }
 
-        try
+        // Descarga del mismo reporte en Excel o PDF
+        [HttpGet]
+        public async Task<IActionResult> Descargar(DateTime? desde, DateTime? hasta, string formato = "excel")
         {
-            var historial = await reportes.ObtenerHistorialAsync(UsuarioId, desde!.Value, hasta!.Value);
-
-            // FA-23-CU22: rango sin pedidos finalizados
-            if (historial is null || historial.Filas.Count == 0)
+            var error = RangoReporte.Validar(desde, hasta);
+            if (error is not null)
             {
-                TempData["Error"] = "No hay pedidos finalizados en el rango seleccionado";
+                TempData["Error"] = error;
+                return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
+                var reporte = await reportes.GenerarReporteNegocioAsync(UsuarioId, desde!.Value, hasta!.Value);
+                if (reporte is null || reporte.TotalPedidos == 0)
+                {
+                    TempData["Error"] = SinPedidos;
+                    return RedirectToAction(nameof(Index), new { desde = Dia(desde), hasta = Dia(hasta) });
+                }
+
+                var nombre = $"Reporte_Pedidos_{desde.Value:yyyyMMdd}_{hasta.Value:yyyyMMdd}";
+                return formato.Equals("pdf", StringComparison.OrdinalIgnoreCase)
+                    ? File(exportador.ReporteNegocioPdf(reporte), MimePdf, nombre + ".pdf")
+                    : File(exportador.ReporteNegocioExcel(reporte), MimeExcel, nombre + ".xlsx");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error al exportar el reporte de pedidos del usuario {UsuarioId}", UsuarioId);
+                TempData["Error"] = "No fue posible generar el archivo. Intenta nuevamente";
+                return RedirectToAction(nameof(Index), new { desde = Dia(desde), hasta = Dia(hasta) });
+            }
+        }
+
+        // ---------- CU-22: exportar historial de pedidos (desde "Historial de Pedidos") ----------
+        [HttpGet]
+        public async Task<IActionResult> ExportarHistorial(DateTime? desde, DateTime? hasta, string formato = "excel")
+        {
+            // FE-55-CU22: rango inv√°lido
+            var error = RangoReporte.Validar(desde, hasta);
+            if (error is not null)
+            {
+                TempData["Error"] = error;
                 return RedirectToAction("Historial", "Pedido");
             }
 
-            var nombre = $"Historial_Pedidos_{desde.Value:yyyyMMdd}_{hasta.Value:yyyyMMdd}";
-            return formato.ToLowerInvariant() switch
+            try
             {
-                "pdf" => File(exportador.HistorialPdf(historial), MimePdf, nombre + ".pdf"),
-                "csv" => File(exportador.HistorialCsv(historial), MimeCsv, nombre + ".csv"),
-                _ => File(exportador.HistorialExcel(historial), MimeExcel, nombre + ".xlsx")
-            };
-        }
-        catch (Exception ex)
-        {
-            // FE-56-CU22: se registra el error para soporte
-            logger.LogError(ex, "Error al exportar el historial de pedidos del usuario {UsuarioId}", UsuarioId);
-            TempData["Error"] = "No fue posible generar el archivo. Intenta nuevamente";
-            return RedirectToAction("Historial", "Pedido");
+                var historial = await reportes.ObtenerHistorialAsync(UsuarioId, desde!.Value, hasta!.Value);
+
+                // FA-23-CU22: rango sin pedidos finalizados
+                if (historial is null || historial.Filas.Count == 0)
+                {
+                    TempData["Error"] = "No hay pedidos finalizados en el rango seleccionado";
+                    return RedirectToAction("Historial", "Pedido");
+                }
+
+                var nombre = $"Historial_Pedidos_{desde.Value:yyyyMMdd}_{hasta.Value:yyyyMMdd}";
+                return formato.ToLowerInvariant() switch
+                {
+                    "pdf" => File(exportador.HistorialPdf(historial), MimePdf, nombre + ".pdf"),
+                    "csv" => File(exportador.HistorialCsv(historial), MimeCsv, nombre + ".csv"),
+                    _ => File(exportador.HistorialExcel(historial), MimeExcel, nombre + ".xlsx")
+                };
+            }
+            catch (Exception ex)
+            {
+                // FE-56-CU22: se registra el error para soporte
+                logger.LogError(ex, "Error al exportar el historial de pedidos del usuario {UsuarioId}", UsuarioId);
+                TempData["Error"] = "No fue posible generar el archivo. Intenta nuevamente";
+                return RedirectToAction("Historial", "Pedido");
+            }
         }
     }
-}
-ParseOptions.0.jsonÿ>
-\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\UsuarioController.cs‚=using Microsoft.AspNetCore.Authentication;
+}ParseOptions.0.jsonÌ>
+\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Controllers\UsuarioController.cs˜=using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+
+namespace Gtrack;
 
 public class UsuarioController(
     IAuthService auth,
@@ -1306,8 +1318,10 @@ public class UsuarioController(
     // Inicio de sesi√≥n con el perfil ya elegido (va en el correo de confirmaci√≥n de la activaci√≥n)
     private string UrlLogin(RolUsuario rol) =>
         Url.Action(nameof(Login), "Usuario", new { rol = rol.ToString() }, Request.Scheme)!;
-}ParseOptions.0.jsonÿ7
-PC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Data\appDBcontext.csÓ6using Microsoft.EntityFrameworkCore;
+}ParseOptions.0.jsonˇ7
+PC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Data\appDBcontext.csï7using Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
@@ -1319,7 +1333,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Administrador> Administradores => Set<Administrador>();
     public DbSet<Pedido> Pedidos => Set<Pedido>();
     public DbSet<ItemPedido> ItemsPedido => Set<ItemPedido>();
-    public DbSet<SuspensionRepartidor> SuspensionRepartidor { get; set; }
+    public DbSet<SuspensionRepartidor> SuspensionRepartidor => Set<SuspensionRepartidor>();
     public DbSet<UbicacionPedido> UbicacionesPedido => Set<UbicacionPedido>();
     public DbSet<SolicitudCancelacion> SolicitudesCancelacion => Set<SolicitudCancelacion>();
     public DbSet<NovedadPedido> NovedadesPedido => Set<NovedadPedido>();
@@ -1462,8 +1476,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .OnDelete(DeleteBehavior.Cascade);
         });
     }
-}ParseOptions.0.jsonΩ
-TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\ActivarCuentaDto.csœusing System.ComponentModel.DataAnnotations;
+}ParseOptions.0.json“
+TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\ActivarCuentaDto.cs‰using System.ComponentModel.DataAnnotations;
+
+namespace Gtrack;
 
 // CU-09: el repartidor crea su contrase√±a desde el enlace que recibi√≥ por correo
 public class ActivarCuentaDto
@@ -1487,9 +1503,11 @@ public class ActivarCuentaDto
     public string Correo { get; set; } = "";
     public string Negocio { get; set; } = "";
 }
-ParseOptions.0.json“
-TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\EditarNegocioDto.cs‰
+ParseOptions.0.jsonÁ
+TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\EditarNegocioDto.cs˘
 using System.ComponentModel.DataAnnotations;
+
+namespace Gtrack;
 
 // CU-13: el documento (NIT/CC) no se puede editar.
 public class EditarNegocioDto
@@ -1518,8 +1536,10 @@ public class EditarNegocioDto
     [Required(ErrorMessage = RegistroNegocioDto.Obligatorio)]
     [StringLength(200, MinimumLength = 5, ErrorMessage = "Debe tener entre 5 y 200 caracteres")]
     public string Direccion { get; set; } = "";
-}ParseOptions.0.jsonˆ
-UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\EliminarCuentaDto.csáusing System.ComponentModel.DataAnnotations;
+}ParseOptions.0.jsonã
+UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\EliminarCuentaDto.csúusing System.ComponentModel.DataAnnotations;
+
+namespace Gtrack;
 
 public class EliminarCuentaDto
 {
@@ -1528,8 +1548,10 @@ public class EliminarCuentaDto
     [DataType(DataType.Password)]
     public string Password { get; set; } = "";
 }
-ParseOptions.0.json¢
-LC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\LoginDto.csºusing System.ComponentModel.DataAnnotations;
+ParseOptions.0.json∑
+LC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\LoginDto.cs—using System.ComponentModel.DataAnnotations;
+
+namespace Gtrack;
 
 public class LoginDto
 {
@@ -1544,8 +1566,10 @@ public class LoginDto
     [Required(ErrorMessage = "Todos los campos son obligatorios")]
     [DataType(DataType.Password)]
     public string Password { get; set; } = "";
-}ParseOptions.0.jsonÛ
-TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilNegocioDto.csÖ// Datos que muestra la pantalla "Mi Perfil" (CU-11 / CU-13).
+}ParseOptions.0.jsonà
+TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilNegocioDto.csönamespace Gtrack;
+
+// Datos que muestra la pantalla "Mi Perfil" (CU-11 / CU-13).
 public class PerfilNegocioDto
 {
     public int Id { get; set; }
@@ -1557,8 +1581,10 @@ public class PerfilNegocioDto
     public string Direccion { get; set; } = "";
     public DateTime FechaRegistro { get; set; }
     public EstadoCuenta Estado { get; set; }
-}ParseOptions.0.json·
-[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilPublicoNegocioDto.csÏ// CU-25 / RN-1-CU25: solo informaci√≥n p√∫blica (sin documento ni correo).
+}ParseOptions.0.jsonˆ
+[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilPublicoNegocioDto.csÅnamespace Gtrack;
+
+// CU-25 / RN-1-CU25: solo informaci√≥n p√∫blica (sin documento ni correo).
 public class PerfilPublicoNegocioDto
 {
     public string Nombre { get; set; } = "";
@@ -1566,8 +1592,10 @@ public class PerfilPublicoNegocioDto
     public string Direccion { get; set; } = "";
     public string Telefono { get; set; } = "";
     public DateTime FechaRegistro { get; set; }
-}ParseOptions.0.json™
-XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilRepartidorDtos.cs∏using System.ComponentModel.DataAnnotations;
+}ParseOptions.0.jsonø
+XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\PerfilRepartidorDtos.csÕusing System.ComponentModel.DataAnnotations;
+
+namespace Gtrack;
 
 // CU-12 / CU-14: datos que el repartidor ve en "Mi perfil"
 public class PerfilRepartidorDto
@@ -1617,8 +1645,10 @@ public class EditarRepartidorDto : IValidatableObject
         return ReglasValidacion.ValidarVehiculo(Vehiculo, Placa);
     }
 }
-ParseOptions.0.json¡
-PC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RecuperarDto.cs◊using System.ComponentModel.DataAnnotations;
+ParseOptions.0.json÷
+PC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RecuperarDto.csÏusing System.ComponentModel.DataAnnotations;
+
+namespace Gtrack;
 
 public class RecuperarDto
 {
@@ -1626,8 +1656,10 @@ public class RecuperarDto
     [Required(ErrorMessage = "Ingresa tu correo electr√≥nico")]
     [RegularExpression(ReglasValidacion.Correo, ErrorMessage = ReglasValidacion.CorreoMensaje)]
     public string Correo { get; set; } = "";
-}ParseOptions.0.json—
-VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RegistrarPedidoDto.cs·using System.ComponentModel.DataAnnotations;
+}ParseOptions.0.jsonÊ
+VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RegistrarPedidoDto.csˆusing System.ComponentModel.DataAnnotations;
+
+namespace Gtrack;
 
 public class RegistrarPedidoDto
 {
@@ -1680,8 +1712,10 @@ public enum MetodoPago
     Efectivo,
     Transferencia,
     Tarjeta
-}ParseOptions.0.jsonˇ
-VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RegistroNegocioDto.csèusing System.ComponentModel.DataAnnotations;
+}ParseOptions.0.jsonî
+VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RegistroNegocioDto.cs§using System.ComponentModel.DataAnnotations;
+
+namespace Gtrack;
 
 public class RegistroNegocioDto
 {
@@ -1726,9 +1760,10 @@ public class RegistroNegocioDto
     [Required(ErrorMessage = Obligatorio)]
     [DataType(DataType.Password)]
     public string ConfirmarPassword { get; set; } = "";
-}ParseOptions.0.json‡
-TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\ReglasValidacion.csÚusing System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
+}ParseOptions.0.json˚
+TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\ReglasValidacion.csçusing System.ComponentModel.DataAnnotations;
+
+namespace Gtrack;
 
 // Reglas de validaci√≥n compartidas por todos los formularios.
 // Se usan con [RegularExpression] para que se validen igual en el navegador (jQuery Validation) y en el servidor.
@@ -1780,12 +1815,15 @@ public static class ReglasValidacion
         }
 
         var esMoto = vehiculo == TipoVehiculo.Moto;
-        if (!Regex.IsMatch(NormalizarPlaca(placa), esMoto ? PlacaMoto : PlacaCarro))
+        var patron = esMoto ? Patrones.PlacaMoto() : Patrones.PlacaCarro();
+        if (!patron.IsMatch(NormalizarPlaca(placa)))
             yield return new ValidationResult(esMoto ? PlacaMensajeMoto : PlacaMensajeCarro, ["Placa"]);
     }
 }
-ParseOptions.0.json–$
-OC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\ReporteDtos.csÁ#// ---------- Filas reutilizables ----------
+ParseOptions.0.jsonÂ$
+OC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\ReporteDtos.cs¸#namespace Gtrack;
+
+// ---------- Filas reutilizables ----------
 public class FilaEstadoReporte
 {
     public int EstadoId { get; set; }
@@ -1913,8 +1951,10 @@ public class ReporteAdminVista
 
 // Una barra de las gr√°ficas que se dibujan en pantalla
 public record BarraGrafica(string Etiqueta, int Cantidad, string Color);
-ParseOptions.0.json÷ 
-YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RergistroPersonalDtos.cs„using System.ComponentModel.DataAnnotations;
+ParseOptions.0.jsonÎ 
+YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RergistroPersonalDtos.cs¯using System.ComponentModel.DataAnnotations;
+
+namespace Gtrack;
 
 // Campo: propiedad del formulario donde se muestra el error (null = mensaje general)
 public record ResultadoRegistro(bool Ok, string? Error, bool CorreoEnviado, string? PasswordTemporal, string? Campo = null);
@@ -2006,14 +2046,18 @@ public class AdministradorDto
     public string Telefono { get; set; } = "";
     public EstadoCuenta Estado { get; set; }
     public DateTime? FechaRegistro { get; set; }
-}ParseOptions.0.json®
-RC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RestablecerDto.csºpublic class RestablecerDto
+}ParseOptions.0.jsonΩ
+RC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\RestablecerDto.cs—namespace Gtrack;
+
+public class RestablecerDto
 {
     public string Token { get; set; } = "";
     public string NuevaPassword { get; set; } = "";
     public string ConfirmarPassword { get; set; } = "";
-}ParseOptions.0.jsonΩ
-VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\VerificarCodigoDto.csÕusing System.ComponentModel.DataAnnotations;
+}ParseOptions.0.json“
+VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Dtos\VerificarCodigoDto.cs‚using System.ComponentModel.DataAnnotations;
+
+namespace Gtrack;
 
 public class VerificarCodigoDto
 {
@@ -2022,8 +2066,10 @@ public class VerificarCodigoDto
     [RegularExpression(@"^\d{6}$", ErrorMessage = "El c√≥digo tiene 6 d√≠gitos")]
     public string Codigo { get; set; } = "";
 }
-ParseOptions.0.jsonŸ
-MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Cliente.csÚpublic class Cliente
+ParseOptions.0.jsonÓ
+MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Cliente.csánamespace Gtrack;
+
+public class Cliente
 {
     public int Id { get; set; }
     public string NombreCompleto { get; set; } = "";
@@ -2032,8 +2078,10 @@ MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Cliente.csÚ
     public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
     public int NegocioId { get; set; }
     public Negocio? Negocio { get; set; }
-}ParseOptions.0.jsonÛ
-XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\CodigoVerificacion.csÅ// CU-13: c√≥digo de verificaci√≥n de identidad para editar el perfil.
+}ParseOptions.0.jsonà
+XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\CodigoVerificacion.csñnamespace Gtrack;
+
+// CU-13: c√≥digo de verificaci√≥n de identidad para editar el perfil.
 public class CodigoVerificacion
 {
     public int Id { get; set; }
@@ -2046,13 +2094,17 @@ public class CodigoVerificacion
     public bool Verificado { get; set; }
     public bool Usado { get; set; }
 }
-ParseOptions.0.jsonˇ
-TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\ErrorViewModel.csëpublic class ErrorViewModel
+ParseOptions.0.jsonî
+TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\ErrorViewModel.cs¶namespace Gtrack;
+
+public class ErrorViewModel
 {
     public string? RequestId { get; set; }
     public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-}ParseOptions.0.jsonå
-MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Negocio.cs•// Datos del negocio. Correo y Documento (NIT/CC) viven en Usuario (cuenta de acceso);
+}ParseOptions.0.json°
+MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Negocio.cs∫namespace Gtrack;
+
+// Datos del negocio. Correo y Documento (NIT/CC) viven en Usuario (cuenta de acceso);
 // aqu√≠ va la informaci√≥n del perfil del negocio.
 public class Negocio
 {
@@ -2065,8 +2117,10 @@ public class Negocio
     public string Direccion { get; set; } = "";
     public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
 }
-ParseOptions.0.jsonÄ
-SC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\NovedadPedido.csì// CU-16: novedad que reporta el repartidor sobre un pedido activo (tabla NovedadPedido).
+ParseOptions.0.jsonï
+SC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\NovedadPedido.cs®namespace Gtrack;
+
+// CU-16: novedad que reporta el repartidor sobre un pedido activo (tabla NovedadPedido).
 // El pedido conserva su estado (PE-32-CU16); la novedad queda guardada con su fecha y hora.
 public class NovedadPedido
 {
@@ -2086,8 +2140,10 @@ public enum TipoNovedad
     ProductoNoDisponible,
     Otro
 }
-ParseOptions.0.jsonÿ	
-LC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Pedido.csÚpublic class Pedido
+ParseOptions.0.jsonÌ	
+LC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Pedido.csá	namespace Gtrack;
+
+public class Pedido
 {
     public int Id { get; set; }
     public string Codigo { get; set; } = "";
@@ -2129,8 +2185,10 @@ public enum EstadoPedido
     EnCamino,
     Entregado,
     Cancelado
-}ParseOptions.0.json–
-NC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Personal.csË// APie ya no se ofrece en los formularios; se conserva solo para no romper registros antiguos (TipoVehiculoId = 3)
+}ParseOptions.0.jsonÂ
+NC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Personal.cs˝namespace Gtrack;
+
+// APie ya no se ofrece en los formularios; se conserva solo para no romper registros antiguos (TipoVehiculoId = 3)
 public enum TipoVehiculo { Bicicleta, Moto, Carro, APie }
 
 public class Repartidor
@@ -2154,8 +2212,10 @@ public class Administrador
     public string NombreCompleto { get; set; } = "";
     public string Telefono { get; set; } = "";
     public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
-}ParseOptions.0.json©
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SolicitudCancelacion.csµ// CU-17: solicitud de cancelaci√≥n hecha por el cliente desde la consulta del pedido.
+}ParseOptions.0.jsonæ
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SolicitudCancelacion.cs namespace Gtrack;
+
+// CU-17: solicitud de cancelaci√≥n hecha por el cliente desde la consulta del pedido.
 // Una sola por pedido (RN-1-CU17): la tabla tiene √≠ndice √∫nico en PedidoId.
 public class SolicitudCancelacion
 {
@@ -2165,9 +2225,11 @@ public class SolicitudCancelacion
     public string Motivo { get; set; } = "";
     public DateTime FechaSolicitud { get; set; } = DateTime.UtcNow;
 }
-ParseOptions.0.jsonè
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SuspensionRepartidor.csõusing System.ComponentModel.DataAnnotations;
+ParseOptions.0.json§
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\SuspensionRepartidor.cs∞using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Gtrack;
 
 [Table("SuspensionRepartidor")]
 public class SuspensionRepartidor
@@ -2186,8 +2248,10 @@ public class SuspensionRepartidor
     public int? ReactivadoPorAdministradorId { get; set; }
 
     public DateTime? FechaReactivacion { get; set; }
-}ParseOptions.0.json¢
-WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\TokenRecuperacion.cs±public class TokenRecuperacion
+}ParseOptions.0.json∑
+WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\TokenRecuperacion.cs∆namespace Gtrack;
+
+public class TokenRecuperacion
 {
     public int Id { get; set; }
     public int UsuarioId { get; set; }
@@ -2195,8 +2259,10 @@ WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\TokenRecuper
     public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
     public DateTime Expira { get; set; }
     public bool Usado { get; set; }
-}ParseOptions.0.jsonÉ
-UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\UbicacionPedido.csîpublic class UbicacionPedido
+}ParseOptions.0.jsonò
+UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\UbicacionPedido.cs©namespace Gtrack;
+
+public class UbicacionPedido
 {
     public int PedidoId { get; set; }
     public Pedido? Pedido { get; set; }
@@ -2205,8 +2271,10 @@ UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\UbicacionPed
     public DateTime FechaActualizacion { get; set; } = DateTime.UtcNow;
 }
 
-ParseOptions.0.json 
-MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Usuario.cs„public enum RolUsuario { Negocio, Repartidor, Administrador }
+ParseOptions.0.jsonﬂ
+MC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Models\Usuario.cs¯namespace Gtrack;
+
+public enum RolUsuario { Negocio, Repartidor, Administrador }
 
 // Los estados nuevos van al final para no cambiar los valores num√©ricos de los existentes.
 // El n√∫mero debe coincidir con dbo.EstadoCuenta (0 a 5).
@@ -2236,8 +2304,9 @@ public class Usuario
 
     private static string Recortar(string valor, int max) => valor.Length <= max ? valor : valor[..max];
 }
-ParseOptions.0.json¥
-FC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Program.cs‘using Microsoft.AspNetCore.Authentication.Cookies;
+ParseOptions.0.jsonŒ
+FC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Program.csÓusing Gtrack;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -2312,8 +2381,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();ParseOptions.0.jsonÖ
-dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\AdministracionRepository.csáusing Microsoft.EntityFrameworkCore;
+await app.RunAsync();ParseOptions.0.jsonö
+dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\AdministracionRepository.csúusing Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 // CU-26 y validaci√≥n de negocios, guardados en SQL Server
 public class AdministracionRepository(AppDbContext db) : IAdministracionRepository
@@ -2383,8 +2454,10 @@ public class AdministracionRepository(AppDbContext db) : IAdministracionReposito
             .AsNoTracking()
             .FirstOrDefaultAsync(a => a.UsuarioId == usuarioId);
 }
-ParseOptions.0.json˘
-hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\CodigoVerificacionRepository.cs˜using Microsoft.EntityFrameworkCore;
+ParseOptions.0.jsoné
+hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\CodigoVerificacionRepository.csåusing Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 public class CodigoVerificacionRepository(AppDbContext db) : ICodigoVerificacionRepository
 {
@@ -2407,15 +2480,19 @@ public class CodigoVerificacionRepository(AppDbContext db) : ICodigoVerificacion
         await db.SaveChangesAsync();
     }
 }
-ParseOptions.0.json‰
-iC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ICodigoVerificacionRepository.cs·public interface ICodigoVerificacionRepository
+ParseOptions.0.json˘
+iC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ICodigoVerificacionRepository.csˆnamespace Gtrack;
+
+public interface ICodigoVerificacionRepository
 {
     Task AgregarAsync(CodigoVerificacion codigo);
     Task<CodigoVerificacion?> ObtenerUltimoAsync(int usuarioId);
     Task ActualizarAsync(CodigoVerificacion codigo);
 }
-ParseOptions.0.json™
-^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\INegocioRepository.cs≤public interface INegocioRepository
+ParseOptions.0.jsonø
+^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\INegocioRepository.cs«namespace Gtrack;
+
+public interface INegocioRepository
 {
     Task<Negocio?> BuscarPorIdAsync(int id);
     Task<Negocio?> ObtenerPorUsuarioIdAsync(int usuarioId);
@@ -2430,8 +2507,10 @@ iC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ICodig
     Task<bool> TienePedidosActivosAsync(int negocioId);
     Task<bool> TieneRepartidoresVinculadosAsync(int negocioId);
 }
-ParseOptions.0.jsonö
-]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IPedidoRepository.cs£public interface IPedidoRepository
+ParseOptions.0.jsonØ
+]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IPedidoRepository.cs∏namespace Gtrack;
+
+public interface IPedidoRepository
 {
     Task<Pedido?> ObtenerPorIdAsync(int id);
     Task<Pedido?> ObtenerPorCodigoAsync(string codigo);
@@ -2440,8 +2519,10 @@ iC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ICodig
     Task AgregarAsync(Pedido pedido);
     Task ActualizarAsync(Pedido pedido);
     Task<List<Pedido>> ObtenerPorNegocioAsync(int negocioId);
-}ParseOptions.0.json€
-aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IPersonalRepositories.cs‡
+}ParseOptions.0.json
+aC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IPersonalRepositories.csı
+namespace Gtrack;
+
 public interface IRepartidorRepository
 {
     Task RegistrarRepartidorAsync(Usuario usuario, Repartidor repartidor);
@@ -2472,8 +2553,10 @@ public interface IAdministracionRepository
     // Administrador due√±o de una cuenta de usuario (null para el administrador principal)
     Task<Administrador?> ObtenerPorUsuarioIdAsync(int usuarioId);
 }
-ParseOptions.0.json´
-hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ITokenRecuperacionRepository.cs©// Enlaces de un solo uso enviados por correo: recuperaci√≥n de contrase√±a (CU-20)
+ParseOptions.0.json¿
+hC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\ITokenRecuperacionRepository.csænamespace Gtrack;
+
+// Enlaces de un solo uso enviados por correo: recuperaci√≥n de contrase√±a (CU-20)
 // y activaci√≥n de la cuenta del repartidor (CU-09).
 public interface ITokenRecuperacionRepository
 {
@@ -2485,15 +2568,19 @@ public interface ITokenRecuperacionRepository
     // Marca como usados todos los enlaces que la cuenta a√∫n tenga sin usar
     Task InvalidarPendientesAsync(int usuarioId);
 }
-ParseOptions.0.json°
-`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUbicacionRepository.csßpublic interface IUbicacionRepository
+ParseOptions.0.json∂
+`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUbicacionRepository.csºnamespace Gtrack;
+
+public interface IUbicacionRepository
 {
     Task<UbicacionPedido?> ObtenerAsync(int pedidoId);
     Task GuardarAsync(int pedidoId, decimal lat, decimal lng);
 }
 
-ParseOptions.0.json±
-^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUsuarioRepository.csπpublic interface IUsuarioRepository
+ParseOptions.0.json∆
+^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\IUsuarioRepository.csŒnamespace Gtrack;
+
+public interface IUsuarioRepository
 {
     Task<Usuario?> ObtenerPorIdentificadorYRolAsync(string identificador, RolUsuario rol);
     Task<Usuario?> ObtenerPorCorreoAsync(string correo);
@@ -2505,8 +2592,10 @@ public interface ITokenRecuperacionRepository
 
     // Libera el correo/documento de cuentas eliminadas (baja l√≥gica) para poder reutilizarlos
     Task LiberarEliminadosAsync(string correo, string documento);
-}ParseOptions.0.jsoná
-]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\NegocioRepository.csêusing Microsoft.EntityFrameworkCore;
+}ParseOptions.0.jsonú
+]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\NegocioRepository.cs•using Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 public class NegocioRepository(AppDbContext db) : INegocioRepository
 {
@@ -2545,8 +2634,10 @@ public class NegocioRepository(AppDbContext db) : INegocioRepository
     public Task<bool> TieneRepartidoresVinculadosAsync(int negocioId) =>
         db.Repartidores.AnyAsync(r => r.NegocioId == negocioId &&
             r.Usuario!.Estado != EstadoCuenta.Eliminado);
-}ParseOptions.0.jsonﬁ
-\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\PedidoRepository.csËusing Microsoft.EntityFrameworkCore;
+}ParseOptions.0.jsonÛ
+\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\PedidoRepository.cs˝using Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 public class PedidoRepository(AppDbContext db) : IPedidoRepository
 {
@@ -2588,8 +2679,10 @@ public class PedidoRepository(AppDbContext db) : IPedidoRepository
             .Include(p => p.Cliente) // <--- ¬°Esta es la clave para que traiga el nombre y no muestre el ID!
             .Where(p => p.NegocioId == negocioId)
             .ToListAsync();
-}ParseOptions.0.json§
-`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\RepartidorRepository.cs™using Microsoft.EntityFrameworkCore;
+}ParseOptions.0.jsonπ
+`C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\RepartidorRepository.csøusing Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 // CU-09: repartidores guardados en SQL Server
 public class RepartidorRepository(AppDbContext db) : IRepartidorRepository
@@ -2660,8 +2753,11 @@ public class RepartidorRepository(AppDbContext db) : IRepartidorRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(r => r.UsuarioId == usuarioId);
 }
-ParseOptions.0.jsonˇ	
-gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\TokenRecuperacionRepository.cs˛using Microsoft.EntityFrameworkCore;
+ParseOptions.0.jsonî
+
+gC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\TokenRecuperacionRepository.csì	using Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 public class TokenRecuperacionRepository(AppDbContext db) : ITokenRecuperacionRepository
 {
@@ -2694,8 +2790,10 @@ public class TokenRecuperacionRepository(AppDbContext db) : ITokenRecuperacionRe
         await db.SaveChangesAsync();
     }
 }
-ParseOptions.0.jsonÃ	
-_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\UbicacionRepository.cs”using Microsoft.EntityFrameworkCore;
+ParseOptions.0.json·	
+_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\UbicacionRepository.csËusing Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 public class UbicacionRepository(AppDbContext db) : IUbicacionRepository
 {
@@ -2731,8 +2829,10 @@ public class UbicacionRepository(AppDbContext db) : IUbicacionRepository
     }
 }
 
-ParseOptions.0.jsonµ
-]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\UsuarioRepository.csæusing Microsoft.EntityFrameworkCore;
+ParseOptions.0.json 
+]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Repositories\UsuarioRepository.cs”using Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 public class UsuarioRepository(AppDbContext db) : IUsuarioRepository
 {
@@ -2770,8 +2870,10 @@ public class UsuarioRepository(AppDbContext db) : IUsuarioRepository
         await db.SaveChangesAsync();
     }
 }
-ParseOptions.0.jsonÌZ
-_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ActivacionCuentaService.csÙYusing Microsoft.AspNetCore.Identity;
+ParseOptions.0.jsonÇ[
+_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ActivacionCuentaService.csâZusing Microsoft.AspNetCore.Identity;
+
+namespace Gtrack;
 
 // Activaci√≥n de cuenta por correo para los usuarios que registra otra persona:
 //   - Repartidor (CU-09): lo registra un negocio.
@@ -2994,8 +3096,10 @@ public class ActivacionCuentaService(
     private static string Saludo(string? nombre) =>
         string.IsNullOrWhiteSpace(nombre) ? "Hola," : $"Hola, {nombre}";
 }
-ParseOptions.0.json◊3
-]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\AdministracionService.cs‡2using Microsoft.EntityFrameworkCore;
+ParseOptions.0.jsonÏ3
+]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\AdministracionService.csı2using Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 public interface IAdministracionService
 {
@@ -3125,8 +3229,10 @@ public class AdministracionService(
             : (false, "No fue posible enviar el correo de activaci√≥n. Intenta nuevamente.");
     }
 }
-ParseOptions.0.json§
-SC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\AuthService.cs∑using Microsoft.AspNetCore.Identity;
+ParseOptions.0.jsonπ
+SC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\AuthService.csÃusing Microsoft.AspNetCore.Identity;
+
+namespace Gtrack;
 
 public class AuthService(IUsuarioRepository repo, IPasswordHasher<Usuario> hasher) : IAuthService
 {
@@ -3205,8 +3311,10 @@ public class AuthService(IUsuarioRepository repo, IPasswordHasher<Usuario> hashe
             _ => (null, MsgGenerico)
         };
     }
-}ParseOptions.0.json⁄
-^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\EmailDesarrolloService.cs‚// Alternativa para desarrollo: no env√≠a nada, solo escribe el correo (versi√≥n texto) en el log
+}ParseOptions.0.json®
+^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\EmailDesarrolloService.cs∞namespace Gtrack;
+
+// Alternativa para desarrollo: no env√≠a nada, solo escribe el correo (versi√≥n texto) en el log
 public class EmailDesarrolloService(ILogger<EmailDesarrolloService> logger) : IEmailService
 {
     public Task EnviarAsync(string para, string asunto, string cuerpo) =>
@@ -3214,15 +3322,18 @@ public class EmailDesarrolloService(ILogger<EmailDesarrolloService> logger) : IE
 
     public Task EnviarAsync(string para, string asunto, CorreoHtml correo)
     {
-        logger.LogInformation("CORREO para {Para} | {Asunto}{Nueva}{Cuerpo}", para, asunto, Environment.NewLine, correo.Texto);
+        if (logger.IsEnabled(LogLevel.Information))
+            logger.LogInformation("CORREO para {Para} | {Asunto}{Nueva}{Cuerpo}", para, asunto, Environment.NewLine, correo.Texto);
         return Task.CompletedTask;
     }
 }
-ParseOptions.0.jsonˆ
-XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\EmailSmtpService.csÑusing System.Net;
+ParseOptions.0.jsonƒ
+XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\EmailSmtpService.cs“using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
+
+namespace Gtrack;
 
 public class EmailSmtpService(
     IConfiguration config,
@@ -3275,7 +3386,8 @@ public class EmailSmtpService(
         };
 
         await smtp.SendMailAsync(msg);
-        logger.LogInformation("Correo enviado a {Para}: {Asunto}", para, asunto);
+        if (logger.IsEnabled(LogLevel.Information))
+            logger.LogInformation("Correo enviado a {Para}: {Asunto}", para, asunto);
     }
 
     // Versi√≥n peque√±a del logo para el correo (si no existe, se usa el logo de la p√°gina)
@@ -3292,13 +3404,15 @@ public class EmailSmtpService(
         return null;
     }
 }
-ParseOptions.0.jsonÇ¨
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ExportadorReportes.csç´using ClosedXML.Excel;
+ParseOptions.0.jsonó¨
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ExportadorReportes.cs¢´using ClosedXML.Excel;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using System.Globalization;
 using System.Text;
+
+namespace Gtrack;
 
 // Genera los archivos Excel (ClosedXML), PDF (QuestPDF) y CSV de los reportes de GTrack
 public class ExportadorReportes : IExportadorReportes
@@ -3778,12 +3892,16 @@ public class ExportadorReportes : IExportadorReportes
         });
     });
 }
-ParseOptions.0.jsonﬂ
-TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IAuthService.csrpublic interface IAuthService
+ParseOptions.0.jsonı
+TC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IAuthService.csánamespace Gtrack;
+
+public interface IAuthService
 {
     Task<(Usuario? Usuario, string? Error)> IniciarSesionAsync(LoginDto dto);
-}ParseOptions.0.jsonõ
-UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IEmailService.cs¨public interface IEmailService
+}ParseOptions.0.json∞
+UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IEmailService.cs¡namespace Gtrack;
+
+public interface IEmailService
 {
     // Texto simple: se env√≠a igual dentro de la plantilla de GTrack
     Task EnviarAsync(string para, string asunto, string cuerpo);
@@ -3791,8 +3909,10 @@ UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IEmailServ
     // Correo armado con PlantillaCorreo.Crear(...)
     Task EnviarAsync(string para, string asunto, CorreoHtml correo);
 }
-ParseOptions.0.jsonÉ
-[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IExportadorReportes.csépublic interface IExportadorReportes
+ParseOptions.0.jsonò
+[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IExportadorReportes.cs£namespace Gtrack;
+
+public interface IExportadorReportes
 {
     byte[] ReporteNegocioExcel(ReporteNegocioDto r);
     byte[] ReporteNegocioPdf(ReporteNegocioDto r);
@@ -3804,8 +3924,10 @@ UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IEmailServ
     byte[] ReporteAdminExcel(ReporteAdminDto r);
     byte[] ReporteAdminPdf(ReporteAdminDto r);
 }
-ParseOptions.0.json˘
-WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\INegocioService.csàpublic interface INegocioService
+ParseOptions.0.jsoné	
+WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\INegocioService.csùnamespace Gtrack;
+
+public interface INegocioService
 {
     // CU-01 (urlRevision: enlace a la lista de negocios que reciben los administradores)
     Task<(bool Ok, string? Error, bool CorreoEnviado)> RegistrarAsync(RegistroNegocioDto dto, string urlRevision);
@@ -3825,8 +3947,10 @@ WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\INegocioSe
     Task<(bool Ok, string? Error)> ValidarEliminacionAsync(int usuarioId, string password);
     Task<(bool Ok, string? Error)> EliminarCuentaAsync(int usuarioId, string password);
 }
-ParseOptions.0.json¢
-VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IPedidoService.cs≤public interface IPedidoService
+ParseOptions.0.json∑
+VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IPedidoService.cs«namespace Gtrack;
+
+public interface IPedidoService
 {
     Task<ClienteAutocompletarDto?> BuscarClienteFrecuenteAsync(int usuarioNegocioId, string telefono);
     Task<(bool Ok, string? Error, string? Codigo)> RegistrarAsync(int usuarioNegocioId, RegistrarPedidoDto dto);
@@ -3839,17 +3963,21 @@ VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IPedidoSer
 
     // CU-16: el repartidor reporta una novedad sobre uno de sus pedidos activos
     Task<(bool Ok, string? Error)> RegistrarNovedadAsync(int usuarioRepartidorId, int pedidoId, int? tipoNovedadId, string? observaciones);
-}ParseOptions.0.json‹
-\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IRecuperacionService.csÊpublic enum ResultadoSolicitud { Procesada, LimiteSuperado }
+}ParseOptions.0.jsonÒ
+\C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IRecuperacionService.cs˚namespace Gtrack;
+
+public enum ResultadoSolicitud { Procesada, LimiteSuperado }
 
 public interface IRecuperacionService
 {
     Task<ResultadoSolicitud> SolicitarAsync(string correo, Func<string, string> construirEnlace);
     Task<bool> TokenVigenteAsync(string token);
     Task<(bool Ok, string? Error)> RestablecerAsync(string token, string nueva, string confirmacion);
-}ParseOptions.0.jsonå
+}ParseOptions.0.json°
 
-WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IReporteService.csõ	public interface IReporteService
+WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IReporteService.cs∞	namespace Gtrack;
+
+public interface IReporteService
 {
     // CU-24: reporte de pedidos del negocio (agrupado por estado y por mes)
     Task<ReporteNegocioDto?> GenerarReporteNegocioAsync(int usuarioNegocioId, DateTime desde, DateTime hasta);
@@ -3878,16 +4006,20 @@ public static class RangoReporte
         return null;
     }
 }
-ParseOptions.0.jsonÆ
-YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IUbicacionService.csªpublic interface IUbicacionService
+ParseOptions.0.json√
+YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\IUbicacionService.cs–namespace Gtrack;
+
+public interface IUbicacionService
 {
     Task<(bool Ok, string? Error)> ActualizarAsync(int repartidorUsuarioId, int pedidoId, decimal lat, decimal lng);
     Task<(bool Ok, string? Error, decimal? Latitud, decimal? Longitud, DateTime? FechaUtc, string? Estado)> ObtenerPorCodigoAsync(string codigoPedido);
 }
 
-ParseOptions.0.json≤|
-VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\NegocioService.cs¬{using Microsoft.AspNetCore.Identity;
+ParseOptions.0.json«|
+VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\NegocioService.cs◊{using Microsoft.AspNetCore.Identity;
 using System.Security.Cryptography;
+
+namespace Gtrack;
 
 public class NegocioService(
     INegocioRepository negocios,
@@ -4240,9 +4372,11 @@ public class NegocioService(
         var minutos = Math.Max(1, (int)Math.Ceiling((hasta - DateTime.UtcNow).TotalMinutes));
         return $"La edici√≥n de tu perfil est√° bloqueada por intentos fallidos. Intenta de nuevo en {minutos} minuto(s).";
     }
-}ParseOptions.0.json÷∆
-UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PedidoService.csÊ≈using Microsoft.EntityFrameworkCore;
+}ParseOptions.0.jsonÕ∆
+UC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PedidoService.cs›≈using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+
+namespace Gtrack;
 
 public class PedidoService(
     IPedidoRepository pedidos,
@@ -4608,7 +4742,7 @@ public class PedidoService(
     public async Task<(bool Ok, string? Error)> CancelarPorClienteAsync(string? codigo, string? motivo)
     {
         var codigoLimpio = codigo?.Trim().ToUpperInvariant() ?? "";
-        if (!System.Text.RegularExpressions.Regex.IsMatch(codigoLimpio, "^[A-Z0-9]{8}$"))
+        if (!Patrones.CodigoPedido().IsMatch(codigoLimpio))
             return (false, MensajeCodigoNoEncontrado);
 
         var motivoLimpio = motivo?.Trim() ?? "";
@@ -4770,10 +4904,12 @@ public class PedidoService(
         }
     }
 }
-ParseOptions.0.json∂Å
-_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PerfilRepartidorService.csºÄusing Microsoft.AspNetCore.Identity;
+ParseOptions.0.json—Å
+_C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PerfilRepartidorService.cs◊Äusing Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+
+namespace Gtrack;
 
 // CU-12 Eliminar Repartidor y CU-14 Editar Repartidor
 public interface IPerfilRepartidorService
@@ -4816,7 +4952,7 @@ public class PerfilRepartidorService(
 
     private const string MensajeEntregasPendientes = "No es posible eliminar la cuenta mientras tengas entregas pendientes"; // FE-27-CU12
     private const string MensajeEntregasPendientesNegocio = "No es posible eliminar a este repartidor mientras tenga entregas pendientes";
-    private const string MensajePasswordIncorrecta = "Contrase√±a incorrecta";                                        // FE-28-CU12
+    private const string MensajeContrasenaIncorrecta = "Contrase√±a incorrecta";                                        // FE-28-CU12
 
     // Mismas reglas del c√≥digo de verificaci√≥n de CU-13
     private const int MaxIntentosCodigo = 3;
@@ -5047,7 +5183,7 @@ public class PerfilRepartidorService(
         if (usuario is null) return (false, MensajeSinPermisos);
 
         if (!PasswordCorrecta(usuario, password))
-            return (false, MensajePasswordIncorrecta); // FE-28-CU12
+            return (false, MensajeContrasenaIncorrecta); // FE-28-CU12
 
         return await DarDeBajaAsync(usuario);
     }
@@ -5074,7 +5210,7 @@ public class PerfilRepartidorService(
         if (usuarioNegocio is null) return (false, MensajeSinPermisos, null);
 
         if (!PasswordCorrecta(usuarioNegocio, password))
-            return (false, MensajePasswordIncorrecta, null);
+            return (false, MensajeContrasenaIncorrecta, null);
 
         var rep = await RepartidorDelNegocioAsync(usuarioNegocioId, repartidorId);
         if (rep?.Usuario is null) return (false, MensajeSinPermisos, null);
@@ -5131,10 +5267,11 @@ public class PerfilRepartidorService(
         return $"La edici√≥n de tu perfil est√° bloqueada por intentos fallidos. Intenta de nuevo en {minutos} minuto(s).";
     }
 }
-ParseOptions.0.json£Ü
-WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PlantillaCorreo.cs±Öusing System.Net;
+ParseOptions.0.jsonåÜ
+WC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\PlantillaCorreo.csöÖusing System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
+
+namespace Gtrack;
 
 // Correo listo para enviar: versi√≥n HTML (con la marca de GTrack) y versi√≥n de texto plano
 // para los clientes de correo que no muestran HTML.
@@ -5241,7 +5378,7 @@ public static class PlantillaCorreo
         WebUtility.HtmlEncode(s ?? "").Replace("{", "&#123;").Replace("}", "&#125;");
 
     private static string ConFormato(string texto) =>
-        Regex.Replace(E(texto), @"\*\*(.+?)\*\*", "<strong style=\"color:#0f1b3d;font-weight:700;\">$1</strong>");
+        Patrones.Negrita().Replace(E(texto), "<strong style=\"color:#0f1b3d;font-weight:700;\">$1</strong>");
 
     private static string SinFormato(string texto) => texto.Replace("**", "");
 
@@ -5448,8 +5585,10 @@ public static class PlantillaCorreo
 
         """;
 }
-ParseOptions.0.jsonƒ)
-[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\RecuperacionService.csœ(using Microsoft.AspNetCore.Identity;
+ParseOptions.0.jsonŸ)
+[C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\RecuperacionService.cs‰(using Microsoft.AspNetCore.Identity;
+
+namespace Gtrack;
 
 public class RecuperacionService(
     IUsuarioRepository usuarios,
@@ -5563,8 +5702,10 @@ public class RecuperacionService(
             return false;
         }
     }
-}ParseOptions.0.jsonö9
-YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\RepartidorService.csß8using Microsoft.EntityFrameworkCore;
+}ParseOptions.0.jsonØ9
+YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\RepartidorService.csº8using Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 public interface IRepartidorService
 {
@@ -5710,9 +5851,11 @@ public class RepartidorService(
             : (false, "No fue posible enviar el correo de activaci√≥n. Intenta nuevamente.");
     }
 }
-ParseOptions.0.json∑g
-VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ReporteService.cs«fusing Microsoft.EntityFrameworkCore;
+ParseOptions.0.jsonΩg
+VC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\ReporteService.csÕfusing Microsoft.EntityFrameworkCore;
 using System.Globalization;
+
+namespace Gtrack;
 
 public class ReporteService(AppDbContext db, INegocioRepository negocios) : IReporteService
 {
@@ -5754,7 +5897,7 @@ public class ReporteService(AppDbContext db, INegocioRepository negocios) : IRep
         return meses;
     }
 
-    private static List<FilaEstadoReporte> ContarPorEstado(IReadOnlyCollection<int> estados)
+    private static List<FilaEstadoReporte> ContarPorEstado(List<int> estados)
     {
         var total = estados.Count;
         return Enum.GetValues<EstadoPedido>()
@@ -6029,8 +6172,10 @@ public class ReporteService(AppDbContext db, INegocioRepository negocios) : IRep
         return reporte;
     }
 }
-ParseOptions.0.json¸
-XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\UbicacionService.csäusing Microsoft.EntityFrameworkCore;
+ParseOptions.0.jsonë
+XC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Services\UbicacionService.csüusing Microsoft.EntityFrameworkCore;
+
+namespace Gtrack;
 
 public class UbicacionService(
     IUbicacionRepository ubicaciones,
@@ -6125,8 +6270,10 @@ public class UbicacionService(
     }
 }
 
-ParseOptions.0.jsonË
-^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\ActividadesEconomicas.cspublic static class ActividadesEconomicas
+ParseOptions.0.json˝
+^C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\ActividadesEconomicas.csÖnamespace Gtrack;
+
+public static class ActividadesEconomicas
 {
     public static readonly IReadOnlyList<string> Lista =
     [
@@ -6140,8 +6287,10 @@ public class UbicacionService(
         "Otro"
     ];
 }
-ParseOptions.0.jsonß
-]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\BCryptPasswordHasher.cs∞using Microsoft.AspNetCore.Identity;
+ParseOptions.0.jsonº
+]C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\BCryptPasswordHasher.cs≈using Microsoft.AspNetCore.Identity;
+
+namespace Gtrack;
 
 // RNF-01 Seguridad: las contrase√±as se guardan con bcrypt (nunca en texto plano).
 //
@@ -6206,8 +6355,10 @@ public class BCryptPasswordHasher : IPasswordHasher<Usuario>
     private static bool EsHashBCrypt(string hash) =>
         hash.Length == 60 && (hash.StartsWith("$2a$") || hash.StartsWith("$2b$") || hash.StartsWith("$2y$"));
 }
-ParseOptions.0.jsonÖ
-YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\EstadoPedidoInfo.csí// Nombres y colores de los 7 estados del pedido (se usan en pantalla, Excel y PDF)
+ParseOptions.0.jsonö
+YC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\EstadoPedidoInfo.csßnamespace Gtrack;
+
+// Nombres y colores de los 7 estados del pedido (se usan en pantalla, Excel y PDF)
 public static class EstadoPedidoInfo
 {
     public static string Nombre(int estadoId) => (EstadoPedido)estadoId switch
@@ -6254,8 +6405,10 @@ public static class EstadoPedidoInfo
         _ => "#343a40"
     };
 }
-ParseOptions.0.json≥
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\GeneradorPassword.csøusing System.Security.Cryptography;
+ParseOptions.0.json»
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\GeneradorPassword.cs‘using System.Security.Cryptography;
+
+namespace Gtrack;
 
 public static class GeneradorPassword
 {
@@ -6276,9 +6429,11 @@ public static class GeneradorPassword
 
         return new string(chars.OrderBy(_ => RandomNumberGenerator.GetInt32(int.MaxValue)).ToArray());
     }
-}ParseOptions.0.jsonÒ
-dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\InvariantDecimalModelBinder.csÛusing Microsoft.AspNetCore.Mvc.ModelBinding;
+}ParseOptions.0.jsonÜ
+dC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\InvariantDecimalModelBinder.csàusing Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Globalization;
+
+namespace Gtrack;
 
 // Los decimales que llegan de formularios y de JavaScript siempre usan punto ("4.5981", "12.50").
 // Sin este binder, ASP.NET los interpreta con la cultura del servidor: en es-CO el punto es separador de miles,
@@ -6317,10 +6472,43 @@ public class InvariantDecimalModelBinderProvider : IModelBinderProvider
             ? new InvariantDecimalModelBinder(context.Metadata.IsNullableValueType)
             : null;
 }
-ParseOptions.0.jsonÂ
-RC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\TokenUtil.cs˘using Microsoft.AspNetCore.WebUtilities;
+ParseOptions.0.json≈
+
+QC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\Patrones.cs⁄	using System.Text.RegularExpressions;
+
+namespace Gtrack;
+
+// Expresiones regulares de la aplicaci√≥n, generadas en tiempo de compilaci√≥n ([GeneratedRegex])
+// y con un tiempo l√≠mite de ejecuci√≥n para evitar ataques de denegaci√≥n de servicio (ReDoS).
+public static partial class Patrones
+{
+    private const int TiempoLimiteMs = 100;
+
+    // C√≥digo de pedido de 8 caracteres en may√∫sculas (CU-05 y CU-17)
+    [GeneratedRegex("^[A-Z0-9]{8}$", RegexOptions.None, TiempoLimiteMs)]
+    public static partial Regex CodigoPedido();
+
+    // C√≥digo de pedido de 8 caracteres, en may√∫sculas o min√∫sculas
+    [GeneratedRegex("^[A-Za-z0-9]{8}$", RegexOptions.None, TiempoLimiteMs)]
+    public static partial Regex CodigoPedidoSinDistinguirMayusculas();
+
+    // Placas de veh√≠culos (CU-09 y CU-14)
+    [GeneratedRegex(ReglasValidacion.PlacaMoto, RegexOptions.None, TiempoLimiteMs)]
+    public static partial Regex PlacaMoto();
+
+    [GeneratedRegex(ReglasValidacion.PlacaCarro, RegexOptions.None, TiempoLimiteMs)]
+    public static partial Regex PlacaCarro();
+
+    // Texto entre ** ** que se muestra en negrita en los correos
+    [GeneratedRegex(@"\*\*(.+?)\*\*", RegexOptions.None, TiempoLimiteMs)]
+    public static partial Regex Negrita();
+}
+ParseOptions.0.json˙
+RC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\TokenUtil.cséusing Microsoft.AspNetCore.WebUtilities;
 using System.Security.Cryptography;
 using System.Text;
+
+namespace Gtrack;
 
 public static class TokenUtil
 {
@@ -6329,8 +6517,10 @@ public static class TokenUtil
 
     public static string Hash(string token) =>
         Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(token)));
-}ParseOptions.0.jsonƒ
-ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\ValidadorPassword.cs–public static class ValidadorPassword
+}ParseOptions.0.jsonŸ
+ZC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Utilities\ValidadorPassword.csÂnamespace Gtrack;
+
+public static class ValidadorPassword
 {
     // RN-2-CU01 / RN-3-CU20: m√≠nimo 6 caracteres, al menos un n√∫mero y una letra
     public static bool EsValida(string? password) =>
@@ -6426,7 +6616,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gtrack")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+375c0e950932e6e8acfece1f01df20ee8b8d782a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0309fc116d3f1565124c89cd896100a7623cb3f5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gtrack")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gtrack")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
@@ -6451,6 +6641,716 @@ using System.Reflection;
 
 // Generated by the MSBuild WriteCodeFragment class.
 
+ParseOptions.0.jsonèö
+¬C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\System.Text.RegularExpressions.Generator\System.Text.RegularExpressions.Generator.RegexGenerator\RegexGenerator.g.cs±ò// <auto-generated/>
+#nullable enable
+#pragma warning disable
+
+namespace Gtrack
+{
+    partial class Patrones
+    {
+        /// <remarks>
+        /// Pattern:<br/>
+        /// <code>^[A-Z0-9]{8}$</code><br/>
+        /// Explanation:<br/>
+        /// <code>
+        /// ‚óã Match if at the beginning of the string.<br/>
+        /// ‚óã Match a character in the set [0-9A-Z] exactly 8 times.<br/>
+        /// ‚óã Match if at the end of the string or if before an ending newline.<br/>
+        /// </code>
+        /// </remarks>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.3008")]
+        public static partial global::System.Text.RegularExpressions.Regex CodigoPedido() => global::System.Text.RegularExpressions.Generated.CodigoPedido_0.Instance;
+    }
+}
+
+namespace Gtrack
+{
+    partial class Patrones
+    {
+        /// <remarks>
+        /// Pattern:<br/>
+        /// <code>^[A-Za-z0-9]{8}$</code><br/>
+        /// Explanation:<br/>
+        /// <code>
+        /// ‚óã Match if at the beginning of the string.<br/>
+        /// ‚óã Match an ASCII letter or digit exactly 8 times.<br/>
+        /// ‚óã Match if at the end of the string or if before an ending newline.<br/>
+        /// </code>
+        /// </remarks>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.3008")]
+        public static partial global::System.Text.RegularExpressions.Regex CodigoPedidoSinDistinguirMayusculas() => global::System.Text.RegularExpressions.Generated.CodigoPedidoSinDistinguirMayusculas_1.Instance;
+    }
+}
+
+namespace Gtrack
+{
+    partial class Patrones
+    {
+        /// <remarks>
+        /// Pattern:<br/>
+        /// <code>^[A-Z]{3}\\d{2}[A-Z]$</code><br/>
+        /// Explanation:<br/>
+        /// <code>
+        /// ‚óã Match if at the beginning of the string.<br/>
+        /// ‚óã Match a character in the set [A-Z] exactly 3 times.<br/>
+        /// ‚óã Match a Unicode digit exactly 2 times.<br/>
+        /// ‚óã Match a character in the set [A-Z].<br/>
+        /// ‚óã Match if at the end of the string or if before an ending newline.<br/>
+        /// </code>
+        /// </remarks>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.3008")]
+        public static partial global::System.Text.RegularExpressions.Regex PlacaMoto() => global::System.Text.RegularExpressions.Generated.PlacaMoto_2.Instance;
+    }
+}
+
+namespace Gtrack
+{
+    partial class Patrones
+    {
+        /// <remarks>
+        /// Pattern:<br/>
+        /// <code>^[A-Z]{3}\\d{3}$</code><br/>
+        /// Explanation:<br/>
+        /// <code>
+        /// ‚óã Match if at the beginning of the string.<br/>
+        /// ‚óã Match a character in the set [A-Z] exactly 3 times.<br/>
+        /// ‚óã Match a Unicode digit exactly 3 times.<br/>
+        /// ‚óã Match if at the end of the string or if before an ending newline.<br/>
+        /// </code>
+        /// </remarks>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.3008")]
+        public static partial global::System.Text.RegularExpressions.Regex PlacaCarro() => global::System.Text.RegularExpressions.Generated.PlacaCarro_3.Instance;
+    }
+}
+
+namespace Gtrack
+{
+    partial class Patrones
+    {
+        /// <remarks>
+        /// Pattern:<br/>
+        /// <code>\\*\\*(.+?)\\*\\*</code><br/>
+        /// Explanation:<br/>
+        /// <code>
+        /// ‚óã Match the string "**".<br/>
+        /// ‚óã 1st capture group.<br/>
+        ///     ‚óã Match a character other than '\n' lazily at least once.<br/>
+        /// ‚óã Match the string "**".<br/>
+        /// </code>
+        /// </remarks>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.3008")]
+        public static partial global::System.Text.RegularExpressions.Regex Negrita() => global::System.Text.RegularExpressions.Generated.Negrita_4.Instance;
+    }
+}
+
+namespace System.Text.RegularExpressions.Generated
+{
+    using System;
+    using System.Buffers;
+    using System.CodeDom.Compiler;
+    using System.Collections;
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.Runtime.CompilerServices;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+
+    /// <summary>Custom <see cref="Regex"/>-derived type for the CodigoPedido method.</summary>
+    [GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.3008")]
+    file sealed class CodigoPedido_0 : Regex
+    {
+        /// <summary>Cached, thread-safe singleton instance.</summary>
+        internal static readonly CodigoPedido_0 Instance = new();
+    
+        /// <summary>Initializes the instance.</summary>
+        private CodigoPedido_0()
+        {
+            base.pattern = "^[A-Z0-9]{8}$";
+            base.roptions = RegexOptions.None;
+            base.internalMatchTimeout = TimeSpan.FromMilliseconds(100);
+            base.factory = new RunnerFactory();
+            base.capsize = 1;
+        }
+            
+        /// <summary>Provides a factory for creating <see cref="RegexRunner"/> instances to be used by methods on <see cref="Regex"/>.</summary>
+        private sealed class RunnerFactory : RegexRunnerFactory
+        {
+            /// <summary>Creates an instance of a <see cref="RegexRunner"/> used by methods on <see cref="Regex"/>.</summary>
+            protected override RegexRunner CreateInstance() => new Runner();
+        
+            /// <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+            private sealed class Runner : RegexRunner
+            {
+                /// <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                protected override void Scan(ReadOnlySpan<char> inputSpan)
+                {
+                    // The pattern is anchored.  Validate the current position and try to match at it only.
+                    if (TryFindNextPossibleStartingPosition(inputSpan) && !TryMatchAtCurrentPosition(inputSpan))
+                    {
+                        base.runtextpos = inputSpan.Length;
+                    }
+                }
+        
+                /// <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                /// <returns>true if a possible match was found; false if no more matches are possible.</returns>
+                private bool TryFindNextPossibleStartingPosition(ReadOnlySpan<char> inputSpan)
+                {
+                    int pos = base.runtextpos;
+                    
+                    // Any possible match is at least 8 characters.
+                    if (pos <= inputSpan.Length - 8)
+                    {
+                        // The pattern leads with a beginning (\A) anchor.
+                        if (pos == 0)
+                        {
+                            return true;
+                        }
+                    }
+                    
+                    // No match found.
+                    base.runtextpos = inputSpan.Length;
+                    return false;
+                }
+        
+                /// <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                /// <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+                private bool TryMatchAtCurrentPosition(ReadOnlySpan<char> inputSpan)
+                {
+                    int pos = base.runtextpos;
+                    int matchStart = pos;
+                    ulong charMinusLowUInt64;
+                    ReadOnlySpan<char> slice = inputSpan.Slice(pos);
+                    
+                    // Match if at the beginning of the string.
+                    if (pos != 0)
+                    {
+                        return false; // The input didn't match.
+                    }
+                    
+                    // Match a character in the set [0-9A-Z] exactly 8 times.
+                    {
+                        if ((uint)slice.Length < 8 ||
+                            ((long)((0xFFC07FFFFFE00000UL << (int)(charMinusLowUInt64 = (uint)slice[0] - '0')) & (charMinusLowUInt64 - 64)) >= 0) ||
+                            ((long)((0xFFC07FFFFFE00000UL << (int)(charMinusLowUInt64 = (uint)slice[1] - '0')) & (charMinusLowUInt64 - 64)) >= 0) ||
+                            ((long)((0xFFC07FFFFFE00000UL << (int)(charMinusLowUInt64 = (uint)slice[2] - '0')) & (charMinusLowUInt64 - 64)) >= 0) ||
+                            ((long)((0xFFC07FFFFFE00000UL << (int)(charMinusLowUInt64 = (uint)slice[3] - '0')) & (charMinusLowUInt64 - 64)) >= 0) ||
+                            ((long)((0xFFC07FFFFFE00000UL << (int)(charMinusLowUInt64 = (uint)slice[4] - '0')) & (charMinusLowUInt64 - 64)) >= 0) ||
+                            ((long)((0xFFC07FFFFFE00000UL << (int)(charMinusLowUInt64 = (uint)slice[5] - '0')) & (charMinusLowUInt64 - 64)) >= 0) ||
+                            ((long)((0xFFC07FFFFFE00000UL << (int)(charMinusLowUInt64 = (uint)slice[6] - '0')) & (charMinusLowUInt64 - 64)) >= 0) ||
+                            ((long)((0xFFC07FFFFFE00000UL << (int)(charMinusLowUInt64 = (uint)slice[7] - '0')) & (charMinusLowUInt64 - 64)) >= 0))
+                        {
+                            return false; // The input didn't match.
+                        }
+                    }
+                    
+                    // Match if at the end of the string or if before an ending newline.
+                    if (9 < slice.Length || (8 < slice.Length && slice[8] != '\n'))
+                    {
+                        return false; // The input didn't match.
+                    }
+                    
+                    // The input matched.
+                    pos += 8;
+                    base.runtextpos = pos;
+                    base.Capture(0, matchStart, pos);
+                    return true;
+                }
+            }
+        }
+
+    }
+    
+    /// <summary>Custom <see cref="Regex"/>-derived type for the CodigoPedidoSinDistinguirMayusculas method.</summary>
+    [GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.3008")]
+    file sealed class CodigoPedidoSinDistinguirMayusculas_1 : Regex
+    {
+        /// <summary>Cached, thread-safe singleton instance.</summary>
+        internal static readonly CodigoPedidoSinDistinguirMayusculas_1 Instance = new();
+    
+        /// <summary>Initializes the instance.</summary>
+        private CodigoPedidoSinDistinguirMayusculas_1()
+        {
+            base.pattern = "^[A-Za-z0-9]{8}$";
+            base.roptions = RegexOptions.None;
+            base.internalMatchTimeout = TimeSpan.FromMilliseconds(100);
+            base.factory = new RunnerFactory();
+            base.capsize = 1;
+        }
+            
+        /// <summary>Provides a factory for creating <see cref="RegexRunner"/> instances to be used by methods on <see cref="Regex"/>.</summary>
+        private sealed class RunnerFactory : RegexRunnerFactory
+        {
+            /// <summary>Creates an instance of a <see cref="RegexRunner"/> used by methods on <see cref="Regex"/>.</summary>
+            protected override RegexRunner CreateInstance() => new Runner();
+        
+            /// <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+            private sealed class Runner : RegexRunner
+            {
+                /// <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                protected override void Scan(ReadOnlySpan<char> inputSpan)
+                {
+                    // The pattern is anchored.  Validate the current position and try to match at it only.
+                    if (TryFindNextPossibleStartingPosition(inputSpan) && !TryMatchAtCurrentPosition(inputSpan))
+                    {
+                        base.runtextpos = inputSpan.Length;
+                    }
+                }
+        
+                /// <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                /// <returns>true if a possible match was found; false if no more matches are possible.</returns>
+                private bool TryFindNextPossibleStartingPosition(ReadOnlySpan<char> inputSpan)
+                {
+                    int pos = base.runtextpos;
+                    
+                    // Any possible match is at least 8 characters.
+                    if (pos <= inputSpan.Length - 8)
+                    {
+                        // The pattern leads with a beginning (\A) anchor.
+                        if (pos == 0)
+                        {
+                            return true;
+                        }
+                    }
+                    
+                    // No match found.
+                    base.runtextpos = inputSpan.Length;
+                    return false;
+                }
+        
+                /// <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                /// <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+                private bool TryMatchAtCurrentPosition(ReadOnlySpan<char> inputSpan)
+                {
+                    int pos = base.runtextpos;
+                    int matchStart = pos;
+                    ReadOnlySpan<char> slice = inputSpan.Slice(pos);
+                    
+                    // Match if at the beginning of the string.
+                    if (pos != 0)
+                    {
+                        return false; // The input didn't match.
+                    }
+                    
+                    // Match an ASCII letter or digit exactly 8 times.
+                    {
+                        if ((uint)slice.Length < 8 ||
+                            !char.IsAsciiLetterOrDigit(slice[0]) ||
+                            !char.IsAsciiLetterOrDigit(slice[1]) ||
+                            !char.IsAsciiLetterOrDigit(slice[2]) ||
+                            !char.IsAsciiLetterOrDigit(slice[3]) ||
+                            !char.IsAsciiLetterOrDigit(slice[4]) ||
+                            !char.IsAsciiLetterOrDigit(slice[5]) ||
+                            !char.IsAsciiLetterOrDigit(slice[6]) ||
+                            !char.IsAsciiLetterOrDigit(slice[7]))
+                        {
+                            return false; // The input didn't match.
+                        }
+                    }
+                    
+                    // Match if at the end of the string or if before an ending newline.
+                    if (9 < slice.Length || (8 < slice.Length && slice[8] != '\n'))
+                    {
+                        return false; // The input didn't match.
+                    }
+                    
+                    // The input matched.
+                    pos += 8;
+                    base.runtextpos = pos;
+                    base.Capture(0, matchStart, pos);
+                    return true;
+                }
+            }
+        }
+
+    }
+    
+    /// <summary>Custom <see cref="Regex"/>-derived type for the PlacaMoto method.</summary>
+    [GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.3008")]
+    file sealed class PlacaMoto_2 : Regex
+    {
+        /// <summary>Cached, thread-safe singleton instance.</summary>
+        internal static readonly PlacaMoto_2 Instance = new();
+    
+        /// <summary>Initializes the instance.</summary>
+        private PlacaMoto_2()
+        {
+            base.pattern = "^[A-Z]{3}\\d{2}[A-Z]$";
+            base.roptions = RegexOptions.None;
+            base.internalMatchTimeout = TimeSpan.FromMilliseconds(100);
+            base.factory = new RunnerFactory();
+            base.capsize = 1;
+        }
+            
+        /// <summary>Provides a factory for creating <see cref="RegexRunner"/> instances to be used by methods on <see cref="Regex"/>.</summary>
+        private sealed class RunnerFactory : RegexRunnerFactory
+        {
+            /// <summary>Creates an instance of a <see cref="RegexRunner"/> used by methods on <see cref="Regex"/>.</summary>
+            protected override RegexRunner CreateInstance() => new Runner();
+        
+            /// <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+            private sealed class Runner : RegexRunner
+            {
+                /// <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                protected override void Scan(ReadOnlySpan<char> inputSpan)
+                {
+                    // The pattern is anchored.  Validate the current position and try to match at it only.
+                    if (TryFindNextPossibleStartingPosition(inputSpan) && !TryMatchAtCurrentPosition(inputSpan))
+                    {
+                        base.runtextpos = inputSpan.Length;
+                    }
+                }
+        
+                /// <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                /// <returns>true if a possible match was found; false if no more matches are possible.</returns>
+                private bool TryFindNextPossibleStartingPosition(ReadOnlySpan<char> inputSpan)
+                {
+                    int pos = base.runtextpos;
+                    
+                    // Any possible match is at least 6 characters.
+                    if (pos <= inputSpan.Length - 6)
+                    {
+                        // The pattern leads with a beginning (\A) anchor.
+                        if (pos == 0)
+                        {
+                            return true;
+                        }
+                    }
+                    
+                    // No match found.
+                    base.runtextpos = inputSpan.Length;
+                    return false;
+                }
+        
+                /// <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                /// <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+                private bool TryMatchAtCurrentPosition(ReadOnlySpan<char> inputSpan)
+                {
+                    int pos = base.runtextpos;
+                    int matchStart = pos;
+                    ReadOnlySpan<char> slice = inputSpan.Slice(pos);
+                    
+                    // Match if at the beginning of the string.
+                    if (pos != 0)
+                    {
+                        return false; // The input didn't match.
+                    }
+                    
+                    if ((uint)slice.Length < 6 ||
+                        !char.IsAsciiLetterUpper(slice[0]) || // Match a character in the set [A-Z] exactly 3 times.
+                        !char.IsAsciiLetterUpper(slice[1]) ||
+                        !char.IsAsciiLetterUpper(slice[2]) ||
+                        !char.IsDigit(slice[3]) || // Match a Unicode digit exactly 2 times.
+                        !char.IsDigit(slice[4]) ||
+                        !char.IsAsciiLetterUpper(slice[5])) // Match a character in the set [A-Z].
+                    {
+                        return false; // The input didn't match.
+                    }
+                    
+                    // Match if at the end of the string or if before an ending newline.
+                    if (7 < slice.Length || (6 < slice.Length && slice[6] != '\n'))
+                    {
+                        return false; // The input didn't match.
+                    }
+                    
+                    // The input matched.
+                    pos += 6;
+                    base.runtextpos = pos;
+                    base.Capture(0, matchStart, pos);
+                    return true;
+                }
+            }
+        }
+
+    }
+    
+    /// <summary>Custom <see cref="Regex"/>-derived type for the PlacaCarro method.</summary>
+    [GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.3008")]
+    file sealed class PlacaCarro_3 : Regex
+    {
+        /// <summary>Cached, thread-safe singleton instance.</summary>
+        internal static readonly PlacaCarro_3 Instance = new();
+    
+        /// <summary>Initializes the instance.</summary>
+        private PlacaCarro_3()
+        {
+            base.pattern = "^[A-Z]{3}\\d{3}$";
+            base.roptions = RegexOptions.None;
+            base.internalMatchTimeout = TimeSpan.FromMilliseconds(100);
+            base.factory = new RunnerFactory();
+            base.capsize = 1;
+        }
+            
+        /// <summary>Provides a factory for creating <see cref="RegexRunner"/> instances to be used by methods on <see cref="Regex"/>.</summary>
+        private sealed class RunnerFactory : RegexRunnerFactory
+        {
+            /// <summary>Creates an instance of a <see cref="RegexRunner"/> used by methods on <see cref="Regex"/>.</summary>
+            protected override RegexRunner CreateInstance() => new Runner();
+        
+            /// <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+            private sealed class Runner : RegexRunner
+            {
+                /// <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                protected override void Scan(ReadOnlySpan<char> inputSpan)
+                {
+                    // The pattern is anchored.  Validate the current position and try to match at it only.
+                    if (TryFindNextPossibleStartingPosition(inputSpan) && !TryMatchAtCurrentPosition(inputSpan))
+                    {
+                        base.runtextpos = inputSpan.Length;
+                    }
+                }
+        
+                /// <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                /// <returns>true if a possible match was found; false if no more matches are possible.</returns>
+                private bool TryFindNextPossibleStartingPosition(ReadOnlySpan<char> inputSpan)
+                {
+                    int pos = base.runtextpos;
+                    
+                    // Any possible match is at least 6 characters.
+                    if (pos <= inputSpan.Length - 6)
+                    {
+                        // The pattern leads with a beginning (\A) anchor.
+                        if (pos == 0)
+                        {
+                            return true;
+                        }
+                    }
+                    
+                    // No match found.
+                    base.runtextpos = inputSpan.Length;
+                    return false;
+                }
+        
+                /// <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                /// <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+                private bool TryMatchAtCurrentPosition(ReadOnlySpan<char> inputSpan)
+                {
+                    int pos = base.runtextpos;
+                    int matchStart = pos;
+                    ReadOnlySpan<char> slice = inputSpan.Slice(pos);
+                    
+                    // Match if at the beginning of the string.
+                    if (pos != 0)
+                    {
+                        return false; // The input didn't match.
+                    }
+                    
+                    if ((uint)slice.Length < 6 ||
+                        !char.IsAsciiLetterUpper(slice[0]) || // Match a character in the set [A-Z] exactly 3 times.
+                        !char.IsAsciiLetterUpper(slice[1]) ||
+                        !char.IsAsciiLetterUpper(slice[2]) ||
+                        !char.IsDigit(slice[3]) || // Match a Unicode digit exactly 3 times.
+                        !char.IsDigit(slice[4]) ||
+                        !char.IsDigit(slice[5]))
+                    {
+                        return false; // The input didn't match.
+                    }
+                    
+                    // Match if at the end of the string or if before an ending newline.
+                    if (7 < slice.Length || (6 < slice.Length && slice[6] != '\n'))
+                    {
+                        return false; // The input didn't match.
+                    }
+                    
+                    // The input matched.
+                    pos += 6;
+                    base.runtextpos = pos;
+                    base.Capture(0, matchStart, pos);
+                    return true;
+                }
+            }
+        }
+
+    }
+    
+    /// <summary>Custom <see cref="Regex"/>-derived type for the Negrita method.</summary>
+    [GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.3008")]
+    file sealed class Negrita_4 : Regex
+    {
+        /// <summary>Cached, thread-safe singleton instance.</summary>
+        internal static readonly Negrita_4 Instance = new();
+    
+        /// <summary>Initializes the instance.</summary>
+        private Negrita_4()
+        {
+            base.pattern = "\\*\\*(.+?)\\*\\*";
+            base.roptions = RegexOptions.None;
+            base.internalMatchTimeout = TimeSpan.FromMilliseconds(100);
+            base.factory = new RunnerFactory();
+            base.capsize = 2;
+        }
+            
+        /// <summary>Provides a factory for creating <see cref="RegexRunner"/> instances to be used by methods on <see cref="Regex"/>.</summary>
+        private sealed class RunnerFactory : RegexRunnerFactory
+        {
+            /// <summary>Creates an instance of a <see cref="RegexRunner"/> used by methods on <see cref="Regex"/>.</summary>
+            protected override RegexRunner CreateInstance() => new Runner();
+        
+            /// <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+            private sealed class Runner : RegexRunner
+            {
+                /// <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                protected override void Scan(ReadOnlySpan<char> inputSpan)
+                {
+                    // Search until we can't find a valid starting position, we find a match, or we reach the end of the input.
+                    while (TryFindNextPossibleStartingPosition(inputSpan) &&
+                           !TryMatchAtCurrentPosition(inputSpan) &&
+                           base.runtextpos != inputSpan.Length)
+                    {
+                        base.runtextpos++;
+                        base.CheckTimeout();
+                    }
+                }
+        
+                /// <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                /// <returns>true if a possible match was found; false if no more matches are possible.</returns>
+                private bool TryFindNextPossibleStartingPosition(ReadOnlySpan<char> inputSpan)
+                {
+                    int pos = base.runtextpos;
+                    
+                    // Any possible match is at least 5 characters.
+                    if (pos <= inputSpan.Length - 5)
+                    {
+                        // The pattern has the literal "**" at the beginning of the pattern. Find the next occurrence.
+                        // If it can't be found, there's no match.
+                        int i = inputSpan.Slice(pos).IndexOfAny(Utilities.s_indexOfString_4B938BB3612E6695167AB8A3A3AD73E3F6DB0CC76E502A73DB7C1EC79B5A2092);
+                        if (i >= 0)
+                        {
+                            base.runtextpos = pos + i;
+                            return true;
+                        }
+                    }
+                    
+                    // No match found.
+                    base.runtextpos = inputSpan.Length;
+                    return false;
+                }
+        
+                /// <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+                /// <param name="inputSpan">The text being scanned by the regular expression.</param>
+                /// <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+                private bool TryMatchAtCurrentPosition(ReadOnlySpan<char> inputSpan)
+                {
+                    int pos = base.runtextpos;
+                    int matchStart = pos;
+                    int capture_starting_pos = 0;
+                    int lazyloop_capturepos = 0;
+                    int lazyloop_pos = 0;
+                    ReadOnlySpan<char> slice = inputSpan.Slice(pos);
+                    
+                    // Match the string "**".
+                    if (!slice.StartsWith("**"))
+                    {
+                        UncaptureUntil(0);
+                        return false; // The input didn't match.
+                    }
+                    
+                    // 1st capture group.
+                    //{
+                        pos += 2;
+                        slice = inputSpan.Slice(pos);
+                        capture_starting_pos = pos;
+                        
+                        // Match a character other than '\n' lazily at least once.
+                        //{
+                            if (slice.IsEmpty || slice[0] == '\n')
+                            {
+                                UncaptureUntil(0);
+                                return false; // The input didn't match.
+                            }
+                            
+                            pos++;
+                            slice = inputSpan.Slice(pos);
+                            lazyloop_pos = pos;
+                            goto LazyLoopEnd;
+                            
+                            LazyLoopBacktrack:
+                            UncaptureUntil(lazyloop_capturepos);
+                            base.CheckTimeout();
+                            
+                            pos = lazyloop_pos;
+                            slice = inputSpan.Slice(pos);
+                            if (slice.IsEmpty || slice[0] == '\n')
+                            {
+                                UncaptureUntil(0);
+                                return false; // The input didn't match.
+                            }
+                            pos++;
+                            slice = inputSpan.Slice(pos);
+                            lazyloop_pos = slice.IndexOfAny('\n', '*');
+                            if ((uint)lazyloop_pos >= (uint)slice.Length || slice[lazyloop_pos] == '\n')
+                            {
+                                UncaptureUntil(0);
+                                return false; // The input didn't match.
+                            }
+                            pos += lazyloop_pos;
+                            slice = inputSpan.Slice(pos);
+                            lazyloop_pos = pos;
+                            
+                            LazyLoopEnd:
+                            lazyloop_capturepos = base.Crawlpos();
+                        //}
+                        
+                        base.Capture(1, capture_starting_pos, pos);
+                        
+                        goto CaptureSkipBacktrack;
+                        
+                        CaptureBacktrack:
+                        goto LazyLoopBacktrack;
+                        
+                        CaptureSkipBacktrack:;
+                    //}
+                    
+                    // Match the string "**".
+                    if (!slice.StartsWith("**"))
+                    {
+                        goto CaptureBacktrack;
+                    }
+                    
+                    // The input matched.
+                    pos += 2;
+                    base.runtextpos = pos;
+                    base.Capture(0, matchStart, pos);
+                    return true;
+                    
+                    // <summary>Undo captures until it reaches the specified capture position.</summary>
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    void UncaptureUntil(int capturePosition)
+                    {
+                        while (base.Crawlpos() > capturePosition)
+                        {
+                            base.Uncapture();
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    
+    /// <summary>Helper methods used by generated <see cref="Regex"/>-derived implementations.</summary>
+    [GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.3008")]
+    file static class Utilities
+    {
+        /// <summary>Supports searching for the string "**".</summary>
+        internal static readonly SearchValues<string> s_indexOfString_4B938BB3612E6695167AB8A3A3AD73E3F6DB0CC76E502A73DB7C1EC79B5A2092 = SearchValues.Create(["**"], StringComparison.Ordinal);
+    }
+}
 ParseOptions.0.jsonü
 ﬂC:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\Microsoft.AspNetCore.App.SourceGenerators\Microsoft.AspNetCore.SourceGenerators.PublicProgramSourceGenerator\PublicTopLevelProgram.Generated.g.cs•// <auto-generated />
 /// <summary>
@@ -12527,8 +13427,8 @@ pedido.EstadoPedidoId == 6
     }
 }
 #pragma warning restore 1591
-ParseOptions.0.json´∏
-‘C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\Microsoft.CodeAnalysis.Razor.Compiler\Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator\Views/Pedido/Consultar_cshtml.g.csª∂#pragma checksum "C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Pedido\Consultar.cshtml" "{8829d00f-11b8-4213-878b-770e8597ac16}" "4ecbba7bcbde6400a2f3c2a624ede97ea8396ee7bec857e29f89cabb0bb7d8bf"
+ParseOptions.0.json¨∏
+‘C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\obj\Debug\net10.0\Microsoft.CodeAnalysis.Razor.Compiler\Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator\Views/Pedido/Consultar_cshtml.g.csº∂#pragma checksum "C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Pedido\Consultar.cshtml" "{8829d00f-11b8-4213-878b-770e8597ac16}" "74cba24cf9d27ebc08ad1c72fde2b451ed5c8658b4059d2792c720f242261095"
 // <auto-generated/>
 #pragma warning disable 1591
 [assembly: global::Microsoft.AspNetCore.Razor.Hosting.RazorCompiledItemAttribute(typeof(AspNetCoreGeneratedDocument.Views_Pedido_Consultar), @"mvc.1.0.view", @"/Views/Pedido/Consultar.cshtml")]
@@ -12703,7 +13603,7 @@ if (!ViewData.ModelState.IsValid)
 #nullable disable
 
             WriteLiteral("                        <div class=\"alert alert-danger rounded-3 border-0 shadow-sm fs-6 mb-4\" role=\"alert\">\r\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4ecbba7bcbde6400a2f3c2a624ede97ea8396ee7bec857e29f89cabb0bb7d8bf11035", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74cba24cf9d27ebc08ad1c72fde2b451ed5c8658b4059d2792c720f24226109511035", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationSummaryTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.ValidationSummaryTagHelper>();
@@ -12736,7 +13636,7 @@ All
 #nullable disable
 
             WriteLiteral("\r\n                    <!-- Formulario de b√∫squeda estilizado con input tipo p√≠ldora -->\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4ecbba7bcbde6400a2f3c2a624ede97ea8396ee7bec857e29f89cabb0bb7d8bf13097", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74cba24cf9d27ebc08ad1c72fde2b451ed5c8658b4059d2792c720f24226109513097", async() => {
                 WriteLiteral(@"
                         <div class=""input-group input-group-lg shadow-sm rounded-pill overflow-hidden border"">
                             <span class=""input-group-text bg-white border-0 ps-4 text-muted""><i class=""bi bi-search""></i></span>
@@ -13301,7 +14201,7 @@ if (puedeCancelar)
 #nullable disable
 
             WriteLiteral("                </div>\r\n            </div>\r\n\r\n            <!-- Enlace para volver a la p√°gina principal -->\r\n            <div class=\"text-center mt-4\">\r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4ecbba7bcbde6400a2f3c2a624ede97ea8396ee7bec857e29f89cabb0bb7d8bf38178", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74cba24cf9d27ebc08ad1c72fde2b451ed5c8658b4059d2792c720f24226109538178", async() => {
                 WriteLiteral("\r\n                    <i class=\"bi bi-arrow-left me-1\"></i>Volver a la p√°gina principal\r\n                ");
             }
             );
@@ -13342,8 +14242,8 @@ if (puedeCancelar)
                     <div class=""modal-body"">
                         <p class=""mb-0"">El pedido <strong>");
 #nullable restore
-#line (277,60)-(277,72) 6 "C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Pedido\Consultar.cshtml"
-Write(Model.Codigo
+#line (277,60)-(277,73) 6 "C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Pedido\Consultar.cshtml"
+Write(Model?.Codigo
 
 #line default
 #line hidden
@@ -13356,10 +14256,10 @@ Write(Model.Codigo
                 </div>
 
                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4ecbba7bcbde6400a2f3c2a624ede97ea8396ee7bec857e29f89cabb0bb7d8bf41572", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74cba24cf9d27ebc08ad1c72fde2b451ed5c8658b4059d2792c720f24226109541573", async() => {
                 WriteLiteral("\r\n                    <input type=\"hidden\" name=\"codigo\"");
-                BeginWriteAttribute("value", " value=\"", 16884, "\"", 16905, 1);
-                WriteAttributeValue("", 16892, 
+                BeginWriteAttribute("value", " value=\"", 16885, "\"", 16906, 1);
+                WriteAttributeValue("", 16893, 
 #nullable restore
 #line (287,64)-(287,76) "C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Pedido\Consultar.cshtml"
 Model.Codigo
@@ -13367,14 +14267,14 @@ Model.Codigo
 #line default
 #line hidden
 #nullable disable
-                , 16892, 13, false);
+                , 16893, 13, false);
                 EndWriteAttribute();
                 WriteLiteral(@" />
                     <div class=""modal-body"">
                         <label for=""motivo-cancelacion"" class=""form-label fw-semibold"">Motivo de la cancelaci√≥n</label>
                         <textarea name=""motivo"" id=""motivo-cancelacion"" class=""form-control"" rows=""3"" required");
-                BeginWriteAttribute("maxlength", "\r\n                                  maxlength=\"", 17188, "\"", 17269, 1);
-                WriteAttributeValue("", 17235, 
+                BeginWriteAttribute("maxlength", "\r\n                                  maxlength=\"", 17189, "\"", 17270, 1);
+                WriteAttributeValue("", 17236, 
 #nullable restore
 #line (291,47)-(291,80) "C:\Users\camil\Documentos\5TO SEMESTRE\ING. SOFTWARE\GTrack\Views\Pedido\Consultar.cshtml"
 PedidoService.MaxCaracteresMotivo
@@ -13382,7 +14282,7 @@ PedidoService.MaxCaracteresMotivo
 #line default
 #line hidden
 #nullable disable
-                , 17235, 34, false);
+                , 17236, 34, false);
                 EndWriteAttribute();
                 WriteLiteral("\r\n                                  placeholder=\"Ej. Ya no necesito el pedido, me equivoqu√© en la direcci√≥n‚Ä¶\"></textarea>\r\n                        <div class=\"form-text text-end\"><span id=\"motivo-contador\">0</span>/");
 #nullable restore
