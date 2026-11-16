@@ -1,0 +1,102 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-test-deploy:
+    name: Build, Test & Deploy to MonsterASP.NET
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Release --no-restore
+
+      - name: Run tests
+        run: dotnet test -c Release --no-build
+
+      - name: Publish web application
+        run: dotnet publish Gtrack.csproj -c Release -o ./publish
+
+      - name: Generate appsettings.Production.json
+        env:
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+        run: |
+          jq -n --arg conn "$DB_CONNECTION_STRING" '{"ConnectionStrings": {"GtrackDb": $conn}}' > ./publish/appsettings.Production.json
+
+      - name: Put application offline (upload app_offline.htm)
+        env:
+          MONSTER_FTP_SERVER: ${{ secrets.MONSTER_FTP_SERVER }}
+          MONSTER_FTP_USER: ${{ secrets.MONSTER_FTP_USER }}
+          MONSTER_FTP_PASSWORD: ${{ secrets.MONSTER_FTP_PASSWORD }}
+        run: |
+          cat << 'EOF' > app_offline.htm
+          <!DOCTYPE html>
+          <html lang="es">
+          <head>
+              <meta charset="utf-8" />
+              <title>Sitio en mantenimiento - GTrack</title>
+              <style>
+                  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; text-align: center; padding: 50px; background-color: #f8f9fa; color: #333; }
+                  h1 { font-size: 2rem; margin-bottom: 10px; color: #0d6efd; }
+                  p { font-size: 1.1rem; color: #6c757d; }
+              </style>
+          </head>
+          <body>
+              <h1>GTrack se está actualizando</h1>
+              <p>Estamos desplegando una nueva versión. El servicio se restablecerá en unos instantes.</p>
+          </body>
+          </html>
+          EOF
+
+          curl -s --ssl-reqd --ftp-pasv -k \
+            --user "$MONSTER_FTP_USER:$MONSTER_FTP_PASSWORD" \
+            -T app_offline.htm \
+            "ftp://$MONSTER_FTP_SERVER:21/wwwroot/app_offline.htm" || \
+          curl -s --ssl-reqd --ftp-pasv -k \
+            --user "$MONSTER_FTP_USER:$MONSTER_FTP_PASSWORD" \
+            -T app_offline.htm \
+            "ftp://$MONSTER_FTP_SERVER:21//wwwroot/app_offline.htm"
+
+          sleep 5
+
+      - name: Deploy to MonsterASP.NET via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.MONSTER_FTP_SERVER }}
+          username: ${{ secrets.MONSTER_FTP_USER }}
+          password: ${{ secrets.MONSTER_FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./publish/
+          server-dir: /wwwroot/
+
+      - name: Remove app_offline.htm (bring app back online)
+        if: always()
+        env:
+          MONSTER_FTP_SERVER: ${{ secrets.MONSTER_FTP_SERVER }}
+          MONSTER_FTP_USER: ${{ secrets.MONSTER_FTP_USER }}
+          MONSTER_FTP_PASSWORD: ${{ secrets.MONSTER_FTP_PASSWORD }}
+        run: |
+          curl -s --ssl-reqd --ftp-pasv -k \
+            --user "$MONSTER_FTP_USER:$MONSTER_FTP_PASSWORD" \
+            -Q "-DELE /wwwroot/app_offline.htm" \
+            "ftp://$MONSTER_FTP_SERVER:21/" || \
+          curl -s --ssl-reqd --ftp-pasv -k \
+            --user "$MONSTER_FTP_USER:$MONSTER_FTP_PASSWORD" \
+            -Q "-DELE app_offline.htm" \
+            "ftp://$MONSTER_FTP_SERVER:21/wwwroot/" || true
+
