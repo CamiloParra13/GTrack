@@ -63,3 +63,6 @@ TestResults/
 # Análisis local de SonarQube y configuración de producción (no se suben al repositorio)
 .sonarqube/
 appsettings.Production.json
+
+publish/
+Properties/PublishProfiles/
