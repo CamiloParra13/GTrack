@@ -13,6 +13,9 @@ jobs:
   build-test-deploy:
     name: Build, Test & Deploy to MonsterASP.NET
     runs-on: ubuntu-latest
+    env:
+      # Clave pública del servidor (ssh-keyscan). No es secreta.
+      SFTP_HOST_KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGXHt3StlKuaaewYkw6gJUy41XlfjSGxFLEkpNhJYvcm"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -40,6 +43,23 @@ jobs:
         run: |
           jq -n --arg conn "$DB_CONNECTION_STRING" '{"ConnectionStrings": {"GtrackDb": $conn}}' > ./publish/appsettings.Production.json
 
+      - name: Prepare SFTP (install lftp and pin host key)
+        env:
+          MONSTER_FTP_SERVER: ${{ secrets.MONSTER_FTP_SERVER }}
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+          mkdir -p ~/.ssh
+          echo "$MONSTER_FTP_SERVER $SFTP_HOST_KEY" > ~/.ssh/known_hosts_monster
+
+          cat > /tmp/lftp_base.rc << EOF
+          set sftp:connect-program "ssh -a -x -o UserKnownHostsFile=$HOME/.ssh/known_hosts_monster -o StrictHostKeyChecking=yes -o HostKeyAlgorithms=ssh-ed25519"
+          set net:max-retries 2
+          set net:timeout 30
+          set cmd:fail-exit yes
+          EOF
+
       - name: Put application offline (upload app_offline.htm)
         env:
           MONSTER_FTP_SERVER: ${{ secrets.MONSTER_FTP_SERVER }}
@@ -65,27 +85,19 @@ jobs:
           </html>
           EOF
 
-          curl -s --ssl-reqd --ftp-pasv \
-            --user "$MONSTER_FTP_USER:$MONSTER_FTP_PASSWORD" \
-            -T app_offline.htm \
-            "ftp://$MONSTER_FTP_SERVER:21/wwwroot/app_offline.htm" || \
-          curl -s --ssl-reqd --ftp-pasv \
-            --user "$MONSTER_FTP_USER:$MONSTER_FTP_PASSWORD" \
-            -T app_offline.htm \
-            "ftp://$MONSTER_FTP_SERVER:21//wwwroot/app_offline.htm"
+          export LFTP_PASSWORD="$MONSTER_FTP_PASSWORD"
+          lftp -c "source /tmp/lftp_base.rc; open -u $MONSTER_FTP_USER sftp://$MONSTER_FTP_SERVER; put -O /wwwroot app_offline.htm; bye"
 
           sleep 5
 
-      - name: Deploy to MonsterASP.NET via FTP
-        uses: SamKirkland/FTP-Deploy-Action@8e83cea8672e3fbcbb9fdafff34debf6ae4c5f65 # v4.3.5
-        with:
-          server: ${{ secrets.MONSTER_FTP_SERVER }}
-          username: ${{ secrets.MONSTER_FTP_USER }}
-          password: ${{ secrets.MONSTER_FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./publish/
-          server-dir: /wwwroot/
+      - name: Deploy to MonsterASP.NET via SFTP
+        env:
+          MONSTER_FTP_SERVER: ${{ secrets.MONSTER_FTP_SERVER }}
+          MONSTER_FTP_USER: ${{ secrets.MONSTER_FTP_USER }}
+          MONSTER_FTP_PASSWORD: ${{ secrets.MONSTER_FTP_PASSWORD }}
+        run: |
+          export LFTP_PASSWORD="$MONSTER_FTP_PASSWORD"
+          lftp -c "source /tmp/lftp_base.rc; open -u $MONSTER_FTP_USER sftp://$MONSTER_FTP_SERVER; mirror -R --parallel=4 ./publish /wwwroot; bye"
 
       - name: Remove app_offline.htm (bring app back online)
         if: always()
@@ -94,12 +106,5 @@ jobs:
           MONSTER_FTP_USER: ${{ secrets.MONSTER_FTP_USER }}
           MONSTER_FTP_PASSWORD: ${{ secrets.MONSTER_FTP_PASSWORD }}
         run: |
-          curl -s --ssl-reqd --ftp-pasv \
-            --user "$MONSTER_FTP_USER:$MONSTER_FTP_PASSWORD" \
-            -Q "-DELE /wwwroot/app_offline.htm" \
-            "ftp://$MONSTER_FTP_SERVER:21/" || \
-          curl -s --ssl-reqd --ftp-pasv \
-            --user "$MONSTER_FTP_USER:$MONSTER_FTP_PASSWORD" \
-            -Q "-DELE app_offline.htm" \
-            "ftp://$MONSTER_FTP_SERVER:21/wwwroot/" || true
-
+          export LFTP_PASSWORD="$MONSTER_FTP_PASSWORD"
+          lftp -c "source /tmp/lftp_base.rc; open -u $MONSTER_FTP_USER sftp://$MONSTER_FTP_SERVER; rm -f /wwwroot/app_offline.htm; bye"
