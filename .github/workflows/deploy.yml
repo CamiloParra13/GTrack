@@ -85,8 +85,9 @@ jobs:
           </html>
           EOF
 
-          export LFTP_PASSWORD="$MONSTER_FTP_PASSWORD"
-          lftp -c "source /tmp/lftp_base.rc; open -u $MONSTER_FTP_USER sftp://$MONSTER_FTP_SERVER; put -O /wwwroot app_offline.htm; bye"
+          lftp -u "$MONSTER_FTP_USER,$MONSTER_FTP_PASSWORD" \
+            -e "source /tmp/lftp_base.rc; put -O /wwwroot app_offline.htm; bye" \
+            "sftp://$MONSTER_FTP_SERVER"
 
           sleep 5
 
@@ -96,8 +97,9 @@ jobs:
           MONSTER_FTP_USER: ${{ secrets.MONSTER_FTP_USER }}
           MONSTER_FTP_PASSWORD: ${{ secrets.MONSTER_FTP_PASSWORD }}
         run: |
-          export LFTP_PASSWORD="$MONSTER_FTP_PASSWORD"
-          lftp -c "source /tmp/lftp_base.rc; open -u $MONSTER_FTP_USER sftp://$MONSTER_FTP_SERVER; mirror -R --parallel=4 ./publish /wwwroot; bye"
+          lftp -u "$MONSTER_FTP_USER,$MONSTER_FTP_PASSWORD" \
+            -e "source /tmp/lftp_base.rc; mirror -R --parallel=4 ./publish /wwwroot; bye" \
+            "sftp://$MONSTER_FTP_SERVER"
 
       - name: Remove app_offline.htm (bring app back online)
         if: always()
@@ -106,5 +108,6 @@ jobs:
           MONSTER_FTP_USER: ${{ secrets.MONSTER_FTP_USER }}
           MONSTER_FTP_PASSWORD: ${{ secrets.MONSTER_FTP_PASSWORD }}
         run: |
-          export LFTP_PASSWORD="$MONSTER_FTP_PASSWORD"
-          lftp -c "source /tmp/lftp_base.rc; open -u $MONSTER_FTP_USER sftp://$MONSTER_FTP_SERVER; rm -f /wwwroot/app_offline.htm; bye"
+          lftp -u "$MONSTER_FTP_USER,$MONSTER_FTP_PASSWORD" \
+            -e "source /tmp/lftp_base.rc; rm -f /wwwroot/app_offline.htm; bye" \
+            "sftp://$MONSTER_FTP_SERVER"
