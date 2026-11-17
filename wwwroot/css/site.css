@@ -312,3 +312,35 @@ a {
     border-radius: 50%;
     margin-right: .35rem;
 }
+
+/* Video decorativo en esquina inferior izquierda */
+.video-esquina {
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    width: 100px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+    z-index: 10;
+}
+
+@media (max-width: 576px) {
+    .video-esquina {
+        width: 75px;
+        left: 10px;
+        bottom: 10px;
+    }
+
+    /* En la vista de login móvil, aseguramos espacio inferior y reducimos el video para evitar tapar campos o enlaces */
+    .login-page {
+        padding-bottom: 85px;
+    }
+
+    .login-page ~ .video-esquina {
+        width: 65px;
+        left: 8px;
+        bottom: 8px;
+    }
+}
+
