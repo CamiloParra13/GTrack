@@ -6,7 +6,7 @@ public class AuthService(IUsuarioRepository repo, IPasswordHasher<Usuario> hashe
 {
     private const int MaxIntentos = 5;
     private const int MinutosBloqueo = 15;
-    private const string MsgGenerico = "Usuario o contraseña incorrectos";
+    private const string MsgGenerico = "No fue posible iniciar sesión. Verifica el perfil seleccionado y tus datos de acceso.";
 
     public async Task<(Usuario? Usuario, string? Error)> IniciarSesionAsync(LoginDto dto)
     {

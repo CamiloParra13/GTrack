@@ -24,7 +24,7 @@ public class AuthServiceTests
             new LoginDto { Identificador = "no-existe", Password = "x", Rol = RolUsuario.Negocio });
 
         Assert.Null(usuario);
-        Assert.Equal("Usuario o contraseña incorrectos", error);
+        Assert.Equal("No fue posible iniciar sesión. Verifica el perfil seleccionado y tus datos de acceso.", error);
     }
 
     [Fact]
@@ -52,7 +52,7 @@ public class AuthServiceTests
             new LoginDto { Identificador = "negocio@gtrack.local", Password = "mala", Rol = RolUsuario.Negocio });
 
         Assert.Null(usuario);
-        Assert.Equal("Usuario o contraseña incorrectos", error);
+        Assert.Equal("No fue posible iniciar sesión. Verifica el perfil seleccionado y tus datos de acceso.", error);
         Assert.True(repo.SeLlamoActualizar);
     }
 

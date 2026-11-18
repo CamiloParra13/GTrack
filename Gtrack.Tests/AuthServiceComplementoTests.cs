@@ -74,6 +74,6 @@ public class AuthServiceComplementoTests
         var (usuario, error) = await servicio.IniciarSesionAsync(Login());
 
         Assert.Null(usuario);
-        Assert.Equal("Usuario o contraseña incorrectos", error);
+        Assert.Equal("No fue posible iniciar sesión. Verifica el perfil seleccionado y tus datos de acceso.", error);
     }
 }

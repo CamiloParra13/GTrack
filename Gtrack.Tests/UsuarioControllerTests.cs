@@ -80,12 +80,12 @@ public class UsuarioControllerTests
     public async Task Login_Post_CredencialesIncorrectas_MuestraError()
     {
         var e = new Escenario();
-        e.Auth.IniciarSesionAsync(Arg.Any<LoginDto>()).Returns(Login(null, "Usuario o contraseña incorrectos"));
+        e.Auth.IniciarSesionAsync(Arg.Any<LoginDto>()).Returns(Login(null, "No fue posible iniciar sesión. Verifica el perfil seleccionado y tus datos de acceso."));
 
         var r = await e.Controlador.Login(LoginDto());
 
         Assert.IsType<ViewResult>(r);
-        Assert.Contains(e.Controlador.ModelState[""]!.Errors, err => err.ErrorMessage == "Usuario o contraseña incorrectos");
+        Assert.Contains(e.Controlador.ModelState[""]!.Errors, err => err.ErrorMessage == "No fue posible iniciar sesión. Verifica el perfil seleccionado y tus datos de acceso.");
     }
 
     [Fact]
