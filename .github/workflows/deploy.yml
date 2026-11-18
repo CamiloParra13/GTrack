@@ -40,8 +40,26 @@ jobs:
       - name: Generate appsettings.Production.json
         env:
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
         run: |
-          jq -n --arg conn "$DB_CONNECTION_STRING" '{"ConnectionStrings": {"GtrackDb": $conn}}' > ./publish/appsettings.Production.json
+          jq -n \
+            --arg conn "$DB_CONNECTION_STRING" \
+            --arg user "$EMAIL_USER" \
+            --arg pass "$EMAIL_PASSWORD" \
+            --arg from "$EMAIL_FROM" \
+            '{
+              ConnectionStrings: { GtrackDb: $conn },
+              Email: {
+                Host: "smtp-relay.brevo.com",
+                Port: "587",
+                User: $user,
+                Password: $pass,
+                From: $from,
+                NombreRemitente: "GTrack"
+              }
+            }' > ./publish/appsettings.Production.json
 
       - name: Prepare SFTP (install lftp and pin host key)
         env:
